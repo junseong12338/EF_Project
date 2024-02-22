@@ -34,7 +34,7 @@ public class BoardController {
 
 	@RequestMapping(value = { "/", "board_list" })
 	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
-
+		// 한글 깨짐 테스트
 		int start = (page - 1) * Common.Board.BLOCKLIST + 1;
 		int end = start + Common.Board.BLOCKLIST - 1;
 
@@ -48,10 +48,10 @@ public class BoardController {
 		int rowTotal = (int) selectMap.get("rowTotal");
 		List<BoardDTO> list = (List<BoardDTO>) selectMap.get("list");
 
-		// 한글 깨짐 테스트
+	
 		String pageMenu = Page.getPaging("board_list", page, rowTotal, Common.Board.BLOCKLIST, Common.Board.BLOCKPAGE);
 
-		// 
+
 		request.getSession().removeAttribute("show");
 
 		model.addAttribute("list", list);
@@ -64,10 +64,8 @@ public class BoardController {
 	@RequestMapping("view")
 	public String view(Model model, int idx, int page) {
 
-		// �Խñ� �Ѱǿ� ���� ��ȸ
 		BoardDTO dto = boardService.selectOne(idx);
 
-		// ��ȸ�� ����
 		HttpSession session = request.getSession();
 		String show = (String) session.getAttribute("show");// ������ null
 		if (show == null) {
@@ -75,7 +73,6 @@ public class BoardController {
 			session.setAttribute("show", "0");
 		}
 
-		// �󼼺��� �������� ��ȯ�ϱ� ���� ���ε��� ������
 		model.addAttribute("dto", dto);
 		return Common.Board.VIEW_PATH + "board_view.jsp?page=" + page;
 	}
