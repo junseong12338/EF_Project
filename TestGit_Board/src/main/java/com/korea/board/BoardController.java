@@ -48,10 +48,10 @@ public class BoardController {
 		int rowTotal = (int) selectMap.get("rowTotal");
 		List<BoardDTO> list = (List<BoardDTO>) selectMap.get("list");
 
-		// ������ �޴� �����ϱ�
+		// 한글 깨짐 테스트
 		String pageMenu = Page.getPaging("board_list", page, rowTotal, Common.Board.BLOCKLIST, Common.Board.BLOCKPAGE);
 
-		// ���ΰ�ħ ���� Ŭ���Ͽ� ��ȸ���� �������� ���ϵ��� ���� ����ϱ�
+		// 
 		request.getSession().removeAttribute("show");
 
 		model.addAttribute("list", list);
@@ -60,7 +60,7 @@ public class BoardController {
 		return Common.Board.VIEW_PATH + "board_list.jsp?page=" + page;
 	}
 
-	// �Խñ� �󼼺���
+	// 
 	@RequestMapping("view")
 	public String view(Model model, int idx, int page) {
 
