@@ -106,19 +106,15 @@ public class BoardController {
 	public String reply(BoardDTO dto, int idx, int page) {
 		String ip = request.getRemoteAddr();
 
-		// ���� ���۷����� ������ �ִ� �����͵� �߿��� ���� ���� �߰��Ϸ��� �ϴ�
-		// step�� �̻��� �ֵ��� +1�� �س��� �ϱ� ������ insert�� �������� �ʴ´�.
-
-		// ���ر��� idx�� �̿��ؼ� ����� �ް���� �Խñ��� ������ �����´�.
+		
 
 		BoardDTO base_dto = boardService.selectOne(idx);
 
-		// ���رۿ� step�̻� ���� step = step + 1 ó��
-		int res = boardService.update_step(base_dto); // -> dao�� ���鷯 ����
-
+		
+		int res = boardService.update_step(base_dto); 
 		dto.setIp(ip);
 
-		// ����� �� ��ġ ����
+	
 		dto.setRef(base_dto.getRef());
 		dto.setStep(base_dto.getStep() + 1);
 		dto.setDepth(base_dto.getDepth() + 1);
@@ -131,10 +127,10 @@ public class BoardController {
 		return null;
 	}
 
-	// �Խñ� ����
+	
 	@RequestMapping("del")
 	public String del(int idx) {
-		// �Խñ� �Ѱǿ� ���� ��ȸ
+	
 		BoardDTO dto = boardService.selectOne(idx);
 		int res = boardService.del(idx);
 
@@ -144,22 +140,20 @@ public class BoardController {
 
 	}
 
-	// �α���
+	
 	@RequestMapping("login")
 	@ResponseBody
 	public String login(String id, String pwd) {
 		MemberDTO dto = boardService.check_id(id);
 
-		// dto�� null �ϰ�� ���̵� ���ٴ� ��
+	
 		if (dto == null)
 			return "[{'param':'no_id'}]";
 
 		if (!dto.getPwd().equals(pwd))
 			return "[{'param':'no_pwd'}]";
 
-		// ���̵�� ��й�ȣ üũ�� ������ ���ٸ� ���ǿ� ���ε��Ѵ�.
-		// ������ ������ �޸𸮸� ����ϱ� ������ ���� ����� ���� ���� ����.
-		// �ʿ��� ��쿡���� �������.
+		
 		session.setMaxInactiveInterval(3600);
 		session.setAttribute("id", dto);
 		return "[{'param':'clear'}]";
@@ -171,7 +165,7 @@ public class BoardController {
 
 	}
 
-	// �α׾ƿ�
+
 	@RequestMapping("logout")
 	public String logout() {
 		session.removeAttribute("id");
@@ -179,13 +173,13 @@ public class BoardController {
 		return "redirect:board_list";
 	}
 
-	// ȸ�� ���� ���̵� �ߺ� ó��
+	
 	@RequestMapping("check_id")
 	@ResponseBody
 	public String check_id(String id) {
 		MemberDTO dto = boardService.check_id(id);
 
-		// dto�� null �ϰ�� ���̵� ���ٴ� ��
+		
 		if (dto == null)
 			return "[{'res':'yes'}]";
 

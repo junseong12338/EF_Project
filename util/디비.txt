@@ -7,6 +7,4 @@ db.username = admin
 db.password = Multicampus522
 
 
-#테스트 이준성 해쉬 태그
-테스트 이준성 제목
-테스트 이준성 컨텐츠
+C:\DEV/backend_project/Wallet_Project522
