@@ -1,0 +1,54 @@
+1682326477454	Copy compilation unit
+1682387554357	Delete element
+1682388975270	Delete element
+1682391327795	Delete element
+1682397162498	Delete element
+1682397354338	Rename type 'LoginController'
+1682397662309	Rename resource 'register.jsp'
+1682401212753	Delete element
+1682401213698	Delete element
+1682403315898	Rename package 'validator'
+1682403932414	Delete element
+1682409425118	Delete element
+1682413883600	Copy compilation unit
+1682414195850	Delete element
+1682416391314	Delete element
+1682416599678	Delete element
+1682416610929	Delete element
+1682422331092	Delete element
+1682422333087	Delete element
+1682470973957	Rename type 'exception'
+1682474805076	Rename compilation unit 'PasswordNotMatchedException.java'
+1682474835646	Rename compilation unit 'MatchedException.java'
+1682475040303	Delete element
+1682475057114	Copy compilation unit
+1682475061652	Rename type 'PasswordNotMatchedException2'
+1682476159306	Rename type 'RestApiController'
+1682476193854	Copy compilation unit
+1682476204047	Delete element
+1682483060313	Rename type 'LoginMapper'
+1682483085955	Rename resource 'LoginMapper.xml'
+1682483683541	Rename type 'UserMapper'
+1682483692879	Rename resource 'UserMapper.xml'
+1682484411605	Copy file
+1682484415107	Rename resource 'join2.jsp'
+1682485390089	Copy compilation unit
+1682489162451	Rename compilation unit 'UserVO2.java'
+1682491667008	Copy compilation unit
+1682491731081	Rename type 'PasswordNotFindMatchedException'
+1682505495219	Copy file
+1682505504175	Rename resource 'join_success2.jsp'
+1682523326437	Copy file
+1682523332250	Rename resource 'login_success2.jsp'
+1682570998928	Delete element
+1682574127178	Delete element
+1682658361479	Copy file
+1682661475349	Copy compilation unit
+1682661551124	Delete element
+1682662057652	Copy compilation unit
+1682662069646	Delete element
+1682662418605	Rename type 'TagPageController'
+1682663021424	Copy file
+1682663035987	Rename resource 'Main_page2.jsp'
+1682663044229	Rename resource 'Filterpage.jsp'
+1682673097098	Delete element

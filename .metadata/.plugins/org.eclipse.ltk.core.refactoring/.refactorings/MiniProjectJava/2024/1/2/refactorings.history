@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;MiniProjectJava/src/main/webapp/WEB-INF/views/board/delect.jsp&apos; to &apos;delete.jsp&apos;" description="Rename resource &apos;delect.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/WEB-INF/views/board/delect.jsp" name="delete.jsp" stamp="1704711541672" updateReferences="true"/>
+</session>
