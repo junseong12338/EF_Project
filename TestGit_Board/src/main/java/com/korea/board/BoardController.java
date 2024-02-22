@@ -48,9 +48,7 @@ public class BoardController {
 		int rowTotal = (int) selectMap.get("rowTotal");
 		List<BoardDTO> list = (List<BoardDTO>) selectMap.get("list");
 
-	
 		String pageMenu = Page.getPaging("board_list", page, rowTotal, Common.Board.BLOCKLIST, Common.Board.BLOCKPAGE);
-
 
 		request.getSession().removeAttribute("show");
 
@@ -60,14 +58,13 @@ public class BoardController {
 		return Common.Board.VIEW_PATH + "board_list.jsp?page=" + page;
 	}
 
-	// 
 	@RequestMapping("view")
 	public String view(Model model, int idx, int page) {
 
 		BoardDTO dto = boardService.selectOne(idx);
 
 		HttpSession session = request.getSession();
-		String show = (String) session.getAttribute("show");// ������ null
+		String show = (String) session.getAttribute("show");
 		if (show == null) {
 			int res = boardService.update_readhit(idx);
 			session.setAttribute("show", "0");

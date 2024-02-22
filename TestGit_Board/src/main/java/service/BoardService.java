@@ -14,15 +14,12 @@ public class BoardService {
 
 	final BoardDAO boardDAO;
 	final MemberDAO memberDAO;
-	//페이지별 게시글 조회
 	public HashMap<String, Object> selectList( HashMap<String, Integer> map){
 		
 		HashMap<String, Object> selectMap = new HashMap<>();
 		
-		//페이지 번호에 따른 전체 게시글 조회
 		List<BoardDTO> list = boardDAO.selectList(map);
 		
-		//전체 게시물 수 조회
 		int rowTotal = boardDAO.getRowTotal();
 		
 		selectMap.put("list", list);
@@ -32,22 +29,18 @@ public class BoardService {
 	}
 	
 	
-	//게시글 상세 조회
 	public BoardDTO selectOne(int idx) {
 		return boardDAO.selectOne(idx);
 	}
 	
-	//조회수 증가
 	public int update_readhit(int idx) {
 		return boardDAO.update_readhit(idx);
 	}
 	
-	//게시글 추가하기
 	public int insert(BoardDTO dto) {
 		return boardDAO.insert(dto); 
 	}
 	
-	// 게시글 삭제
 	public int del(int idx) {
 		return boardDAO.del(idx);
 	}

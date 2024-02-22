@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.korea</groupId>
     <artifactId>board</artifactId>
-    <name>TestGit_Board</name>
+    <name>Game_Donation_Board</name>
     <packaging>war</packaging>
     <version>1.0.0-BUILD-SNAPSHOT</version>
     <properties>
