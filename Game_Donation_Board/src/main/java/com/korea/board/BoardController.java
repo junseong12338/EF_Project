@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.BoardDTO;
-import dto.EF_UserDTO;
+import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import service.BoardService;
+import service.UserService;
 import util.Common;
 import util.Page;
 
@@ -25,7 +26,8 @@ import util.Page;
 public class BoardController {
 
 	final BoardService boardService;
-
+	// final UserService userService;
+	
 	@Autowired
 	HttpServletRequest request;
 
@@ -74,59 +76,7 @@ public class BoardController {
 		return Common.Board.VIEW_PATH + "board_view.jsp?page=" + page;
 	}
 
-	@RequestMapping("insert_form")
-	public String insert_form() {
-		EF_UserDTO show = (EF_UserDTO) session.getAttribute("id");
-		if (show == null)
-			return Common.Member.VIEW_PATH + "login_form.jsp";
 
-		return Common.Board.VIEW_PATH + "insert_form.jsp";
-	}
-
-	@RequestMapping("insert")
-	public String insert(BoardDTO dto) {
-
-		String ip = request.getRemoteAddr();
-		dto.setIp(ip);
-		int res = boardService.insert(dto);
-
-		if (res > 0)
-			return "redirect:board_list";
-		return null;
-
-	}
-
-
-	
-	@RequestMapping("login")
-	@ResponseBody
-	public String login(String id, String pwd) {
-		EF_UserDTO dto = boardService.check_id(id);
-
-		if (dto == null)
-			return "[{'param':'no_id'}]";
-
-		if (!dto.getPwd().equals(pwd))
-			return "[{'param':'no_pwd'}]";
-
-		
-		session.setMaxInactiveInterval(3600);
-		session.setAttribute("id", dto);
-		return "[{'param':'clear'}]";
-	}
-
-	@RequestMapping("login_form")
-	public String login_form() {
-		
-		return Common.Member.VIEW_PATH + "login_form.jsp";
-	}
-
-	@RequestMapping("logout")
-	public String logout() {
-		
-		session.removeAttribute("id");
-		return "redirect:board_list";
-	}
 
 
 }
