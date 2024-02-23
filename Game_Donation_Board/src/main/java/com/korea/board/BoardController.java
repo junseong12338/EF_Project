@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.BoardDTO;
-import dto.MemberDTO;
+import dto.EF_UserDTO;
 import lombok.RequiredArgsConstructor;
 import service.BoardService;
 import util.Common;
@@ -76,7 +76,7 @@ public class BoardController {
 
 	@RequestMapping("insert_form")
 	public String insert_form() {
-		MemberDTO show = (MemberDTO) session.getAttribute("id");
+		EF_UserDTO show = (EF_UserDTO) session.getAttribute("id");
 		if (show == null)
 			return Common.Member.VIEW_PATH + "login_form.jsp";
 
@@ -96,57 +96,13 @@ public class BoardController {
 
 	}
 
-	// �亯 ���
-	@RequestMapping("reply_form")
-	public String reply_from(int idx, int page) {
-		return Common.Board.VIEW_PATH + "reply_form.jsp?idx=" + idx + "&page=" + page;
-	}
-
-	@RequestMapping("reply")
-	public String reply(BoardDTO dto, int idx, int page) {
-		String ip = request.getRemoteAddr();
-
-		
-
-		BoardDTO base_dto = boardService.selectOne(idx);
-
-		
-		int res = boardService.update_step(base_dto); 
-		dto.setIp(ip);
-
-	
-		dto.setRef(base_dto.getRef());
-		dto.setStep(base_dto.getStep() + 1);
-		dto.setDepth(base_dto.getDepth() + 1);
-
-		res = boardService.reply(dto);
-
-		if (res > 0)
-			return "redirect:board_list?page=" + page;
-
-		return null;
-	}
-
-	
-	@RequestMapping("del")
-	public String del(int idx) {
-	
-		BoardDTO dto = boardService.selectOne(idx);
-		int res = boardService.del(idx);
-
-		if (res > 0)
-			return "redirect:board_list";
-		return null;
-
-	}
 
 	
 	@RequestMapping("login")
 	@ResponseBody
 	public String login(String id, String pwd) {
-		MemberDTO dto = boardService.check_id(id);
+		EF_UserDTO dto = boardService.check_id(id);
 
-	
 		if (dto == null)
 			return "[{'param':'no_id'}]";
 
@@ -161,43 +117,16 @@ public class BoardController {
 
 	@RequestMapping("login_form")
 	public String login_form() {
+		
 		return Common.Member.VIEW_PATH + "login_form.jsp";
-
 	}
-
 
 	@RequestMapping("logout")
 	public String logout() {
+		
 		session.removeAttribute("id");
-
 		return "redirect:board_list";
 	}
 
-	
-	@RequestMapping("check_id")
-	@ResponseBody
-	public String check_id(String id) {
-		MemberDTO dto = boardService.check_id(id);
-
-		
-		if (dto == null)
-			return "[{'res':'yes'}]";
-
-		return "[{'res':'no'}]";
-	}
-	
-	@RequestMapping("member_insert_form")
-	public String member_insert_form() {
-		return Common.Member.VIEW_PATH + "member_insert_form.jsp";
-	}
-	
-	@RequestMapping("member_insert")
-	public String member_insert(MemberDTO dto) {
-		int res = boardService.Member_insert(dto);
-		if (res > 0)return "redirect:board_list";
-		
-		return null;
-
-	}
 
 }

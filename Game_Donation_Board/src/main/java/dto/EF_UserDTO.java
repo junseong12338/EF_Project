@@ -3,7 +3,7 @@ package dto;
 import lombok.Data;
 
 @Data
-public class MemberDTO {
+public class EF_UserDTO {
 	
 	private int idx;
 	private String name;

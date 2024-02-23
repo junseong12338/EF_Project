@@ -6,7 +6,7 @@ import java.util.List;
 import dao.BoardDAO;
 import dao.MemberDAO;
 import dto.BoardDTO;
-import dto.MemberDTO;
+import dto.EF_UserDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -55,11 +55,11 @@ public class BoardService {
 	}
 
 
-	public MemberDTO check_id(String id) {
+	public EF_UserDTO check_id(String id) {
 		return memberDAO.loginCheck(id);
 	}
 	
-	public int Member_insert(MemberDTO dto) {
+	public int Member_insert(EF_UserDTO dto) {
 		return memberDAO.member_insert(dto);
 	}
 	
