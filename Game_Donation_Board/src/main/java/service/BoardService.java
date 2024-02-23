@@ -4,16 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import dao.BoardDAO;
-import dao.MemberDAO;
+import dao.UserDAO;
 import dto.BoardDTO;
-import dto.EF_UserDTO;
+import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class BoardService {
 
 	final BoardDAO boardDAO;
-	final MemberDAO memberDAO;
+	
+	final UserDAO userDAO;
+	
 	public HashMap<String, Object> selectList( HashMap<String, Integer> map){
 		
 		HashMap<String, Object> selectMap = new HashMap<>();
@@ -49,19 +51,11 @@ public class BoardService {
 		return boardDAO.update_step(base_dto);
 	}
 
-
 	public int reply(BoardDTO dto) {
 		return boardDAO.reply(dto);
 	}
 
 
-	public EF_UserDTO check_id(String id) {
-		return memberDAO.loginCheck(id);
-	}
-	
-	public int Member_insert(EF_UserDTO dto) {
-		return memberDAO.member_insert(dto);
-	}
 	
 	
 
