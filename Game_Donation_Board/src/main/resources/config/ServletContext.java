@@ -26,8 +26,8 @@ public class ServletContext implements WebMvcConfigurer {
 
 	
 	@Bean
-	public BoardController boardController(BoardService boardService) {
-		return new BoardController(boardService);
+	public BoardController boardController(BoardService boardService ,UserService userService) {
+		return new BoardController(boardService,userService);
 	}
 	
 	@Bean
