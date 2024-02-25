@@ -7,88 +7,30 @@
 <title>Insert title here</title>
 <style type="text/css"></style>
 <link rel="stylesheet" href="resources/css/login.css">
-<script src="resources/js/httpRequest.js"></script>
-<script type="text/javascript">
-		
-	function send(f){
-		let userEmail = f.userEmail.value.trim();
-		
-		if(userEmail == ''){
-			alert('이메일를 입력해주세요');
-			return;
-		}
-		
-		f.action = "user_insert";
-		f.method = "POST";
-		f.submit();
-	}
-	
-	
-
-	function login(f){
-		let userEmail = f.userEmail.value.trim();
-		let userPw = f.userPw.value.trim();
-		
-		alert(userEmail);
-		
-		//유효성체크
-		if(userEmail==''){
-			alert("아이디를 입력해주세요");
-			return;
-		}
-		
-		if(userPw==''){
-			alert("비밀번호를 입력하세요");
-			return;
-		}
-		
-		let url = "login";
-		let param ="userEmail="+encodeURIComponent(userEmail)+"&userPw="+encodeURIComponent(userPw);
-
-		sendRequest(url,param,myCheck,"POST");
-	}
-	
-	//콜백메서드
-	function myCheck(){
-	if(xhr.readyState == 4 && xhr.status == 200){
-		let data = xhr.responseText;
-		let json = eval(data);
-
-		if(json[0].param == 'no_id'){
-			alert("아이디가 존재하지 않습니다.");
-		}else if(json[0].param == 'no_pwd'){
-			alert("비밀번호가 맞지 않습니다.");
-		}else {
-			alert("로그인 성공");
-			location.href="board_list";
-
-		}
-	}
-}
-</script>
 
 </head>
-
 <body>
 <div class="container" id="container">
+  <!-- 회원가입 -->
   <div class="form-container sign-up-container">
-    <form action="#">
+    <form>
       <h1>Create Account</h1>
       <div class="social-container">
-     
+       	<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
       <span>or use your email for registration</span>
-      <input type="text" name="userName" id ="userName" placeholder="Name" />
-      <input type="email" name="userEmail" id="userEmail" oninput="check_id()"placeholder="Email" ><span id="check"></span>
-      <input type="password" name="userPw" id ="userPw" placeholder="Password" />
-      
-      <button onclick="send(this.form)">Sign Up</button>
+	    <input type="text" name="USER_NAME" id="userName"  oninput="check_Name(this.form)" placeholder="Name" /><span style='color:red;'id="check_Name"></span>
+		<input type="email" name="USER_EMAIL" id="userEmail" oninput="check_Email(this.form)" placeholder="Email" ><span style='color:red;'id="check_Email"></span>
+		<input type="password" name="USER_PW" id="userPw"  oninput="check_Pw(this.form)" placeholder="Password" /><span style='color:red;' id="check_Pw"></span>
+      <button type = "button" onclick="send(this.form)">Sign Up</button>
     </form>
   </div>
   
-  
+  <!-- 로그인 -->
   <div class="form-container sign-in-container">
-    <form action="#">
+    <form>
       <h1>Sign in</h1>
       <div class="social-container">
         <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -99,11 +41,11 @@
       <input type="email" name="userEmail" id="userEmail" placeholder="Email" />
       <input type="password"name="userPw" id="userPw"  placeholder="Password" />
       <a href="#">Forgot your password?</a>
-      <button onclick="login(this.form)">Sign In</button>
+   		<button type = "button"onclick="login(this.form)">Sign In</button>
     </form>
   </div>
   
-  
+  <!-- 회원가입 / 로그인 사이드바  -->
   <div class="overlay-container">
     <div class="overlay">
       <div class="overlay-panel overlay-left">
@@ -123,5 +65,6 @@
 
 
 </body>
+<script src="resources/js/httpRequest.js"></script>
 <script src="resources/js/login.js"></script>
 </html>

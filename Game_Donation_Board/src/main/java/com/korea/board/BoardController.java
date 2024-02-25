@@ -26,7 +26,7 @@ import util.Page;
 public class BoardController {
 
 	final BoardService boardService;
-	// final UserService userService;
+	final UserService userService;
 	
 	@Autowired
 	HttpServletRequest request;

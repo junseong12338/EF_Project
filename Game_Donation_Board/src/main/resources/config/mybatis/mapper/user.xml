@@ -4,13 +4,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="u">
 
-	<select id="loginCheck" parameterType="String" resultType="user">
-	select * from EF_USER where user_email =#{userEmail}
+	<select id="loginCheck" resultType="user" parameterType="String">
+		SELECT * FROM EF_USER WHERE USER_EMAIL =#{userEmail}
 	</select>
 	
    <insert id="insert" parameterType="user">
-        INSERT INTO EF_USER VALUES (#{userIdx}, 1, #{userEmail}, #{userName}, #{userPw}, '', 1, '', '', 0)
-    </insert>
+        INSERT INTO EF_USER VALUES (SEQ_EF_USER_IDX.NEXTVAL, 1, #{USER_EMAIL}, #{USER_NAME}, #{USER_PW}, '', 1, '', '', 0)
+   </insert>
 
 </mapper>
 

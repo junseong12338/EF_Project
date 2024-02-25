@@ -8,11 +8,11 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 	final UserDAO userDAO;
 
-	public UserDTO check_Email(String email) {
-		return userDAO.loginCheck(email);
+	public UserDTO check_Email(String userEmail) {
+		return userDAO.loginCheck(userEmail);
 	}
 	
-	public int User_insert(UserDTO dto) {
+	public int user_insert(UserDTO dto) {
 		return userDAO.User_insert(dto);
 	}
 	

@@ -20,52 +20,59 @@ public class UserController {
 	
 	@Autowired
 	HttpServletRequest request;
-
 	@Autowired
 	HttpSession session;
 
-
-	
+	// 로그인 로그아웃
 	@RequestMapping("login")
 	@ResponseBody
-	public String login(String email, String pw) {
-		UserDTO dto = userService.check_Email(email);
-
-		if (dto == null)
-			return "[{'param':'no_id'}]";
-
-		if (!dto.getUserPw().equals(pw))
-			return "[{'param':'no_pwd'}]";
-
+	public String login(String userEmail, String userPw) {
+	
+		UserDTO dto = userService.check_Email(userEmail);
+		
+		// 이메일 유무 확인 
+		if (dto == null) return "[{'param':'no_email'}]";
+		if (!dto.getUSER_PW().equals(userPw)) return "[{'param':'no_pw'}]";
 		
 		session.setMaxInactiveInterval(3600);
-		session.setAttribute("email", dto);
+		session.setAttribute("userEmail", dto);
+		
 		return "[{'param':'clear'}]";
 	}
 
-
-	
-	
 	@RequestMapping("login_form")
 	public String login_form() {
-		
 		return Common.Member.VIEW_PATH + "login_form.jsp";
 	}
 
 	@RequestMapping("logout")
 	public String logout() {
+		session.removeAttribute("userEmail");
 		
-		session.removeAttribute("email");
 		return "redirect:board_list";
 	}
 	
+	
+	// 회원 가입
+
+	// 회원 가입 값 입력
 	@RequestMapping("user_insert")
-	public String User_insert(UserDTO dto) {
-		int res = userService.User_insert(dto);
+	public String user_insert(UserDTO dto) {
+		int res = userService.user_insert(dto);
 		
-		if (res > 0)return "redirect:board_list";
+		if (res > 0) return "redirect:board_list";
 		
 		return null;
-
+	}
+	
+	// 아이디 중복 확인
+	@RequestMapping("check_Email")
+	@ResponseBody
+	public String check_id(String userEmail) {
+		UserDTO dto = userService.check_Email(userEmail);
+		
+		if (dto == null) return "[{\"res\":\"yes\"}]"; 
+		
+		else return "[{\"res\":\"no\"}]"; 
 	}
 }
