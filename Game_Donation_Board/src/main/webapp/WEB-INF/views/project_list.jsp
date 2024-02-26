@@ -1,14 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <title>Cyborg - Awesome HTML5 Template</title>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Project-List</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,15 +20,55 @@
 
 
     <link rel="stylesheet" href="assets/css/side-bar.css">
-<!--
 
-TemplateMo 579 Cyborg Gaming
+<script>
+// 스크롤 이벤트 처리
+let currentPage = 1;
 
-https://templatemo.com/tm-579-cyborg-gaming
+let isLoading = false;
 
--->
-  </head>
+$(window).on("scroll",function(){
+    let scrollTop = $(window).scrollTop();// 위로 스크롤된 길이
+    let windowHeight = $(window).height();// 웹브라우저 창의 높이
+    let documentHeight = $(document).height();// 문서 전체의 높이
+    let isBottom = scrollTop + windowHeight >= documentHeight;// 스크롤이 바닥에 닿을 때
 
+    if(isBottom){
+        if(currentPage == ${totalPage} || isLoading){
+            return;
+        }
+
+        isLoading = true;
+        $(".back-drop").show();
+        currentPage++;
+        
+        console.log("스크롤 - 현재페이지 : " + currentPage);
+        // 추가로 받아올 페이지를 서버에 Ajax 요청
+        GetList(currentPage);
+    };
+});
+
+// list 가져오기
+const GetList = function(currentPage){
+    console.log("리스트 - 현재페이지 : " + currentPage);
+
+    // 무한 스크롤
+    $.ajax({
+        url : "ajax_list",
+        method : "GET",
+        data : "pageNum"+currentPage,
+        success:function(data){
+            console.log("ajax 데이터 : " + data);
+
+            $(".project-list-container").append(data);
+            $(".back-drop").hide();
+            isLoading = false;
+            console.log("ajax 잘넘어옴");
+        };
+    });
+};
+</script>
+</head>
 <body>
 
   <!-- ***** Preloader Start ***** -->
@@ -190,7 +227,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
 
                     <div class="col-lg-3 col-sm-6 project-list-container"></div>
-                    <div class="back-drop"></div>
+                    <div class="back-drop">##</div>
 
                   </div>
                 </div>
@@ -217,9 +254,6 @@ https://templatemo.com/tm-579-cyborg-gaming
   </footer>
 
 
-  <!-- Scripts -->
-  
-
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -232,6 +266,5 @@ https://templatemo.com/tm-579-cyborg-gaming
   <script src="assets/js/custom.js"></script>
 
 
-  </body>
-
+</body>
 </html>
