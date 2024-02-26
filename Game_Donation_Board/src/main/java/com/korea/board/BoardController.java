@@ -1,5 +1,6 @@
 package com.korea.board;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -126,7 +128,30 @@ public class BoardController {
 
 		return null;
 	}
+	@RequestMapping("payment")
+	public String Payment(BoardDTO dto, int idx, int page) {
+		String ip = request.getRemoteAddr();
 
+		
+
+		BoardDTO base_dto = boardService.selectOne(idx);
+
+		
+		int res = boardService.update_step(base_dto); 
+		dto.setIp(ip);
+
+	
+		dto.setRef(base_dto.getRef());
+		dto.setStep(base_dto.getStep() + 1);
+		dto.setDepth(base_dto.getDepth() + 1);
+
+		res = boardService.reply(dto);
+
+		if (res > 0)
+			return "redirect:board_list?page=" + page;
+
+		return null;
+	}
 	
 	@RequestMapping("del")
 	public String del(int idx) {
@@ -198,6 +223,10 @@ public class BoardController {
 		
 		return null;
 
+	}
+	@GetMapping("/")
+	public String test(Principal principal) {
+		return principal.getName();
 	}
 
 }

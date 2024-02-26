@@ -57,6 +57,7 @@ public class BoardDAO {
 	public int del(int idx) {
 		return sqlSession.delete("b.board_delete",idx);
 	}
+	
 
 
 }

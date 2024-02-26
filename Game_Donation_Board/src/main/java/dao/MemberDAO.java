@@ -21,6 +21,9 @@ public class MemberDAO {
 		return sqlSession.insert("m.insert",dto);
 	}
 	
-	
+
+	public int select_user(int idx) {
+		return sqlSession.delete("m.select_user",idx);
+	}
 
 }

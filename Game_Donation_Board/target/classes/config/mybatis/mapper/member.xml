@@ -15,6 +15,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 #{email}
 			 )
 	</insert>
+	<select id="select_user" parameterType="String" resultType="EF_USER">
+		select * from EF_USER where user_idx = #{idx}
+	</select>
 </mapper>
 
 

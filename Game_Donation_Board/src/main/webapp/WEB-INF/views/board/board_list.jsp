@@ -2,8 +2,59 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
+ <!-- jQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+        <!-- iamport.payment.js -->
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+        <script>
+          var IMP = window.IMP; 
+          IMP.init("imp52373275"); 
+          
+          var today = new Date();   
+          var hours = today.getHours(); // 시
+          var minutes = today.getMinutes();  // 분
+          var seconds = today.getSeconds();  // 초
+          var milliseconds = today.getMilliseconds();
+          var makeMerchantUid = hours +  minutes + seconds + milliseconds;
+
+         
+  
+          function requestPay() {
+        	 	  let payment = document.getElementById("payment").value;
+        	 	  if(Number(payment)>0){
+        	 		  IMP.request_pay({
+                          pg : 'kakaopay',
+                          merchant_uid: "IMP"+makeMerchantUid, 
+                          name : '포인트결제',
+                          amount : Number(payment),
+                          buyer_email : 'tyghqkr456@naver.com',
+                          buyer_name : '석진',
+                          buyer_tel : '010-1234-5678',
+                          buyer_addr : '인천광역시 부평',
+                          buyer_postcode : '123-456'
+                      }, function (rsp) { // callback
+                          if (rsp.success) {
+                              console.log(rsp);
+                          } else {
+                              console.log(rsp);
+                          }
+                      });
+        	 	  }else{
+        	 		  alert("금액이 0원 이하일수없습니다.");
+        	 		 document.getElementById("payment").value="";
+        	 	  }
+        		
+          }
+          $(document).ready(function() {			
+              $("#payment").keyup(function() {
+                  var replace_text = $(this).val().replace(/[^-0-9]/g, '');
+                  $(this).val(replace_text);
+              });
+          });
+      </script>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -92,6 +143,17 @@
 		<tr>
 			<td colspan="5" align="right">
 				<img src="resources/img/btn_reg.gif" onclick="location.href='insert_form'">
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="5" align="left">
+				<button onclick="requestPay()" style="margin-left: 135px; background-color: #bb4ab1; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">충전하기</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" align="left">
+				<input type="number" id="payment" placeholder = "숫자만 입력가능"/>
 			</td>
 		</tr>
 	</table>
