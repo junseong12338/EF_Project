@@ -20,6 +20,7 @@
 </style>
 </head>
 <body>
+석진 테스트
 	<table border="1">
 		<tr>
 			<td colspan="5"><img src="resources/img/title_04.gif"></td>
