@@ -26,28 +26,27 @@ public class UserController {
 	// 로그인 로그아웃
 	@RequestMapping("login")
 	@ResponseBody
-	public String login(String userEmail, String userPw) {
+	public String login(String user_email, String user_pw) {
 	
-		UserDTO dto = userService.check_Email(userEmail);
-		
+		UserDTO dto = userService.checkEmail(user_email);
 		// 이메일 유무 확인 
-		if (dto == null) return "[{'param':'no_email'}]";
-		if (!dto.getUSER_PW().equals(userPw)) return "[{'param':'no_pw'}]";
+		if (dto == null) return "[{\"param\":\"no_email\"}]";
+		if (!dto.getUser_pw().equals(user_pw)) return "[{\"param\":\"no_pw\"}]";
 		
 		session.setMaxInactiveInterval(3600);
-		session.setAttribute("userEmail", dto);
-		
-		return "[{'param':'clear'}]";
+		session.setAttribute("user_email", dto);
+	
+		return "[{\"param\":\"clear\"}]";
 	}
 
 	@RequestMapping("login_form")
 	public String login_form() {
-		return Common.Member.VIEW_PATH + "login_form.jsp";
+		return Common.User.VIEW_PATH + "login_form.jsp";
 	}
 
 	@RequestMapping("logout")
 	public String logout() {
-		session.removeAttribute("userEmail");
+		session.removeAttribute("user_email");
 		
 		return "redirect:board_list";
 	}
@@ -58,7 +57,7 @@ public class UserController {
 	// 회원 가입 값 입력
 	@RequestMapping("user_insert")
 	public String user_insert(UserDTO dto) {
-		int res = userService.user_insert(dto);
+		int res = userService.userInsert(dto);
 		
 		if (res > 0) return "redirect:board_list";
 		
@@ -66,10 +65,10 @@ public class UserController {
 	}
 	
 	// 아이디 중복 확인
-	@RequestMapping("check_Email")
+	@RequestMapping("check_email")
 	@ResponseBody
-	public String check_id(String userEmail) {
-		UserDTO dto = userService.check_Email(userEmail);
+	public String check_email(String user_email) {
+		UserDTO dto = userService.checkEmail(user_email);
 		
 		if (dto == null) return "[{\"res\":\"yes\"}]"; 
 		

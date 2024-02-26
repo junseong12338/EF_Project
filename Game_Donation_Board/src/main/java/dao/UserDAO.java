@@ -10,12 +10,12 @@ public class UserDAO {
 	
 	final SqlSession sqlSession;
 
-	public UserDTO loginCheck(String userEmail) {
+	public UserDTO checkEmail(String user_email) {
 
-		return sqlSession.selectOne("u.loginCheck",userEmail);
+		return sqlSession.selectOne("u.checkEmail",user_email);
 	}
 	
-	public int User_insert(UserDTO dto) {
+	public int userInsert(UserDTO dto) {
 		return sqlSession.insert("u.insert",dto);
 	}
 	

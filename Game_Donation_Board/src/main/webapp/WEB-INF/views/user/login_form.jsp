@@ -21,9 +21,9 @@
         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
       <span>or use your email for registration</span>
-	    <input type="text" name="USER_NAME" id="userName"  oninput="check_Name(this.form)" placeholder="Name" /><span style='color:red;'id="check_Name"></span>
-		<input type="email" name="USER_EMAIL" id="userEmail" oninput="check_Email(this.form)" placeholder="Email" ><span style='color:red;'id="check_Email"></span>
-		<input type="password" name="USER_PW" id="userPw"  oninput="check_Pw(this.form)" placeholder="Password" /><span style='color:red;' id="check_Pw"></span>
+	    <input type="text" name="user_name" id="user_name"  oninput="checkName(this.form)" placeholder="Name" /><span style='color:red;'id="check_name"></span>
+		<input type="email" name="user_email" id="user_email" oninput="checkEmail(this.form)" placeholder="Email" /><span style='color:green;'id="check_email"></span>
+		<input type="password" name="user_pw" id="user_pw"  oninput="checkPw(this.form)" placeholder="Password" /><span style='color:red;' id="check_pw"></span>
       <button type = "button" onclick="send(this.form)">Sign Up</button>
     </form>
   </div>
@@ -38,8 +38,8 @@
         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
       <span>or use your account</span>
-      <input type="email" name="userEmail" id="userEmail" placeholder="Email" />
-      <input type="password"name="userPw" id="userPw"  placeholder="Password" />
+      <input type="email" name="user_email" id="login_email" oninput="LoginCheckEmail(this.form)" placeholder="Email" /><span style='color:red;'id="checklog_email"></span>
+      <input type="password"name="user_pw" id="login_pw"  oninput="LoginCheckPw(this.form)" placeholder="Password" /><span style='color:red;' id="checklog_pw"></span>
       <a href="#">Forgot your password?</a>
    		<button type = "button"onclick="login(this.form)">Sign In</button>
     </form>
