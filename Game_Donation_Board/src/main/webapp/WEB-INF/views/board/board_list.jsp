@@ -20,6 +20,7 @@
 </style>
 </head>
 <body>
+  <a href="${naverLoginURL}">네이버 로그인</a>
 	<table border="1">
 		<tr>
 			<td colspan="5"><img src="resources/img/title_04.gif"></td>
