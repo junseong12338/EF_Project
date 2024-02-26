@@ -34,7 +34,7 @@ $(window).on("scroll",function(){
     let isBottom = scrollTop + windowHeight >= documentHeight;// 스크롤이 바닥에 닿을 때
 
     if(isBottom){
-        if(currentPage == ${totalPage} || isLoading){
+        if(currentPage == ${totalPageCount} || isLoading){
             return;
         }
 
@@ -56,7 +56,7 @@ const GetList = function(currentPage){
     $.ajax({
         url : "ajax_list",
         method : "GET",
-        data : "pageNum"+currentPage,
+        data : "pageNum="+currentPage,
         success:function(data){
             console.log("ajax 데이터 : " + data);
 
@@ -67,6 +67,10 @@ const GetList = function(currentPage){
         };
     });
 };
+
+$(document).ready(function(){
+	GetList(1);
+})
 </script>
 </head>
 <body>

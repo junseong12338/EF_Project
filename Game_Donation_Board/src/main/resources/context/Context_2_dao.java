@@ -7,23 +7,19 @@ import org.springframework.context.annotation.Configuration;
 
 import dao.BoardDAO;
 import dao.MemberDAO;
+import dao.ProjectDAO;
 import service.BoardService;
+import service.ProjectService;
 
 @Configuration
 public class Context_2_dao {
-	@Bean
-	public BoardDAO boardDAO(SqlSession sqlSession) {
-		return new BoardDAO(sqlSession);
+	
+	@Bean ProjectDAO projectDAO(SqlSession sqlSession) {
+		return new ProjectDAO(sqlSession);
 	}
 	
 	@Bean
-	public MemberDAO memberDAO(SqlSession sqlSession) {
-		return new MemberDAO(sqlSession);
-	}
-	
-	
-	@Bean
-	public BoardService boardService(BoardDAO boardDAO,MemberDAO memberDAO) {
-		return new BoardService(boardDAO,memberDAO);
+	public ProjectService projectService(ProjectDAO projectDAO) {
+		return new ProjectService(projectDAO);
 	}
 }

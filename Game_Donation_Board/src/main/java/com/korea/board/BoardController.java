@@ -1,6 +1,7 @@
 package com.korea.board;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.BoardDTO;
-import dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import service.BoardService;
 import util.Common;
@@ -34,7 +33,7 @@ public class BoardController {
 
 	@RequestMapping(value = { "/", "board_list" })
 	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
-		// 한글 깨짐 테스트
+		// �븳湲� 源⑥쭚 �뀒�뒪�듃
 		int start = (page - 1) * Common.Board.BLOCKLIST + 1;
 		int end = start + Common.Board.BLOCKLIST - 1;
 
@@ -63,7 +62,7 @@ public class BoardController {
 
 		BoardDTO dto = boardService.selectOne(idx);
 
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		String show = (String) session.getAttribute("show");
 		if (show == null) {
 			int res = boardService.update_readhit(idx);
@@ -74,14 +73,6 @@ public class BoardController {
 		return Common.Board.VIEW_PATH + "board_view.jsp?page=" + page;
 	}
 
-	@RequestMapping("insert_form")
-	public String insert_form() {
-		MemberDTO show = (MemberDTO) session.getAttribute("id");
-		if (show == null)
-			return Common.Member.VIEW_PATH + "login_form.jsp";
-
-		return Common.Board.VIEW_PATH + "insert_form.jsp";
-	}
 
 	@RequestMapping("insert")
 	public String insert(BoardDTO dto) {
@@ -96,7 +87,7 @@ public class BoardController {
 
 	}
 
-	// �亯 ���
+	// 占썰변 占쏙옙占�
 	@RequestMapping("reply_form")
 	public String reply_from(int idx, int page) {
 		return Common.Board.VIEW_PATH + "reply_form.jsp?idx=" + idx + "&page=" + page;
@@ -141,24 +132,7 @@ public class BoardController {
 	}
 
 	
-	@RequestMapping("login")
-	@ResponseBody
-	public String login(String id, String pwd) {
-		MemberDTO dto = boardService.check_id(id);
-
 	
-		if (dto == null)
-			return "[{'param':'no_id'}]";
-
-		if (!dto.getPwd().equals(pwd))
-			return "[{'param':'no_pwd'}]";
-
-		
-		session.setMaxInactiveInterval(3600);
-		session.setAttribute("id", dto);
-		return "[{'param':'clear'}]";
-	}
-
 	@RequestMapping("login_form")
 	public String login_form() {
 		return Common.Member.VIEW_PATH + "login_form.jsp";
@@ -174,30 +148,10 @@ public class BoardController {
 	}
 
 	
-	@RequestMapping("check_id")
-	@ResponseBody
-	public String check_id(String id) {
-		MemberDTO dto = boardService.check_id(id);
-
-		
-		if (dto == null)
-			return "[{'res':'yes'}]";
-
-		return "[{'res':'no'}]";
-	}
 	
 	@RequestMapping("member_insert_form")
 	public String member_insert_form() {
 		return Common.Member.VIEW_PATH + "member_insert_form.jsp";
 	}
 	
-	@RequestMapping("member_insert")
-	public String member_insert(MemberDTO dto) {
-		int res = boardService.Member_insert(dto);
-		if (res > 0)return "redirect:board_list";
-		
-		return null;
-
-	}
-
 }
