@@ -5,17 +5,17 @@ import lombok.Data;
 @Data
 public class UserDTO  {
 	
-	private int USER_IDX;
-	private int USER_GRADE;
+	private int user_idx;
+	private int user_grade;
 					
-	private String USER_EMAIL;
-	private String USER_NAME;
-	private String USER_PW ;
-	private String USER_IMG;
-	private int USER_STATUS;
-	private String USER_CONTEN;
-	private String USER_ADDR;
-	private int USER_POINT;
+	private String user_email;
+	private String user_name;
+	private String user_pw;
+	private String user_img;
+	private int user_status;
+	private String user_content;
+	private String user_addr;
+	private int user_point;
 	
 
 	

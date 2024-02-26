@@ -27,10 +27,10 @@
 		<tr>
 			<td colspan = "5" align="right">
 			<c:choose>
-				<c:when test="${empty userEmail }">
+				<c:when test="${empty user_email }">
 					<input type ="button" value="로그인" onclick="location.href='login_form'">
 				</c:when>
-				<c:when test="${not empty userEmail }">
+				<c:when test="${not empty user_email }">
 					<input type ="button" value="로그아웃" onclick="location.href='logout'">
 				</c:when>
 			</c:choose>

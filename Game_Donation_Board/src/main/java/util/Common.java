@@ -14,7 +14,7 @@ public class Common {
 		public final static int BLOCKLIST = 20;
 		public final static int BLOCKPAGE = 5;
 	}
-	public static class Member{
-		public final static String VIEW_PATH = "/WEB-INF/views/member/";
+	public static class User{
+		public final static String VIEW_PATH = "/WEB-INF/views/user/";
 	}
 }
