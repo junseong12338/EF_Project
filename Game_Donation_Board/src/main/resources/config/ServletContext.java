@@ -16,7 +16,6 @@ import service.UserService;
 
 @Configuration
 @EnableWebMvc
-//@ComponentScan("com.korea.board")
 public class ServletContext implements WebMvcConfigurer {
 	
 	@Override
@@ -34,5 +33,6 @@ public class ServletContext implements WebMvcConfigurer {
 	public UserController userController(UserService userService) {
 		return new UserController(userService);
 	}
+	
 
 }
