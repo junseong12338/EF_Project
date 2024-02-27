@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +26,13 @@ import com.google.gson.JsonObject;
 
 import lombok.RequiredArgsConstructor;
 import service.BoardService;
+import service.SummerNoteService;
 
 @Controller
 @RequiredArgsConstructor
 public class SummerNoteController {
-	final BoardService boardService;
+	
+	final SummerNoteService summerNoteService;
 
 	@Autowired
 	HttpServletRequest request;
@@ -35,6 +40,13 @@ public class SummerNoteController {
 	@Autowired
 	HttpSession session;
 	
+	
+	
+	/*
+	 * 섬머노트 이미지,파일 업로드 처리
+	 * 에디터에 이미지, 파일을 등록하면
+	 * 임시폴더에 저장(fileRoot)
+	 */
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
@@ -43,9 +55,10 @@ public class SummerNoteController {
         /*
 		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
 		 */
+		//파일 업로드 기본경로
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 		System.out.println("uploadSummernoteImageFile colled.....");
 		// 내부경로로 저장
-		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 		String fileRoot = contextRoot+"resources/fileupload/temp/";
 		
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
@@ -72,10 +85,53 @@ public class SummerNoteController {
 		return a;
 	}
 	
-	@RequestMapping("/summernote_send")
+	/*
+	 * 글 작성중 이미지,파일 등록 후 삭제 시 
+	 * 이미 저장된 이미지, 파일 삭제 
+	 */
+	@RequestMapping(value = "/deleteSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
+	public void deleteSummernoteImageFile(@RequestParam("file") String fileName) {
+		System.out.println("deleteSummernoteImageFile colled.....");
+		//파일 업로드 기본경로
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+	    // 폴더 위치
+	    String filePath = contextRoot + "resources/fileupload/temp/";
+	    
+	    // 해당 파일 삭제
+	    deleteFile(filePath, fileName);
+	}
+
+	// 파일 하나 삭제
+	private void deleteFile(String filePath, String fileName) {
+	    Path path = Paths.get(filePath, fileName);
+	    try {
+	        Files.delete(path);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	
+	/*
+	 * 글 작성 완료 매핑 메서드
+	 */
+	@RequestMapping("/summernote_send")
 	public String summernote_send(String editordata) {
 		System.out.println(editordata);
+		
+		try {
+			int res = summerNoteService.insertProject(editordata);
+			
+			if(res == -1) {
+				return "redirect:/";
+			}
+			
+			System.out.println("res :" + res);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 //		String path_folder1 ="/upload/image/fileupload/29/";
 //	    String path_folder2 = "/upload/image/fileupload/";
@@ -83,7 +139,7 @@ public class SummerNoteController {
 //	    fileUpload(path_folder1, path_folder2);
 		
 		
-		return null;
+		return "redirect:editor_test";
 	}
 	
 	// 하위 폴더 복사

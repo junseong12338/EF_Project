@@ -12,6 +12,7 @@ import com.korea.board.BoardController;
 import com.korea.board.SummerNoteController;
 
 import service.BoardService;
+import service.SummerNoteService;
 
 
 @Configuration
@@ -29,8 +30,8 @@ public class ServletContext implements WebMvcConfigurer {
 		return new BoardController(boardService);
 	}
 	
-	@Bean SummerNoteController summerNoteController(BoardService boardService) {
-		return new SummerNoteController(boardService);
+	@Bean SummerNoteController summerNoteController(SummerNoteService summerNoteService) {
+		return new SummerNoteController(summerNoteService);
 	}
 	
 	 @Bean(name = "multipartResolver")

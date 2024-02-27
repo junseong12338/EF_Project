@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Configuration;
 
 import dao.BoardDAO;
 import dao.MemberDAO;
+import dao.ProjectDAO;
 import service.BoardService;
+import service.SummerNoteService;
 
 @Configuration
 public class Context_2_dao {
@@ -21,9 +23,18 @@ public class Context_2_dao {
 		return new MemberDAO(sqlSession);
 	}
 	
+	@Bean
+	public ProjectDAO projectDAO(SqlSession sqlSession) {
+		return new ProjectDAO(sqlSession);
+	}
 	
 	@Bean
 	public BoardService boardService(BoardDAO boardDAO,MemberDAO memberDAO) {
 		return new BoardService(boardDAO,memberDAO);
 	}
+	
+	@Bean SummerNoteService summerNoteService(ProjectDAO projectDAO) {
+		return new SummerNoteService(projectDAO);
+	}
+	
 }

@@ -60,9 +60,14 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
                 uploadSummernoteImageFile(files[i], this);
               }
             },
+
+            onMediaDelete: function ($target, editor, $editable) {
+              var deletedImageUrl = $target.attr("src").split("/").pop();
+              deleteSummernoteImageFile(deletedImageUrl);
+            },
           },
         });
-
+        // 이미지,파일 업로드 함수
         function uploadSummernoteImageFile(file, el) {
           data = new FormData();
           data.append("file", file);
@@ -80,12 +85,25 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
             },
           });
         }
+        // 이미지,파일 삭제 함수
+        function deleteSummernoteImageFile(imageName) {
+          data = new FormData();
+          data.append("file", imageName);
+          $.ajax({
+            data: data,
+            type: "POST",
+            url: "deleteSummernoteImageFile",
+            contentType: false,
+            enctype: "multipart/form-data",
+            processData: false,
+          });
+        }
       });
       //작성완료 함수
       function send(f) {
         let content = f.editordata.value;
 
-        if (content == '') {
+        if (content == "") {
           alert("내용을 입력해주세요");
           return;
         }
