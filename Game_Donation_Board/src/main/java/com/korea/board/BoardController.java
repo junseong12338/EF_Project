@@ -26,47 +26,41 @@ import util.Page;
 public class BoardController {
 
 	final BoardService boardService;
-	final UserService userService;
 	
+
 	@Autowired
 	HttpServletRequest request;
 
 	@Autowired
 	HttpSession session;
 
-//	@RequestMapping(value = { "/", "board_list" })
-//	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
-//		// 한글 깨짐 테스트
-//		int start = (page - 1) * Common.Board.BLOCKLIST + 1;
-//		int end = start + Common.Board.BLOCKLIST - 1;
-//
-//		HashMap<String, Integer> map = new HashMap<>();
-//
-//		map.put("start", start);
-//		map.put("end", end);
-//
-//		HashMap<String, Object> selectMap = boardService.selectList(map);
-//
-//		int rowTotal = (int) selectMap.get("rowTotal");
-//		List<BoardDTO> list = (List<BoardDTO>) selectMap.get("list");
-//
-//		String pageMenu = Page.getPaging("board_list", page, rowTotal, Common.Board.BLOCKLIST, Common.Board.BLOCKPAGE);
-//
-//		request.getSession().removeAttribute("show");
-//
-//		model.addAttribute("list", list);
-//		model.addAttribute("pageMenu", pageMenu);
-//
-//		return Common.Board.VIEW_PATH + "board_list.jsp?page=" + page;
-//	}
+	@RequestMapping(value = { "/", "board_list" })
+	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
+		// 한글 깨짐 테스트
+		int start = (page - 1) * Common.Board.BLOCKLIST + 1;
+		int end = start + Common.Board.BLOCKLIST - 1;
 
+		HashMap<String, Integer> map = new HashMap<>();
 
+		map.put("start", start);
+		map.put("end", end);
 
-	@RequestMapping(value = { "/", "test" })
-	public String list() {
+		HashMap<String, Object> selectMap = boardService.selectList(map);
 
-		return Common.Board.VIEW_PATH + "test.jsp";
+		int rowTotal = (int) selectMap.get("rowTotal");
+		List<BoardDTO> list = (List<BoardDTO>) selectMap.get("list");
+
+		String pageMenu = Page.getPaging("board_list", page, rowTotal, Common.Board.BLOCKLIST, Common.Board.BLOCKPAGE);
+
+		request.getSession().removeAttribute("show");
+
+		model.addAttribute("list", list);
+		model.addAttribute("pageMenu", pageMenu);
+
+		return Common.Board.VIEW_PATH + "board_list.jsp?page=" + page;
 	}
+
+
 
 
 }
