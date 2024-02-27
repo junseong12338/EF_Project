@@ -11,6 +11,7 @@
 	<typeAliases>
 		 <typeAlias type="dto.BoardDTO" alias="board"/> 
 		 <typeAlias type="dto.MemberDTO" alias="member"/> 
+		<!--  <typeAlias type="dto.EFUserDTO" alias="efuser"/> -->
 	</typeAliases>
 		
 	<mappers>

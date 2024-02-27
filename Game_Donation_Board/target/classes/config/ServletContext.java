@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.korea.board.BoardController;
+import com.korea.board.ProfileController;
 
 import service.BoardService;
 
@@ -27,5 +28,9 @@ public class ServletContext implements WebMvcConfigurer {
 		return new BoardController(boardService);
 	}
 	
+	@Bean
+	public ProfileController profileController() {
+		return new ProfileController();
+	}
 
 }

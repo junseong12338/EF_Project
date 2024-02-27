@@ -34,7 +34,7 @@ public class BoardController {
 
 	@RequestMapping(value = { "/", "board_list" })
 	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
-		// 한글 깨짐 테스트
+		// �븳湲� 源⑥쭚 �뀒�뒪�듃
 		int start = (page - 1) * Common.Board.BLOCKLIST + 1;
 		int end = start + Common.Board.BLOCKLIST - 1;
 
@@ -96,7 +96,7 @@ public class BoardController {
 
 	}
 
-	// �亯 ���
+	// 占썰변 占쏙옙占�
 	@RequestMapping("reply_form")
 	public String reply_from(int idx, int page) {
 		return Common.Board.VIEW_PATH + "reply_form.jsp?idx=" + idx + "&page=" + page;
@@ -198,6 +198,14 @@ public class BoardController {
 		
 		return null;
 
+	}
+	
+	
+	@RequestMapping("test")
+	public String test() {
+	
+
+		return "test";
 	}
 
 }
