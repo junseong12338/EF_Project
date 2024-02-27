@@ -13,8 +13,8 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script>
     var naverLogin = new naver.LoginWithNaverId({
-        clientId: "TXFmtdFUoER8uvpoJOJm", // ë³¸ì¸ê±¸ë¡ ìì , ëì´ì°ê¸° ê¸ì§.
-        callbackUrl: "http://localhost:9090/test/home", // ìë¬´ê±°ë ì¤ì 
+        clientId: "TXFmtdFUoER8uvpoJOJm", 
+        callbackUrl: "http://localhost:9090/test/home", 
         isPopup: false,
         callbackHandle: true
     });
@@ -43,17 +43,17 @@
   
                     location.replace("http://localhost:9090/test/ok") 
                 } else if(result=='no') {
-                    console.log('ì¤í¨')
+                	 console.log('실패')
                     location.replace("http://localhost:8080/test/home1.do")
                 }
             },
             error: function(result) {
-                console.log('ì¤ë¥ ë°ì')
+            	   console.log('오류 발생')
             }
         })
  
     } else {
-        console.log("callback ì²ë¦¬ì ì¤í¨íììµëë¤.");
+    	console.log("callback 처리에 실패하였습니다.");
     }
     });
 });

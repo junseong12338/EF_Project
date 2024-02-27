@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css"></style>
+
 <link rel="stylesheet" href="resources/css/login.css">
 
 </head>
@@ -33,6 +34,8 @@
     <form>
       <h1>Sign in</h1>
       <div class="social-container">
+      <button type ="button" class = "btn" onclick="location.href='${urlNaver}'">네이버</button>
+      
         <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
         <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
@@ -65,6 +68,8 @@
 
 
 </body>
+<script src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="resources/js/httpRequest.js"></script>
 <script src="resources/js/login.js"></script>
 </html>

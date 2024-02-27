@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import dao.BoardDAO;
 import dao.UserDAO;
 import service.BoardService;
+import service.NaverLoginService;
 import service.UserService;
 
 @Configuration
@@ -30,4 +31,9 @@ public class Context_2_dao {
 	public UserService userService(UserDAO userDAO) {
 		return new UserService(userDAO);
 	}
+	
+	@Bean
+    public NaverLoginService naverLoginService() {
+        return new NaverLoginService();
+    }
 }
