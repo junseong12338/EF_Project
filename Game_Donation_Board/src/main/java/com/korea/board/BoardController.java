@@ -34,49 +34,39 @@ public class BoardController {
 	@Autowired
 	HttpSession session;
 
-	@RequestMapping(value = { "/", "board_list" })
-	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
-		// 한글 깨짐 테스트
-		int start = (page - 1) * Common.Board.BLOCKLIST + 1;
-		int end = start + Common.Board.BLOCKLIST - 1;
+//	@RequestMapping(value = { "/", "board_list" })
+//	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
+//		// 한글 깨짐 테스트
+//		int start = (page - 1) * Common.Board.BLOCKLIST + 1;
+//		int end = start + Common.Board.BLOCKLIST - 1;
+//
+//		HashMap<String, Integer> map = new HashMap<>();
+//
+//		map.put("start", start);
+//		map.put("end", end);
+//
+//		HashMap<String, Object> selectMap = boardService.selectList(map);
+//
+//		int rowTotal = (int) selectMap.get("rowTotal");
+//		List<BoardDTO> list = (List<BoardDTO>) selectMap.get("list");
+//
+//		String pageMenu = Page.getPaging("board_list", page, rowTotal, Common.Board.BLOCKLIST, Common.Board.BLOCKPAGE);
+//
+//		request.getSession().removeAttribute("show");
+//
+//		model.addAttribute("list", list);
+//		model.addAttribute("pageMenu", pageMenu);
+//
+//		return Common.Board.VIEW_PATH + "board_list.jsp?page=" + page;
+//	}
 
-		HashMap<String, Integer> map = new HashMap<>();
 
-		map.put("start", start);
-		map.put("end", end);
 
-		HashMap<String, Object> selectMap = boardService.selectList(map);
+	@RequestMapping(value = { "/", "test" })
+	public String list() {
 
-		int rowTotal = (int) selectMap.get("rowTotal");
-		List<BoardDTO> list = (List<BoardDTO>) selectMap.get("list");
-
-		String pageMenu = Page.getPaging("board_list", page, rowTotal, Common.Board.BLOCKLIST, Common.Board.BLOCKPAGE);
-
-		request.getSession().removeAttribute("show");
-
-		model.addAttribute("list", list);
-		model.addAttribute("pageMenu", pageMenu);
-
-		return Common.Board.VIEW_PATH + "board_list.jsp?page=" + page;
+		return Common.Board.VIEW_PATH + "test.jsp";
 	}
-
-	@RequestMapping("view")
-	public String view(Model model, int idx, int page) {
-
-		BoardDTO dto = boardService.selectOne(idx);
-
-		HttpSession session = request.getSession();
-		String show = (String) session.getAttribute("show");
-		if (show == null) {
-			int res = boardService.update_readhit(idx);
-			session.setAttribute("show", "0");
-		}
-
-		model.addAttribute("dto", dto);
-		return Common.Board.VIEW_PATH + "board_view.jsp?page=" + page;
-	}
-
-
 
 
 }

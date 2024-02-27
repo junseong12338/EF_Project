@@ -4,8 +4,11 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +23,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HomeController {
 	
 
-	@RequestMapping("/naver.do")
+	@Autowired
+	HttpSession session;
+	
+	@RequestMapping("/")
     public String naver() {
         return "naver_login";
     }
     
-    
+	@RequestMapping("/ok")
+    public String ok(Model model) {
+        return "ok";
+    }
     @RequestMapping(value="/callback", method=RequestMethod.GET)
     public String callBack(){
         return "callback";
@@ -55,8 +64,18 @@ public class HomeController {
     if(naver!=null) {
         result = "ok";
     }
- 
+   
+	session.setMaxInactiveInterval(3600);
+	session.setAttribute("naver", naver);
     return result;
     
     }
+    
+    
+    @RequestMapping("naver_out")
+	public String naver_out() {
+		session.removeAttribute("naver");
+
+		 return "redirect:/";
+	}
 }

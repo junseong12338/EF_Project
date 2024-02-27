@@ -1,4 +1,4 @@
-%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +13,8 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script>
     var naverLogin = new naver.LoginWithNaverId({
-        clientId: "TXFmtdFUoER8uvpoJOJm", // 본인걸로 수정, 띄어쓰기 금지.
-        callbackUrl: "http://localhost:8080/test/home", // 아무거나 설정
+        clientId: "TXFmtdFUoER8uvpoJOJm", // ë³¸ì¸ê±¸ë¡ ìì , ëì´ì°ê¸° ê¸ì§.
+        callbackUrl: "http://localhost:9090/test/home", // ìë¬´ê±°ë ì¤ì 
         isPopup: false,
         callbackHandle: true
     });
@@ -40,20 +40,20 @@
             dataType: 'text',
             success: function(result) {
                 if(result=='ok') {
-                    console.log('성공')
-                    location.replace("http://localhost:8080/test/home.do") 
+  
+                    location.replace("http://localhost:9090/test/ok") 
                 } else if(result=='no') {
-                    console.log('실패')
+                    console.log('ì¤í¨')
                     location.replace("http://localhost:8080/test/home1.do")
                 }
             },
             error: function(result) {
-                console.log('오류 발생')
+                console.log('ì¤ë¥ ë°ì')
             }
         })
  
     } else {
-        console.log("callback 처리에 실패하였습니다.");
+        console.log("callback ì²ë¦¬ì ì¤í¨íììµëë¤.");
     }
     });
 });
