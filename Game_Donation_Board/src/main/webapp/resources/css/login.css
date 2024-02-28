@@ -91,6 +91,11 @@ input {
 	width: 100%;
 }
 
+
+
+
+
+
 .container {
 	background-color: #fff;
 	border-radius: 10px;
@@ -216,6 +221,8 @@ input {
 .social-container {
 	margin: 20px 0;
 }
+
+
 
 .social-container img {
 	width: 40px;
