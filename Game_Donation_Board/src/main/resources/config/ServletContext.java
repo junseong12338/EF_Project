@@ -9,9 +9,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.korea.board.BoardController;
+import com.korea.board.ProjectController;
 import com.korea.board.SummerNoteController;
 
 import service.BoardService;
+import service.ProjectService;
 import service.SummerNoteService;
 
 
@@ -32,6 +34,10 @@ public class ServletContext implements WebMvcConfigurer {
 	
 	@Bean SummerNoteController summerNoteController(SummerNoteService summerNoteService) {
 		return new SummerNoteController(summerNoteService);
+	}
+	
+	@Bean ProjectController projectController(ProjectService projectService) {
+		return new ProjectController(projectService);
 	}
 	
 	 @Bean(name = "multipartResolver")

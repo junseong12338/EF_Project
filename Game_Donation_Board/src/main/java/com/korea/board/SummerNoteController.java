@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class SummerNoteController {
 
 	@Autowired
 	HttpServletRequest request;
-
+	
 	@Autowired
 	HttpSession session;
 	
@@ -49,8 +51,9 @@ public class SummerNoteController {
 	 */
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile)  {
 		JsonObject jsonObject = new JsonObject();
+		
 		
         /*
 		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
@@ -101,18 +104,6 @@ public class SummerNoteController {
 	    // 해당 파일 삭제
 	    deleteFile(filePath, fileName);
 	}
-
-	// 파일 하나 삭제
-	private void deleteFile(String filePath, String fileName) {
-	    Path path = Paths.get(filePath, fileName);
-	    try {
-	        Files.delete(path);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-
-	
 	/*
 	 * 글 작성 완료 매핑 메서드
 	 */
@@ -135,10 +126,13 @@ public class SummerNoteController {
 			System.out.println("idx :" + idx);
 			
 			// temp 에서 저장된 데이터들 업로드
-		    String path_folder1 = contextRoot + "resources/fileupload/temp/";
-		    String path_folder2 = contextRoot + "resources/fileupload/" + idx + "/";
-		    fileUpload(path_folder1, path_folder2);
+		    String temp_folder = contextRoot + "resources/fileupload/temp/";
+		    String idx_folder = contextRoot + "resources/fileupload/" + idx + "/";
+		    fileUpload(temp_folder, idx_folder);
 			
+		    //temp 폴더 안 session에 저장되어있는 유저email이 이름에 포함된 이미지 삭제
+		    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -146,16 +140,61 @@ public class SummerNoteController {
 		
 
 		
-		return "redirect:editor_test";
+		return "redirect:/";
 	}
 	
+	// 위치값으로 내부 파일 이름 가져오기
+	private List<String> getFileNamesFromFolder(String folderName) {
+	    // 파일 이름을 저장할 리스트 생성
+	    List<String> fileNames = new ArrayList<>();
+
+	    // 주어진 폴더 경로를 기반으로 폴더 객체 생성
+	    File folder = new File(folderName);
+	    // 폴더 내의 파일들을 가져옴
+	    File[] files = folder.listFiles();
+	    if (files != null) {
+	        // 파일인 경우 파일 이름을 리스트에 추가
+	        for (File file : files) {
+	            if (file.isFile()) {
+	            	if(file.getName().contains("io")) {
+	            		fileNames.add(file.getName());	            		
+	            	}
+	            }
+	        }
+	    }
+	    // 파일 이름을 담은 리스트 반환
+	    return fileNames;
+	}
+	
+	
+	// 더미 파일 삭제
+	private void removeDummyFiles(List<String> fileNames, String filePath) {
+	    // 주어진 파일 이름 리스트를 기반으로 파일을 삭제
+	    for (String fileName : fileNames) {
+	        // contents 문자열에 파일 이름이 포함되어 있지 않은 경우 파일 삭제
+	        
+	            deleteFile(filePath, fileName);
+	        
+	    }
+	}
+	
+	// 파일 하나 삭제
+		private void deleteFile(String filePath, String fileName) {
+		    Path path = Paths.get(filePath, fileName);
+		    try {
+		        Files.delete(path);
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		}
+	
 	// 하위 폴더 복사
-	private void fileUpload(String path_folder1, String path_folder2) {
+	private void fileUpload(String temp_folder, String idx_folder) {
 	    // 주어진 경로를 기반으로 폴더 객체 생성
 	    File folder1;
 	    File folder2;
-	    folder1 = new File(path_folder1);
-	    folder2 = new File(path_folder2);
+	    folder1 = new File(temp_folder);
+	    folder2 = new File(idx_folder);
 
 	    // 폴더가 존재하지 않으면 새로 생성
 	    if (!folder1.exists())
