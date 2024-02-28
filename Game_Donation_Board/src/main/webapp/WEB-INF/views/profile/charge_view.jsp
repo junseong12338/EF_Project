@@ -2,6 +2,49 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+  		<!-- jQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+        <!-- iamport.payment.js -->
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+        <script>
+          var IMP = window.IMP; 
+          IMP.init("imp52373275"); 
+        
+          var today = new Date();   
+          var hours = today.getHours(); // 시
+          var minutes = today.getMinutes();  // 분
+          var seconds = today.getSeconds();  // 초
+          var milliseconds = today.getMilliseconds();
+          var makeMerchantUid = hours +  minutes + seconds + milliseconds;
+          
+  
+          function requestPay() {
+        	  if(confirm('결제하시겠습니까?')){
+        		  let payment = document.getElementById("payment").value;
+                  IMP.request_pay({
+                      pg : 'kakaopay',
+                      merchant_uid: "IMP"+makeMerchantUid, 
+                      name : '컴퓨터',
+                      amount : Number(payment),
+                      buyer_email : 'tyghqkr456@naver.com',
+                      buyer_name : '석진',
+                      buyer_tel : '010-1234-5678',
+                      buyer_addr : '인천광역시 부평',
+                      buyer_postcode : '123-456'
+                  }, function (rsp) { // callback
+                      if (rsp.success) {
+                          console.log(rsp);
+                          alert('결제완료');
+                      } else {
+                          console.log(rsp);
+                          alert('결제실패');
+                      }
+                  });
+        	  }
+        	 
+          }
+      </script>
+
 <head>
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -134,20 +177,16 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
-
-            <div id="profile-settings">
+            <div id="profile-settings" style="margin:auto">
                 <h2>결제 수단 방법</h2><br>
                 <div class="button-container">
                     <p>결제 금액</p>
                     <input type="number"placeholder="숫자만 입력가능." id="payment">
                 </div>
-            </div>
-            <div>
-                <button id="kakao-pay" class="payment-button">
+                 <button onclick="requestPay()" id="kakao-pay" class="payment-button">
                   <img src="./resources/images/카카오페이.jpg" alt="카카오페이">
                 </button>
-              </div><br>
-              <button id="recharge" class="payment-button">충전하기</button>
+            </div>
             </div>
         </div>
     </div>
