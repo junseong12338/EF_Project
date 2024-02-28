@@ -13,7 +13,7 @@ import service.UserService;
 
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class UserLoginController {
 	final UserService userService;
 	
 	@Autowired

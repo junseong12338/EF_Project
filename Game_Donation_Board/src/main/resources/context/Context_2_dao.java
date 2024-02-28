@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import dao.UserDAO;
+import service.KakaoLoginService;
 import service.NaverLoginService;
 import service.UserService;
 
@@ -26,5 +27,10 @@ public class Context_2_dao {
 	@Bean
     public NaverLoginService naverLoginService() {
         return new NaverLoginService();
+    }
+	
+	@Bean
+    public KakaoLoginService kakaoLoginService() {
+        return new KakaoLoginService();
     }
 }

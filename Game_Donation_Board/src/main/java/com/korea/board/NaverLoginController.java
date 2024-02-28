@@ -20,7 +20,7 @@ import util.Common;
 
 @Controller
 @RequiredArgsConstructor
-public class NaverController {
+public class NaverLoginController {
 	
 	final UserService userService;
 	/* naverLoginService */
@@ -86,5 +86,5 @@ public class NaverController {
 		return "redirect:board_list";
 	}
   	
-	// 로그아웃 -> UserController 
+	// logout -> UserLoginController
 }

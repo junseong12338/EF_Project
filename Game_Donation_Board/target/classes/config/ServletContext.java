@@ -8,9 +8,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.korea.board.BoardController;
-import com.korea.board.NaverController;
-import com.korea.board.UserController;
+import com.korea.board.KakaoLoginController;
+import com.korea.board.NaverLoginController;
+import com.korea.board.UserLoginController;
 
+import service.KakaoLoginService;
 import service.NaverLoginService;
 import service.UserService;
 
@@ -31,13 +33,18 @@ public class ServletContext implements WebMvcConfigurer {
 	}
 	
 	@Bean
-	public UserController userController(UserService userService) {
-		return new UserController(userService);
+	public UserLoginController userController(UserService userService) {
+		return new UserLoginController(userService);
 	}
 	
 	@Bean
-	public NaverController naverController(UserService userService, NaverLoginService naverLoginService) {
-		return new NaverController(userService,naverLoginService);
+	public NaverLoginController naverController(UserService userService, NaverLoginService naverLoginService) {
+		return new NaverLoginController(userService,naverLoginService);
+	}
+	
+	@Bean
+	public KakaoLoginController kakaoController(UserService userService, KakaoLoginService kakaoLoginService) {
+		return new KakaoLoginController(userService,kakaoLoginService);
 	}
 	
 
