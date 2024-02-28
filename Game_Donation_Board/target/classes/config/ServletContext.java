@@ -11,7 +11,6 @@ import com.korea.board.BoardController;
 import com.korea.board.NaverController;
 import com.korea.board.UserController;
 
-import service.BoardService;
 import service.NaverLoginService;
 import service.UserService;
 
@@ -27,8 +26,8 @@ public class ServletContext implements WebMvcConfigurer {
 
 	
 	@Bean
-	public BoardController boardController(BoardService boardService ) {
-		return new BoardController(boardService);
+	public BoardController boardController() {
+		return new BoardController();
 	}
 	
 	@Bean

@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css"></style>
 
 <link rel="stylesheet" href="resources/css/login.css">
 
@@ -17,9 +16,8 @@
     <form>
       <h1>Create Account</h1>
       <div class="social-container">
-       	<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" onclick="location.href='${urlNaver}'" class="social"><img src="resources/img/NaverBtn.png" ></a>
+        <a href="#" class="social"><img src="resources/img/KakaoBtn.png"></a>
       </div>
       <span>or use your email for registration</span>
 	    <input type="text" name="user_name" id="user_name"  oninput="checkName(this.form)" placeholder="Name" /><span style='color:red;'id="check_name"></span>
@@ -34,11 +32,8 @@
     <form>
       <h1>Sign in</h1>
       <div class="social-container">
-      <button type ="button" class = "btn" onclick="location.href='${urlNaver}'">네이버</button>
-      
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" onclick="location.href='${urlNaver}'" class="social"><img src="resources/img/NaverBtn.png" ></a>
+        <a href="#" class="social"><img src="resources/img/KakaoBtn.png"></a>
       </div>
       <span>or use your account</span>
       <input type="email" name="user_email" id="login_email" oninput="LoginCheckEmail(this.form)" placeholder="Email" /><span style='color:red;'id="checklog_email"></span>
@@ -68,6 +63,8 @@
 
 
 </body>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
 <script src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="resources/js/httpRequest.js"></script>

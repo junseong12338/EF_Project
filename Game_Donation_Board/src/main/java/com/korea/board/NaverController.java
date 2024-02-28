@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,13 +29,11 @@ public class NaverController {
 	private String apiResult = null;
 		
 	// 로그인페이지
-	//로그인 첫 화면 요청 메소드
-	
+	// 로그인 첫 화면 요청 메소드
 	
 	
 	@RequestMapping(value = "login_form", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login_form(Model model, HttpSession session) {
-		System.out.println("로그인로그인");
 		/* 네아로 인증 URL을 생성하기 위하여 naverLoginService클래스의 getAuthorizationUrl메소드 호출 */
 		String naverAuthUrl = naverLoginService.getAuthorizationUrl(session);
 		/* 인증요청문 확인 */
@@ -71,14 +68,13 @@ public class NaverController {
 
 		UserDTO dto = userService.checkEmail(email);
 		// DB에 정보가 없으면 자동으로 회원 가입 
-		// 비밀번호는 NULL 유효성 처리로 일반 로그인 불가 + 중ㅂ
-		System.out.println("dto:"+dto);
+		// 비밀번호는 NULL 유효성 처리로 일반 로그인 불가 + 중복 생성 방지
 		if(dto == null) {
 			dto = new UserDTO();
 			dto.setUser_email(email);
 			dto.setUser_name(name);
 			userService.userInsert(dto);
-			System.out.println(dto);
+
 		}
 		// 사용자 정보
 		session.setAttribute("user_email", dto);
@@ -89,13 +85,6 @@ public class NaverController {
         /* 네이버 로그인 성공 페이지 View 호출 */
 		return "redirect:board_list";
 	}
-    
-
-	
+  	
 	// 로그아웃 -> UserController 
-	
-	
-	
-
-	
 }
