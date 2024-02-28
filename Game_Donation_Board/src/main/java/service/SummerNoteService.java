@@ -39,9 +39,9 @@ public class SummerNoteService {
 			dto.setProject_content(replace_editordata);
 			
 			
-			int res = projectDAO.insert_project(dto);
+			projectDAO.insert_project(dto);
 			
-			return res;
+			return idx;
 		}
 		return -1;
 	}
