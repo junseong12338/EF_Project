@@ -204,11 +204,13 @@ https://templatemo.com/tm-579-cyborg-gaming
                      <h2>배송지 입력</h2>
                     <form>
                         <!-- 배송지 설정 입력란 추가 -->
+                        <form action="(test)address.html" method="get">
                         <div class="form-group">
                           <label for="shipping-address-1">주소 입력 </label>
-                          <input type="text" id="shipping-address-1" name="shipping-address-1" class="shipping-address-1">
+                          <input type="text" id="shipping-address-1" name="shipping-address-1" class="shipping-address-1">    
                           <input type="submit" value="추가">
                       </div>
+                    </form>
                       <div class="form-group">
                           <label for="shipping-address-2">상세 주소 </label>
                           <input type="text" id="shipping-address-2" name="shipping-address-2" class="shipping-address-2">
