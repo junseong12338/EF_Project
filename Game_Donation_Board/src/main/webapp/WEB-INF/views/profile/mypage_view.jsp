@@ -95,7 +95,7 @@
                         <li><a href="browse.html">Browse</a></li>
                         <li><a href="details.html">Details</a></li>
                         <li><a href="streams.html">Streams</a></li>
-                        <li><a href="profile.html" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
+                        <li><a href="mypage_view" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
                     </ul>   
                     <a class='menu-trigger'>
                         <span>Menu</span>
@@ -131,16 +131,16 @@
                   <div class="col-lg-4 align-self-center">
                    
                     <ul>
-                      <li><a href="myinfo.html">내 정보</a></li>
+                      <li><a href="myinfo_view">내 정보</a></li>
                       <li>후원 누적 포인트 <span>1,100,000 Point</span></li>
                       <li>잔여 포인트 <span>7,000 Point</span></li>
                       <li>리뷰 <span>30</span></li>
                       <li>포인트 충전
-                        <a href="charge.html">
+                        <a href="charge_view">
                           <button id="recharge-button" style="margin-left: 135px; background-color: #bb4ab1; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.5s;" onmouseover="this.style.backgroundColor='#a400b3'" onmouseout="this.style.backgroundColor='#bb4ab1'">충전하기</button>
                         </a>
                       </li>
-                      <li><a href="SponsorshipDetails.html">후원한 프로젝트 내역</a></li>
+                      <li><a href="Sponsorshipdetails_view">후원한 프로젝트 내역</a></li>
                     </ul>
                   </div>
                 </div>

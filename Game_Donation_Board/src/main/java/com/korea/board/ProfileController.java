@@ -5,9 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +28,28 @@ public class ProfileController {
 	public String mypage_view() {
 		
 		return Common.profile.VIEW_PATH + "mypage_view.jsp";
-		
 
 	}
+	
+	@RequestMapping("myinfo_view")
+	public String myinfo_view() {
+		
+		return Common.profile.VIEW_PATH + "myinfo_view.jsp";
+	
+	}
+	
+	@RequestMapping("charge_view")
+	public String charge_view() {
+		
+		return Common.profile.VIEW_PATH + "charge_view.jsp";
+	
+	}
+	
+	@RequestMapping("Sponsorshipdetails_view")
+	public String Sponsorshipdetails_view() {
+		
+		return Common.profile.VIEW_PATH + "Sponsorshipdetails_view.jsp";
+	
+	}
+
 }

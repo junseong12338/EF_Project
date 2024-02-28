@@ -163,7 +163,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                         <li><a href="browse.html">Browse</a></li>
                         <li><a href="details.html">Details</a></li>
                         <li><a href="streams.html">Streams</a></li>
-                        <li><a href="profile.html" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
+                        <li><a href="mypage_view" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
                     </ul>   
                     <a class='menu-trigger'>
                         <span>Menu</span>
