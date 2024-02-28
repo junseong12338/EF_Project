@@ -7,10 +7,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.korea.board.BoardController;
 import com.korea.board.ProjectController;
 
-import service.BoardService;
 import service.ProjectService;
 
 

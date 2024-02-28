@@ -17,12 +17,17 @@ public class ProjectDTO {
 	private String project_end;
 	
 	
-	
-	
-	
-	
-	
-	
+	// 카테고리 10개
+	boolean category_01 = false;
+	boolean category_02 = false;
+	boolean category_03 = false;
+	boolean category_04 = false;
+	boolean category_05 = false;
+	boolean category_06 = false;
+	boolean category_07 = false;
+	boolean category_08 = false;
+	boolean category_09 = false;
+	boolean category_10 = false;
 	
 	
 }

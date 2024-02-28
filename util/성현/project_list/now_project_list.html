@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <title>Cyborg - Awesome HTML5 Template</title>
+    
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +32,13 @@ TemplateMo 579 Cyborg Gaming
 https://templatemo.com/tm-579-cyborg-gaming
 
 -->
+
+<script>
+  function search(f){
+    f.submit();
+  }
+</script>
+
   </head>
 
 <body>
@@ -61,9 +69,9 @@ https://templatemo.com/tm-579-cyborg-gaming
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Search End ***** -->
                     <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
+                      <form id="search" action="now_project_list" method="GET">
+                        <input type="text" placeholder="검색어를 입력해주세요" id='searchText' name="searchKeyword"/>
+                        <i class="fa fa-search" type="button" onclick="search(this.form)"></i>
                       </form>
                     </div>
                     <!-- ***** Search End ***** -->
@@ -72,7 +80,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                         <li><a href="index.html" class="active">Home</a></li>
                         <li><a href="browse.html">Browse</a></li>
                         <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
+                        <li><a href="streams.html">Streams </a></li>
                         <li><a href="profile.html">Profile <img src="assets/images/profile-header.jpg" alt=""></a></li>
                     </ul>   
                     <a class='menu-trigger'>
@@ -102,31 +110,31 @@ https://templatemo.com/tm-579-cyborg-gaming
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">2</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">3</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">4</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">5</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">6</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">7</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">8</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">9</a>
       </li>
       <li>
-        <a href="#" onclick="send(1)" class="category">1</a>
+        <a href="#" onclick="send(1)" class="category">10</a>
       </li>
     </ul>
   </aside>
@@ -145,7 +153,9 @@ https://templatemo.com/tm-579-cyborg-gaming
                 <div class="project-list header-text">
                   <div class="heading-section">
                     <h4><em>진행중인</em> 프로젝트</h4>
-                    <hr><h6>인기순</h6><hr>
+                    
+                    <div style="text-align: center;"><h6><em style="font-size: larger;">${list_count}</em>&nbsp;&nbsp;&nbsp;건의 프로젝트가 있습니다.</h6></div>
+                    <hr>
                   </div>
                   <div class="row">
                     <div class="col-lg-3 col-sm-6">

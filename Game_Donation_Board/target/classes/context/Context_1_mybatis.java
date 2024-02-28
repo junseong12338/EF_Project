@@ -23,7 +23,7 @@ public class Context_1_mybatis {
 	public DataSource ds()  throws SQLException{
 		OracleDataSource ds = new OracleDataSource();
 	    ds.setURL("jdbc:oracle:thin:@project522_high?TNS_ADMIN=C:/DEV/backend_project/Wallet_Project522/");
-	    ds.setUser("ADMIN");
+	    ds.setUser("admin");
 	    ds.setPassword("Multicampus522");
 		return ds;
 	}

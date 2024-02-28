@@ -10,7 +10,6 @@
 	
 	<typeAliases>
 		 <typeAlias type="dto.ProjectDTO" alias="project"/> 
-		 <typeAlias type="java.util.HashMap" alias="map"/> 
 	</typeAliases>
 		
 	<mappers>

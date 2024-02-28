@@ -5,10 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import dao.BoardDAO;
-import dao.MemberDAO;
 import dao.ProjectDAO;
-import service.BoardService;
 import service.ProjectService;
 
 @Configuration

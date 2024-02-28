@@ -22,14 +22,8 @@ public class ProjectController {
 	
 	final ProjectService projectService;
 	
-	@Autowired
-	HttpServletRequest request;
-	
-	@Autowired
-	HttpSession session;
-
-	@RequestMapping(value={"/","project_list"})
-	public String project_list(Model model) {
+	@RequestMapping(value={"/","now_project_list"})
+	public String project_list(HttpServletRequest request, HttpSession session) {
 		
 		// 한페이지에 12개씩 표시할 것
 		final int PAGE_PROJECT_COUNT = 12;
@@ -38,28 +32,37 @@ public class ProjectController {
 		// totalPageCount
 		int total_page_count = (int)Math.ceil(list_count / (double)PAGE_PROJECT_COUNT);
 		
-		model.addAttribute("list_total_count", list_count);
-		model.addAttribute("total_page_count", total_page_count);
+		request.setAttribute("list_total_count", list_count);
+		request.setAttribute("total_page_count", total_page_count);
 		
 		return Common.Project_list.VIEW_PATH + "project_list.jsp";
 	}
 	
 	
 	@RequestMapping("ajax_list")
-	public String ajax_list(Model model, int pageNum) {
+	public String ajax_list(HttpServletRequest request, HttpSession session) {
 		
 		// 한페이지에 12개씩 표시할 것
 		final int PAGE_PROJECT_COUNT = 12;
 
 		int page_num = 1;
 		
-		if(pageNum != 0) {
-			page_num = pageNum;
-		}
+		
+		
 		
 		int start_list_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;
+		int end_list_num = start_list_num + PAGE_PROJECT_COUNT;
 		int list_count = PAGE_PROJECT_COUNT;
 		
+		
+		// 검색어 처리
+		
+		
+		
+		
+		
+		
+		// 수정해야댐
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start_list_num", start_list_num);
 		map.put("list_count", list_count);
