@@ -13,16 +13,19 @@ public class ProjectDAO {
 	
 	final SqlSession sqlSession;
 	
+	// list 총 개수 반환
+	public int get_list_count() {
+		return sqlSession.selectOne("project.project_list_count");
+	}
+	
 	// 진행예정 프로젝트의 수 반환
 	public int getBeforeListTotal() {
-		int listTotal = sqlSession.selectOne("project.project_before_count");
-		return listTotal;
+		return sqlSession.selectOne("project.project_before_count");
 		}
 	
 	// 진행중인 프로젝트의 수 반환
 	public int getNowListTotal() {
-		int listTotal = sqlSession.selectOne("project.project_now_count");
-		return listTotal;
+		return sqlSession.selectOne("project.project_now_count");
 	}
 	
 	// 마감된 프로젝트의 수 반환
@@ -32,6 +35,11 @@ public class ProjectDAO {
 		}
 	
 	//---------------------------------------------------------------------------------------
+	// 전체 프로젝트 리스트
+	public List<ProjectDTO> selectList(HashMap<String, Object> map){
+		return sqlSession.selectList("project.project_list",map);
+	}
+	
 	// 진행예정 프로젝트 리스트
 	public List<ProjectDTO> selectListBefore(HashMap<String, Object> map){
 		List<ProjectDTO> list = sqlSession.selectList("project.project_before_list",map);

@@ -12,18 +12,13 @@ public class ProjectService {
 	
 	final ProjectDAO projectDAO;
 	
-	public HashMap<String, Object> selectList(HashMap<String, Object> map){
-		
-		HashMap<String, Object> selectMap = new HashMap<String, Object>();
-		
-		// 진행중인 list의 총 갯수
-		int listTotal = projectDAO.getNowListTotal();
-		// 진행중인 list
-		List<ProjectDTO> list = projectDAO.selectListNow(map);
-		
-		selectMap.put("listTotal", listTotal);
-		selectMap.put("list", list);
-		
-		return selectMap;
+	// 전체 list의 갯수
+	public int selectOne(){
+		return projectDAO.get_list_count();
+	}
+	
+	// 전체 프로젝트 리스트 ( 인기순으로 초기 값 잡자 )
+	public List<ProjectDTO> selectList(HashMap<String, Object> map){
+		return projectDAO.selectList(map);
 	}
 }

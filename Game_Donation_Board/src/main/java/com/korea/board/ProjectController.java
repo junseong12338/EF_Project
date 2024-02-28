@@ -33,38 +33,43 @@ public class ProjectController {
 		
 		// 한페이지에 12개씩 표시할 것
 		final int PAGE_PROJECT_COUNT = 12;
-		
-		int pageNum = 1;
-		String strPageNum = request.getParameter("pageNum");
-		
-		if(strPageNum != null) {
-			pageNum = Integer.parseInt(strPageNum);
-		}
-		
-		int startList = (pageNum - 1) * PAGE_PROJECT_COUNT;
-		int endList = pageNum * PAGE_PROJECT_COUNT;
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startList", startList);
-		map.put("endList", endList);
-		
-		HashMap<String, Object> selectMap = projectService.selectList(map);
-		
 		// 저장된 프로젝트(list) 총 갯수
-		int listTotal = (int)selectMap.get("listTotal");
-		// 불러올 프로젝트(list) - 페이지번호에 해당하는 !
-		List<ProjectDTO> list = (List<ProjectDTO>)selectMap.get("list");
+		int list_count = projectService.selectOne();
+		// totalPageCount
+		int total_page_count = (int)Math.ceil(list_count / (double)PAGE_PROJECT_COUNT);
 		
-		model.addAttribute("listTotal", listTotal);
-		model.addAttribute("list", list);
+		model.addAttribute("list_total_count", list_count);
+		model.addAttribute("total_page_count", total_page_count);
 		
 		return Common.Project_list.VIEW_PATH + "project_list.jsp";
 	}
 	
 	
 	@RequestMapping("ajax_list")
-	public String ajax_list() {
+	public String ajax_list(Model model, int pageNum) {
 		
+		// 한페이지에 12개씩 표시할 것
+		final int PAGE_PROJECT_COUNT = 12;
+
+		int page_num = 1;
+		
+		if(pageNum != 0) {
+			page_num = pageNum;
+		}
+		
+		int start_list_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;
+		int list_count = PAGE_PROJECT_COUNT;
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start_list_num", start_list_num);
+		map.put("list_count", list_count);
+		
+		List<ProjectDTO> list = projectService.selectList(map);
+		
+		
+		
+		
+		return Common.Project_list.VIEW_PATH + "project_list_ajax.jsp";
 	}
 
 }

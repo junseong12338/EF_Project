@@ -21,18 +21,12 @@ public class Context_1_mybatis {
 
 	@Bean
 	public DataSource ds()  throws SQLException{
-		 OracleDataSource ds = new OracleDataSource();
-
-	        ds.setURL("jdbc:oracle:thin:@project522_high?TNS_ADMIN=C:/DEV/backend_project/Wallet_Project522/");
-	        ds.setUser("ADMIN");
-	        ds.setPassword("Multicampus522");
-//		ds.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
-//		ds.setUsername("hr");
-//		ds.setPassword("hr");
+		OracleDataSource ds = new OracleDataSource();
+	    ds.setURL("jdbc:oracle:thin:@project522_high?TNS_ADMIN=C:/DEV/backend_project/Wallet_Project522/");
+	    ds.setUser("ADMIN");
+	    ds.setPassword("Multicampus522");
 		return ds;
 	}
-	
-
 	
 	@Bean
 	public SqlSessionFactory factoryBean(DataSource ds) throws Exception{
@@ -43,8 +37,6 @@ public class Context_1_mybatis {
 		return factoryBean.getObject();
 	} 
 	
-	
-
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate (SqlSessionFactory factoryBean) {
 		return new SqlSessionTemplate(factoryBean);

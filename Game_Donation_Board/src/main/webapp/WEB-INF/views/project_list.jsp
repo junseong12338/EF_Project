@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,8 +35,7 @@ $(window).on("scroll",function(){
     let isBottom = scrollTop + windowHeight >= documentHeight;// 스크롤이 바닥에 닿을 때
 
     if(isBottom){
-    	// 수정해야댐----
-        if(currentPage == ${totalPageCount} || isLoading){
+        if(currentPage == ${total_page_count} || isLoading){
             return;
         }
 
@@ -72,6 +72,18 @@ const GetList = function(currentPage){
 $(document).ready(function(){
 	GetList(1);
 })
+</script>
+<script>
+	let category_1 = false
+	let category_2 = false
+	let category_3 = false
+	let category_4 = false
+	let category_5 = false
+	let category_6 = false
+	let category_7 = false
+	let category_8 = false
+	let category_9 = false
+	let category_10 = false
 </script>
 </head>
 <body>
@@ -138,40 +150,74 @@ $(document).ready(function(){
     </div>
     <ul>
       <li>
-        <a href="#">menu1</a>
-        <ul>
-          <li><a href="#">text1</a></li>
-          <li><a href="#">text2</a></li>
-          <li><a href="#">text3</a></li>
-          <li><a href="#">text4</a></li>
-        </ul>
+        <a href="#" onclick="send(1)" class="category">1
+        <c:if test="category_1">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px; display: none">
+        </c:if>
+        </a>
       </li>
       <li>
-        <a href="#">menu2</a>
-        <ul>
-          <li><a href="#">text1</a></li>
-          <li><a href="#">text2</a></li>
-          <li><a href="#">text3</a></li>
-          <li><a href="#">text4</a></li>
-        </ul>
+        <a href="#" onclick="send(2)" class="category">2
+        <c:if test="category_2">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
       </li>
       <li>
-        <a href="#">menu3</a>
-        <ul>
-          <li><a href="#">text1</a></li>
-          <li><a href="#">text2</a></li>
-          <li><a href="#">text3</a></li>
-          <li><a href="#">text4</a></li>
-        </ul>
+        <a href="#" onclick="send(3)" class="category">3
+        <c:if test="category_3">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
       </li>
       <li>
-        <a href="#">menu4</a>
-        <ul>
-          <li><a href="#">text1</a></li>
-          <li><a href="#">text2</a></li>
-          <li><a href="#">text3</a></li>
-          <li><a href="#">text4</a></li>
-        </ul>
+        <a href="#" onclick="send(4)" class="category">4
+        <c:if test="category_4">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="send(5)" class="category">5
+        <c:if test="category_5">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="send(6)" class="category">6
+        <c:if test="category_6">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="send(7)" class="category">7
+        <c:if test="category_7">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="send(8)" class="category">8
+        <c:if test="category_8">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="send(9)" class="category">9
+        <c:if test="category_9">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="send(10)" class="category">10
+        <c:if test="category_10">
+        <img src="assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+        </c:if>
+        </a>
       </li>
     </ul>
   </aside>
@@ -190,50 +236,15 @@ $(document).ready(function(){
                 <div class="project-list header-text">
                   <div class="heading-section">
                     <h4><em>진행중인</em> 프로젝트</h4>
-                    <hr><h6><strong>${listTotal }</strong>건의 프로젝트가 있습니다.</h6><hr>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                      <div class="item">
-                        <img src="resources/assets/images/popular-01.jpg" alt="">
-                        <h4>Fortnite   <span>Sandbox</span></h4>
-                        <p>안녕하세요 반갑습니다.</p>
-                        <p>&nbsp;dsadasd</p>
-                        <p>dsadasdassaddas</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                      <div class="item">
-                        <img src="resources/assets/images/popular-01.jpg" alt="">
-                        <h4>Fortnite   <span>Sandbox</span></h4>
-                        <p>안녕하세요 반갑습니다.</p>
-                        <p>&nbsp;dsadasd</p>
-                        <p>dsadasdassaddas</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                      <div class="item">
-                        <img src="resources/assets/images/popular-01.jpg" alt="">
-                        <h4>Fortnite   <span>Sandbox</span></h4>
-                        <p>안녕하세요 반갑습니다.</p>
-                        <p>&nbsp;dsadasd</p>
-                        <p>dsadasdassaddas</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                      <div class="item">
-                        <img src="resources/assets/images/popular-01.jpg" alt="">
-                        <h4>Fortnite   <span>Sandbox</span></h4>
-                        <p>안녕하세요 반갑습니다.</p>
-                        <p>&nbsp;dsadasd</p>
-                        <p>dsadasdassaddas</p>
-                      </div>
-                    </div>
-
-
-                    <div class="col-lg-3 col-sm-6 project-list-container"></div>
-                    <div class="back-drop">##</div>
-
+                    <hr>
+                    <h6><strong>${list_count }</strong>건의 프로젝트가 있습니다.</h6>
+                    <hr>
+                  
+                  	<!-- project-list Start -->
+					<div class="col-lg-3 col-sm-6 project-list-container"></div>
+					<hr>
+                    <div class="back-drop" align="center">##</div>
+                    <!-- project-list End -->
                   </div>
                 </div>
               </div>

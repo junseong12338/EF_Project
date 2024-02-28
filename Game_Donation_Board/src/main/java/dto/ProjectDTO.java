@@ -15,4 +15,14 @@ public class ProjectDTO {
 	private String project_img;
 	private String project_start;
 	private String project_end;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

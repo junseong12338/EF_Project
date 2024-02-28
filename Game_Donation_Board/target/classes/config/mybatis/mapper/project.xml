@@ -3,6 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
+<choose></choose>
+	<!-- 리스트 총 개수 반환 -->
+	<select id="project_list_count" resultType="int">
+		SELECT COUNT(*) FROM EF_PROJECT
+	</select>
+
 	<!-- 진행예정 프로젝트 총 갯수 -->
 	<select id="project_before_count" resultType="int">
 		SELECT COUNT(*) FROM PROJECT 
@@ -20,8 +26,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM PROJECT 
 		WHERE SYSDATE > PROJECT_END
 	</select>
+
+<!-- ------------------------------------------------------------------- -->	
 	
 	<!-- 진행중인 프로젝트 List - in(start and end)-->
+	<!-- default : 인기(like) 순 -->
+	<select id="project_list" resultType="project" parameterType="map">
+		SELECT * FROM (SELECT COUNT(*) FROM EF_LIKE )
+	</select>
+	
+	
+	
 	<!-- 인기순 -->
 	<select id="project_now_list" resultType="project" parameterType="map">
 		SELECT A.*
