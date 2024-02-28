@@ -51,5 +51,12 @@ public class ProfileController {
 		return Common.profile.VIEW_PATH + "Sponsorshipdetails_view.jsp";
 	
 	}
+	
+	@RequestMapping("address")
+	public String address() {
+		System.out.println("dddd");
+		return Common.profile.VIEW_PATH + "address.jsp";
+	
+	}
 
 }
