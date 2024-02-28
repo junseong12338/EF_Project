@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import dto.BoardDTO;
-import dto.MemberDTO;
+import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
