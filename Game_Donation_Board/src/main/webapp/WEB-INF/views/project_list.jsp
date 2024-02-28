@@ -34,6 +34,7 @@ $(window).on("scroll",function(){
     let isBottom = scrollTop + windowHeight >= documentHeight;// 스크롤이 바닥에 닿을 때
 
     if(isBottom){
+    	// 수정해야댐----
         if(currentPage == ${totalPageCount} || isLoading){
             return;
         }
@@ -189,12 +190,12 @@ $(document).ready(function(){
                 <div class="project-list header-text">
                   <div class="heading-section">
                     <h4><em>진행중인</em> 프로젝트</h4>
-                    <hr><h6>인기순</h6><hr>
+                    <hr><h6><strong>${listTotal }</strong>건의 프로젝트가 있습니다.</h6><hr>
                   </div>
                   <div class="row">
                     <div class="col-lg-3 col-sm-6">
                       <div class="item">
-                        <img src="assets/images/popular-01.jpg" alt="">
+                        <img src="resources/assets/images/popular-01.jpg" alt="">
                         <h4>Fortnite   <span>Sandbox</span></h4>
                         <p>안녕하세요 반갑습니다.</p>
                         <p>&nbsp;dsadasd</p>
@@ -203,7 +204,7 @@ $(document).ready(function(){
                     </div>
                     <div class="col-lg-3 col-sm-6">
                       <div class="item">
-                        <img src="assets/images/popular-01.jpg" alt="">
+                        <img src="resources/assets/images/popular-01.jpg" alt="">
                         <h4>Fortnite   <span>Sandbox</span></h4>
                         <p>안녕하세요 반갑습니다.</p>
                         <p>&nbsp;dsadasd</p>
@@ -212,7 +213,7 @@ $(document).ready(function(){
                     </div>
                     <div class="col-lg-3 col-sm-6">
                       <div class="item">
-                        <img src="assets/images/popular-01.jpg" alt="">
+                        <img src="resources/assets/images/popular-01.jpg" alt="">
                         <h4>Fortnite   <span>Sandbox</span></h4>
                         <p>안녕하세요 반갑습니다.</p>
                         <p>&nbsp;dsadasd</p>
@@ -221,7 +222,7 @@ $(document).ready(function(){
                     </div>
                     <div class="col-lg-3 col-sm-6">
                       <div class="item">
-                        <img src="assets/images/popular-01.jpg" alt="">
+                        <img src="resources/assets/images/popular-01.jpg" alt="">
                         <h4>Fortnite   <span>Sandbox</span></h4>
                         <p>안녕하세요 반갑습니다.</p>
                         <p>&nbsp;dsadasd</p>
@@ -260,14 +261,14 @@ $(document).ready(function(){
 
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="resources/vendor/jquery/jquery.min.js"></script>
+  <script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-  <script src="assets/js/isotope.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
-  <script src="assets/js/tabs.js"></script>
-  <script src="assets/js/popup.js"></script>
-  <script src="assets/js/custom.js"></script>
+  <script src="resources/assets/js/isotope.min.js"></script>
+  <script src="resources/assets/js/owl-carousel.js"></script>
+  <script src="resources/assets/js/tabs.js"></script>
+  <script src="resources/assets/js/popup.js"></script>
+  <script src="resources/assets/js/custom.js"></script>
 
 
 </body>

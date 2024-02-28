@@ -58,8 +58,13 @@ public class ProjectController {
 		model.addAttribute("listTotal", listTotal);
 		model.addAttribute("list", list);
 		
-		return Common.Board.VIEW_PATH + "project_list.jsp";
+		return Common.Project_list.VIEW_PATH + "project_list.jsp";
 	}
 	
 	
+	@RequestMapping("ajax_list")
+	public String ajax_list() {
+		
+	}
+
 }
