@@ -1,6 +1,6 @@
 admin / Multicampus522
 
-
+admin@edudb2_cloud
 db.classname = oracle.jdbc.driver.OracleDriver
 db.url = jdbc:oracle:thin:@project522_high?TNS_ADMIN=C:/DEV/Wallet_Project522/
 db.username = admin

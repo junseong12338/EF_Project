@@ -2,7 +2,6 @@ package util;
 
 public class Common {
 	// 경로를 관리함
-	
 	public static class Board{
 		public final static String VIEW_PATH = "/WEB-INF/views/board/";
 		public final static int BLOCKLIST = 10;

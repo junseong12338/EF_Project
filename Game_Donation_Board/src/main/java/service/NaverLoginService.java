@@ -14,7 +14,6 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
-import dao.UserDAO;
 import util.NaverOAuthApi;
 
 public class NaverLoginService {
@@ -95,7 +94,7 @@ public class NaverLoginService {
                 .apiSecret(CLIENT_SECRET)
                 .callback(REDIRECT_URI).build(NaverOAuthApi.instance());
 
-            OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
+        OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
         oauthService.signRequest(oauthToken, request);
         Response response = request.send();
         return response.getBody();
