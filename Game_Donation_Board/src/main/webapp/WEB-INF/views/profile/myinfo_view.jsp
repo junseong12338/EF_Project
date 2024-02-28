@@ -5,33 +5,38 @@
 <head>
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
-
     <title>Cyborg - Awesome HTML5 Template</title>
+    
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="resources/css/fontawesome.css">
+    <link rel="stylesheet" href="resources/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="resources/css/owl.css">
+    <link rel="stylesheet" href="resources/css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style> 
  input[type="text"] {
-            background-color: transparent; /* 투명 배경색 */
+            background-color: white; /* 투명 배경색 */
             border: 1px solid black; /* 테두리 설정 */
             border-radius: 5px; /* 테두리 둥글게 만듦 */
             padding: 5px; /* 입력 칸 내부 여백 */
             margin-bottom: 10px; /* 입력 칸 간격 조정 */
-            color: white; /* 텍스트 색상을 흰색으로 설정 */
+            color: black; /* 텍스트 색상을 흰색으로 설정 */
         }
 
         #nickname{
-          width: 20%; /* 사용자 이름 입력 칸 너비를 70%로 설정 */
+          width: 25%; /* 사용자 이름 입력 칸 너비를 70%로 설정 */
         }
 
         input[type="email"] {
-            background-color: transparent; /* 투명 배경색 */
+            background-color: white; /* 투명 배경색 */
             border: 1px solid black; /* 테두리 설정 */
             border-radius: 5px; /* 테두리 둥글게 만듦 */
             padding: 5px; /* 입력 칸 내부 여백 */
             margin-bottom: 10px; /* 입력 칸 간격 조정 */
-            width: 35%; /* 이메일 주소 입력 칸 너비를 100%로 설정 */
-            color: white; /* 텍스트 색상을 흰색으로 설정 */
+            width: 30%; /* 이메일 주소 입력 칸 너비를 설정 */
+            color: black; /* 텍스트 색상을 흰색으로 설정 */
             display: inline-block; /* 인라인 블록 요소로 변경 */
         }
         .shipping-address-1 {
@@ -64,7 +69,7 @@
 
         h2 {
             margin-bottom: 20px;
-            color: #333;
+            color: white;
             display: inline-block;
         }
 
@@ -84,14 +89,7 @@
         
     </style>
 
-    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="resources/css/fontawesome.css">
-    <link rel="stylesheet" href="resources/css/templatemo-cyborg-gaming.css">
-    <link rel="stylesheet" href="resources/css/owl.css">
-    <link rel="stylesheet" href="resources/css/animate.css">
-    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+    
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -136,34 +134,21 @@
                 <form>
                   <div class="form-group">
                     <label for="username">사용자 닉네임 </label>
-                    <input type="text" id="username" name="username" class="nickname">
-                    <input type="submit" value="저장"><br><br>
+                    <input type="text" id="username" name="username" class="nickname"><br><br>
                   </div>
                   <div class="form-group">
                     <label for="email">이메일 주소 </label>
                     <input type="email" id="email" name="email">
-                    <input type="submit" value="저장">
                   </div>      
                 </form>
             </div>
           		<!-- 배송지 설정 입력란 추가 -->
-                <div id="shipping-settings" class="section">
-                     <h2>배송지 입력</h2>
-                     
-                        <form action="address" method="get">
-                        <div class="form-group">
-                          <label for="shipping-address-1">주소 입력 </label>
-                          <input type="text" id="shipping-address-1" name="shipping-address-1" class="shipping-address-1">                             
-                          <input type="submit" value="추가">
-                      </div>
-                    </form>
-                      <div class="form-group">
-                          <label for="shipping-address-2">상세 주소 </label>
-                          <input type="text" id="shipping-address-2" name="shipping-address-2" class="shipping-address-2">
-                          <input type="submit" value="저장">
-                      </div>
-                      
-                </div>
+             <h2>주소 입력</h2><br><br>
+            <input type="text" id="sample4_postcode" placeholder="우편번호">
+            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+            <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+            <input type="text" id="sample4_detailAddress" placeholder="상세주소"><br>
+            <button type="submit">저장</button>
                 <!-- 배송지 설정 입력란 추가 -->
                 
             </div>
@@ -191,6 +176,54 @@
   <script src="resources/js/custom.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+<script>
+
+function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+             
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+              /*   var extraRoadAddr = ''; */ // 참고 항목 변수
+
+       
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                  /*   extraRoadAddr += data.bname; */
+                }
+             
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                  /*  extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName); */
+                }
+             
+                /* if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                } */
+
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+              /*   document.getElementById("sample4_jibunAddress").value = data.jibunAddress; */
+                
+                if(roadAddr !== ''){
+              /*       document.getElementById("sample4_extraAddress").value = extraRoadAddr; */
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+
+                var guideTextBox = document.getElementById("guide");
+
+                if(data.autoRoadAddress) {
+                /*     var expRoadAddr = data.autoRoadAddress + extraRoadAddr; */
+                  /*   guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')'; */
+                  /*   guideTextBox.style.display = 'block'; */
+
+                } else {
+                   /*  guideTextBox.innerHTML = ''; */
+                   /*  guideTextBox.style.display = 'none'; */
+                }
+            }
+        }).open();
+    }
+
+  </script>
 
 </body>
 </html>
