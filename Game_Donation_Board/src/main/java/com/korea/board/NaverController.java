@@ -26,7 +26,7 @@ public class NaverController {
 	final UserService userService;
 	/* naverLoginService */
 	final NaverLoginService naverLoginService;
-	
+	// 토큰을 통해 값을 저장할 사용자 정보
 	private String apiResult = null;
 		
 	// 로그인페이지
@@ -68,29 +68,29 @@ public class NaverController {
 		String email = (String) response_obj.get("email");
 		String name = (String) response_obj.get("name");
 		
-		System.out.println(email);
-		System.out.println(name);
+
 		UserDTO dto = userService.checkEmail(email);
-		
-		System.out.println(dto);
+		// DB에 정보가 없으면 자동으로 회원 가입 
+		// 비밀번호는 NULL 유효성 처리로 일반 로그인 불가 + 중ㅂ
+		System.out.println("dto:"+dto);
 		if(dto == null) {
+			dto = new UserDTO();
 			dto.setUser_email(email);
 			dto.setUser_name(name);
-			
-			int res = userService.userInsert(dto);
+			userService.userInsert(dto);
+			System.out.println(dto);
 		}
-		
-		// 세션에 사용자 정보 등록
-		// session.setAttribute("islogin_r", "Y");
-		session.setAttribute("signIn", apiResult);
+		// 사용자 정보
 		session.setAttribute("user_email", dto);
-	    session.setAttribute("accessToken", oauthToken); // 토큰 저장
+		
+	    // 난수 인증 세션 삭제
+	    session.removeAttribute(state);
 
         /* 네이버 로그인 성공 페이지 View 호출 */
 		return "redirect:board_list";
 	}
     
-	// 소셜 로그인 성공 페이지
+
 	
 	// 로그아웃 -> UserController 
 	

@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
    <insert id="insert" parameterType="user">
-        INSERT INTO EF_USER VALUES (SEQ_EF_USER_IDX.NEXTVAL, 1, #{user_email}, #{user_name}, #{user_pw}, '', 1, '', '', 0)
+        INSERT INTO EF_USER VALUES (SEQ_EF_USER_IDX.NEXTVAL, 1, #{user_email}, #{user_name}, #{user_pw, jdbcType=VARCHAR} , '', 1, '', '', 0)
    </insert>
 
 </mapper>
