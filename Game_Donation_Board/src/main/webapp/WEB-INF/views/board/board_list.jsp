@@ -16,11 +16,9 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
       onclick="location.href='editor_test'"
       value="에디터 페이지 이동"
     />
-    <input
-      type="button"
-      onclick="location.href='project_test'"
-      value="글보기"
-    />
-    
+    <form action="project_test" method="get">
+      <input type="text" name="idx" placeholder="글번호" />
+      <input type="submit" value="글보기" />
+    </form>
   </body>
 </html>

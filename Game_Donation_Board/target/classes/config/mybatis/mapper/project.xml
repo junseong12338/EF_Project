@@ -22,6 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
+	<!-- 프로젝트 단일 셀렉트 -->
+	<select id="selectOne_project" parameterType="int" resultType="project">
+		SELECT * FROM EF_PROJECT
+		WHERE PROJECT_IDX = #{idx}
+	</select>
+	
+	
 </mapper>
 
 

@@ -9,6 +9,7 @@ import dao.BoardDAO;
 import dao.MemberDAO;
 import dao.ProjectDAO;
 import service.BoardService;
+import service.ProjectService;
 import service.SummerNoteService;
 
 @Configuration
@@ -33,8 +34,13 @@ public class Context_2_dao {
 		return new BoardService(boardDAO,memberDAO);
 	}
 	
-	@Bean SummerNoteService summerNoteService(ProjectDAO projectDAO) {
+	@Bean public SummerNoteService summerNoteService(ProjectDAO projectDAO) {
 		return new SummerNoteService(projectDAO);
+	}
+	
+	@Bean
+	public ProjectService projectService(ProjectDAO projectDAO) {
+		return new ProjectService(projectDAO);
 	}
 	
 }

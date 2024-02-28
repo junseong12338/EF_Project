@@ -23,4 +23,9 @@ public class ProjectDAO {
 		return sqlsession.selectOne("pj.select_idx",project_content);
 	}
 	
+	//글 한개 가져오기
+	public ProjectDTO selectOne_project(int idx) {
+		return sqlsession.selectOne("pj.selectOne_project",idx);
+	}
+	
 }
