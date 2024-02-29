@@ -16,4 +16,8 @@ public class Common {
 	public static class User{
 		public final static String VIEW_PATH = "/WEB-INF/views/user/";
 	}
+	
+	public static class profile{
+		public final static String VIEW_PATH = "/WEB-INF/views/profile/";
+	}
 }
