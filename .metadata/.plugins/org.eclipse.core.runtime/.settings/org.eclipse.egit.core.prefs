@@ -1,8 +1,8 @@
-GitRepositoriesView.GitDirectories=C\:\\Users\\admin\\Desktop\\EF_work\\.git;
-GitRepositoriesView.GitDirectories.relative=C\:\\Users\\admin\\Desktop\\EF_work\\.git;
+GitRepositoriesView.GitDirectories=C\:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\.git;
+GitRepositoriesView.GitDirectories.relative=.git;
 RepositoryGroups.uuids=
 RepositorySearchDialogDeepSearch=false
-RepositorySearchDialogSearchPath=C\:\\Users\\admin\\Desktop\\EF_work
+RepositorySearchDialogSearchPath=C\:\\jjs_project\\spring\\koricWorkspace\\EF_Project
 RepositorySearchDialogSkipHidden=false
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1

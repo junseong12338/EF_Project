@@ -24,7 +24,7 @@ public class ProfileController {
 	
 	//public final static String VIEW_PATH = "/WEB-INF/views/profile/";
 	
-	@RequestMapping(value = { "/", "mypage_view" })
+	@RequestMapping("mypage_view")
 	public String mypage_view() {
 		
 		return Common.profile.VIEW_PATH + "mypage_view.jsp";
