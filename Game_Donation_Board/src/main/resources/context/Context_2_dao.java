@@ -1,6 +1,5 @@
 package context;
 
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +10,24 @@ import dao.ProjectDAO;
 import service.BoardService;
 import service.ProjectService;
 import service.SummerNoteService;
+import dao.UserDAO;
+import service.KakaoLoginService;
+import service.NaverLoginService;
+import service.UserService;
 
 @Configuration
 public class Context_2_dao {
+	
+
 	@Bean
-	public BoardDAO boardDAO(SqlSession sqlSession) {
-		return new BoardDAO(sqlSession);
+	public UserDAO memberDAO(SqlSession sqlSession) {
+		return new UserDAO(sqlSession);
+	}
+
+
+	@Bean
+	public UserService userService(UserDAO userDAO) {
+		return new UserService(userDAO);
 	}
 	
 	@Bean
@@ -43,4 +54,12 @@ public class Context_2_dao {
 		return new ProjectService(projectDAO);
 	}
 	
+    public NaverLoginService naverLoginService() {
+        return new NaverLoginService();
+    }
+	
+	@Bean
+    public KakaoLoginService kakaoLoginService() {
+        return new KakaoLoginService();
+    }
 }
