@@ -1,6 +1,5 @@
 package service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import dao.ProjectDAO;
@@ -14,7 +13,7 @@ public class ProjectService {
 	
 	public ProjectDTO select_project(int idx) {
 		return projectDAO.selectOne_project(idx);
-	
+	}
 	
 	// ��ü list�� ����
 	public int selectOne(ProjectDTO dto){

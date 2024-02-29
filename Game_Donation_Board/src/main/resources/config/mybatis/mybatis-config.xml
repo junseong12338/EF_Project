@@ -12,15 +12,14 @@
 		
 		 <typeAlias type="dto.ProjectDTO" alias="project"/> 
 		  <typeAlias type="dto.UserDTO" alias="user"/> 
-		  <typeAlias type="dto.BoardDTO" alias="board"/> 
-		 <typeAlias type="dto.MemberDTO" alias="member"/> 
+		  
+		  
 	</typeAliases>
 		
 	<mappers>
 		<mapper resource="config/mybatis/mapper/user.xml" />
 		<mapper resource="config/mybatis/mapper/project.xml" />
-		<mapper resource="config/mybatis/mapper/board.xml" />
-		<mapper resource="config/mybatis/mapper/member.xml" />
+		
 	</mappers>
 	
 </configuration>

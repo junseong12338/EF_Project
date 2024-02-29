@@ -45,7 +45,8 @@ public class ProjectController {
 	public String project_list(Model model,
 								@RequestParam(value="pageNum")int page_num_js,
 								@RequestParam(value="sort")int sort_js,
-								@RequestParam(value="category_box")List<Integer> category_js) throws Exception{
+								@RequestParam(value="category_box")List<Integer> category_js
+								) throws Exception{
 		
 		
 		ProjectDTO dto = new ProjectDTO();
@@ -95,7 +96,7 @@ public class ProjectController {
 		model.addAttribute("total_page_count", total_page_count);
 		
 		// ������
-		return Common.Project_list.VIEW_PATH + "project_list.jsp";
+		return "/WEB-INF/views/project_list.jsp";
 	}
 	
 	
@@ -157,7 +158,7 @@ public class ProjectController {
 		// ������
 		model.addAttribute("list", list);
 		
-		return Common.Project_list.VIEW_PATH + "project_list_ajax.jsp";
+		return Common.Board.VIEW_PATH + "project_list_ajax.jsp";
 	}
 
 }
