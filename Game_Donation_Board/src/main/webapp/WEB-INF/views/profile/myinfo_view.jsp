@@ -51,7 +51,7 @@
         color: white;
     }
 
-    input[type="submit"] {
+    button[type="submit"] {
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -59,10 +59,11 @@
             color: #fff;
             font-size: 16px;
             cursor: pointer;
-            margin-left: 20px;
+            margin-left: 5px;
+            margin-top: 20px;
         }
 
-        input[type="submit"]:hover {
+        button[type="submit"]:hover {
             background-color: #a400b3;
             transition: background-color 0.5s;
         }
@@ -136,9 +137,10 @@
                     <label for="username">사용자 닉네임 </label>
                     <input type="text" id="username" name="username" class="nickname"><br><br>
                   </div>
-                  <div class="form-group">
+                 <div class="form-group">
                     <label for="email">이메일 주소 </label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="email" name="email" onblur="validateEmail(this)">
+					<div id="email-error" style="color: red;"></div>
                   </div>      
                 </form>
             </div>
@@ -177,6 +179,35 @@
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
+
+//실시간으로 이메일 형식 유효성 검사
+function validateEmail(input) {
+    const email = input.value;
+    const emailError = document.getElementById('email-error');
+    const re = /\S+@\S+\.\S+/;
+    if (!re.test(email)) {
+        emailError.textContent = '올바른 이메일 주소를 입력하세요.';
+    } else {
+        emailError.textContent = '';
+    }
+}
+
+// 전체 폼 데이터 검증, 이메일 주소 형식이 올바르지 않으면 DB로 전송 막음.
+function validateForm() {
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+
+    // 이메일 주소 유효성 검사
+    const re = /\S+@\S+\.\S+/;
+    if (!re.test(emailInput.value)) {
+        emailError.textContent = '올바른 이메일 주소를 입력하세요.';
+        return false; // 폼 제출 방지
+    } else {
+        emailError.textContent = ''; // 에러 메시지 초기화
+        return true; // 폼 제출 허용
+    }
+}
+
 
 function sample4_execDaumPostcode() {
         new daum.Postcode({
