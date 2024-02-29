@@ -129,29 +129,29 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
-
+  			<form>
             <div id="profile-settings">
                 <h2>프로필 설정</h2><br>
-                <form>
-                  <div class="form-group">
+              
+             <div class="form-group"> 
                     <label for="username">사용자 닉네임 </label>
-                    <input type="text" id="username" name="username" class="nickname"><br><br>
-                  </div>
-                 <div class="form-group">
+                    <input type="text" id="username" name="user_name" class="nickname"><br><br>
+                 </div>
+               <div class="form-group">
                     <label for="email">이메일 주소 </label>
-                    <input type="email" id="email" name="email" onblur="validateEmail(this)">
+                    <input type="email" id="email" name="user_email" onblur="validateEmail(this)">
 					<div id="email-error" style="color: red;"></div>
-                  </div>      
-                </form>
+                  </div>   
             </div>
           		<!-- 배송지 설정 입력란 추가 -->
              <h2>주소 입력</h2><br><br>
-            <input type="text" id="sample4_postcode" placeholder="우편번호">
-            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-            <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-            <input type="text" id="sample4_detailAddress" placeholder="상세주소"><br>
-            
-            <button type="submit">저장</button>
+	            <input type="text" name ="postal_code" id="sample4_postcode" placeholder="우편번호">
+	            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+	            <input type="text" name = "road_name" id="sample4_roadAddress" placeholder="도로명주소">
+	            <input type="text" name = "detailed_address"id="sample4_detailAddress" placeholder="상세주소"><br>
+	            <input type ="hidden" name = "user_addr"/>
+	            <button onclick="addRess(this.form)">저장</button>
+            </form>
                 <!-- 배송지 설정 입력란 추가 -->
                 
             </div>
@@ -254,6 +254,22 @@ function sample4_execDaumPostcode() {
             }
         }).open();
     }
+
+
+
+
+	function addRess(f) {
+
+           
+		let user_addr = f.postal_code.value.trim() +  f.road_name.value.trim() +f.detailed_address.value.trim();
+
+		
+	    f.user_addr.value = user_addr;
+	 // 폼 제출
+        f.action = "address_update";
+        f.method = "POST";
+        f.submit();
+	}
 
   </script>
 

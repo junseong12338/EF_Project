@@ -1,5 +1,8 @@
 package dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 
 import dto.UserDTO;
@@ -29,6 +32,11 @@ public class UserDAO {
 	public int delete(int idx) {
 		
 		return sqlSession.delete("project.user_delete",idx);
+	}
+	
+	public int userUpdate(UserDTO dto) {
+		System.out.println("DAO"+dto);
+	    return sqlSession.update("u.update", dto);
 	}
 		
 }

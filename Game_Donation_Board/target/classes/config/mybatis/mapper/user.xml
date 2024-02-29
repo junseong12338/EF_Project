@@ -25,6 +25,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE from user
 		WHERE user_idx=#{useridx}
 	</delete>
+	
+	<!-- 주소지 등록 -->
+	<update id ="update" parameterType="user">
+		UPDATE EF_USER
+		SET USER_ADDR=#{user_addr,jdbcType=VARCHAR}
+		where user_email=#{user_email}
+	</update>
 
 
 </mapper>

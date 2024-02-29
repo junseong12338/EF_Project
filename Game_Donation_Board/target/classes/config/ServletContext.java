@@ -74,8 +74,8 @@ public class ServletContext implements WebMvcConfigurer {
 
 	
 	@Bean
-	public ProfileController profileController() {
-		return new ProfileController();
+	public ProfileController profileController(UserService userService) {
+		return new ProfileController(userService);
 	}
 
 }
