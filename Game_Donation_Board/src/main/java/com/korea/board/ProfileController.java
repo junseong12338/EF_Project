@@ -52,11 +52,15 @@ public class ProfileController {
 	
 	}
 	
-	@RequestMapping("address")
-	public String address() {
-		System.out.println("dddd");
-		return Common.profile.VIEW_PATH + "address.jsp";
 	
-	}
+	
+	// ∏Æ∫‰ jsp ¿€º∫¡ﬂ
+	
+//	@RequestMapping("review")
+//	public String review() {
+//		return Common.profile.VIEW_PATH + "review.jsp";
+//	
+//	}
 
+	
 }

@@ -47,7 +47,6 @@ public class BoardDAO {
 	}
 
 	
-	
 	public int update_step(BoardDTO dto) {
 		int res = sqlSession.update("b.board_update_step",dto);
 		return res;
