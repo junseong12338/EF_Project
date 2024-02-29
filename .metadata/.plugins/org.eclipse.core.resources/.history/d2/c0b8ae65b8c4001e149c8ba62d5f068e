@@ -1,0 +1,78 @@
+package com.korea.di.di3;
+
+import java.util.*;
+
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import com.google.common.reflect.ClassPath;
+
+
+
+@Component class Car{};
+@Component class SportCar extends Car{};
+@Component class Truck extends Car{};
+@Component class Engine {};
+
+
+
+
+class AppContext{
+	Map map; 
+	public AppContext() throws Exception{
+		map = new HashMap();
+		doComponentScan();
+	}
+	
+	private void doComponentScan() throws Exception{
+	
+		ClassLoader classLoader = AppContext.class.getClassLoader();
+		ClassPath classPath = ClassPath.from(classLoader);
+		
+		Set<ClassPath.ClassInfo> set = classPath.getTopLevelClasses("com.korea.di.di4");
+		
+		for(ClassPath.ClassInfo classInfo : set) {
+			Class clazz = classInfo.load();
+			Component component = (Component)clazz.getAnnotation(Component.class);
+			if(component != null) {
+				String id = StringUtils.uncapitalize(classInfo.getSimpleName());
+				map.put(id, clazz.newInstance());
+			}
+		}
+	}
+	
+	//이름으로 찾기
+	Object getBean(String id){
+		return map.get(id);
+	}
+
+	//타입으로 찾기
+	Object getBean(Class clazz) {
+		for(Object obj : map.values()) {
+			if(clazz.isInstance(obj)) {
+				return obj;
+			}
+		}
+		return null;
+	}
+}
+
+
+public class Main3 {
+	
+
+	public static void main(String[] args)throws Exception {
+		AppContext ac = new AppContext();
+		
+		
+		Car car = (Car)ac.getBean("car"); //byName으로 객체를 검색
+		System.out.println("car= " + car);
+		
+		Car car2 = (Car)ac.getBean(Car.class); //byType으로 객체를 검색
+		System.out.println("car2= " + car2);
+		
+		Engine engine = (Engine)ac.getBean("engine");
+		System.out.println("engine= " + engine);
+	}
+
+}

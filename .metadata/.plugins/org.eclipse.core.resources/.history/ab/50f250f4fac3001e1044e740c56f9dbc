@@ -1,0 +1,12 @@
+package com.korea.dto;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Data
+public class PersonDTO {
+	private String name;
+	private String age;
+}

@@ -1,0 +1,21 @@
+package com.korea.di;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import service.BoardServiceImpl;
+
+@Controller
+public class BoardController {
+	
+	BoardServiceImpl service;
+
+	//생성자 인젝션을 위한 service객체를 파라미터로 받는 생성자
+	public BoardController(BoardServiceImpl service) {
+		System.out.println("--BoardController()의 생성자--");
+		this.service = service;
+	}
+}
