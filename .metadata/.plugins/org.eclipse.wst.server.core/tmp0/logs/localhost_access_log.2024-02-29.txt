@@ -123,3 +123,14 @@
 0:0:0:0:0:0:0:1 - - [29/Feb/2024:17:38:16 +0900] "GET /board/resources/fileupload/temp/io0c87b381-8569-479d-8bbe-8ab15b48c2aa.png HTTP/1.1" 200 23052
 0:0:0:0:0:0:0:1 - - [29/Feb/2024:17:38:25 +0900] "POST /board/summernote_send HTTP/1.1" 302 -
 0:0:0:0:0:0:0:1 - - [29/Feb/2024:17:38:25 +0900] "GET /board/ HTTP/1.1" 200 1033
+127.0.0.1 - - [29/Feb/2024:18:00:07 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:07 +0900] "GET /board/ HTTP/1.1" 200 1033
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:07 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:08 +0900] "GET /board/editor_test HTTP/1.1" 200 4076
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:08 +0900] "GET /resources/js/summernote-ko-KR.js HTTP/1.1" 404 847
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:08 +0900] "GET /resources/js/summernote-lite.js HTTP/1.1" 404 846
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:08 +0900] "GET /resources/css/summernote-lite.css HTTP/1.1" 404 848
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:14 +0900] "POST /board/uploadSummernoteImageFile HTTP/1.1" 200 110
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:14 +0900] "GET /board/resources/fileupload/temp/ioab3e2d34-b68f-4a8a-9dc7-bb83987c5199.png HTTP/1.1" 200 9714
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:17 +0900] "POST /board/summernote_send HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [29/Feb/2024:18:00:17 +0900] "GET /board/ HTTP/1.1" 200 1033
