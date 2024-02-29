@@ -107,7 +107,7 @@
                       <li><a href="myinfo_view">내 정보</a></li>
                       <li>후원 누적 포인트 <span>1,100,000 Point</span></li>
                       <li>잔여 포인트 <span>7,000 Point</span></li>
-                      <li>리뷰 <span>30</span></li>
+                      <li><a href="review">리뷰</a></li>
                       <li>포인트 충전
                         <a href="charge_view">
                           <button id="recharge-button" style="margin-left: 135px; background-color: #bb4ab1; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.5s;" onmouseover="this.style.backgroundColor='#a400b3'" onmouseout="this.style.backgroundColor='#bb4ab1'">충전하기</button>

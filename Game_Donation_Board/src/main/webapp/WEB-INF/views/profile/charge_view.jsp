@@ -111,6 +111,14 @@
   height: auto; /* 이미지의 높이를 자동으로 조정합니다. */
 }
 
+#KG이니시스 {
+      width: 100px; /* 버튼의 너비를 조정합니다. */
+      border-radius:15px;
+    }
+
+    .payment-button:not(:last-child) {
+      margin-right: 20px;
+    }
 
 #recharge {
   margin-left: 0px;
@@ -163,7 +171,7 @@
                         <li><a href="browse.html">Browse</a></li>
                         <li><a href="details.html">Details</a></li>
                         <li><a href="streams.html">Streams</a></li>
-                        <li><a href="profile.html" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
+                        <li><a href="mypage_view" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
                     </ul>   
                     <a class='menu-trigger'>
                         <span>Menu</span>
@@ -186,11 +194,14 @@
                  <button onclick="requestPay()" id="kakao-pay" class="payment-button">
                   <img src="./resources/images/카카오페이.jpg" alt="카카오페이">
                 </button>
+                <button id="KG이니시스" class="KG이니시스">
+                <img src="./resources/images/KG이니시스.jpg" alt="KG이니시스">
+              </button>
+              </div><br>
             </div>
             </div>
         </div>
     </div>
-  </div>
   <footer>
     <div class="container">
       <div class="row">
