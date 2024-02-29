@@ -1,20 +1,37 @@
 package dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class ProjectDTO {
-	private int project_idx;
 	
+	private int project_idx;
 	private int user_idx;
+	private int project_status;
+	private int project_target;
 	
 	private String project_title;
 	private String project_content;
-	private int project_status;
 	private String project_img;
 	private String project_start;
 	private String project_end;
-	private int project_target;
+	
+	// DB�� �߰��ؾ��Ѵ�
+	private String project_subtitle;
+	// ���;���
+	private String project_author;
+	// �� �ݵ��ݾ� - sql���� alias �ؼ� �ܾ�� ����
+	private String project_donation;
+	
+	// ī�װ��� 10��
+	private List<Integer> category_list;
+	// ���Ĺ��
+	private int sort;
+	// list Start,End,Count Num
+	private int start;
+	private int end;
+	private int count;
+	
 }

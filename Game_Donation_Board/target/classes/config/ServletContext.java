@@ -22,6 +22,9 @@ import service.NaverLoginService;
 import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
+import com.korea.board.ProjectController;
+
+import service.ProjectService;
 
 
 @Configuration
@@ -73,6 +76,9 @@ public class ServletContext implements WebMvcConfigurer {
 	@Bean
 	public ProfileController profileController() {
 		return new ProfileController();
+	}
+	public ProjectController projectController(ProjectService projectService) {
+		return new ProjectController(projectService);
 	}
 
 }
