@@ -1,5 +1,7 @@
 package service;
 
+import org.springframework.stereotype.Service;
+
 import dao.UserDAO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;

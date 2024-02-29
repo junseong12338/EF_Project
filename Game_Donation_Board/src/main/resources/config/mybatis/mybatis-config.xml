@@ -9,11 +9,14 @@
 	</settings>
 	
 	<typeAliases>
+		
+		 <typeAlias type="dto.ProjectDTO" alias="project"/> 
 		  <typeAlias type="dto.UserDTO" alias="user"/> 
 	</typeAliases>
 		
 	<mappers>
 		<mapper resource="config/mybatis/mapper/user.xml" />
+		<mapper resource="config/mybatis/mapper/project.xml" />
 	</mappers>
 	
 </configuration>
