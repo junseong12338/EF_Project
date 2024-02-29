@@ -1,0 +1,8 @@
+# .metadata 디렉토리 내의 모든 파일과 디렉토리 무시
+.metadata/*
+
+# .metadata/.plugins 디렉토리 내의 모든 파일과 디렉토리 무시
+.metadata/.plugins/*
+
+# .metadata/.plugins/org.eclipse.wst.server.core 디렉토리 내의 파일과 디렉토리는 받아옴
+!.metadata/.plugins/org.eclipse.wst.server.core/
