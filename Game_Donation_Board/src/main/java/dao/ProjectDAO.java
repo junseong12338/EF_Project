@@ -1,5 +1,8 @@
 package dao;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import dto.ProjectDTO;
@@ -10,7 +13,7 @@ public class ProjectDAO {
 	
 	final SqlSession sqlsession;
 	
-	//±Û ÀÛ¼º Àü ±Û ¹øÈ£ ¹Ì¸® °¡Á®¿À±â
+	//ï¿½ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È£ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int select_idx() {
 		return sqlsession.selectOne("pj.select_idx");
 	}
@@ -23,9 +26,62 @@ public class ProjectDAO {
 		return sqlsession.selectOne("pj.select_idx",project_content);
 	}
 	
-	//±Û ÇÑ°³ °¡Á®¿À±â
+	//ï¿½ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public ProjectDTO selectOne_project(int idx) {
 		return sqlsession.selectOne("pj.selectOne_project",idx);
 	}
+	
+	
+	// list ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
+	public int get_list_count(ProjectDTO dto) {
+		return sqlSession.selectOne("project.project_list_count",dto);
+	}
+	
+	//-----------------------------------------------------------
+	
+	
+	// ï¿½ï¿½ï¿½à¿¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯
+	public int getBeforeListTotal() {
+		return sqlSession.selectOne("project.project_before_count");
+		}
+	
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯
+	public int getNowListTotal() {
+		return sqlSession.selectOne("project.project_now_count");
+	}
+	
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯
+	public int getAfterListTotal() {
+		int listTotal = sqlSession.selectOne("project.project_after_count");
+		return listTotal;
+		}
+	
+	//---------------------------------------------------------------------------------------
+	// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®
+	public List<ProjectDTO> selectList(ProjectDTO dto){
+		return sqlSession.selectList("project.project_list",dto);
+	}
+	
+	//----------------------------------------------------------------------
+	
+	// ï¿½ï¿½ï¿½à¿¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®
+	public List<ProjectDTO> selectListBefore(HashMap<String, Object> map){
+		List<ProjectDTO> list = sqlSession.selectList("project.project_before_list",map);
+		return list;
+	}
+	
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®
+	public List<ProjectDTO> selectListNow(HashMap<String, Object> map){
+		List<ProjectDTO> list = sqlSession.selectList("project.project_now_list",map);
+		return list;
+	}
+	
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®
+	public List<ProjectDTO> selectListAfter(HashMap<String, Object> map){
+		List<ProjectDTO> list = sqlSession.selectList("project.project_after_list",map);
+		return list;
+	}
+	
+	//---------------------------------------------------------------------------------------
 	
 }
