@@ -25,6 +25,8 @@
 <script>
 //스크롤 이벤트 처리
 let currentPage = 1;
+let category = [0,0,0,0,0,0,0,0,0,0];
+let sort = 0;
 
 let isLoading = false;
 
@@ -55,9 +57,13 @@ const GetList = function(currentPage){
 
     // 무한 스크롤
     $.ajax({
-        url : "ajax_list",
+        url : "now_ajax_list",
         method : "GET",
-        data : "pageNum="+currentPage+"&keyword=${keyword}",
+        data : {
+        	pageNum : currentPage,
+        	sort : sort,
+        	category_box : category
+        },
         success:function(data){
             console.log("ajax 데이터 : " + data);
 
@@ -69,16 +75,17 @@ const GetList = function(currentPage){
     });
 };
 
+// 로딩시 1페이지 실행
 $(document).ready(function(){
 	GetList(1);
 })
 
-function search(f){
-	f.submit();
-}
+function select(value){
+    sort = value;
+  }
 
 function send(n){
-	
+	category[n-1] = n;
 }
 
 </script>
@@ -148,71 +155,72 @@ function send(n){
     <ul>
       <li>
         <a href="#" onclick="send(1)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">1
-		
-        <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
-        
+          <c:if test="category[0] == true">
+            <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(2)" class="category" >2
-        <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
-
+        <a href="#" onclick="send(2)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">2
+          <c:if test="category[1] == true">
+            <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(3)" class="category">3
-        <c:if test="category_3">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(3)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">3
+          <c:if test="category[2] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(4)" class="category">4
-        <c:if test="category_4">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(4)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">4
+          <c:if test="category[3] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(5)" class="category">5
-        <c:if test="category_5">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(5)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">5
+          <c:if test="category[4] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(6)" class="category">6
-        <c:if test="category_6">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(6)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">6
+          <c:if test="category[5] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(7)" class="category">7
-        <c:if test="category_7">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(7)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">7
+          <c:if test="category[6] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(8)" class="category">8
-        <c:if test="category_8">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(8)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">8
+          <c:if test="category[7] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(9)" class="category">9
-        <c:if test="category_9">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(9)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">9
+          <c:if test="category[8] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(10)" class="category">10
-        <c:if test="category_10">
-        <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
-        </c:if>
+        <a href="#" onclick="send(10)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">10
+          <c:if test="category[9] == true">
+            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          </c:if>
         </a>
       </li>
     </ul>
@@ -232,6 +240,19 @@ function send(n){
                 <div class="project-list header-text">
                   <div class="heading-section">
                     <h4><em>진행중인</em> 프로젝트</h4>
+                    
+                    <!-- select 박스 Start -->
+                    <div>
+                      <form>
+                        <select id="selectScope">
+                          <option value="0" onclick="select(this.value)">인기순</option>
+                          <option value="1" onclick="select(this.value)">최신순</option>
+                          <option value="2" onclick="select(this.value)">최대 후원순</option>
+                        </select>
+                      </form>
+                    </div>
+                    <!-- select 박스 End -->
+                    
                     <hr>
                     <div style="text-align: center;"><h6><em style="font-size: larger;">${list_count}</em>&nbsp;&nbsp;&nbsp;건의 프로젝트가 있습니다.</h6></div>
                     <hr>
