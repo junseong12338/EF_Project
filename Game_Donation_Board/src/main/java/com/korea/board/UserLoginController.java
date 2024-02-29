@@ -35,7 +35,7 @@ public class UserLoginController {
 		return "[{\"param\":\"clear\"}]";
 	}
 	
-	// 로그아웃
+	// 로그아웃 
     // 세션에서 토큰을 삭제합니다.
 	@RequestMapping("logout")
 	public String logout() {
