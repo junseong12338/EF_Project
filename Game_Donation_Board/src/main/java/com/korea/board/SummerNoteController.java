@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonObject;
 
 import lombok.RequiredArgsConstructor;
-import service.BoardService;
 import service.SummerNoteService;
 
 @Controller
@@ -45,9 +44,9 @@ public class SummerNoteController {
 	
 	
 	/*
-	 * ¼¶¸Ó³ëÆ® ÀÌ¹ÌÁö,ÆÄÀÏ ¾÷·Îµå Ã³¸®
-	 * ¿¡µðÅÍ¿¡ ÀÌ¹ÌÁö, ÆÄÀÏÀ» µî·ÏÇÏ¸é
-	 * ÀÓ½ÃÆú´õ¿¡ ÀúÀå(fileRoot)
+	 * ï¿½ï¿½ï¿½Ó³ï¿½Æ® ï¿½Ì¹ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ Ã³ï¿½ï¿½
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
+	 * ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(fileRoot)
 	 */
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -56,29 +55,29 @@ public class SummerNoteController {
 		
 		
         /*
-		 * String fileRoot = "C:\\summernote_image\\"; // ¿ÜºÎ°æ·Î·Î ÀúÀåÀ» Èñ¸ÁÇÒ¶§.
+		 * String fileRoot = "C:\\summernote_image\\"; // ï¿½ÜºÎ°ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½.
 		 */
-		//ÆÄÀÏ ¾÷·Îµå ±âº»°æ·Î
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½âº»ï¿½ï¿½ï¿½
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 		System.out.println("uploadSummernoteImageFile colled.....");
-		// ³»ºÎ°æ·Î·Î ÀúÀå
+		// ï¿½ï¿½ï¿½Î°ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½
 		String fileRoot = contextRoot+"resources/fileupload/temp/io";
 		
-		String originalFileName = multipartFile.getOriginalFilename();	//¿À¸®Áö³¯ ÆÄÀÏ¸í
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//ÆÄÀÏ È®ÀåÀÚ
-		String savedFileName = UUID.randomUUID() + extension;	//ÀúÀåµÉ ÆÄÀÏ ¸í
+		String originalFileName = multipartFile.getOriginalFilename();	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½
+		String savedFileName = UUID.randomUUID() + extension;	//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		
 		File targetFile = new File(fileRoot + savedFileName);	
 		try {
 			InputStream fileStream = multipartFile.getInputStream();			
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//ÆÄÀÏ ÀúÀå
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			
 			System.out.println("contextRoot : " + contextRoot.toString());
-			jsonObject.addProperty("url","/board/resources/fileupload/temp/io"+savedFileName); // contextroot + resources + ÀúÀåÇÒ ³»ºÎ Æú´õ¸í
+			jsonObject.addProperty("url","/board/resources/fileupload/temp/io"+savedFileName); // contextroot + resources + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile);	//ÀúÀåµÈ ÆÄÀÏ »èÁ¦
+			FileUtils.deleteQuietly(targetFile);	//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
@@ -89,30 +88,30 @@ public class SummerNoteController {
 	}
 	
 	/*
-	 * ±Û ÀÛ¼ºÁß ÀÌ¹ÌÁö,ÆÄÀÏ µî·Ï ÈÄ »èÁ¦ ½Ã 
-	 * ÀÌ¹Ì ÀúÀåµÈ ÀÌ¹ÌÁö, ÆÄÀÏ »èÁ¦ 
+	 * ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
+	 * ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	 */
 	@RequestMapping(value = "/deleteSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void deleteSummernoteImageFile(@RequestParam("file") String fileName) {
 		System.out.println("deleteSummernoteImageFile colled.....");
-		//ÆÄÀÏ ¾÷·Îµå ±âº»°æ·Î
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½âº»ï¿½ï¿½ï¿½
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-	    // Æú´õ À§Ä¡
+	    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 	    String filePath = contextRoot + "resources/fileupload/temp/";
 	    
-	    // ÇØ´ç ÆÄÀÏ »èÁ¦
+	    // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    deleteFile(filePath, fileName);
 	}
 	/*
-	 * ±Û ÀÛ¼º ¿Ï·á ¸ÅÇÎ ¸Þ¼­µå
+	 * ï¿½ï¿½ ï¿½Û¼ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/summernote_send")
 	public String summernote_send(String editordata) {
 
-		//ÆÄÀÏ ¾÷·Îµå ±âº»°æ·Î
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½âº»ï¿½ï¿½ï¿½
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-		// Æú´õ À§Ä¡
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 	    String filePath = contextRoot + "resources/fileupload/temp/";
 		
 	    
@@ -125,12 +124,12 @@ public class SummerNoteController {
 			}
 			System.out.println("idx :" + idx);
 			
-			// temp ¿¡¼­ ÀúÀåµÈ µ¥ÀÌÅÍµé ¾÷·Îµå
+			// temp ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½Îµï¿½
 		    String temp_folder = contextRoot + "resources/fileupload/temp/";
 		    String idx_folder = contextRoot + "resources/fileupload/" + idx + "/";
 		    fileUpload(temp_folder, idx_folder);
 			
-		    //temp Æú´õ ¾È session¿¡ ÀúÀåµÇ¾îÀÖ´Â À¯ÀúemailÀÌ ÀÌ¸§¿¡ Æ÷ÇÔµÈ ÀÌ¹ÌÁö »èÁ¦
+		    //temp ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ sessionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½emailï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
 		    
 		} catch (Exception e) {
@@ -143,17 +142,17 @@ public class SummerNoteController {
 		return "redirect:/";
 	}
 	
-	// À§Ä¡°ªÀ¸·Î ³»ºÎ ÆÄÀÏ ÀÌ¸§ °¡Á®¿À±â
+	// ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private List<String> getFileNamesFromFolder(String folderName) {
-	    // ÆÄÀÏ ÀÌ¸§À» ÀúÀåÇÒ ¸®½ºÆ® »ý¼º
+	    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	    List<String> fileNames = new ArrayList<>();
 
-	    // ÁÖ¾îÁø Æú´õ °æ·Î¸¦ ±â¹ÝÀ¸·Î Æú´õ °´Ã¼ »ý¼º
+	    // ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 	    File folder = new File(folderName);
-	    // Æú´õ ³»ÀÇ ÆÄÀÏµéÀ» °¡Á®¿È
+	    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    File[] files = folder.listFiles();
 	    if (files != null) {
-	        // ÆÄÀÏÀÎ °æ¿ì ÆÄÀÏ ÀÌ¸§À» ¸®½ºÆ®¿¡ Ãß°¡
+	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
 	        for (File file : files) {
 	            if (file.isFile()) {
 	            	if(file.getName().contains("io")) {
@@ -162,23 +161,23 @@ public class SummerNoteController {
 	            }
 	        }
 	    }
-	    // ÆÄÀÏ ÀÌ¸§À» ´ãÀº ¸®½ºÆ® ¹ÝÈ¯
+	    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
 	    return fileNames;
 	}
 	
 	
-	// ´õ¹Ì ÆÄÀÏ »èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void removeDummyFiles(List<String> fileNames, String filePath) {
-	    // ÁÖ¾îÁø ÆÄÀÏ ÀÌ¸§ ¸®½ºÆ®¸¦ ±â¹ÝÀ¸·Î ÆÄÀÏÀ» »èÁ¦
+	    // ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    for (String fileName : fileNames) {
-	        // contents ¹®ÀÚ¿­¿¡ ÆÄÀÏ ÀÌ¸§ÀÌ Æ÷ÇÔµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì ÆÄÀÏ »èÁ¦
+	        // contents ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	        
 	            deleteFile(filePath, fileName);
 	        
 	    }
 	}
 	
-	// ÆÄÀÏ ÇÏ³ª »èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½
 		private void deleteFile(String filePath, String fileName) {
 		    Path path = Paths.get(filePath, fileName);
 		    try {
@@ -188,24 +187,24 @@ public class SummerNoteController {
 		    }
 		}
 	
-	// ÇÏÀ§ Æú´õ º¹»ç
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void fileUpload(String temp_folder, String idx_folder) {
-	    // ÁÖ¾îÁø °æ·Î¸¦ ±â¹ÝÀ¸·Î Æú´õ °´Ã¼ »ý¼º
+	    // ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 	    File folder1;
 	    File folder2;
 	    folder1 = new File(temp_folder);
 	    folder2 = new File(idx_folder);
 
-	    // Æú´õ°¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é »õ·Î »ý¼º
+	    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    if (!folder1.exists())
 	        folder1.mkdirs();
 	    if (!folder2.exists())
 	        folder2.mkdirs();
 	    
-	    // Æú´õ1ÀÇ ÆÄÀÏµéÀ» °¡Á®¿È
+	    // ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    File[] target_files = folder1.listFiles();
 	    for (File file : target_files) {
-	        // Æú´õ2¿¡ µ¿ÀÏÇÑ ÆÄÀÏ »ý¼º
+	        // ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    	File temp = null; 	    		
 	    	if(file.getName().contains("io"))
 	    	{
@@ -213,12 +212,12 @@ public class SummerNoteController {
 	    	}
 	        
 	    	if(temp != null) {
-		    		// ÆÄÀÏÀÎ °æ¿ì
+		    		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		    		if (file.isDirectory()) {
-		    			// Æú´õÀÎ °æ¿ì µ¿ÀÏÇÑ Æú´õ »ý¼º
+		    			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    			temp.mkdir();
 		    		} else {
-		    			// Æú´õ°¡ ¾Æ´Ñ °æ¿ì ÆÄÀÏ º¹»ç
+		    			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    			FileInputStream fis = null;
 		    			FileOutputStream fos = null;
 		    			try {
@@ -233,7 +232,7 @@ public class SummerNoteController {
 		    				e.printStackTrace();
 		    			} finally {
 		    				try {
-		    					// ¿¹¿Ü ¹ß»ý ¿©ºÎ¿Í »ó°ü¾øÀÌ ÆÄÀÏ ÀÔÃâ·Â ½ºÆ®¸²À» ´ÝÀ½
+		    					// ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    					fis.close();
 		    					fos.close();
 		    				} catch (IOException e) {

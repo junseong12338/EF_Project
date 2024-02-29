@@ -9,18 +9,16 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.korea.board.BoardController;
-import com.korea.board.ProjectController;
-import com.korea.board.SummerNoteController;
-
-import service.BoardService;
-import service.ProjectService;
-import service.SummerNoteService;
 import com.korea.board.KakaoLoginController;
 import com.korea.board.NaverLoginController;
+import com.korea.board.ProjectController;
+import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
 import service.KakaoLoginService;
 import service.NaverLoginService;
+import service.ProjectService;
+import service.SummerNoteService;
 import service.UserService;
 
 
