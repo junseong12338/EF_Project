@@ -1,0 +1,17 @@
+package com.korea.first;
+
+public class MethodInfo {
+	
+	public static void main(String[] args) throws Exception{
+		// 스프링이 매개변수 얻어오는 두가지 방법
+		// 1.  reflection API
+		// 먼저 reflection API를 통해서 매개변수의 이름을 얻어오려고 시도한다.
+		// 2 . Class File
+		// 1. 방법 실패하면 클래스파일을 직접 읽어서 매개변수의 이름을 가져온다.
+		
+		// Class클래스 : 클래스 정보를 얻어오기 위한 클래스
+		// forName() : 클래스의 파일명은 인자로 넣어주면 해당 클래스 정보 반환
+		Class clazz = Class.forName("com.korea.first.YoilTeller");
+		
+	}
+}
