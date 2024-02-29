@@ -3,6 +3,7 @@ package config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,10 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.korea.board.BoardController;
 import com.korea.board.KakaoLoginController;
 import com.korea.board.NaverLoginController;
+import com.korea.board.ProjectController;
+import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
 import service.KakaoLoginService;
 import service.NaverLoginService;
+import service.ProjectService;
+import service.SummerNoteService;
 import service.UserService;
 
 
@@ -47,5 +52,18 @@ public class ServletContext implements WebMvcConfigurer {
 		return new KakaoLoginController(userService,kakaoLoginService);
 	}
 	
-
+	@Bean SummerNoteController summerNoteController(SummerNoteService summerNoteService) {
+		return new SummerNoteController(summerNoteService);
+	}
+	
+	@Bean ProjectController projectController(ProjectService projectService) {
+		return new ProjectController(projectService);
+	}
+	
+	 @Bean(name = "multipartResolver")
+	    public CommonsMultipartResolver commonsMultipartResolver() {
+	        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+	        resolver.setMaxUploadSize(100000000);
+	        return resolver;
+	    }
 }

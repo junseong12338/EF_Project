@@ -8,7 +8,7 @@ import util.Common;
 @Controller
 public class BoardController {
 
-	@RequestMapping(value = { "/", "board_list" })
+	@RequestMapping(value = { "/", "board_list" })	
 	public String list() {
 		// 한글 깨짐 테스트 이준성 머지 테스트
 		return Common.Board.VIEW_PATH + "board_list.jsp";
@@ -16,5 +16,6 @@ public class BoardController {
 
 
 
+	
 
 }
