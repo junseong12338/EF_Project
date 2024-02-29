@@ -1,8 +1,0 @@
-package dao;
-
-public interface BoradDAO {
-	
-	// dao 는 기본적으로 CRUD 기능을 가지고 있다.
-	
-	int insert(Object ob);
-}
