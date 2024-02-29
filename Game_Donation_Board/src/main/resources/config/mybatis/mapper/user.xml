@@ -12,6 +12,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO EF_USER VALUES (SEQ_EF_USER_IDX.NEXTVAL, 1, #{user_email}, #{user_name}, #{user_pw, jdbcType=VARCHAR} , '', 1, '', '', 0)
    </insert>
 
+	<!-- 포인트 업데이트  -->
+	<update id="update_point" parameterType="int">
+		 UPDATE users
+        SET user_point = #{userPoint}
+        WHERE user_id = #{userId}
+	</update>
+	
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="user_delete" parameterType="int">
+		DELETE from user
+		WHERE user_idx=#{useridx}
+	</delete>
+
+
 </mapper>
 
 

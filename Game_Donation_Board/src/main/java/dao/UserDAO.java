@@ -18,7 +18,17 @@ public class UserDAO {
 	public int userInsert(UserDTO dto) {
 		return sqlSession.insert("u.insert",dto);
 	}
-	
-	
+	// ����Ʈ ������Ʈ	
+	public int update_point(int point) {
+		
+		return sqlSession.update("project.update_point",point);
+					
+	}
 
+	// ȸ�� Ż��
+	public int delete(int idx) {
+		
+		return sqlSession.delete("project.user_delete",idx);
+	}
+		
 }

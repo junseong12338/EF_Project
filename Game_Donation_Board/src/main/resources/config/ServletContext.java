@@ -14,6 +14,8 @@ import com.korea.board.NaverLoginController;
 import com.korea.board.ProjectController;
 import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
+//import com.korea.board.BoardController;
+import com.korea.board.ProfileController;
 
 import service.KakaoLoginService;
 import service.NaverLoginService;
@@ -66,4 +68,11 @@ public class ServletContext implements WebMvcConfigurer {
 	        resolver.setMaxUploadSize(100000000);
 	        return resolver;
 	    }
+
+	
+	@Bean
+	public ProfileController profileController() {
+		return new ProfileController();
+	}
+
 }
