@@ -1,0 +1,16 @@
+package com.korea.mvc;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+public class RequestParmTest {
+	
+	@RequestMapping("/requestParam")
+	public String main(HttpServletRequest request) {
+		String year = request.getParameter("year");
+//		http://localhost/ch2/requestParam         ---->> year=null
+//		http://localhost/ch2/requestParam?year=   ---->> year=""
+//		http://localhost/ch2/requestParam?year    ---->> year=""
+		System.out.printf("[%s]year=[%s]%n", new Date(), year);
+		return "yoil";
+	}
+}

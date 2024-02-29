@@ -1,0 +1,10 @@
+package com.korea.di;
+
+import org.springframework.stereotype.Controller;
+
+import service.BoardServiceImpl;
+
+@Controller
+public class BoardCotroller {
+	BoardServiceImpl
+}
