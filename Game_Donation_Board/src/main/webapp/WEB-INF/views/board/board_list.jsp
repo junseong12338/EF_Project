@@ -7,7 +7,7 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
-
+    <!-- 내꺼 -->
     <script></script>
   </head>
   <body>
