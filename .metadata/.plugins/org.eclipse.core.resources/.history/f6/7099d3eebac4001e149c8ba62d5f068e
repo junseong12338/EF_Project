@@ -1,0 +1,8 @@
+package com.korea.di;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Coding {
+
+}
