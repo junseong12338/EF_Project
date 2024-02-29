@@ -14,7 +14,10 @@ public class BoardController {
 		return Common.Board.VIEW_PATH + "board_list.jsp";
 	}
 
-
+	@RequestMapping("editor_test")
+	 public String editor_test() {
+		return Common.Board.VIEW_PATH + "editor_test.jsp";
+	}
 
 	
 
