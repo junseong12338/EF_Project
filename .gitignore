@@ -127,5 +127,6 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
 *.project
 *.properties
+Servers/
 Game_Donation_Board/.classpath
 Game_Donation_Board/target/
