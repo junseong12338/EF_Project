@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,windows
 
 ### Eclipse ###
-.metadata/
+
 bin/
 tmp/
 *.tmp
@@ -16,7 +16,8 @@ local.properties
 
 
 # 특정 경로만 제외하고 받아옴
-!.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/Game_Donation_Board/resources
+.metadata/
+!.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/Game_Donation_Board/resources/
 
 
 # External tool builders
