@@ -1,0 +1,28 @@
+package com.korea.di;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+
+@Component
+@Getter
+@Setter
+public class Coding {
+	
+//	// 필드 주입
+//	@Autowired
+//	Computer computer;
+	
+	// setter주입
+
+	Computer computer;
+	
+	public Computer getComputer() {
+		return computer;
+	}
+
+	public void setComputer(Computer computer){
+		this.computer = computer;
+	}
+}

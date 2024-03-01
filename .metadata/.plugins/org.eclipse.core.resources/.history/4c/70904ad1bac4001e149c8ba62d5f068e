@@ -1,0 +1,7 @@
+package com.korea.di;
+
+
+@Compoent
+public class Computer {
+
+}

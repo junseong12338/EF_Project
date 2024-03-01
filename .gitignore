@@ -1,8 +1,4 @@
-# .metadata 디렉토리 내의 모든 파일과 디렉토리 무시
-.metadata/*
 
-# 특정 경로만 제외하고 받아옴
-!.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/Game_Donation_Board/resources
 
 
 # External tool builders

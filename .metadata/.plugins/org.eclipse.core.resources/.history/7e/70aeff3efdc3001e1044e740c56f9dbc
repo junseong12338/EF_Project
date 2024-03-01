@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+    <%
+	PersonDTO p1 = new PersonVO();
+	p1.setName("일길동");
+	p1.setAge(30);
+	p1.setTel("010-111-2222");
+	
+	PersonVO p2 = new PersonVO("이길동","010-3333-3333",35);
+	
+	request.setAttribute("p1", p1);
+	request.setAttribute("p2", p2);
+
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>
