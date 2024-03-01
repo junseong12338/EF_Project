@@ -1,5 +1,7 @@
 package service;
 
+import java.util.HashMap;
+
 import dao.UserDAO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,10 @@ public class UserService {
 	
 	public int userInsert(UserDTO dto) {
 		return userDAO.userInsert(dto);
+	}
+	
+	public int userUpdate(UserDTO dto) {
+		return userDAO.userUpdate(dto);
 	}
 	
 }

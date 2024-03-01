@@ -1,0 +1,23 @@
+리스트에 들어갈 목록
+
+- 이미지
+- 카테고리 / 작성자이름
+- 제목
+- 내용 ... ( 글자수 짤라서 + ... ) <- 소제목
+- 펀딩금액(크기 지정) / 목표금액 달성정도(%)
+
+
+조회할 때 조건
+- 최신 순, 인기 순(LIKE), 최대 후원 순, 달성% 순
+	- default : 인기 순
+
+인기순으로 - project 테이블에 참조된 like 테이블에서 컬럼수를 가져와서 랭크를 매긴다
+SELECT A.*
+FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX ASC) AS "RANK_NO" 
+        FROM EF_PROJECT A, (SELECT A.PROJECT_IDX, 
+                          COUNT(B.PROJECT_IDX) AS "LIKE_COUNT"
+                            FROM EF_PROJECT A
+                            LEFT JOIN EF_LIKE B ON A.PROJECT_IDX = B.PROJECT_IDX
+                            GROUP BY A.PROJECT_IDX) B
+        WHERE A.PROJECT_IDX = B.PROJECT_IDX) A
+WHERE A.RANK_NO BETWEEN 1 AND 10;
