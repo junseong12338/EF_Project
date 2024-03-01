@@ -7,8 +7,6 @@
 !.metadata/.plugins/org.eclipse.wst.server.core/
 
 
-
-
 # External tool builders
 .externalToolBuilders/
 
@@ -110,3 +108,6 @@ $RECYCLE.BIN/
 *.msix
 *.msm
 *.ms
+
+# Servers 폴더 무시
+Servers/
