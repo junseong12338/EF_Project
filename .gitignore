@@ -15,9 +15,7 @@ local.properties
 .recommenders
 
 
-# 특정 경로만 제외하고 받아옴
-.metadata/
-!.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/Game_Donation_Board/resources/
+# 특정 경로만 제외하고 받아옴 이미지 업로드 때문에 메타데이터 일단 허용
 
 
 # External tool builders
