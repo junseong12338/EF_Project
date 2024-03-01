@@ -1,5 +1,9 @@
-# .metadata 디렉토리 내의 모든 파일과 디렉토리 무시
-.metadata/*
+
+# Created by https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,windows
+
+### Eclipse ###
+.metadata
 bin/
 tmp/
 *.tmp
@@ -10,17 +14,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
-
-
 # 특정 경로만 제외하고 받아옴
 !.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/Game_Donation_Board/resources
-
-
-
-
-
-
 
 
 # External tool builders
@@ -123,7 +118,13 @@ $RECYCLE.BIN/
 *.msi
 *.msix
 *.msm
-*.ms
+*.msp
 
-# Servers 폴더 무시
-Servers/
+# Windows shortcuts
+*.lnk
+
+# End of https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
+*.project
+*.properties
+Game_Donation_Board/.classpath
+Game_Donation_Board/target/
