@@ -1,0 +1,5 @@
+package com.korea.di;
+
+public class SpringDITest {
+
+}
