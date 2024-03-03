@@ -37,12 +37,10 @@ $(window).on("scroll",function(){
     let isBottom = scrollTop + windowHeight >= documentHeight;// 스크롤이 바닥에 닿을 때
 
     if(isBottom){
-        if(currentPage == ${total_page_count} || isLoading){
+        if(currentPage == ${total_page_count}){
             return;
         }
 
-        isLoading = true;
-        $(".back-drop").show();
         currentPage++;
         
         console.log("스크롤 - 현재페이지 : " + currentPage);
@@ -52,12 +50,12 @@ $(window).on("scroll",function(){
 });
 
 // list 가져오기
-const GetList = function(currentPage){
+const GetList = function(currentPage, sort, category){
     console.log("리스트 - 현재페이지 : " + currentPage);
 
     // 무한 스크롤
     $.ajax({
-        url : "now_ajax_list",
+        url : "ajax_list",
         method : "GET",
         data : {
         	pageNum : currentPage,
@@ -71,21 +69,27 @@ const GetList = function(currentPage){
             $(".back-drop").hide();
             isLoading = false;
             console.log("ajax 잘넘어옴");
-        };
+        }
     });
 };
 
 // 로딩시 1페이지 실행
 $(document).ready(function(){
-	GetList(1);
+	GetList(1, 0, [0,0,0,0,0,0,0,0,0,0]);
 })
 
 function select(value){
     sort = value;
+    
+    $(".project-list-container").empty();
+    GetList(1, sort, category);
   }
 
 function send(n){
 	category[n-1] = n;
+	
+	$(".project-list-container").empty();
+	GetList(1, sort, category);
 }
 
 </script>
@@ -155,70 +159,70 @@ function send(n){
     <ul>
       <li>
         <a href="#" onclick="send(1)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">1
-          <c:if test="category[0] == true">
+          <c:if test="category[0] == 1">
             <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(2)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">2
-          <c:if test="category[1] == true">
+        <a onclick="send(2)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">2
+          <c:if test="category[1] == 2">
             <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
-        <a href="#" onclick="send(3)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">3
-          <c:if test="category[2] == true">
+        <a onclick="send(3)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">3
+          <c:if test="category[2] == 3">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(4)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">4
-          <c:if test="category[3] == true">
+          <c:if test="category[3] == 4">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(5)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">5
-          <c:if test="category[4] == true">
+          <c:if test="category[4] == 5">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(6)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">6
-          <c:if test="category[5] == true">
+          <c:if test="category[5] == 6">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(7)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">7
-          <c:if test="category[6] == true">
+          <c:if test="category[6] == 7">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(8)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">8
-          <c:if test="category[7] == true">
+          <c:if test="category[7] == 8">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(9)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">9
-          <c:if test="category[8] == true">
+          <c:if test="category[8] == 9">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(10)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">10
-          <c:if test="category[9] == true">
+          <c:if test="category[9] == 10">
             <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
@@ -259,10 +263,6 @@ function send(n){
                   
                   	<!-- project-list Start -->
 					<div class="col-lg-3 col-sm-6 project-list-container"></div>
-					<hr>
-                    <div class="back-drop" align="center">
-                    	
-                    </div>
                     <!-- project-list End -->
                   </div>
                 </div>
