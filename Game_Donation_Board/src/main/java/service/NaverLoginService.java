@@ -48,13 +48,11 @@ public class NaverLoginService {
                 .callback(REDIRECT_URI)
                 .state(state) //앞서 생성한 난수값을 인증 URL생성시 사용함
                 .build(NaverOAuthApi.instance());
-        System.out.println("실패"+state);
         return oauthService.getAuthorizationUrl();
     }
 
     /* 네이버아이디로 Callback 처리 및  AccessToken 획득 Method */
     public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException{
-    	System.out.println("실패함 ㅇㅇ");
         /* Callback으로 전달받은 세선검증용 난수값과 세션에 저장되어있는 값이 일치하는지 확인 */
         String sessionState = getSession(session);
         if(StringUtils.pathEquals(sessionState, state)){
@@ -70,9 +68,7 @@ public class NaverLoginService {
             OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
             return accessToken;
         }
-        else {
-        	System.out.println("실패함 ㅇㅇ");
-        }
+
         
         return null;
     }

@@ -7,9 +7,47 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="resources/css/login.css">
+<style type="text/css">
+.logo {
+    margin-right: 35%; /* 오른쪽 여백을 화면 너비의 5%로 지정 */
+    position: relative; /* 로고 위치를 상대적으로 설정 */
+    top: -20px; /* 로고를 위로 10px 이동 */
+    
+}
+
+/* 작은 화면에 대한 스타일 */
+@media screen and (max-width: 768px) {
+
+	.container{
+		width : 400px;
+	}
+  .overlay-container {
+   display: none; /* 작은 화면에서는 overlay-container 숨김 */
+  }
+
+  .form-container {
+    width: 100%; /* form-container의 너비를 100%로 설정 */
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 50%; /* input 태그의 너비를 조정합니다. */
+    /* 필요에 따라 다른 스타일도 추가할 수 있습니다. */
+  }
+}
+
+
+
+</style>
 
 </head>
+
 <body>
+<div>
+
+
+<a href="board_list" class="logo"><img src="resources/assets/images/logo.png" alt=""></a>
 <div class="container" id="container">
   <!-- 회원가입 -->
   <div class="form-container sign-up-container">
@@ -24,6 +62,7 @@
 	    <input type="text" name="user_name" id="user_name"  oninput="checkName(this.form)" placeholder="Name" /><span style='color:red;'id="check_name"></span>
 		<input type="email" name="user_email" id="user_email" oninput="checkEmail(this.form)" placeholder="Email" /><span style='color:green;'id="check_email"></span>
 		<input type="password" name="user_pw" id="user_pw"  oninput="checkPw(this.form)" placeholder="Password" /><span style='color:red;' id="check_pw"></span>
+ 
       <button type = "button" onclick="send(this.form)">Sign Up</button>
     </form>
   </div>
@@ -41,7 +80,8 @@
       <input type="email" name="user_email" id="login_email" oninput="LoginCheckEmail(this.form)" placeholder="Email" /><span style='color:red;'id="checklog_email"></span>
       <input type="password"name="user_pw" id="login_pw"  oninput="LoginCheckPw(this.form)" placeholder="Password" /><span style='color:red;' id="checklog_pw"></span>
       <!-- 추가 구현 비밀번호 -->
-      <a href="#">Forgot your password?</a>
+      <a href="#">Forgot your password?</a>    
+        
    	  <button type = "button"onclick="login(this.form)">Sign In</button>
     </form>
   </div>
@@ -63,7 +103,9 @@
     </div>
   </div>
 </div>
+</div>
 </body>
+
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
