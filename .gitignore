@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,windows
 
 ### Eclipse ###
-.metadata
+.metadata/
 bin/
 tmp/
 *.tmp
@@ -13,10 +13,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
-
-# 특정 경로만 제외하고 받아옴 이미지 업로드 때문에 메타데이터 일단 허용
-
 
 # External tool builders
 .externalToolBuilders/
@@ -122,6 +118,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# End of https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
 *.project
