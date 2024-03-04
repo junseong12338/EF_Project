@@ -50,11 +50,13 @@ public class NaverLoginController {
 	public String callbackNaver(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws Exception {
 		System.out.println("로그인 성공 callbackNaver");
+		
 		OAuth2AccessToken oauthToken;
         oauthToken = naverLoginService.getAccessToken(session, code, state); // 토큰 
         //로그인 사용자 정보를 읽어온다.
 	    apiResult = naverLoginService.getUserProfile(oauthToken);
-	    
+		System.out.println("코드:"+code+"상태 :"+state);
+
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObj;
 		
@@ -87,4 +89,20 @@ public class NaverLoginController {
 	}
   	
 	// logout -> UserLoginController
+	// 네이버 로그인 실패 시 callback 호출 메소드
+		@RequestMapping(value = "/callbackNaverFail.do", method = { RequestMethod.GET, RequestMethod.POST })
+		public String callbackNaverFail(Model model, @RequestParam(required = false) String error,
+		        @RequestParam(required = false) String error_description, HttpSession session) throws Exception {
+		    System.out.println("로그인 실패 callbackNaverFail");
+
+		    // 에러와 에러 설명을 모델에 추가하여 뷰로 전달할 수 있습니다.
+		    model.addAttribute("error", error);
+		    model.addAttribute("error_description", error_description);
+
+		    /* 로그인 실패 페이지 View 호출 */
+		    return "redirect:board_list"; // 로그인 실패 시 보여줄 뷰 페이지의 이름을 넣어주세요.
+		}
+
+
+	
 }

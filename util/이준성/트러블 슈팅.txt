@@ -11,4 +11,13 @@ cmd 키고 사용중 인 포트 확인
 netstat -p tcp -ano 
 
 사용중인 포트 삭제
-taskkill /f /pid 4488 포트번호
+taskkill /f /pid 포트번호
+
+
+===
+불필요 서버 삭제
+
+
+===
+JS 오류 
+https://mebadong.tistory.com/73
