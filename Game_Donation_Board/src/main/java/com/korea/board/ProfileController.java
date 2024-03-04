@@ -1,30 +1,22 @@
 package com.korea.board;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-
+import service.UserService;
 import util.Common;
 
 @Controller
 @RequiredArgsConstructor
 public class ProfileController {
 	
-	
-//	@Autowired
-//	HttpServletRequest request;
-//	
-//	@Autowired
-//	HttpSession session;
-	
-	//public final static String VIEW_PATH = "/WEB-INF/views/profile/";
-	
-	@RequestMapping(value = { "/", "mypage_view" })
+	final UserService userService;
+		
+	@RequestMapping("mypage_view")
 	public String mypage_view() {
 		
 		return Common.profile.VIEW_PATH + "mypage_view.jsp";
@@ -59,4 +51,22 @@ public class ProfileController {
 	
 	}
 	
-}
+	@RequestMapping("address_update")
+	public String address_update(String user_email,String user_addr) {
+		System.out.println(user_email);
+		UserDTO dto = userService.checkEmail(user_email);
+		dto.setUser_addr(user_addr);
+		int res = userService.userUpdate(dto);
+		System.out.println(res);
+		
+		if (res > 0) {
+			
+			return "redirect:board_list";
+		}
+		
+		return null;
+	}
+//		return Common.profile.VIEW_PATH + "review.jsp";
+	}
+	
+
