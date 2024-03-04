@@ -1,0 +1,26 @@
+package com.korea.di;
+
+import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Component
+@Getter
+@Setter
+public class Coding {
+	
+	// 필드 주입
+	//@Autowired
+	//Computer computer;
+	
+	// setter주입
+	
+	// 생성자주입
+
+	Computer computer;
+	
+	
+	
+
+}

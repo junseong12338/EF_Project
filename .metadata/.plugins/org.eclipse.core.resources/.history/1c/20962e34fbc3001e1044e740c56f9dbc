@@ -1,0 +1,42 @@
+package com.korea.dto;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+
+//@Data
+public class PersonDTO {
+	private String name,tel;
+	private int age;
+	
+	public PersonVO() {
+		System.out.println("---PersonVO의 기본생성자---");
+	}
+	
+	public PersonVO(String name, String tel, int age) {
+		System.out.println("---파라미터를 받는 PersonVO 생성자 호출 ----");
+		this.name = name;
+		this.tel = tel;
+		this.age = age;
+	}
+
+	
+	public void setName(String name) {
+		System.out.println("name setter호출");
+		this.name = name;
+	}
+
+	
+	public void setTel(String tel) {
+		System.out.println("tel setter호출");
+		this.tel = tel;
+	}
+
+	
+	public void setAge(int age) {
+		System.out.println("age setter호출");
+		this.age = age;
+	}
+	
+}
