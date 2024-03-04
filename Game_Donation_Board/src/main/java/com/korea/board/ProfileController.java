@@ -15,15 +15,7 @@ import util.Common;
 public class ProfileController {
 	
 	final UserService userService;
-	
-//	@Autowired
-//	HttpServletRequest request;
-//	
-//	@Autowired
-//	HttpSession session;
-	
-	//public final static String VIEW_PATH = "/WEB-INF/views/profile/";
-	
+		
 	@RequestMapping("mypage_view")
 	public String mypage_view() {
 		
