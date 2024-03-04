@@ -80,6 +80,7 @@ public class NaverLoginService {
 
     /* http session에 데이터 저장 */
     private void setSession(HttpSession session,String state){
+    	System.out.println(state);
         session.setAttribute(SESSION_STATE, state);     
     }
 
@@ -89,7 +90,7 @@ public class NaverLoginService {
     }
     /* Access Token을 이용하여 네이버 사용자 프로필 API를 호출 */
     public String getUserProfile(OAuth2AccessToken oauthToken) throws IOException{
-
+    
         OAuth20Service oauthService =new ServiceBuilder()
                 .apiKey(CLIENT_ID)
                 .apiSecret(CLIENT_SECRET)
