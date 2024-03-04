@@ -47,14 +47,22 @@ public class NaverLoginController {
 	
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callbackNaver.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public String callbackNaver(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
-			throws Exception {
+	public String callbackNaver(Model model, 
+            @RequestParam(required = false, defaultValue = "") String code, 
+            @RequestParam(required = false, defaultValue = "") String state, 
+            @RequestParam(required = false, defaultValue = "") String error, 
+            @RequestParam(required = false, defaultValue = "") String error_description,
+            HttpSession session)throws Exception {
+		
 		System.out.println("로그인 성공 callbackNaver");
+		
+		if(!error.equals("")) return "redirect:board_list";
 		OAuth2AccessToken oauthToken;
         oauthToken = naverLoginService.getAccessToken(session, code, state); // 토큰 
         //로그인 사용자 정보를 읽어온다.
 	    apiResult = naverLoginService.getUserProfile(oauthToken);
-	    
+		System.out.println("코드:"+code+"상태 :"+state);
+
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObj;
 		
@@ -87,4 +95,8 @@ public class NaverLoginController {
 	}
   	
 	// logout -> UserLoginController
+	
+
+
+	
 }
