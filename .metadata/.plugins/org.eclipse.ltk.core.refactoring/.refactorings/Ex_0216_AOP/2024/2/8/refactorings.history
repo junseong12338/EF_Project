@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;Context_3_fileupload.java&apos; to &apos;context.Context_3_fileupload.java&apos;&#x0D;&#x0A;- Original project: &apos;Ex_0216_AOP&apos;&#x0D;&#x0A;- Destination element: &apos;context.Context_3_fileupload.java&apos;&#x0D;&#x0A;- Original element: &apos;context.Context_3_fileupload.java&apos;" description="Copy compilation unit" destination="/src\/main\/resources=/maven.pomderived=/true=/&lt;context{Context_3_fileupload.java" element1="/src\/main\/resources=/maven.pomderived=/true=/&lt;context{Context_3_fileupload.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1708321114585" units="1" version="1.0"/>
-</session>
