@@ -14,16 +14,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 포인트 업데이트  -->
 	<update id="update_point" parameterType="int">
-		 UPDATE users
-        SET user_point = #{userPoint}
-        WHERE user_id = #{userId}
+		 UPDATE EF_USER
+        SET user_point = #{user_Point}
+        WHERE user_id = #{user_Id}
 	</update>
 	
 	
 	<!-- 회원 탈퇴 -->
 	<delete id="user_delete" parameterType="int">
-		DELETE from user
-		WHERE user_idx=#{useridx}
+		DELETE FROM EF_USER
+		WHERE user_idx=#{user_idx}
 	</delete>
 	
 	<!-- 주소지 등록 -->
