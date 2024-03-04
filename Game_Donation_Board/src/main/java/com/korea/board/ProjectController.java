@@ -1,6 +1,7 @@
 package com.korea.board;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,9 @@ public class ProjectController {
 	@Autowired
 	HttpServletRequest request;
 	
+	@Autowired
+	HttpSession session;
+	
 	@RequestMapping("project_test")
 	public String project_view(Model model) {
 		int idx = Integer.parseInt(request.getParameter("idx"));
@@ -37,32 +41,20 @@ public class ProjectController {
 		
 		return Common.Board.VIEW_PATH + "project_view.jsp";
 	}
-	@Autowired
-	HttpSession session;
 	
-	// �������� ������Ʈ ����
+	
+	// 프로젝트 기간을 고려하지 않은 기본적인 프로젝트 리스트 맵핑
+	// + 다 끝나고 진행예정, 진행중, 마감 나눌거임
 	@RequestMapping("project_list")
 	public String project_list(Model model){
 		
-		// ���������� 12���� ǥ���� ��
-		final int PAGE_PROJECT_COUNT = 12;
+		// 스크롤 이벤트를 위한 총 페이지 수 ( 초기값 )
+		int total_page_count = 1;
 		
-		// ������
-		int page_num = 1;//(�⺻ ������ 1�� ����)
-		
-		int start_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;
-		int end_num = start_num + PAGE_PROJECT_COUNT;
-		int count = PAGE_PROJECT_COUNT;
-		
-		
-		int total_page_count = (int)Math.ceil(count / (double)PAGE_PROJECT_COUNT);
-		
-		// ���ε� - list �� ����, �� ������ ��ȯ
-		
-		// listcount 가 ajax로 가야댐 (수정해야댐)
+		// 바인딩
 		model.addAttribute("total_page_count", total_page_count);
 		
-		// ������
+		// 포워딩
 		return "/WEB-INF/views/project_list.jsp";
 	}
 	
@@ -71,53 +63,55 @@ public class ProjectController {
 	public String ajax_list(Model model,
 							@RequestParam(defaultValue = "1", value="pageNum" )int page_num_js,
 							@RequestParam(defaultValue = "0", value="sort")int sort_js,
-							@RequestParam(value="category_box")List<Integer> category_js) throws Exception{
+							@RequestParam(required = true, value="category_box[]")List<String> category_js) throws Exception{
 		
 		ProjectDTO dto = new ProjectDTO();
 		
-		// ���������� 12���� ǥ���� ��
+		// 한 페이지에 들어갈 프로젝트 수
 		final int PAGE_PROJECT_COUNT = 12;
 		
-		// ������
-		int page_num = 1;//(�⺻ ������ 1�� ����)
-		if(page_num_js != 0) {
-			page_num = page_num_js; 
-		}
+		// 초기에 요청이 없을경우 default = 1
+		int page_num = 1;
+		// 프로젝트 시작 리스트 넘버 ( 페이지 번호 마다 )
+		int start_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;// 1, 13, 25 ...
+		// 프로젝트 마지막 리스트 넘버 ( 페이지 번호 마다 )
+		int end_num = page_num * PAGE_PROJECT_COUNT;// 12, 24, 36 ...
+		// 총 프로젝트 수를 구하기위한 총 프로젝트 수
+		int count = projectService.selectOne(dto);
 		
-		int start_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;
-		int end_num = start_num + PAGE_PROJECT_COUNT;
-		int count = PAGE_PROJECT_COUNT;
+		// 스크롤 이벤트를 위한 총 페이지 수
+		int total_page_count = (int)Math.ceil(count / (double)PAGE_PROJECT_COUNT);
 		
+		// 페이지마다 가져올 list start ~ end
 		dto.setStart(start_num);
 		dto.setEnd(end_num);
-		dto.setCount(count);
 		
 		
-		
-		// ���Ĺ��
-		int sort = 0;//(�α�� �⺻����)
+		// 정렬 방법 ( 0, 1, 2 )
+		int sort = 0;// 기본값 인기순 
 		if(sort_js != 0) {
 			sort = sort_js;
 		}
 		
 		dto.setSort(sort);
 		
-		// ī�װ���
-		List<Integer> category = null;//( ī�װ��� ���� �������� ����)
+		// 카테고리 저장 List<Integer>
+		List<Integer> category = new ArrayList<>();
 		if(category_js != null) {
-			category = category_js;
+			for(int i = 0; i < category_js.size(); i++) {
+				category.add(Integer.parseInt(category_js.get(i)));
+			}
 		}
 		
 		dto.setCategory_list(category);
 		
 		System.out.println(category);
 		
-		// ��������� ajax_list �� ����
-		// ī�װ���, ����, start,end,count�� ������ ������ �޾ƿ���. (�Խù� List)
+		// 변수에 따른 ajax 프로젝트 list
 		int list_count = projectService.selectOne(dto);
 		List<ProjectDTO> list = projectService.selectList(dto);
 		
-		// �޼� �ۼ�Ʈ, ���� �Ⱓ
+		// 펀딩 총금액, 남은기간 변수 셋팅
 		int persent = 0;
 		String diff_date = "";
 		long diff = 0;
@@ -125,6 +119,7 @@ public class ProjectController {
 		// 펀딩 총 금액
 		persent = Integer.parseInt(dto.getProject_donation()) / dto.getProject_target();
 		String persent_str  = String.format("%,d %", persent);
+		
 		
 		// 남은 날짜 반환
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -157,7 +152,9 @@ public class ProjectController {
 			diff_date = String.format("%d 일", ( diff / (24 * 60 * 60 * 1000L) ) % 365);
 		}
 		
-		// ������
+		
+		// 바인딩
+		model.addAttribute("total_page_count", total_page_count);
 		model.addAttribute("diff_date", diff_date);
 		model.addAttribute("persent", persent_str);
 		model.addAttribute("list_count", list_count);
@@ -165,7 +162,7 @@ public class ProjectController {
 		model.addAttribute("page_num", page_num);
 		
 		
-		
+		// ajax 포워딩
 		return "/WEB-INF/views/project_list_ajax.jsp";
 	}
 

@@ -3,14 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${page_num eq 1}">
-	<c:if test="${not empty list }">
-		<h6><em>${list_count}</em>건의 프로젝트가 있습니다.</h6>
-	</c:if> 
-</c:if>
-<c:if test="${page_num eq 1 }">
-	<c:if test="${empty list }">
-		<h6>등록된 프로젝트가 없습니다.</h6>
-	</c:if>
+	<c:choose>
+		<c:when test="${not empty list }">
+			<h6><em>${list_count}</em>건의 프로젝트가 있습니다.</h6>
+		</c:when>
+		<c:when test="${empty list }">
+			<h6>등록된 프로젝트가 없습니다.</h6>
+		</c:when>
+	</c:choose>
 </c:if>
 
 <div class="row">

@@ -22,13 +22,14 @@
 
     <link rel="stylesheet" href="resources/assets/css/side-bar.css">
 
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	
 <script>
 //스크롤 이벤트 처리
 let currentPage = 1;
 let category = [0,0,0,0,0,0,0,0,0,0];
 let sort = 0;
 
-let isLoading = false;
 
 $(window).on("scroll",function(){
     let scrollTop = $(window).scrollTop();// 위로 스크롤된 길이
@@ -66,8 +67,6 @@ const GetList = function(currentPage, sort, category){
             console.log("ajax 데이터 : " + data);
 
             $(".project-list-container").append(data);
-            $(".back-drop").hide();
-            isLoading = false;
             console.log("ajax 잘넘어옴");
         }
     });
@@ -159,71 +158,71 @@ function send(n){
     <ul>
       <li>
         <a href="#" onclick="send(1)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">1
-          <c:if test="category[0] == 1">
+          <c:if test="category[0] == '1'">
             <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a onclick="send(2)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">2
-          <c:if test="category[1] == 2">
+          <c:if test="category[1] == '2'">
             <img src="resources/assets/images/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a onclick="send(3)" class="category"  style="height: 50px;padding-top: 10px; padding-bottom: 10px;">3
-          <c:if test="category[2] == 3">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[2] == '3'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(4)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">4
-          <c:if test="category[3] == 4">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[3] == '4'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(5)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">5
-          <c:if test="category[4] == 5">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[4] == '5'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(6)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">6
-          <c:if test="category[5] == 6">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[5] == '6'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(7)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">7
-          <c:if test="category[6] == 7">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[6] == '7'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(8)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">8
-          <c:if test="category[7] == 8">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[7] == '8'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(9)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">9
-          <c:if test="category[8] == 9">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[8] == '9'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
       <li>
         <a href="#" onclick="send(10)" class="category" style="height: 50px;padding-top: 10px; padding-bottom: 10px;">10
-          <c:if test="category[9] == 10">
-            <img src="resources/assets/img/checkbox3.png" style="height: 30px; width: 30px;">
+          <c:if test="category[9] == '10'">
+            <img src="resources/assets/img/checkbox.png" style="height: 30px; width: 30px;">
           </c:if>
         </a>
       </li>
