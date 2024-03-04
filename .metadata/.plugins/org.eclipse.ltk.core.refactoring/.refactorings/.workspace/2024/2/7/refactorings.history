@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;Ex_1024_JsonMaker&apos; to &apos;Ex_0214_JsonMaker&apos;" description="Rename resource &apos;Ex_1024_JsonMaker&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/Ex_1024_JsonMaker" name="Ex_0214_JsonMaker" stamp="1707889793836" updateReferences="true"/>
-</session>

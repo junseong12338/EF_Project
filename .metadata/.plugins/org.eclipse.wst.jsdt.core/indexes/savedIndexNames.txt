@@ -1,2 +1,0 @@
-INDEX VERSION 1.4+C:\jjs_project\spring\koricWorkspace\EF_Project\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3122170836.index
