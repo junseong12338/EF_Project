@@ -1,9 +1,0 @@
-INDEX VERSION 1.131
-C:\hyuni\develop\work\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\138430562.index
-\Game_Donation_Board\src\main\java
-C:\hyuni\develop\work\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4036037310.index
-\Game_Donation_Board\src\main\java
-C:\hyuni\develop\work\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2637497126.index
-\Game_Donation_Board\src\main\java
-C:\hyuni\develop\work\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\762149604.index
-\Game_Donation_Board\src\main\java

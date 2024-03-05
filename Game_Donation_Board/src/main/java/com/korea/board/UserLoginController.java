@@ -29,7 +29,6 @@ public class UserLoginController {
 		if (dto == null) return "[{\"param\":\"no_email\"}]";
 		if (!dto.getUser_pw().equals(user_pw)) return "[{\"param\":\"no_pw\"}]";
 		
-		session.setMaxInactiveInterval(3600);
 		session.setAttribute("user_email", dto);
 	
 		return "[{\"param\":\"clear\"}]";

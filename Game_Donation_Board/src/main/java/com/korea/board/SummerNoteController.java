@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 
+import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import service.SummerNoteService;
 
@@ -41,6 +42,9 @@ public class SummerNoteController {
 	@Autowired
 	HttpSession session;
 	
+	//각자 컴퓨터 이미지 기본경로 설정 
+	// C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : 이준성 학원 경로
+	final String contextRoot = "C:\\DEV\\LYC\\EF_work\\EF_Project\\util\\ef_project_img\\";
 	
 	
 	/*
@@ -52,16 +56,16 @@ public class SummerNoteController {
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile)  {
 		JsonObject jsonObject = new JsonObject();
-		
+		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 		
         /*
 		 * String fileRoot = "C:\\summernote_image\\"; // �ܺΰ�η� ������ ����Ҷ�.
 		 */
 		//���� ���ε� �⺻���
-		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		
 		System.out.println("uploadSummernoteImageFile colled.....");
 		// ���ΰ�η� ����
-		String fileRoot = contextRoot+"resources/fileupload/temp/io";
+		String fileRoot = contextRoot+"temp/"+userEmail;
 		
 		String originalFileName = multipartFile.getOriginalFilename();	//�������� ���ϸ�
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//���� Ȯ����
@@ -73,7 +77,7 @@ public class SummerNoteController {
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//���� ����
 			
 			System.out.println("contextRoot : " + contextRoot.toString());
-			jsonObject.addProperty("url","/board/resources/fileupload/temp/io"+savedFileName); // contextroot + resources + ������ ���� ������
+			jsonObject.addProperty("url","/ef_project_img/temp/"+userEmail+savedFileName); // contextroot + resources + ������ ���� ������
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
@@ -95,10 +99,8 @@ public class SummerNoteController {
 	@ResponseBody
 	public void deleteSummernoteImageFile(@RequestParam("file") String fileName) {
 		System.out.println("deleteSummernoteImageFile colled.....");
-		//���� ���ε� �⺻���
-		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 	    // ���� ��ġ
-	    String filePath = contextRoot + "resources/fileupload/temp/";
+	    String filePath = contextRoot + "temp/";
 	    
 	    // �ش� ���� ����
 	    deleteFile(filePath, fileName);
@@ -109,10 +111,8 @@ public class SummerNoteController {
 	@RequestMapping("/summernote_send")
 	public String summernote_send(String editordata) {
 
-		//���� ���ε� �⺻���
-		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 		// ���� ��ġ
-	    String filePath = contextRoot + "resources/fileupload/temp/";
+	    String filePath = contextRoot + "temp/";
 		
 	    
 		
@@ -125,9 +125,9 @@ public class SummerNoteController {
 			System.out.println("idx :" + idx);
 			
 			// temp ���� ����� �����͵� ���ε�
-		    String temp_folder = contextRoot + "resources/fileupload/temp/";
-		    String idx_folder = contextRoot + "resources/fileupload/" + idx + "/";
-		    fileUpload(temp_folder, idx_folder);
+		    String temp_folder = contextRoot + "temp/";
+		    String idx_folder = contextRoot + idx + "/";
+		    fileUpload(temp_folder, idx_folder,editordata);
 			
 		    //temp ���� �� session�� ����Ǿ��ִ� ����email�� �̸��� ���Ե� �̹��� ����
 		    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
@@ -146,7 +146,7 @@ public class SummerNoteController {
 	private List<String> getFileNamesFromFolder(String folderName) {
 	    // ���� �̸��� ������ ����Ʈ ����
 	    List<String> fileNames = new ArrayList<>();
-
+	    String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 	    // �־��� ���� ��θ� ������� ���� ��ü ����
 	    File folder = new File(folderName);
 	    // ���� ���� ���ϵ��� ������
@@ -155,7 +155,7 @@ public class SummerNoteController {
 	        // ������ ��� ���� �̸��� ����Ʈ�� �߰�
 	        for (File file : files) {
 	            if (file.isFile()) {
-	            	if(file.getName().contains("io")) {
+	            	if(file.getName().contains(userEmail)) {
 	            		fileNames.add(file.getName());	            		
 	            	}
 	            }
@@ -188,13 +188,15 @@ public class SummerNoteController {
 		}
 	
 	// ���� ���� ����
-	private void fileUpload(String temp_folder, String idx_folder) {
+	private void fileUpload(String temp_folder, String idx_folder, String editordata) {
 	    // �־��� ��θ� ������� ���� ��ü ����
 	    File folder1;
 	    File folder2;
 	    folder1 = new File(temp_folder);
 	    folder2 = new File(idx_folder);
 
+	    String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
+	    
 	    // ������ �������� ������ ���� ����
 	    if (!folder1.exists())
 	        folder1.mkdirs();
@@ -206,8 +208,9 @@ public class SummerNoteController {
 	    for (File file : target_files) {
 	        // ����2�� ������ ���� ����
 	    	File temp = null; 	    		
-	    	if(file.getName().contains("io"))
+	    	if(file.getName().contains(userEmail))
 	    	{
+	    		if(editordata.contains(file.getName()))
 	    		temp = new File(folder2.getAbsolutePath() + File.separator + file.getName()); 
 	    	}
 	        

@@ -15,9 +15,7 @@ public class ProjectService {
 		return projectDAO.selectOne_project(idx);
 	}
 	
-	//--------------------------------------------
-	
-	// 변수에 따른 list 총 갯수 
+	// ��ü list�� ����
 	public int selectOne(ProjectDTO dto){
 		return projectDAO.get_list_count(dto);
 	}

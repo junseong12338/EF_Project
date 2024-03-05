@@ -1,8 +1,0 @@
-INDEX VERSION 1.4+C:\hyuni\develop\work\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2892448511.index
-3886385734.index
-2637497126.index
-255063106.index
-3105372686.index
-2697095172.index
-3360645373.index

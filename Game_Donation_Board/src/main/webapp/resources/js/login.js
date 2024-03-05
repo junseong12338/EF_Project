@@ -1,16 +1,36 @@
 
-
-const signUpButton = document.getElementById('signUp');
-const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
 
+const H_signUpButton = document.getElementById('H_signUp');
+const signUpButton = document.getElementById('signUp');
+
+const H_signInButton = document.getElementById('H_signIn');
+const signInButton = document.getElementById('signIn');
+
+
+
+
+H_signUpButton.addEventListener('click', () => {
+  container.classList.add("right-panel-active");
+});
 signUpButton.addEventListener('click', () => {
   container.classList.add("right-panel-active");
+});
+
+
+H_signInButton.addEventListener('click', () => {
+  container.classList.remove("right-panel-active");
 });
 
 signInButton.addEventListener('click', () => {
   container.classList.remove("right-panel-active");
 });
+
+
+
+
+
+
 
 // 아이디 중복 여부 변수
 let email_check = false;
@@ -99,7 +119,7 @@ function resultFn(f) {
 }
 
 // 회원가입 데이터 전송 함수
-function send(f) {
+function signUp(f) {
     let user_name = f.user_name.value.trim();
     let user_email = f.user_email.value.trim();
     let user_pw = f.user_pw.value.trim();
