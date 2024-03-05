@@ -143,6 +143,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\hyuni\develop\work"/>
 			<item value="C:\DEV\Spring_work\EF_Project"/>
 			<item value="C:\jjs_project\spring\koricWorkspace\EF_Project"/>
 			<item value="C:\Users\admin\Desktop\EF_work"/>

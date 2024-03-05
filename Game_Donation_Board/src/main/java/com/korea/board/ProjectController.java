@@ -43,18 +43,18 @@ public class ProjectController {
 	}
 	
 	
-	// 프로젝트 기간을 고려하지 않은 기본적인 프로젝트 리스트 맵핑
-	// + 다 끝나고 진행예정, 진행중, 마감 나눌거임
+	// �봽濡쒖젥�듃 湲곌컙�쓣 怨좊젮�븯吏� �븡�� 湲곕낯�쟻�씤 �봽濡쒖젥�듃 由ъ뒪�듃 留듯븨
+	// + �떎 �걹�굹怨� 吏꾪뻾�삁�젙, 吏꾪뻾以�, 留덇컧 �굹�닃嫄곗엫
 	@RequestMapping("project_list")
 	public String project_list(Model model){
 		
-		// 스크롤 이벤트를 위한 총 페이지 수 ( 초기값 )
+		// �뒪�겕濡� �씠踰ㅽ듃瑜� �쐞�븳 珥� �럹�씠吏� �닔 ( 珥덇린媛� )
 		int total_page_count = 1;
 		
-		// 바인딩
+		// 諛붿씤�뵫
 		model.addAttribute("total_page_count", total_page_count);
 		
-		// 포워딩
+		// �룷�썙�뵫
 		return "/WEB-INF/views/project_list.jsp";
 	}
 	
@@ -67,35 +67,32 @@ public class ProjectController {
 		
 		ProjectDTO dto = new ProjectDTO();
 		
-		// 한 페이지에 들어갈 프로젝트 수
+		// �븳 �럹�씠吏��뿉 �뱾�뼱媛� �봽濡쒖젥�듃 �닔
 		final int PAGE_PROJECT_COUNT = 12;
 		
-		// 초기에 요청이 없을경우 default = 1
+		// 珥덇린�뿉 �슂泥��씠 �뾾�쓣寃쎌슦 default = 1
 		int page_num = 1;
-		// 프로젝트 시작 리스트 넘버 ( 페이지 번호 마다 )
+		// �봽濡쒖젥�듃 �떆�옉 由ъ뒪�듃 �꽆踰� ( �럹�씠吏� 踰덊샇 留덈떎 )
 		int start_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;// 1, 13, 25 ...
-		// 프로젝트 마지막 리스트 넘버 ( 페이지 번호 마다 )
+		// �봽濡쒖젥�듃 留덉�留� 由ъ뒪�듃 �꽆踰� ( �럹�씠吏� 踰덊샇 留덈떎 )
 		int end_num = page_num * PAGE_PROJECT_COUNT;// 12, 24, 36 ...
-		// 총 프로젝트 수를 구하기위한 총 프로젝트 수
-		int count = projectService.selectOne(dto);
+		// 珥� �봽濡쒖젥�듃 �닔瑜� 援ы븯湲곗쐞�븳 珥� �봽濡쒖젥�듃 �닔
 		
-		// 스크롤 이벤트를 위한 총 페이지 수
-		int total_page_count = (int)Math.ceil(count / (double)PAGE_PROJECT_COUNT);
 		
-		// 페이지마다 가져올 list start ~ end
+		// �럹�씠吏�留덈떎 媛��졇�삱 list start ~ end
 		dto.setStart(start_num);
 		dto.setEnd(end_num);
 		
 		
-		// 정렬 방법 ( 0, 1, 2 )
-		int sort = 0;// 기본값 인기순 
+		// �젙�젹 諛⑸쾿 ( 0, 1, 2 )
+		int sort = 0;// 湲곕낯媛� �씤湲곗닚 
 		if(sort_js != 0) {
 			sort = sort_js;
 		}
 		
 		dto.setSort(sort);
 		
-		// 카테고리 저장 List<Integer>
+		// 移댄뀒怨좊━ ���옣 List<Integer>
 		List<Integer> category = new ArrayList<>();
 		if(category_js != null) {
 			for(int i = 0; i < category_js.size(); i++) {
@@ -107,27 +104,31 @@ public class ProjectController {
 		
 		System.out.println(category);
 		
-		// 변수에 따른 ajax 프로젝트 list
+
 		int list_count = projectService.selectOne(dto);
+		// �뒪�겕濡� �씠踰ㅽ듃瑜� �쐞�븳 珥� �럹�씠吏� �닔
+		int total_page_count = (int)Math.ceil(list_count / (double)PAGE_PROJECT_COUNT);
+		
+		// 蹂��닔�뿉 �뵲瑜� ajax �봽濡쒖젥�듃 list		
 		List<ProjectDTO> list = projectService.selectList(dto);
 		
-		// 펀딩 총금액, 남은기간 변수 셋팅
+		// ���뵫 珥앷툑�븸, �궓��湲곌컙 蹂��닔 �뀑�똿
 		int persent = 0;
 		String diff_date = "";
 		long diff = 0;
 		
-		// 펀딩 총 금액
+		// ���뵫 珥� 湲덉븸
 		persent = Integer.parseInt(dto.getProject_donation()) / dto.getProject_target();
 		String persent_str  = String.format("%,d %", persent);
 		
 		
-		// 남은 날짜 반환
+		// �궓�� �궇吏� 諛섑솚
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		// 현재
+		// �쁽�옱
 		Date now = new Date();
-		// 시작
+		// �떆�옉
 		Date start_date = sdf.parse(dto.getProject_start());
-		// 끝
+		// �걹
 		Date end_date = sdf.parse(dto.getProject_end());
 		
 		if(now.getTime() > start_date.getTime()) {
@@ -145,24 +146,25 @@ public class ProjectController {
 		}
 		
 		if(diff == 0) {
-			diff_date = "진행 예정";
+			diff_date = "吏꾪뻾 �삁�젙";
 		}else if(diff == -1){
-			diff_date = "마감";
+			diff_date = "留덇컧";
 		}else {
-			diff_date = String.format("%d 일", ( diff / (24 * 60 * 60 * 1000L) ) % 365);
+			diff_date = String.format("%d �씪", ( diff / (24 * 60 * 60 * 1000L) ) % 365);
 		}
 		
 		
-		// 바인딩
+		// 諛붿씤�뵫
 		model.addAttribute("total_page_count", total_page_count);
 		model.addAttribute("diff_date", diff_date);
 		model.addAttribute("persent", persent_str);
 		model.addAttribute("list_count", list_count);
 		model.addAttribute("list", list);
 		model.addAttribute("page_num", page_num);
+//		model.addAttribute("category", dto.getCategory_list());
 		
 		
-		// ajax 포워딩
+		// ajax �룷�썙�뵫
 		return "/WEB-INF/views/project_list_ajax.jsp";
 	}
 
