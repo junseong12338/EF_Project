@@ -42,15 +42,15 @@ public class SummerNoteController {
 	@Autowired
 	HttpSession session;
 	
-	//각자 컴퓨터 이미지 기본경로 설정 
-	// C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : 이준성 학원 경로
-	final String contextRoot = "C:\\DEV\\LYC\\EF_work\\EF_Project\\util\\ef_project_img\\";
+	//媛곸옄 而댄벂�꽣 �씠誘몄� 湲곕낯寃쎈줈 �꽕�젙 
+	// C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : �씠以��꽦 �븰�썝 寃쎈줈
+	final String contextRoot = "C:\\hyuni\\develop\\work\\git\\util\\ef_project_img\\";
 	
 	
 	/*
-	 * ���ӳ�Ʈ �̹���,���� ���ε� ó��
-	 * �����Ϳ� �̹���, ������ ����ϸ�
-	 * �ӽ������� ����(fileRoot)
+	 * 占쏙옙占쌈놂옙트 占싱뱄옙占쏙옙,占쏙옙占쏙옙 占쏙옙占싸듸옙 처占쏙옙
+	 * 占쏙옙占쏙옙占싶울옙 占싱뱄옙占쏙옙, 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙玖占�
+	 * 占쌈쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙(fileRoot)
 	 */
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -59,29 +59,29 @@ public class SummerNoteController {
 		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 		
         /*
-		 * String fileRoot = "C:\\summernote_image\\"; // �ܺΰ�η� ������ ����Ҷ�.
+		 * String fileRoot = "C:\\summernote_image\\"; // 占쌤부곤옙管占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙秊占�.
 		 */
-		//���� ���ε� �⺻���
+		//占쏙옙占쏙옙 占쏙옙占싸듸옙 占썩본占쏙옙占�
 		
 		System.out.println("uploadSummernoteImageFile colled.....");
-		// ���ΰ�η� ����
+		// 占쏙옙占싸곤옙管占� 占쏙옙占쏙옙
 		String fileRoot = contextRoot+"temp/"+userEmail;
 		
-		String originalFileName = multipartFile.getOriginalFilename();	//�������� ���ϸ�
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//���� Ȯ����
-		String savedFileName = UUID.randomUUID() + extension;	//����� ���� ��
+		String originalFileName = multipartFile.getOriginalFilename();	//占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占싹몌옙
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//占쏙옙占쏙옙 확占쏙옙占쏙옙
+		String savedFileName = UUID.randomUUID() + extension;	//占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙
 		
 		File targetFile = new File(fileRoot + savedFileName);	
 		try {
 			InputStream fileStream = multipartFile.getInputStream();			
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//���� ����
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//占쏙옙占쏙옙 占쏙옙占쏙옙
 			
 			System.out.println("contextRoot : " + contextRoot.toString());
-			jsonObject.addProperty("url","/ef_project_img/temp/"+userEmail+savedFileName); // contextroot + resources + ������ ���� ������
+			jsonObject.addProperty("url","/ef_project_img/temp/"+userEmail+savedFileName); // contextroot + resources + 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile);	//����� ���� ����
+			FileUtils.deleteQuietly(targetFile);	//占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
@@ -92,26 +92,26 @@ public class SummerNoteController {
 	}
 	
 	/*
-	 * �� �ۼ��� �̹���,���� ��� �� ���� �� 
-	 * �̹� ����� �̹���, ���� ���� 
+	 * 占쏙옙 占쌜쇽옙占쏙옙 占싱뱄옙占쏙옙,占쏙옙占쏙옙 占쏙옙占� 占쏙옙 占쏙옙占쏙옙 占쏙옙 
+	 * 占싱뱄옙 占쏙옙占쏙옙占� 占싱뱄옙占쏙옙, 占쏙옙占쏙옙 占쏙옙占쏙옙 
 	 */
 	@RequestMapping(value = "/deleteSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void deleteSummernoteImageFile(@RequestParam("file") String fileName) {
 		System.out.println("deleteSummernoteImageFile colled.....");
-	    // ���� ��ġ
+	    // 占쏙옙占쏙옙 占쏙옙치
 	    String filePath = contextRoot + "temp/";
 	    
-	    // �ش� ���� ����
+	    // 占쌔댐옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	    deleteFile(filePath, fileName);
 	}
 	/*
-	 * �� �ۼ� �Ϸ� ���� �޼���
+	 * 占쏙옙 占쌜쇽옙 占싹뤄옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙
 	 */
 	@RequestMapping("/summernote_send")
 	public String summernote_send(String editordata) {
 
-		// ���� ��ġ
+		// 占쏙옙占쏙옙 占쏙옙치
 	    String filePath = contextRoot + "temp/";
 		
 	    
@@ -124,12 +124,12 @@ public class SummerNoteController {
 			}
 			System.out.println("idx :" + idx);
 			
-			// temp ���� ����� �����͵� ���ε�
+			// temp 占쏙옙占쏙옙 占쏙옙占쏙옙占� 占쏙옙占쏙옙占싶듸옙 占쏙옙占싸듸옙
 		    String temp_folder = contextRoot + "temp/";
 		    String idx_folder = contextRoot + idx + "/";
 		    fileUpload(temp_folder, idx_folder,editordata);
 			
-		    //temp ���� �� session�� ����Ǿ��ִ� ����email�� �̸��� ���Ե� �̹��� ����
+		    //temp 占쏙옙占쏙옙 占쏙옙 session占쏙옙 占쏙옙占쏙옙퓸占쏙옙獵占� 占쏙옙占쏙옙email占쏙옙 占싱몌옙占쏙옙 占쏙옙占쌉듸옙 占싱뱄옙占쏙옙 占쏙옙占쏙옙
 		    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
 		    
 		} catch (Exception e) {
@@ -142,17 +142,17 @@ public class SummerNoteController {
 		return "redirect:/";
 	}
 	
-	// ��ġ������ ���� ���� �̸� ��������
+	// 占쏙옙치占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占싱몌옙 占쏙옙占쏙옙占쏙옙占쏙옙
 	private List<String> getFileNamesFromFolder(String folderName) {
-	    // ���� �̸��� ������ ����Ʈ ����
+	    // 占쏙옙占쏙옙 占싱몌옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙트 占쏙옙占쏙옙
 	    List<String> fileNames = new ArrayList<>();
 	    String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
-	    // �־��� ���� ��θ� ������� ���� ��ü ����
+	    // 占쌍억옙占쏙옙 占쏙옙占쏙옙 占쏙옙罐占� 占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙체 占쏙옙占쏙옙
 	    File folder = new File(folderName);
-	    // ���� ���� ���ϵ��� ������
+	    // 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占싹듸옙占쏙옙 占쏙옙占쏙옙占쏙옙
 	    File[] files = folder.listFiles();
 	    if (files != null) {
-	        // ������ ��� ���� �̸��� ����Ʈ�� �߰�
+	        // 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙 占싱몌옙占쏙옙 占쏙옙占쏙옙트占쏙옙 占쌩곤옙
 	        for (File file : files) {
 	            if (file.isFile()) {
 	            	if(file.getName().contains(userEmail)) {
@@ -161,23 +161,23 @@ public class SummerNoteController {
 	            }
 	        }
 	    }
-	    // ���� �̸��� ���� ����Ʈ ��ȯ
+	    // 占쏙옙占쏙옙 占싱몌옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙트 占쏙옙환
 	    return fileNames;
 	}
 	
 	
-	// ���� ���� ����
+	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	private void removeDummyFiles(List<String> fileNames, String filePath) {
-	    // �־��� ���� �̸� ����Ʈ�� ������� ������ ����
+	    // 占쌍억옙占쏙옙 占쏙옙占쏙옙 占싱몌옙 占쏙옙占쏙옙트占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 	    for (String fileName : fileNames) {
-	        // contents ���ڿ��� ���� �̸��� ���ԵǾ� ���� ���� ��� ���� ����
+	        // contents 占쏙옙占쌘울옙占쏙옙 占쏙옙占쏙옙 占싱몌옙占쏙옙 占쏙옙占쌉되억옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙
 	        
 	            deleteFile(filePath, fileName);
 	        
 	    }
 	}
 	
-	// ���� �ϳ� ����
+	// 占쏙옙占쏙옙 占싹놂옙 占쏙옙占쏙옙
 		private void deleteFile(String filePath, String fileName) {
 		    Path path = Paths.get(filePath, fileName);
 		    try {
@@ -187,9 +187,9 @@ public class SummerNoteController {
 		    }
 		}
 	
-	// ���� ���� ����
+	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	private void fileUpload(String temp_folder, String idx_folder, String editordata) {
-	    // �־��� ��θ� ������� ���� ��ü ����
+	    // 占쌍억옙占쏙옙 占쏙옙罐占� 占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙체 占쏙옙占쏙옙
 	    File folder1;
 	    File folder2;
 	    folder1 = new File(temp_folder);
@@ -197,16 +197,16 @@ public class SummerNoteController {
 
 	    String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 	    
-	    // ������ �������� ������ ���� ����
+	    // 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	    if (!folder1.exists())
 	        folder1.mkdirs();
 	    if (!folder2.exists())
 	        folder2.mkdirs();
 	    
-	    // ����1�� ���ϵ��� ������
+	    // 占쏙옙占쏙옙1占쏙옙 占쏙옙占싹듸옙占쏙옙 占쏙옙占쏙옙占쏙옙
 	    File[] target_files = folder1.listFiles();
 	    for (File file : target_files) {
-	        // ����2�� ������ ���� ����
+	        // 占쏙옙占쏙옙2占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	    	File temp = null; 	    		
 	    	if(file.getName().contains(userEmail))
 	    	{
@@ -215,12 +215,12 @@ public class SummerNoteController {
 	    	}
 	        
 	    	if(temp != null) {
-		    		// ������ ���
+		    		// 占쏙옙占쏙옙占쏙옙 占쏙옙占�
 		    		if (file.isDirectory()) {
-		    			// ������ ��� ������ ���� ����
+		    			// 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 		    			temp.mkdir();
 		    		} else {
-		    			// ������ �ƴ� ��� ���� ����
+		    			// 占쏙옙占쏙옙占쏙옙 占싣댐옙 占쏙옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙
 		    			FileInputStream fis = null;
 		    			FileOutputStream fos = null;
 		    			try {
@@ -235,7 +235,7 @@ public class SummerNoteController {
 		    				e.printStackTrace();
 		    			} finally {
 		    				try {
-		    					// ���� �߻� ���ο� ������� ���� ����� ��Ʈ���� ����
+		    					// 占쏙옙占쏙옙 占쌩삼옙 占쏙옙占싸울옙 占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙占� 占쏙옙트占쏙옙占쏙옙 占쏙옙占쏙옙
 		    					fis.close();
 		    					fos.close();
 		    				} catch (IOException e) {
