@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.heading-section h4 {
+	color: white;
+	font-size: 34px;
+	text-decoration: none;
+	margin-bottom: 30px;
+}
+      
+.thumb img {
+	border-radius: 23px;
+	max-width: 30%;
+	height: auto;
+} 

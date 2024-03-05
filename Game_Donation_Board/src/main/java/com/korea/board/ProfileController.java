@@ -100,6 +100,13 @@ public class ProfileController {
 	    return null;
 	}
 	
+	@RequestMapping("registered_Project")
+	public String registered_Project() {
+		
+		return Common.profile.VIEW_PATH + "registered_Project.jsp";
+	
+	}	
+	
 }
 	
 

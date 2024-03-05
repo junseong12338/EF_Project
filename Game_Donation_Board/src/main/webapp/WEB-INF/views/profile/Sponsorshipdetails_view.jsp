@@ -6,18 +6,10 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Cyborg - Awesome HTML5 Template</title>
-
-    <style>    
-
-    .heading-section h4 {
-        color: white;
-        font-size: 34px;
-        text-decoration: none;
-        margin-bottom: 30px;
-      }
-    </style>
+    <title>EZ Funding</title>
     
+    <link rel="stylesheet" href="resources/css/sponsorshipdetails.css">
+    <link rel="stylesheet" href="resources/css/menu.css">
     <link href="resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/css/fontawesome.css">
     <link rel="stylesheet" href="resources/css/templatemo-cyborg-gaming.css">
@@ -40,94 +32,27 @@
       </div>
     </div>
   </div>
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <a href="index.html" class="logo">
-                        <img src="resources/images/logo.png" alt="">
-                    </a>
-                    <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="검색" id='searchText' name="searchKeyword" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
-                      </form>
-                    </div>
-
-                    <ul class="nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
-                        <li><a href="mypage_view" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
-                    </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+  <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
-
             <div class="row">
                 <div class="col-3g-8">
                   <div class="featured-games header-text">
                     <h4>내가 후원한 프로젝트</h4><br>
-            <p class="section-description">4건의 후원 내역이 있습니다.</p><br>
-                    <div class="heading-section">
-        </div>
-        <div class="owl-features owl-carousel">
+            <p class="section-description">1건의 후원 내역이 있습니다.</p><br>
+                    <div class="heading-section"></div>
           <div class="item">
             <div class="thumb">
-              <img src="resources/images/건즈.jpg" alt="" style="border-radius: 23px;">
+              <img src="resources/images/건즈.jpg" alt="">
               
             </div>
             <div class="down-content">
               <h4>건즈</h4>
-              <span><br><br><i class="fa fa-eye"></i>후원 포인트 : 300,000 Point</span>
+              <span><br><br>후원 포인트 : 300,000 Point</span>
             </div>
-          </div>
-        
-          <div class="item">
-            <div class="thumb">
-              <img src="resources/images/배틀그라운드.jpg" alt="" style="border-radius: 20px;">
-              
-            </div>
-            <div class="down-content">
-              <h4>배틀그라운드</h4>
-              <span><br><br><i class="fa fa-eye"></i>후원 포인트 : 300,000 Point</span>
-              
-            </div>
-          </div>
-        
-          <div class="item">
-            <div class="thumb">
-              <img src="resources/images/서든어택.jpg" alt="" style="border-radius: 23px;">
-              
-            </div>
-            <div class="down-content">
-              <h4>서든어택</h4>
-              <span><br><br><i class="fa fa-eye"></i>후원 포인트 : 200,000 Point</span>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="thumb">
-              <img src="resources/images/카트라이더.jpg" alt="" style="border-radius: 23px;">
-            </div>
-            
-            <div class="down-content">
-              <h4>카드라이더</h4>
-              <span><br><br><i class="fa fa-eye"></i>후원 포인트 : 300,000 Point</span>
-            </div>
-          </div>
-        </div>
+          </div>  
       </div>
     </div>
         </div>
@@ -147,7 +72,7 @@
       </div>
     </div>
   </footer>
-
+  <script src="resources/js/menu.js"></script>
   <script src="resources/jquery/jquery.min.js"></script>
   <script src="resources/js/bootstrap.min.js"></script>
   <script src="resources/js/isotope.min.js"></script>
