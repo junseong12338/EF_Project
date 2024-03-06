@@ -29,13 +29,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 리스트 총 개수 반환 -->
-	<select id="project_count" resultType="int">
+	<select id="project_list_count" resultType="int">
 		SELECT COUNT(*) FROM EF_PROJECT
+	</select>
+
+	<!-- 진행예정 프로젝트 총 갯수 -->
+	<select id="project_before_count" resultType="int">
+		SELECT COUNT(*) FROM PROJECT 
+		WHERE PROJECT_START > SYSDATE
+	</select>
+	
+	<!-- 진행중인 프로젝트 총 갯수 -->
+	<select id="project_now_count" resultType="int">
+		SELECT COUNT(*) FROM PROJECT 
+		WHERE PROJECT_END >= SYSDATE AND SYSDATE >= PROJECT_START
+	</select>
+	
+	<!-- 마감된 프로젝트 총 갯수 -->
+	<select id="project_after_count" resultType="int">
+		SELECT COUNT(*) FROM PROJECT 
+		WHERE SYSDATE > PROJECT_END
 	</select>
 
 
 	<!-- 인기순 -->
-	<select id="project_list" resultType="project" parameterType="project">
+	<select id="project_now_list" resultType="project" parameterType="java.util.HashMap">
 		SELECT A.*
 		FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX ASC) AS "RANK_NO" 
         FROM EF_PROJECT A, (SELECT A.PROJECT_IDX, 
@@ -44,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                             LEFT JOIN EF_LIKE B ON A.PROJECT_IDX = B.PROJECT_IDX
                             GROUP BY A.PROJECT_IDX) B
         WHERE A.PROJECT_IDX = B.PROJECT_IDX) A
-		WHERE A.RANK_NO BETWEEN #{start} AND #{end}
+		WHERE A.RANK_NO BETWEEN #{startList} AND #{endList}
 	</select>
 </mapper>
 

@@ -23,7 +23,7 @@ public class ProjectDTO {
 	// ���;���
 	private String project_author;
 	// �� �ݵ��ݾ� - sql���� alias �ؼ� �ܾ�� ����
-	private int project_donation;
+	private String project_donation;
 	
 	// ī�װ��� 10��
 	private List<Integer> category_list;
@@ -34,6 +34,4 @@ public class ProjectDTO {
 	private int end;
 	private int count;
 	
-	private String persent;
-	private String diff_date;
 }
