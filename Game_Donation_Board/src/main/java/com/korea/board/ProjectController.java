@@ -104,6 +104,7 @@ public class ProjectController {
 		dto.setCategory_list(category);
 		
 		System.out.println(category);
+		System.out.println(sort);
 		
 
 		int list_count = projectService.selectOne(dto);

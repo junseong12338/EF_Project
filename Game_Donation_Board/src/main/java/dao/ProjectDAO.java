@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,7 +12,7 @@ public class ProjectDAO {
 	
 	final SqlSession sqlSession;
 	
-	//�� �ۼ� �� �� ��ȣ �̸� ��������
+
 	public int select_idx() {
 		return sqlSession.selectOne("project.select_idx");
 	}
@@ -26,19 +25,19 @@ public class ProjectDAO {
 		return sqlSession.selectOne("project.select_idx",project_content);
 	}
 	
-	//�� �Ѱ� ��������
+
 	public ProjectDTO selectOne_project(int idx) {
 		return sqlSession.selectOne("project.selectOne_project",idx);
 	}
 	
 	//------------------------------------------------------------------
 	
-	// list �� ���� ��ȯ
+
 	public int select_count(ProjectDTO dto) {
 		return sqlSession.selectOne("project.project_count",dto);
 	}
 	
-	// ��ü ������Ʈ ����Ʈ
+
 	public List<ProjectDTO> selectList(ProjectDTO dto){
 		return sqlSession.selectList("project.project_list",dto);
 	}
