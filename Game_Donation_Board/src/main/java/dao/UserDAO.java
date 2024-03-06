@@ -17,17 +17,18 @@ public class UserDAO {
 
 		return sqlSession.selectOne("u.checkEmail",user_email);
 	}
+	public UserDTO selectone(int user_idx) {
+
+		return sqlSession.selectOne("u.selectone",user_idx);
+	}
 	
 	public int userInsert(UserDTO dto) {
 		return sqlSession.insert("u.insert",dto);
 	}
 	// ����Ʈ ������Ʈ	
-	public int update_point(int userId, int point) {
-		
-		Map<String, Integer> params = new HashMap<>();
-	    params.put("userId", userId);
-	    params.put("point", point);
-	    return sqlSession.update("u.update_point_by_user_id", params);
+	public int update_point(UserDTO dto) {
+		System.out.println("DAO"+dto);
+	    return sqlSession.update("u.update_point", dto);
 	}
 
 	// ȸ�� Ż��
@@ -40,5 +41,6 @@ public class UserDAO {
 		System.out.println("DAO"+dto);
 	    return sqlSession.update("u.update", dto);
 	}
+
 		
 }

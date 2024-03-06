@@ -1,5 +1,7 @@
 package service;
 
+import java.util.Map;
+
 import dao.UserDAO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,10 @@ public class UserService {
 
 	public UserDTO checkEmail(String user_email) {
 		return userDAO.checkEmail(user_email);
+	}
+
+	public UserDTO selectone(int user_idx) {
+		return userDAO.selectone(user_idx);
 	}
 	
 	public int userInsert(UserDTO dto) {
@@ -24,7 +30,9 @@ public class UserService {
 		return userDAO.userDelete(idx);
 	}
 	
-	public int userPointUpdate(int userId, int point) {
-		return userDAO.update_point(userId, point);
+	public int userPointUpdate(UserDTO dto) {
+		return userDAO.update_point(dto);
 	}
+	
+
 }

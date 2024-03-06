@@ -17,31 +17,53 @@
           var milliseconds = today.getMilliseconds();
           var makeMerchantUid = hours +  minutes + seconds + milliseconds;
           
-  
-          function requestPay() {
+
+
+          function requestPay(f) {
+    		  let email = document.getElementById("user_email").value;
+    		  let name = document.getElementById("user_name").value;
+    		  let addr = document.getElementById("user_addr").value;
+    		  let point = document.getElementById("user_point").value;
+    		  let idx = document.getElementById("user_idx").value;
+    		  let payment = document.getElementById("payment").value;
         	  if(confirm('결제하시겠습니까?')){
-        		  let payment = document.getElementById("payment").value;
                   IMP.request_pay({
                       pg : 'kakaopay',
                       merchant_uid: "IMP"+makeMerchantUid, 
                       name : '컴퓨터',
                       amount : Number(payment),
-                      buyer_email : 'tyghqkr456@naver.com',
-                      buyer_name : '석진',
+                      buyer_email : email,
+                      buyer_name : name,
                       buyer_tel : '010-1234-5678',
-                      buyer_addr : '인천광역시 부평',
+                      buyer_addr : addr,
                       buyer_postcode : '123-456'
                   }, function (rsp) { // callback
                       if (rsp.success) {
-                          console.log(rsp);
-                          alert('결제완료');
+                    	  console.log('success');
+                     	   $.ajax({
+                     		    url: "user_point_update",
+                     		    data: {"user_email" : email,"payment": payment},
+                     		    type: "POST"
+                     		  });
+                    	  alert("결제성공");
+                    	  location.href = "/board/mypage_view";
                       } else {
-                          console.log(rsp);
-                          alert('결제실패');
+                    	  console.log('success');
+                    	   $.ajax({
+                    		    url: "user_point_update",
+                    		    data: {"user_email" : email,"payment": payment},
+                    		    type: "POST"
+                    		  });
+                   	  alert("결제성공");
+                	  location.href = "/board/mypage_view";
+                    	  
+                    	  
+                    	 /*  console.log('fail');
+                    	  alert("결제실패");
+                    	  history.go(0); */
                       }
                   });
         	  }
-        	 
           }
       </script>
 
@@ -141,6 +163,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
       <span class="dot"></span>
@@ -189,9 +212,17 @@
                 <h2>결제 수단 방법</h2><br>
                 <div class="button-container">
                     <p>결제 금액</p>
+                    <form name="f">
+                    <input type="hidden" value="${user_email.user_idx}" id="user_idx">
+					<input type="hidden" value="${user_email.user_email}" id="user_email">
+					<input type="hidden" value="${user_email.user_name}" id="user_name">
+					<input type="hidden" value="${user_email.user_addr}" id="user_addr">
+					<input type="hidden" value="${user_email.user_point}" id="user_point">
+					<input type="hidden" id="sumpoint">
                     <input type="number"placeholder="숫자만 입력가능." id="payment">
+                    </form>
                 </div>
-                 <button onclick="requestPay()" id="kakao-pay" class="payment-button">
+                 <button onclick="requestPay(this.form)" id="kakao-pay" class="payment-button">
                   <img src="./resources/images/카카오페이.jpg" alt="카카오페이">
                 </button>
                 <button id="KG이니시스" class="KG이니시스">
@@ -221,6 +252,5 @@
   <script src="resources/js/tabs.js"></script>
   <script src="resources/js/popup.js"></script>
   <script src="resources/js/custom.js"></script>
-
 </body>
 </html>

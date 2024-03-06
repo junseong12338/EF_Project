@@ -133,17 +133,11 @@
   
   <script type="text/javascript">
 
-/*   function fetchRemainingPoints() {
-	    fetch("/getRemainingPoints")
-	        .then(response => response.text())
-	        .then(data => {
-	            const remainingPoints = parseInt(data); // 서버로부터 받은 포인트 값을 정수로 변환하여 변수에 할당
-	            document.getElementById('remaining-points').textContent = remainingPoints + ' Point';
-	        })
-	        .catch(error => console.error('Error fetching remaining points:', error));
-	} */
+ function updatepoint() {
+	 
+	}
 //페이지 로드 시 잔여 포인트를 가져오기
-document.addEventListener('DOMContentLoaded', fetchRemainingPoints);
+document.addEventListener('DOMContentLoaded', updatepoint);
   </script>
 
 </body>

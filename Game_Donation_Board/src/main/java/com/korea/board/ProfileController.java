@@ -1,5 +1,8 @@
 package com.korea.board;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.scribejava.core.model.Response;
 
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +43,6 @@ public class ProfileController {
 	@RequestMapping("mypage_view")
 	public String mypage_view() {
 		UserDTO userdto = (UserDTO)request.getSession().getAttribute("user_email");
-		
-		
 		return Common.profile.VIEW_PATH + "mypage_view.jsp";
 
 	}
@@ -100,6 +104,34 @@ public class ProfileController {
 	    return null;
 	}
 	
+	@RequestMapping(value = "user_point_update")
+	@ResponseBody
+	public String user_point_update(String user_email,int payment) {
+		System.out.println(user_email);
+		UserDTO dto = userService.checkEmail(user_email);
+		int point = dto.getUser_point();
+		dto.setUser_point(point+payment);
+		int res = userService.userPointUpdate(dto);
+		System.out.println(res);
+		request.getSession().setAttribute("user_point", dto.getUser_point());
+		
+		if (res > 0) {
+			
+			return "redirect:board_list";
+		}
+		
+		return null;
+	}
+	
+
+	@RequestMapping(value = "user_point_select")
+	@ResponseBody
+	public void user_point_update(String user_email) {
+		System.out.println(user_email);
+		UserDTO dto = userService.checkEmail(user_email);
+		request.getSession().setAttribute("user_point", dto.getUser_point());
+	}
+
 }
 	
 
