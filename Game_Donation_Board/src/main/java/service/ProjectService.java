@@ -17,7 +17,7 @@ public class ProjectService {
 	
 	// ��ü list�� ����
 	public int selectOne(ProjectDTO dto){
-		return projectDAO.get_list_count(dto);
+		return projectDAO.select_count(dto);
 	}
 	
 	// ��ü ������Ʈ ����Ʈ ( �α������ �ʱ� �� ���� )
