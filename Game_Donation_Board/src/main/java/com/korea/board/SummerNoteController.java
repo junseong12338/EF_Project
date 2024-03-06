@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 
+import dto.ProjectDTO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import service.SummerNoteService;
@@ -45,7 +46,7 @@ public class SummerNoteController {
 	
 	//각자 컴퓨터 이미지 기본경로 설정 
 	//예: C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : 이준성 학원 경로
-	final String contextRoot = "C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img\\";
+	final String contextRoot = "C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img\\";
 	
 	//글 작성 페이지 이동
 	@RequestMapping("project_editor")
@@ -75,8 +76,8 @@ public class SummerNoteController {
 		String savedFileName = UUID.randomUUID() + extension;	
 		
 		File targetFile = new File(fileRoot + savedFileName);	
-		try {
-			InputStream fileStream = multipartFile.getInputStream();	
+		try(InputStream fileStream = multipartFile.getInputStream();) {
+				
 			//지정된 경로에 파일 저장
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	
 			
@@ -92,6 +93,7 @@ public class SummerNoteController {
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
+		System.out.println(jsonObject.get("url"));
 		String a = jsonObject.toString();
 		
 		
@@ -117,11 +119,30 @@ public class SummerNoteController {
 	 * 글작성완료 동작 메서드 
 	 */
 	@RequestMapping("/summernote_send")
-	public String summernote_send(String editordata) {
+	public String summernote_send(HttpServletRequest sendRequest, @RequestParam("category") List<Integer> category) {
+		String project_title = sendRequest.getParameter("project_title");
+		String start_date = sendRequest.getParameter("start_date");
+		String end_date = sendRequest.getParameter("end_date");
+		int target = Integer.parseInt(sendRequest.getParameter("target"));
+		String project_main_img = sendRequest.getParameter("project_main_img");
+		String editordata = sendRequest.getParameter("editordata");
+		
+		
 		
 		try {
+			
+			ProjectDTO dto = new ProjectDTO(); 
+			
+			dto.setProject_title(project_title);
+			dto.setProject_start(start_date);
+			dto.setProject_end(end_date);
+			dto.setProject_target(target);
+			dto.setProject_img(project_main_img);
+			dto.setProject_content(editordata);	
+			dto.setCategory_list(category);
+			
 			//글 등록 후 글번호를 받아옴
-			int idx = summerNoteService.insertProject(editordata);
+			int idx = summerNoteService.insertProject(dto);
 			
 			if(idx == -1) {
 				return "redirect:/";
@@ -138,9 +159,9 @@ public class SummerNoteController {
 		    //idx폴더 경로
 		    String idx_folder = contextRoot + idx + "/";
 		    
-		    //temp폴더 안 editordata내용안에 이미지이름이 포함되어있는 파일만 
+		    //temp폴더 안 editordata내용안, project_main_img에 이미지이름이 포함되어있는 파일만 
 		    //idx폴더로 복사
-		    fileUpload(temp_folder, idx_folder,editordata);
+		    fileUpload(temp_folder, idx_folder,dto);
 			
 		    //temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
 		    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
@@ -152,7 +173,8 @@ public class SummerNoteController {
 		
 
 		
-		return "redirect:/";
+//		return "redirect:/";
+		return Common.project.VIEW_PATH + "project_editor.jsp";
 	}
 	
 	// temp폴더 안 session에 저장된 userEmail값이 이름에 포함된 이미지파일 이름을 리스트로 반환
@@ -203,7 +225,7 @@ public class SummerNoteController {
 	}
 	
 	// temp폴더 안 파일 idx폴더로 옮기기
-	private void fileUpload(String temp_folder, String idx_folder, String editordata) {
+	private void fileUpload(String temp_folder, String idx_folder, ProjectDTO dto) {
 	    // temp폴더와 idx폴더경로 설정
 	    File folder1;
 	    File folder2;
@@ -224,8 +246,10 @@ public class SummerNoteController {
 	        
 	    	//editordata내용에 포함된 파일이름을 가진 파일만 idx폴더로 복사
 	    	File temp = null; 	    		
-    		if(editordata.contains(file.getName())) {
+    		if(dto.getProject_content().contains(file.getName())) {
     			temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());    			
+    		}else if(dto.getProject_img().contains(file.getName())) {
+    			temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());   
     		}
 	    	
 	        

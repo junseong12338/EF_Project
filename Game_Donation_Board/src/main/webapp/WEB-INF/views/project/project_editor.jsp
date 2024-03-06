@@ -75,6 +75,21 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         display: flex;
         justify-content: space-between;
       }
+      .image-container {
+        width: 300px;
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 100%;
+      }
+
+      form .image-category-setting {
+        display: flex;
+        justify-content: space-between;
+      }
     </style>
   </head>
   <body style="font-family: 'Montserrat', sans-serif">
@@ -85,6 +100,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="col-lg-12">
           <div class="page-content">
             <form method="post" enctype="multipart/form-data">
+              <input
+                type="hidden"
+                name="project_main_img"
+                id="project_main_img"
+              />
               <div id="project_editor">
                 <div class="title-box">
                   <div id="title">
@@ -118,15 +138,96 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     />
                   </div>
                 </div>
-                <div class="mainimage-setting">
-                  메인이미지를 선택해주세요 :
-                  <input
-                    type="file"
-                    name="main_image"
-                    id="main_image"
-                    onchange="main_image_send(this)"
-                  />
-                  <img src="" class="img-rounded" id="main_image_show" />
+                <div class="image-category-setting">
+                  <div class="image-setting-container">
+                    <div class="image-container">
+                      <img
+                        src="resources/img/preview.jpg"
+                        class="img-rounded"
+                        id="main_image_show"
+                      />
+                    </div>
+                    메인이미지를 선택해주세요 :
+                    <input
+                      type="file"
+                      name="main_image"
+                      id="main_image"
+                      onchange="main_image_send()"
+                    />
+                  </div>
+                  <div class="category-container">
+                    카테고리 설정<br />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="1"
+                    />
+                    1 &nbsp;
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="2"
+                    />
+                    2<br />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="3"
+                    />
+                    3 &nbsp;
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="4"
+                    />
+                    4<br />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="5"
+                    />
+                    5 &nbsp;
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="6"
+                    />
+                    6<br />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="7"
+                    />
+                    7 &nbsp;
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="8"
+                    />
+                    8<br />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="9"
+                    />
+                    9 &nbsp;
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category"
+                      value="10"
+                    />
+                    10<br />
+                  </div>
                 </div>
                 <div class="submit-button">
                   <button
@@ -172,9 +273,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
       $(document).ready(function () {
-        // 썸머노트 설정
-        var setting = {};
-
         $("#summernote").summernote({
           height: 700, // 에디터 높이
           minHeight: null, // 최소 높이
@@ -268,14 +366,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       });
 
       //메인이미지(썸네일) 등록 ajax함수
-      function main_image_send(file) {
-        uploadMainImageFile(file);
-      }
+      function main_image_send() {
+        var preview = new FileReader();
+        preview.onload = function (e) {
+          // img id 값
+          document.getElementById("main_image_show").src = e.target.result;
+        };
+        // input id 값
+        preview.readAsDataURL(document.getElementById("main_image").files[0]);
 
-      //메인이미지 업로드 ajax
-      function uploadMainImageFile(file) {
         data = new FormData();
-        data.append("file", file);
+
+        data.append("file", document.getElementById("main_image").files[0]);
 
         $.ajax({
           data: data,
@@ -286,19 +388,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           processData: false,
           success: function (data) {
             console.log(data.url);
-            $(".main_image_show").attr("src", data.url);
+            document.getElementById("project_main_img").value = data.url;
           },
         });
       }
 
       //작성완료 함수
       function send(f) {
-        let content = f.editordata.value;
-
-        if (content == "") {
-          alert("내용을 입력해주세요");
-          return;
-        }
+        // if (content == "") {
+        //   alert("내용을 입력해주세요");
+        //   return;
+        // }
 
         f.action = "summernote_send";
         f.submit();
