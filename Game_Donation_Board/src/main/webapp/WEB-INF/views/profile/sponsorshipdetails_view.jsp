@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,18 +42,19 @@
                 <div class="col-3g-8">
                   <div class="featured-games header-text">
                     <h4>내가 후원한 프로젝트</h4><br>
-            <p class="section-description">1건의 후원 내역이 있습니다.</p><br>
-                    <div class="heading-section"></div>
-          <div class="item">
-            <div class="thumb">
-              <img src="resources/images/건즈.jpg" alt="">
-              
-            </div>
-            <div class="down-content">
-              <h4>건즈</h4>
-              <span><br><br>후원 포인트 : 300,000 Point</span>
-            </div>
-          </div>  
+           <!--  <p class="section-description">1건의 후원 내역이 있습니다.</p><br> -->
+           
+           <c:forEach var="donation_dto" items="${donationList}">
+			
+			<div>
+        		<h5>${donation_dto.project_title}</h5> <!-- 프로젝트 제목 표시 -->
+        	<div>${donation_dto.project_content}</div>   
+        	    	
+        		<img src="${donation_dto.project_img}">
+        		
+        		<h5>${donation_dto.donation_money}</h5> <!-- 후원 금액 표시 -->
+    		</div>
+	     </c:forEach>
       </div>
     </div>
         </div>

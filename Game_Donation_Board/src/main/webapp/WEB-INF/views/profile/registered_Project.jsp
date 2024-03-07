@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +42,17 @@
             <div class="row">
                 <div class="col-3g-8">
                     <h4>내가 등록한 프로젝트</h4><br>
-            <p class="section-description">0건의 내역이 있습니다.</p><br>
+            <!-- <p class="section-description" id="history-count">0건의 내역이 있습니다.</p><br> -->
+         	
+         	<c:forEach var="dto" items="${projectList}">
+         	
+         	<div>
+        		<h5>${dto.project_title}</h5> <!-- 프로젝트 제목 표시 -->
+        	<div>${dto.project_content}</div>
+        	
+        		<img src="${dto.project_img}">
+    		</div>
+         	</c:forEach>
     </div>
         </div>
         </div>

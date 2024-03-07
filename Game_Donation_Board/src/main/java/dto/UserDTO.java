@@ -17,7 +17,5 @@ public class UserDTO  {
 	private String user_addr;
 	private int user_point;
 	
-
-	
 }
 

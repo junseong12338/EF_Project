@@ -47,7 +47,7 @@
                           <button id="recharge-button" style="margin-left: 135px; background-color: #bb4ab1; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.5s;" onmouseover="this.style.backgroundColor='#a400b3'" onmouseout="this.style.backgroundColor='#bb4ab1'">충전하기</button>
                         </a>
                       </li>
-                      <li><a href="Sponsorshipdetails_view"> 후원한 프로젝트 내역 </a> | <a href="registered_Project"> 등록한 프로젝트 </a> | <a href="review"> 리뷰 </a></li>
+                      <li><a href="sponsorshipdetails_view"> 후원한 프로젝트 내역 </a> | <a href="registered_Project"> 등록한 프로젝트 </a> | <a href="review"> 리뷰 </a></li>
                     </ul>
                   </div>
                 </div>
