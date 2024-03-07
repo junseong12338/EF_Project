@@ -126,7 +126,7 @@ public class SummerNoteController {
 		int target = Integer.parseInt(sendRequest.getParameter("target"));
 		String project_main_img = sendRequest.getParameter("project_main_img");
 		String editordata = sendRequest.getParameter("editordata");
-		
+		int user_idx = ((UserDTO)(sendRequest.getSession().getAttribute("user_email"))).getUser_idx();
 		
 		
 		try {
@@ -134,6 +134,7 @@ public class SummerNoteController {
 			ProjectDTO dto = new ProjectDTO(); 
 			
 			dto.setProject_title(project_title);
+			dto.setUser_idx(user_idx);
 			dto.setProject_start(start_date);
 			dto.setProject_end(end_date);
 			dto.setProject_target(target);

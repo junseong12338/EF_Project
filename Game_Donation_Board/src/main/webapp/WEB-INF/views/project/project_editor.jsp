@@ -99,7 +99,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <div class="row">
         <div class="col-lg-12">
           <div class="page-content">
-            <form method="post" enctype="multipart/form-data">
+            <form
+              method="post"
+              enctype="multipart/form-data"
+              id="project_editor"
+            >
               <input
                 type="hidden"
                 name="project_main_img"
@@ -123,7 +127,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <div class="project-setting">
                   <div class="date-setting">
                     시작날짜 :
-                    <input type="date" name="start_date" id="start_date" />
+                    <input
+                      type="date"
+                      name="start_date"
+                      id="start_date"
+                      onchange="set_min_endDate()"
+                    />
                     종료날짜 :
                     <input type="date" name="end_date" id="end_date" />
                   </div>
@@ -133,8 +142,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       type="number"
                       name="target"
                       id="target"
-                      min="1"
-                      max="10000000"
+                      onchange="target_maxvalue()"
                     />
                   </div>
                 </div>
@@ -157,75 +165,25 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   </div>
                   <div class="category-container">
                     카테고리 설정<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="1"
-                    />
+                    <input type="checkbox" name="category" value="1" />
                     1 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="2"
-                    />
+                    <input type="checkbox" name="category" value="2" />
                     2<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="3"
-                    />
+                    <input type="checkbox" name="category" value="3" />
                     3 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="4"
-                    />
+                    <input type="checkbox" name="category" value="4" />
                     4<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="5"
-                    />
+                    <input type="checkbox" name="category" value="5" />
                     5 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="6"
-                    />
+                    <input type="checkbox" name="category" value="6" />
                     6<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="7"
-                    />
+                    <input type="checkbox" name="category" value="7" />
                     7 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="8"
-                    />
+                    <input type="checkbox" name="category" value="8" />
                     8<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="9"
-                    />
+                    <input type="checkbox" name="category" value="9" />
                     9 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category"
-                      value="10"
-                    />
+                    <input type="checkbox" name="category" value="10" />
                     10<br />
                   </div>
                 </div>
@@ -273,6 +231,23 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
       $(document).ready(function () {
+        // 현재 날짜를 가져오는 함수
+        function getCurrentDate() {
+          const today = new Date();
+          const year = today.getFullYear();
+          let month = today.getMonth() + 1;
+          let day = today.getDate();
+
+          // 월과 일이 한 자리 숫자인 경우 앞에 0을 추가
+          month = month < 10 ? "0" + month : month;
+          day = day < 10 ? "0" + day : day;
+          return year + "-" + month + "-" + day;
+        }
+
+        // 현재 날짜 이후의 날짜만 선택 가능하도록 설정
+        const futureDateInput = document.getElementById("start_date");
+        futureDateInput.min = getCurrentDate();
+
         $("#summernote").summernote({
           height: 700, // 에디터 높이
           minHeight: null, // 최소 높이
@@ -395,13 +370,66 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       //작성완료 함수
       function send(f) {
-        // if (content == "") {
-        //   alert("내용을 입력해주세요");
-        //   return;
-        // }
+        const title = document.getElementById("project_title").value;
+        const content = document.getElementById("summernote").value;
+        const target = document.getElementById("target").value;
+        const main_image = document.getElementById("main_image").value;
+        const start_date = document.getElementById("start_date").value;
+        const end_date = document.getElementById("end_date").value;
+        const category = [];
+        const checkboxes =
+          document.getElementById("project_editor").elements["category"];
 
-        f.action = "summernote_send";
-        f.submit();
+        for (let i = 0; i < checkboxes.length; i++) {
+          const checkbox = checkboxes[i];
+
+          // 체크된 체크박스의 값을 배열에 추가
+          if (checkbox.checked) {
+            category.push(checkbox.value);
+          }
+        }
+
+        console.log("title : " + title);
+        console.log("content : " + content);
+        console.log("target : " + target);
+        console.log("main_image : " + main_image);
+        console.log("start_date : " + start_date);
+        console.log("end_date : " + end_date);
+        console.log("category : " + category);
+
+        if (content == "") {
+          alert("내용을 입력해주세요");
+          return;
+        }
+
+        // f.action = "summernote_send";
+        // f.submit();
+      }
+
+      //목표금액 최대수치 초과 시 value 재설정
+      function target_maxvalue() {
+        console.log(document.getElementById("target").value);
+        if (document.getElementById("target").value > 100000000) {
+          alert("목표금액은 100.000.000원을 초과할 수 없습니다.");
+          document.getElementById("target").value = 100000000;
+        }
+      }
+
+      function set_min_endDate() {
+        const start_date = document.getElementById("start_date").value;
+
+        const dateObject = new Date(start_date);
+
+        const year = dateObject.getFullYear();
+        let month = dateObject.getMonth() + 1;
+        let day = dateObject.getDate() + 1;
+
+        // 월과 일이 한 자리 숫자인 경우 앞에 0을 추가
+        month = month < 10 ? "0" + month : month;
+        day = day < 10 ? "0" + day : day;
+
+        const futureDateInput = document.getElementById("end_date");
+        futureDateInput.min = year + "-" + month + "-" + day;
       }
     </script>
   </body>
