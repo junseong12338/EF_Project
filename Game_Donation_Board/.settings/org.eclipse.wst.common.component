@@ -101,8 +101,37 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+                                                                                                                                		
+        
+        
+        
+                                                
+        
+                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
                 
         <wb-resource deploy-path="/" source-path="/"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
                                                                                                                                         
         
         
@@ -124,6 +153,7 @@
         
         
         <property name="context-root" value="board"/>
+                
         <property name="java-output-path" value="/Game_Donation_Board/target/classes"/>
                                                                                                                                 	
     

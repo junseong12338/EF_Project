@@ -36,7 +36,7 @@
 							        
    									<li onclick="location.href='disconnectNaver?accessToken=' + encodeURIComponent('${accessToken}')">네이버 연동 해제</li>
    									<li onclick="location.href='unlinkKakaoAccount?accessToken=' + encodeURIComponent('${access_Token}')">카카오 연동 해제</li>
-
+                                       <li onclick="location.href='project_editor'">작품 등록하기</li>
    									<hr>
 							        <li onclick="location.href='logout'">로그아웃</li>
 							    </ul>

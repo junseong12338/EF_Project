@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.ProjectDAO;
+import dto.CategoryNumDTO;
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
 
@@ -13,33 +14,36 @@ public class SummerNoteService {
 	
 	final ProjectDAO projectDAO;
 	
-	//±Û ÀÛ¼º Ã³¸® ¸Þ¼­µå
+	//ï¿½ï¿½ ï¿½Û¼ï¿½ Ã³ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
 	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
-	public int insertProject(String editordata) throws Exception {
+	public int insertProject(ProjectDTO dto) throws Exception {
 		
-		ProjectDTO dto = new ProjectDTO();
-		
-		dto.setUser_idx(0);
-		dto.setProject_title("1234556");
-		dto.setProject_start("2020-03-09");
-		dto.setProject_end("2020-03-29");
-		dto.setProject_target(10000000);
 		dto.setProject_status(0);
+		
 		
 		
 		
 		int idx = projectDAO.select_idx();
 		
 		if(idx > 0) {
-			
+			CategoryNumDTO categoryDTO = new CategoryNumDTO();
 			dto.setProject_idx(idx);
 			
-			String replace_editordata = editordata.replaceAll("/temp/", "/"+idx+"/");
+			String replace_editordata = dto.getProject_content().replaceAll("/temp/", "/"+idx+"/");
+			String reqlace_mainImg = dto.getProject_img().replaceAll("/temp/", "/"+idx+"/");
 			
 			dto.setProject_content(replace_editordata);
+			dto.setProject_img(reqlace_mainImg);
 			
 			
 			projectDAO.insert_project(dto);
+			
+			categoryDTO.setProject_idx(idx);
+			
+			for(int categoryNum : dto.getCategory_list()) {
+				categoryDTO.setCategory_num(categoryNum);
+				projectDAO.insert_categoryNum(categoryDTO);
+			}
 			
 			return idx;
 		}

@@ -15,9 +15,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{project_title},
 			#{project_content},
 			#{project_status},
-			0,					<!-- 프로젝트 이미지 컬럼 임시데이터 -->
-			SYSDATE,
-			SYSDATE,
+			#{project_img},
+			TO_DATE(#{project_start}, 'YYYY-MM-DD'),
+			TO_DATE(#{project_end}, 'YYYY-MM-DD'),
 			#{project_target}
 		)
 	</insert>
@@ -27,6 +27,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM EF_PROJECT
 		WHERE PROJECT_IDX = #{idx}
 	</select>
+	
+	<!-- 카테고리 등록 -->
+	<insert id="insert_category" parameterType="categoryNum">
+		INSERT INTO EF_CATEGORY VALUES(
+			#{project_idx},
+			#{category_num}
+		)
+	</insert>
 	
 	<!-- 리스트 총 개수 반환 -->
 	<select id="project_list_count" resultType="int">
