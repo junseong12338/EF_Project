@@ -84,4 +84,8 @@ public class ProjectDAO {
 	
 	//---------------------------------------------------------------------------------------
 	
+	
+	public List<ProjectDTO>	ProjectList(){
+		return sqlSession.selectList("project.project_list");
+	}
 }

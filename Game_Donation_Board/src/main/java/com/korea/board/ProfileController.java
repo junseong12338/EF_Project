@@ -26,10 +26,6 @@ public class ProfileController {
 	
 	@Autowired
 	HttpSession session;
-	
-	
-	
-	
 
 	
 	//public final static String VIEW_PATH = "/WEB-INF/views/profile/";
@@ -38,8 +34,7 @@ public class ProfileController {
 	public String mypage_view() {
 		UserDTO userdto = (UserDTO)request.getSession().getAttribute("user_email");
 		
-		
-		return Common.profile.VIEW_PATH + "mypage_view.jsp";
+			return Common.profile.VIEW_PATH + "mypage_view.jsp";
 
 	}
 	

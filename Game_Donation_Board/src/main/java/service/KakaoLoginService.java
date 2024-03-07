@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public class KakaoLoginService {
 
@@ -66,7 +68,28 @@ public class KakaoLoginService {
 
 		return access_Token;
 	}
+	
+	
+	
+	 public ResponseEntity<String> unlinkKakaoAccount(String accessToken) throws Exception {
+	        String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+	        conn.setDoOutput(true);
+
+	        // 결과 코드가 200이라면 성공
+	        int responseCode = conn.getResponseCode();
+	        if (responseCode == HttpURLConnection.HTTP_OK) {
+	            return ResponseEntity.ok("Kakao account successfully unlinked.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to unlink Kakao account. Status code: " + responseCode);
+	        }
+	    }
+	
+	
 	public HashMap<String, Object> getUserInfo(String access_Token) throws Exception {
 		HashMap<String, Object> userInfo = new HashMap<>();
 		String reqURL = "https://kapi.kakao.com/v2/user/me";

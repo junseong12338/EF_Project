@@ -24,4 +24,9 @@ public class ProjectService {
 	public List<ProjectDTO> selectList(ProjectDTO dto){
 		return projectDAO.selectList(dto);
 	}
+	
+	public List<ProjectDTO>	ProjectList(){
+		
+		return projectDAO.ProjectList();
+	}
 }

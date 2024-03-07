@@ -12,6 +12,10 @@ public class UserService {
 		return userDAO.checkEmail(user_email);
 	}
 	
+	public UserDTO checkSocial(String user_social) {
+		return userDAO.checkSocial(user_social);
+	}
+	
 	public int userInsert(UserDTO dto) {
 		return userDAO.userInsert(dto);
 	}
