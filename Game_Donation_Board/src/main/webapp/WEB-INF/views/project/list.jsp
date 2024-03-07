@@ -37,7 +37,7 @@
 let currentPage = 1;
 let category = [0,0,0,0,0,0,0,0,0,0];
 let sort = 0;
-
+let sort_date = 0;
 
 $(window).on("scroll",function(){
     let scrollTop = $(window).scrollTop();// 위로 스크롤된 길이
@@ -59,7 +59,7 @@ $(window).on("scroll",function(){
 });
 
 // list 가져오기
-const GetList = function(currentPage, sort, category){
+const GetList = function(currentPage, sort, sort_date, category){
     console.log("리스트 - 현재페이지 : " + currentPage);
 
     // 무한 스크롤
@@ -69,6 +69,7 @@ const GetList = function(currentPage, sort, category){
         data : {
         	pageNum : currentPage,
         	sort : sort,
+        	sort_date : sort_date,
         	category_box : category
         },
         success:function(data){
@@ -82,7 +83,7 @@ const GetList = function(currentPage, sort, category){
 
 // 로딩시 1페이지 실행
 $(document).ready(function(){
-	GetList(1, 0, [0,0,0,0,0,0,0,0,0,0]);
+	GetList(1, 0, 0, [0,0,0,0,0,0,0,0,0,0]);
 })
 
 
@@ -93,7 +94,14 @@ function send_sort(value){
 	sort = value;
 	
 	$(".project-list-container").empty();
-	GetList(1, sort, category);
+	GetList(1, sort, sort_date, category);
+}
+
+function send_sort_date(value){
+	sort_date = value;
+	
+	$(".project-list-container").empty();
+	GetList(1, sort, sort_date , category);
 }
 
 
@@ -158,7 +166,7 @@ function send(n){
 	
 	
 	$(".project-list-container").empty();
-	GetList(1, sort, category);
+	GetList(1, sort, sort_date, category);
 }
 
 </script>
@@ -193,7 +201,7 @@ function send(n){
                     <div class="search-input">
                       <form id="search" action="now_project_list" method="GET">
                         <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" value="${keyword }"/>
-                        <i class="fa fa-search" type="button" onclick="search(this.form)"></i>
+                        <i class="fa fa-search" type="button"></i>
                       </form>
                     </div>
                     <!-- ***** Search End ***** -->
@@ -301,10 +309,21 @@ function send(n){
                   <!-- select 박스 Start -->
                   <div>
                     <form>
-                      <select id="select" onchange="send_sort(this.value)">
+                      <select id="select_sort" onchange="send_sort(this.value)">
                         <option value="0">인기순</option>
                         <option value="1">최신순</option>
                         <option value="2">최대 후원순</option>
+                      </select>
+                    </form>
+                  </div>
+                  &nbsp;
+                  <div>
+                    <form>
+                      <select id="select_sort_date" onchange="send_sort_date(this.value)">
+                      	<option value="0">전체보기</option>
+                        <option value="1">진행중</option>
+                        <option value="2">진행예정</option>
+                        <option value="3">마감</option>
                       </select>
                     </form>
                   </div>
@@ -323,7 +342,7 @@ function send(n){
       </div>
     </div>
   </div>
-  
+
 
 
   <footer>

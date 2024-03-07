@@ -29,6 +29,8 @@ public class ProjectDTO {
 	private List<Integer> category_list;
 	// 정렬
 	private int sort;
+	// 진행여부 날짜
+	private int sort_date;
 	// 시작, 끝 값으로 불러올 거임
 	private int start;
 	private int end;

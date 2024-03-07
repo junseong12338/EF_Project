@@ -15,6 +15,7 @@ public class ProjectService {
 		return projectDAO.selectOne_project(idx);
 	}
 	
+	//--------------------------------------------------------------
 
 	public int selectOne(ProjectDTO dto){
 		return projectDAO.select_count(dto);
