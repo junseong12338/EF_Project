@@ -26,21 +26,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectOne_project" parameterType="int" resultType="project">
 		SELECT * FROM EF_PROJECT
 		WHERE PROJECT_IDX = #{idx}
-	</select>
-	
-	<!-- 카테고리 등록 -->
+	</select> 
 	<insert id="insert_category" parameterType="categoryNum">
 		INSERT INTO EF_CATEGORY VALUES(
 			#{project_idx},
 			#{category_num}
 		)
 	</insert>
-	
-	<!-- 몰라 -->
-	<select id = "project_list" resultType="project">
-		select * 
-		from EF_PROJECT
-	</select>
 
 	
 	<!-- 리스트 총 개수 반환 -->

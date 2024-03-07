@@ -90,26 +90,25 @@ public class ProfileController {
 	    }	    
 	    return null;
 	}	
-	
-	 @RequestMapping("registered_Project")
-	    public String getProjectList(Model model) {
-	    //int userIdx = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
-    	List<ProjectDTO> EF_PROJCET = userService.ProjectList();
-
-	        // 모델에 프로젝트 목록 추가
-	        model.addAttribute("projectList", EF_PROJCET);
-	        
-	        // 프로젝트 목록 페이지로 포워딩
-	        return Common.profile.VIEW_PATH + "registered_Project.jsp";
-	    }
-	
-	 @RequestMapping("sponsorshipdetails_view")
-	 public String sponsorshipdetails_view(Model model) {
-		 List<DonationDTO> EF_DONATION = userService.donationList();
-		 
-		 model.addAttribute("donationlist", EF_DONATION);
-		 
-		 return Common.profile.VIEW_PATH + "sponsorshipdetails_view.jsp";
-		 
-	 }
+	/*
+	 * @RequestMapping("registered_Project") public String getProjectList(Model
+	 * model) { //int userIdx =
+	 * ((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
+	 * List<ProjectDTO> EF_PROJCET = userService.ProjectList();
+	 * 
+	 * // 모델에 프로젝트 목록 추가 model.addAttribute("projectList", EF_PROJCET);
+	 * 
+	 * // 프로젝트 목록 페이지로 포워딩 return Common.profile.VIEW_PATH +
+	 * "registered_Project.jsp"; }
+	 * 
+	 * @RequestMapping("sponsorshipdetails_view") public String
+	 * sponsorshipdetails_view(Model model) { List<DonationDTO> EF_DONATION =
+	 * userService.donationList();
+	 * 
+	 * model.addAttribute("donationlist", EF_DONATION);
+	 * 
+	 * return Common.profile.VIEW_PATH + "sponsorshipdetails_view.jsp";
+	 * 
+	 * }
+	 */
 }
