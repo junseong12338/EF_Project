@@ -96,9 +96,8 @@ public class ProjectDAO {
 	
 	//---------------------------------------------------------------------------------------
 	
-	
 	public List<ProjectDTO>	ProjectList(){
-		return null;
-//				sqlSession.selectList("project.project_list");
+		return sqlSession.selectList("project.pro_list");
 	}
+
 }

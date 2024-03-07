@@ -25,4 +25,10 @@ public class ProjectService {
 	public List<ProjectDTO> selectList(ProjectDTO dto){
 		return projectDAO.selectList(dto);
 	}
+	//-------------------------------------------------------------- 이준성
+
+	public List<ProjectDTO>	ProjectList(){
+		
+		return projectDAO.ProjectList();
+	}
 }

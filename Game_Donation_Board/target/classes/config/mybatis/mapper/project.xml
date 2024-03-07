@@ -151,6 +151,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				</choose>
 				<!-- choose 기간 end -->
 	</select>
+	
+	
+	
+	<select id = "pro_list" resultType="project">
+		select * 
+		from EF_PROJECT
+	</select>
 </mapper>
 
 

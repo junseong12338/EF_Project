@@ -20,9 +20,9 @@ public class AdminController {
 	
 	@RequestMapping("AdminList")	
 	public String AdminList(Model model) {
-//		List<ProjectDTO> EF_PROJECT = projectService.ProjectList();
-//		model.addAttribute("ProectList",EF_PROJECT);	
-//		
+		List<ProjectDTO> EF_PROJECT = projectService.ProjectList();
+		model.addAttribute("ProectList",EF_PROJECT);	
+		
 
 		return Common.User.VIEW_PATH + "AdminList.jsp";
 	}
