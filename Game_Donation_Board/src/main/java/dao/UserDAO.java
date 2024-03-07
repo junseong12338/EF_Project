@@ -18,20 +18,25 @@ public class UserDAO {
 		return sqlSession.selectOne("u.checkEmail",user_email);
 	}
 	
+	public UserDTO checkSocial(String user_social) {
+
+		return sqlSession.selectOne("u.checkSocial",user_social);
+	}
+	
 	public int userInsert(UserDTO dto) {
 		return sqlSession.insert("u.insert",dto);
 	}
-	// ����Ʈ ������Ʈ	
-	public int update_point(int point) {
+	public int update_point(int userId, int point) {
 		
-		return sqlSession.update("project.update_point",point);
-					
+		Map<String, Integer> params = new HashMap<>();
+	    params.put("userId", userId);
+	    params.put("point", point);
+	    return sqlSession.update("u.update_point_by_user_id", params);
 	}
 
-	// ȸ�� Ż��
-	public int delete(int idx) {
+	public int userDelete(int idx) {
 		
-		return sqlSession.delete("project.user_delete",idx);
+		return sqlSession.delete("u.user_delete",idx);
 	}
 	
 	public int userUpdate(UserDTO dto) {

@@ -1,8 +1,0 @@
-INDEX VERSION 1.4+C:\DEV\LYC\EF_work\EF_Project\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-694441075.index
-2961299289.index
-138430562.index
-2629086277.index
-3885347852.index
-2697095172.index
-684974756.index

@@ -1,0 +1,44 @@
+list ajax
+	- 이미지 클릭 시 상세페이지 이동경로 작성
+
+list
+	- 진행, 진행예정, 마감 나눠서 jsp만들기
+
+sort : like table, category_list : category table, project_donation : donation table(sum)
+project_author : user table
+
+list 갯수 sql
+- 매개변수 : 인기순(sort), 카테고리[List](category_list), 시작,끝값(start,end), 
+- 받아올 요소 : count(*)
+
+
+list 
+- 매개변수 : 인기순(sort), 카테고리[List](category_list), 시작,끝값(start,end), 
+- 받아올 요소 : dto - list(*)
+@ 주의해야 할 점
+- project_author ( alias 지정 ) -> user 테이블 join [to project] user_idx 가 같은 name을 가져와야함
+- project_donation ( alias 지정 ) -> 
+
+
+SELECT A.*
+FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (ORDER BY C.DONATION_RATE ASC, A.PROJECT_IDX ASC) AS "RANK_NO" ,C.DONATION_SUM, C.DONATION_RATE
+        FROM EF_PROJECT A, (SELECT A.PROJECT_IDX, 
+                            COUNT(B.PROJECT_IDX) AS "LIKE_COUNT"
+                            FROM EF_PROJECT A
+                            LEFT JOIN EF_LIKE B ON A.PROJECT_IDX = B.PROJECT_IDX
+                            GROUP BY A.PROJECT_IDX) B,
+                           (SELECT B.PROJECT_IDX, DONATION_SUM, 
+                            ROUND(B.DONATION_SUM / A.PROJECT_TARGET*100) AS DONATION_RATE
+                            FROM EF_PROJECT A,(SELECT A.PROJECT_IDX, 
+                                               SUM(B.DONATION_MONEY) AS "DONATION_SUM"
+                                               FROM EF_PROJECT A
+                                               LEFT JOIN EF_DONATION B ON A.PROJECT_IDX = B.PROJECT_IDX
+                                               GROUP BY A.PROJECT_IDX) B
+                            WHERE A.PROJECT_IDX = B.PROJECT_IDX)C
+        WHERE A.PROJECT_IDX = B.PROJECT_IDX 
+        AND A.PROJECT_IDX = C.PROJECT_IDX
+        AND A.PROJECT_IDX IN (SELECT PROJECT_IDX
+                              FROM EF_CATEGORY
+                              WHERE CATEGORY_IDX = 1)   
+        ) A
+WHERE A.RANK_NO BETWEEN 1 AND 10;
