@@ -39,8 +39,8 @@ public class UserLoginController {
 	@RequestMapping("logout")
 	public String logout() {
 		
-		session.removeAttribute("user_email");
-		session.removeAttribute("accessToken");
+		session.invalidate();
+
  
 		return "redirect:board_list";
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import dto.CategoryNumDTO;
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
 
@@ -13,7 +14,6 @@ public class ProjectDAO {
 	
 	final SqlSession sqlSession;
 	
-	//�� �ۼ� �� �� ��ȣ �̸� ��������
 	public int select_idx() {
 		return sqlSession.selectOne("project.select_idx");
 	}
@@ -26,9 +26,13 @@ public class ProjectDAO {
 		return sqlSession.selectOne("project.select_idx",project_content);
 	}
 	
-	//�� �Ѱ� ��������
 	public ProjectDTO selectOne_project(int idx) {
 		return sqlSession.selectOne("project.selectOne_project",idx);
+	}
+	
+	//프로젝트 카테고리 등록 메서드
+	public int insert_categoryNum(CategoryNumDTO dto) {
+		return sqlSession.insert("project.insert_category",dto);
 	}
 	
 	
@@ -58,6 +62,14 @@ public class ProjectDAO {
 	
 	//---------------------------------------------------------------------------------------
 	// ��ü ������Ʈ ����Ʈ
+	//------------------------------------------------------------------
+	
+
+	public int select_count(ProjectDTO dto) {
+		return sqlSession.selectOne("project.project_count",dto);
+	}
+	
+
 	public List<ProjectDTO> selectList(ProjectDTO dto){
 		return sqlSession.selectList("project.project_list",dto);
 	}
@@ -84,4 +96,8 @@ public class ProjectDAO {
 	
 	//---------------------------------------------------------------------------------------
 	
+	public List<ProjectDTO>	ProjectList(){
+		return sqlSession.selectList("project.pro_list");
+	}
+
 }

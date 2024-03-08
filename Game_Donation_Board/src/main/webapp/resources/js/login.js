@@ -34,7 +34,8 @@ signInButton.addEventListener('click', () => {
 
 // 아이디 중복 여부 변수
 let email_check = false;
-
+let name_check = false;
+let pw_check = false;
 // 이름 유효성 검사 함수
 function checkName(f) {
     let user_name = f.user_name.value.trim();
@@ -42,12 +43,12 @@ function checkName(f) {
     if (user_name === '') {
         let span = document.getElementById("check_name");
         span.innerHTML = "이름을 입력해주세요.";
-        email_check = false; // 이메일 유효성 검사 결과를 false로 설정
+        name_check = false; // 이메일 유효성 검사 결과를 false로 설정
         return; // 함수 종료
     } else {
         let span = document.getElementById("check_name");
         span.innerHTML = "";
-        email_check = true;
+        name_check = true;
     }
 }
 
@@ -58,12 +59,12 @@ function checkPw(f) {
     if (user_pw === '') {
         let span = document.getElementById("check_pw");
         span.innerHTML = "비밀번호를 입력해주세요.<br><br>";
-        email_check = false; // 이메일 유효성 검사 결과를 false로 설정
+        pw_check = false; // 이메일 유효성 검사 결과를 false로 설정
         return; // 함수 종료
     } else {
         let span = document.getElementById("check_pw");
         span.innerHTML = "";
-        email_check = true;
+        pw_check = true;
     }
 }
 
@@ -130,7 +131,7 @@ function signUp(f) {
     checkPw(f);
 
     // 아이디 중복 여부에 따라 폼 제출 여부 결정
-    if (email_check) {
+    if (email_check && name_check && pw_check) {
         // 폼 데이터 설정
         f.user_name.value = user_name;
         f.user_email.value = user_email;

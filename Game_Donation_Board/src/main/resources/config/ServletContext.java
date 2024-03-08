@@ -8,23 +8,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.korea.board.AdminController;
 import com.korea.board.BoardController;
 import com.korea.board.KakaoLoginController;
 import com.korea.board.NaverLoginController;
+import com.korea.board.ProfileController;
 import com.korea.board.ProjectController;
 import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
-//import com.korea.board.BoardController;
-import com.korea.board.ProfileController;
 
 import service.KakaoLoginService;
 import service.NaverLoginService;
 import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
-import com.korea.board.ProjectController;
-
-import service.ProjectService;
 
 
 @Configuration
@@ -38,8 +35,8 @@ public class ServletContext implements WebMvcConfigurer {
 
 	
 	@Bean
-	public BoardController boardController() {
-		return new BoardController();
+	public BoardController boardController(ProjectService projectService) {
+		return new BoardController(projectService);
 	}
 	
 	@Bean
@@ -76,6 +73,11 @@ public class ServletContext implements WebMvcConfigurer {
 	@Bean
 	public ProfileController profileController(UserService userService) {
 		return new ProfileController(userService);
+	}
+	
+	@Bean
+	public AdminController adminController(ProjectService projectService) {
+		return new AdminController(projectService);
 	}
 
 }

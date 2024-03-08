@@ -15,13 +15,20 @@ public class ProjectService {
 		return projectDAO.selectOne_project(idx);
 	}
 	
-	// ��ü list�� ����
+	//--------------------------------------------------------------
+
 	public int selectOne(ProjectDTO dto){
-		return projectDAO.get_list_count(dto);
+		return projectDAO.select_count(dto);
 	}
 	
-	// ��ü ������Ʈ ����Ʈ ( �α������ �ʱ� �� ���� )
+
 	public List<ProjectDTO> selectList(ProjectDTO dto){
 		return projectDAO.selectList(dto);
+	}
+	//-------------------------------------------------------------- 이준성
+
+	public List<ProjectDTO>	ProjectList(){
+		
+		return projectDAO.ProjectList();
 	}
 }
