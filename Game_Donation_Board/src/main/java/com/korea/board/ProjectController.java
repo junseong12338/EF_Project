@@ -74,13 +74,15 @@ public class ProjectController {
 		
 		int page_num = 1;
 		
+		if(page_num_js != 0) {
+			page_num = page_num_js;
+		}
+		
 		int start_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;// 1, 13, 25 ...
 		
 		int end_num = page_num * PAGE_PROJECT_COUNT;// 12, 24, 36 ...
 		
-		
-		
-		
+		// list 범위 저장 -> dto
 		dto.setStart(start_num);
 		dto.setEnd(end_num);
 		

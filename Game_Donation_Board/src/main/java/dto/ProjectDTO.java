@@ -17,9 +17,7 @@ public class ProjectDTO {
 	private String project_img;
 	private String project_start;
 	private String project_end;
-	
-	// column 새로 만들거임
-	private String project_subtitle;
+
 	// sql에서 project_author로 받아와야함
 	private String project_author;
 	// sql에서 project_donation로 받아와야함 

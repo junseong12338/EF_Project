@@ -28,7 +28,7 @@ public class ProjectService {
 	//-------------------------------------------------------------- 이준성
 
 	public List<ProjectDTO>	ProjectList(){
-		
-		return projectDAO.ProjectList();
+		return null;
+//		return projectDAO.ProjectList();
 	}
 }

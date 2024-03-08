@@ -35,6 +35,7 @@
 <script>
 //스크롤 이벤트 처리
 let currentPage = 1;
+let total_page_count = 1;
 let category = [0,0,0,0,0,0,0,0,0,0];
 let sort = 0;
 let sort_date = 0;
@@ -46,21 +47,24 @@ $(window).on("scroll",function(){
     let isBottom = scrollTop + windowHeight >= documentHeight;// 스크롤이 바닥에 닿을 때
 
     if(isBottom){
-        if(currentPage == ${total_page_count}){
+        if(currentPage == total_page_count){
             return;
         }
 
         currentPage++;
         
         console.log("스크롤 - 현재페이지 : " + currentPage);
+
         // 추가로 받아올 페이지를 서버에 Ajax 요청
-        GetList(currentPage);
+        GetList(currentPage, sort, sort_date, category);
     };
 });
 
 // list 가져오기
 const GetList = function(currentPage, sort, sort_date, category){
     console.log("리스트 - 현재페이지 : " + currentPage);
+    console.log("스크롤 - 정렬1 : " + sort);
+    console.log("스크롤 - 정렬2 : " + sort_date);
 
     // 무한 스크롤
     $.ajax({
@@ -77,6 +81,9 @@ const GetList = function(currentPage, sort, sort_date, category){
 
             $(".project-list-container").append(data);
             console.log("ajax 잘넘어옴");
+            
+            // hidden 으로 total_page_count 받아오기
+            total_page_count = document.getElementById("total_page").value;
         }
     });
 };
@@ -201,7 +208,7 @@ function send(n){
                     <div class="search-input">
                       <form id="search" action="now_project_list" method="GET">
                         <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" value="${keyword }"/>
-                        <i class="fa fa-search" type="button"></i>
+                        <i class="fa fa-search"></i>
                       </form>
                     </div>
                     <!-- ***** Search End ***** -->
@@ -304,29 +311,24 @@ function send(n){
             <div class="col-lg-12">
               <div class="project-list header-text">
                 <div class="heading-section">
-                  <h4><em>진행중인</em> 프로젝트</h4>
+                  <h4><em>EZ-FUNDING</em> 프로젝트</h4>
                   
                   <!-- select 박스 Start -->
                   <div>
-                    <form>
                       <select id="select_sort" onchange="send_sort(this.value)">
                         <option value="0">인기순</option>
                         <option value="1">최신순</option>
                         <option value="2">최대 후원순</option>
                       </select>
-                    </form>
-                  </div>
-                  &nbsp;
-                  <div>
-                    <form>
                       <select id="select_sort_date" onchange="send_sort_date(this.value)">
                       	<option value="0">전체보기</option>
                         <option value="1">진행중</option>
                         <option value="2">진행예정</option>
                         <option value="3">마감</option>
                       </select>
-                    </form>
                   </div>
+                  
+
                   <!-- select 박스 End -->
                 </div>  
                 

@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -29,6 +28,11 @@ public class ProjectDAO {
 	public ProjectDTO selectOne_project(int idx) {
 		return sqlSession.selectOne("project.selectOne_project",idx);
 	}
+	
+	//프로젝트 카테고리 등록 메서드
+	   public int insert_categoryNum(CategoryNumDTO dto) {
+	      return sqlSession.insert("project.insert_category",dto);
+	   }
 	
 	//------------------------------------------------------------------
 	
