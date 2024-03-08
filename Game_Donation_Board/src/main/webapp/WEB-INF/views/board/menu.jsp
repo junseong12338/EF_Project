@@ -5,11 +5,13 @@
 <link rel="stylesheet" href="resources/css/menu.css">
 <script src="resources/js/menu.js"></script>
 
- <header class="header-area header-sticky">
+  
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <nav class="main-nav">
+               <nav class="main-nav">
                     <a href="board_list" class="logo">
                         <img src="resources/assets/images/logo.png" alt="">
                     </a>
@@ -29,8 +31,13 @@
 							    <ul id="dropdown-container" class="dropdown-list">
 							        <li onclick="location.href='mypage_view'">프로필</li>
 							        <li>후원한 프로젝트</li>
-							        <li onclick="location.href='project_editor'">작품 등록하기</li>
-							        <hr>
+							        <li>작품 등록하기</li>
+							        <li onclick="location.href='AdminList'">관리자페이지</li>
+							        
+   									<li onclick="location.href='disconnectNaver?accessToken=' + encodeURIComponent('${accessToken}')">네이버 연동 해제</li>
+   									<li onclick="location.href='unlinkKakaoAccount?accessToken=' + encodeURIComponent('${access_Token}')">카카오 연동 해제</li>
+                                       <li onclick="location.href='project_editor'">작품 등록하기</li>
+   									<hr>
 							        <li onclick="location.href='logout'">로그아웃</li>
 							    </ul>
 							</li>
@@ -40,9 +47,10 @@
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
-                    <!-- ***** Menu End ***** -->
                 </nav>
             </div>
         </div>
     </div>
   </header>
+  
+  <!-- ***** Header Area End ***** -->

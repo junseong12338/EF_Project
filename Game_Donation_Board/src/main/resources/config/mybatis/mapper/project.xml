@@ -72,6 +72,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE A.PROJECT_IDX = B.PROJECT_IDX) A
 		WHERE A.RANK_NO BETWEEN #{startList} AND #{endList}
 	</select>
+	
+	
+	<select id = "project_list" resultType="project">
+		select * 
+		from EF_PROJECT
+	
+	</select>
 </mapper>
 
 

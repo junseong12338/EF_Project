@@ -1,9 +1,14 @@
 package com.korea.board;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +20,21 @@ import util.Common;
 public class ProfileController {
 	
 	final UserService userService;
-		
+	
+	@Autowired
+	HttpServletRequest request;
+	
+	@Autowired
+	HttpSession session;
+
+	
+	//public final static String VIEW_PATH = "/WEB-INF/views/profile/";
+	
 	@RequestMapping("mypage_view")
 	public String mypage_view() {
+		UserDTO userdto = (UserDTO)request.getSession().getAttribute("user_email");
 		
-		return Common.profile.VIEW_PATH + "mypage_view.jsp";
+			return Common.profile.VIEW_PATH + "mypage_view.jsp";
 
 	}
 	
@@ -67,6 +82,19 @@ public class ProfileController {
 		return null;
 	}
 //		return Common.profile.VIEW_PATH + "review.jsp";
+	
+	@RequestMapping("delete_account")
+    public String deleteAccount(Integer user_idx){  
+
+	    // UserService에 UserDTO 객체를 전달하여 사용자 삭제
+	    int res = userService.userDelete(user_idx);
+	    System.out.println(res);
+	    if (res > 0) {
+	        return "redirect:board_list";		
+	    }	    
+	    return null;
 	}
+	
+}
 	
 

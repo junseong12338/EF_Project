@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +53,7 @@
         color: white;
     }
 
-    button[type="submit"] {
+    button {
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -63,7 +65,7 @@
             margin-top: 20px;
         }
 
-        button[type="submit"]:hover {
+        button:hover {
             background-color: #a400b3;
             transition: background-color 0.5s;
         }
@@ -95,36 +97,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-  
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <a href="index.html" class="logo">
-                        <img src="resources/images/logo.png" alt="">
-                    </a>
-                    <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="검색" id='searchText' name="searchKeyword" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
-                      </form>
-                    </div>
-                    <ul class="nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
-                        <li><a href="mypage_view" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
-                    </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+    <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
+
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -139,7 +113,7 @@
                  </div>
                <div class="form-group">
                     <label for="email">이메일 주소 </label>
-                    <input type="email" id="email" name="user_email" onblur="validateEmail(this)">
+                    <input type="email" id="email" name="user_email" oninput="validateEmail(this)">
 					<div id="email-error" style="color: red;"></div>
                   </div>   
             </div>
@@ -154,6 +128,15 @@
             </form>
                 <!-- 배송지 설정 입력란 추가 -->
                 
+                      <!-- 회원 탈퇴 -->
+                 <form name="deleteForm">
+            <div id="profile-delete" class="form-group" style="text-align: right;">
+              <input type ="hidden" name = "user_idx" value="${user_email.user_idx }"/> 
+              <button onclick="deleteAccount(this.form)">회원탈퇴</button>
+
+          </div>
+        </form>
+        		<!-- 회원 탈퇴 -->
             </div>
         </div>
     </div>
@@ -208,7 +191,6 @@ function validateForm() {
         return true; // 폼 제출 허용
     }
 }
-
 
 function sample4_execDaumPostcode() {
         new daum.Postcode({
@@ -270,7 +252,15 @@ function sample4_execDaumPostcode() {
         f.method = "POST";
         f.submit();
 	}
-
+	
+	function deleteAccount(form) {
+	    // 회원 탈퇴를 확인하고 진행할 수 있는 다이얼로그나 로직을 추가할 수 있습니다.
+	    if (confirm("정말로 회원을 탈퇴하시겠습니까?")) {
+	        form.action = "delete_account"; // 회원탈퇴를 처리할 컨트롤러나 서블릿의 엔드포인트를 지정합니다.
+	        form.method = "POST";
+	        form.submit();
+	    }
+	}
   </script>
 
 </body>
