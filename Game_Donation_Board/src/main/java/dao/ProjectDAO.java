@@ -14,20 +14,26 @@ public class ProjectDAO {
 	
 	final SqlSession sqlSession;
 	
-	//�� �ۼ� �� �� ��ȣ �̸� ��������
-	public int select_idx() {
-		return sqlSession.selectOne("project.select_idx");
+	//프로젝트 시퀀스 번호 가져오기
+	public int select_next_idx() {
+		return sqlSession.selectOne("project.select_next_idx");
 	}
 	
+	//프로젝트 등록
 	public int insert_project(ProjectDTO dto) {
 		return sqlSession.insert("project.insert_project",dto);
 	}
-	
-	public int select_idx(String project_content) {
-		return sqlSession.selectOne("project.select_idx",project_content);
+	//프로젝트 업데이트
+	public int update_project(ProjectDTO dto) {
+		return sqlSession.update("project.project_update",dto);
 	}
 	
-	//�� �Ѱ� ��������
+	//카테고리 삭제
+	public int delete_categery(int idx) {
+		return sqlSession.delete("project.category_delete",idx);
+	}
+	
+	//프로젝트 한건 가져오기
 	public ProjectDTO selectOne_project(int idx) {
 		return sqlSession.selectOne("project.selectOne_project",idx);
 	}
@@ -37,6 +43,10 @@ public class ProjectDAO {
 		return sqlSession.insert("project.insert_category",dto);
 	}
 	
+	//프로젝트가 가지고있는 카테고리넘버 가져오기
+	public List<CategoryNumDTO> select_categoryNum(int idx) {
+		return sqlSession.selectList("project.select_category",idx);
+	}
 	
 	// list �� ���� ��ȯ
 	public int get_list_count(ProjectDTO dto) {

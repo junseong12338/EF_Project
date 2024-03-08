@@ -8,5 +8,5 @@ import lombok.Setter;
 public class CategoryNumDTO {
 	
 	private int project_idx;
-	private int category_num; 
+	private int category_idx; 
 }

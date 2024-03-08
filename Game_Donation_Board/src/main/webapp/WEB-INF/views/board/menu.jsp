@@ -31,7 +31,6 @@
 							    <ul id="dropdown-container" class="dropdown-list">
 							        <li onclick="location.href='mypage_view'">프로필</li>
 							        <li>후원한 프로젝트</li>
-							        <li>작품 등록하기</li>
 							        <li onclick="location.href='AdminList'">관리자페이지</li>
 							        
    									<li onclick="location.href='disconnectNaver?accessToken=' + encodeURIComponent('${accessToken}')">네이버 연동 해제</li>

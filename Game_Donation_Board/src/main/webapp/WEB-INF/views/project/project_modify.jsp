@@ -109,6 +109,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 name="project_main_img"
                 id="project_main_img"
               />
+              <input
+                type="hidden"
+                name="project_idx"
+                id="project_idx"
+                value="${dto.project_idx}"
+              />
               <div id="project_editor">
                 <div class="title-box">
                   <div id="title">
@@ -117,12 +123,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       type="text"
                       name="project_title"
                       id="project_title"
+                      value="${dto.project_title}"
                     />
                   </div>
                 </div>
 
                 <div class="content-box">
-                  <textarea id="summernote" name="editordata"></textarea>
+                  <textarea id="summernote" name="editordata">
+                    ${dto.project_content}</textarea
+                  >
                 </div>
                 <div class="project-setting">
                   <div class="date-setting">
@@ -132,9 +141,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       name="start_date"
                       id="start_date"
                       onchange="set_min_endDate()"
+                      value="${dto.project_start}"
                     />
                     종료날짜 :
-                    <input type="date" name="end_date" id="end_date" />
+                    <input
+                      type="date"
+                      name="end_date"
+                      id="end_date"
+                      value="${dto.project_end}"
+                    />
                   </div>
                   <div class="targetmoney-setting">
                     목표 후원금액 :
@@ -143,6 +158,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       name="target"
                       id="target"
                       onchange="target_maxvalue()"
+                      value="${dto.project_target}"
                     />
                   </div>
                 </div>
@@ -150,7 +166,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   <div class="image-setting-container">
                     <div class="image-container">
                       <img
-                        src="resources/img/preview.jpg"
+                        src="${dto.project_img}"
                         class="img-rounded"
                         id="main_image_show"
                       />
@@ -161,29 +177,80 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       name="main_image"
                       id="main_image"
                       onchange="main_image_send()"
+                      value="${dto.project_img}"
                     />
                   </div>
                   <div class="category-container">
                     카테고리 설정<br />
-                    <input type="checkbox" name="category" value="1" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category1"
+                      value="1"
+                    />
                     1 &nbsp;
-                    <input type="checkbox" name="category" value="2" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category2"
+                      value="2"
+                    />
                     2<br />
-                    <input type="checkbox" name="category" value="3" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category3"
+                      value="3"
+                    />
                     3 &nbsp;
-                    <input type="checkbox" name="category" value="4" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category4"
+                      value="4"
+                    />
                     4<br />
-                    <input type="checkbox" name="category" value="5" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category5"
+                      value="5"
+                    />
                     5 &nbsp;
-                    <input type="checkbox" name="category" value="6" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category6"
+                      value="6"
+                    />
                     6<br />
-                    <input type="checkbox" name="category" value="7" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category7"
+                      value="7"
+                    />
                     7 &nbsp;
-                    <input type="checkbox" name="category" value="8" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category8"
+                      value="8"
+                    />
                     8<br />
-                    <input type="checkbox" name="category" value="9" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category9"
+                      value="9"
+                    />
                     9 &nbsp;
-                    <input type="checkbox" name="category" value="10" />
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="category10"
+                      value="10"
+                    />
                     10<br />
                   </div>
                 </div>
@@ -231,6 +298,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
       $(document).ready(function () {
+        category_checked();
+
         // 현재 날짜를 가져오는 함수
         function getCurrentDate() {
           const today = new Date();
@@ -247,6 +316,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         // 현재 날짜 이후의 날짜만 선택 가능하도록 설정
         const futureDateInput = document.getElementById("start_date");
         futureDateInput.min = getCurrentDate();
+        set_min_endDate();
 
         $("#summernote").summernote({
           height: 700, // 에디터 높이
@@ -428,7 +498,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           return;
         }
 
-        f.action = "summernote_send";
+        f.action = "update_send";
         f.submit();
       }
 
@@ -440,7 +510,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           document.getElementById("target").value = 100000000;
         }
       }
-
       //시작날짜를 정하면 종료날짜는 시작날짜 뒤로만 체크할수 있게 변경
       function set_min_endDate() {
         const start_date = document.getElementById("start_date").value;
@@ -457,6 +526,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
         const futureDateInput = document.getElementById("end_date");
         futureDateInput.min = year + "-" + month + "-" + day;
+      }
+
+      //가져온 프로젝트의 카테고리 체크해놓기
+      function category_checked() {
+        let category = ${dto.category_list};
+        for (let i = 0; i <  category.length; i++) {
+          document.getElementById("category" + category[i]).checked = true;
+        }
       }
     </script>
   </body>

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +55,38 @@ public class SummerNoteController {
 		return Common.project.VIEW_PATH + "project_editor.jsp";
 	}
 	
+	//글 수정페이지 이동
+	@RequestMapping("project_modify")
+	public String project_modify(Model model, @RequestParam(value="idx", defaultValue="0") int idx){
+		
+		//매개변수 무결성체크
+		if(idx == 0) {
+			return "redirect:/";
+		}
+		
+		
+		ProjectDTO dto = summerNoteService.projectSelectOne(idx);
+		
+		//프로젝트번호 무결성체크
+		if(dto == null) {
+			return "redirect:/";
+		}
+		
+		//temp폴더 경로
+	    String temp_folder = contextRoot + "temp/";
+	    //idx폴더 경로
+	    String idx_folder = contextRoot + idx + "/";
+	    
+	    //idx폴더 안 editordata내용안, project_main_img에 이미지이름이 포함되어있는 파일만 
+	    //temp폴더로 복사
+	    fileUpload(idx_folder, temp_folder,dto);
+		
+	    
+	    
+		model.addAttribute("dto",dto);
+		
+		return Common.project.VIEW_PATH + "project_modify.jsp";
+	}
 	
 	/*
 	 * 글 작성중 이미지파일 등록 시 
@@ -178,6 +211,70 @@ public class SummerNoteController {
 		return Common.project.VIEW_PATH + "project_editor.jsp";
 	}
 	
+	/*
+	 * 글수정 동작 메서드 
+	 */
+	@RequestMapping("/update_send")
+	public String update_send(HttpServletRequest sendRequest, @RequestParam("category") List<Integer> category) {
+		String project_title = sendRequest.getParameter("project_title");
+		String start_date = sendRequest.getParameter("start_date");
+		String end_date = sendRequest.getParameter("end_date");
+		int target = Integer.parseInt(sendRequest.getParameter("target"));
+		String project_main_img = sendRequest.getParameter("project_main_img");
+		String editordata = sendRequest.getParameter("editordata");
+		int user_idx = ((UserDTO)(sendRequest.getSession().getAttribute("user_email"))).getUser_idx();
+		int project_idx = Integer.parseInt(sendRequest.getParameter("project_idx"));
+		
+		try {
+			
+			ProjectDTO dto = new ProjectDTO(); 
+			
+			dto.setProject_idx(project_idx);
+			dto.setProject_title(project_title);
+			dto.setUser_idx(user_idx);
+			dto.setProject_start(start_date);
+			dto.setProject_end(end_date);
+			dto.setProject_target(target);
+			dto.setProject_img(project_main_img);
+			dto.setProject_content(editordata);	
+			dto.setCategory_list(category);
+			
+			//글 업데이트
+			int idx = summerNoteService.updateProject(dto);
+			
+			if(idx != -1) {
+				// temp폴더 안 글작성에쓰인 이미지,파일을 
+				//idx번호로된 폴더를 만들어 파일복사 후 
+				//temp폴더 안 더미 데이터 삭제
+				
+				//temp폴더 경로
+			    String temp_folder = contextRoot + "temp/";
+			    //idx폴더 경로
+			    String idx_folder = contextRoot + project_idx + "/";
+			    
+			    //idx폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
+			    removeDummyFiles(getFileNamesFromFolder(idx_folder), idx_folder);
+			    
+			    //temp폴더 안 editordata내용안, project_main_img에 이미지이름이 포함되어있는 파일만 
+			    //idx폴더로 복사
+			    fileUpload(temp_folder, idx_folder,dto);
+				
+			    //temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
+			    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+			}
+			
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+
+		
+		return "redirect:/";
+	}
+	
+	
 	// temp폴더 안 session에 저장된 userEmail값이 이름에 포함된 이미지파일 이름을 리스트로 반환
 	private List<String> getFileNamesFromFolder(String folderName) {
 	    // 파일이름을 담을 리스트 객체
@@ -245,12 +342,10 @@ public class SummerNoteController {
 	    File[] target_files = folder1.listFiles();
 	    for (File file : target_files) {
 	        
-	    	//editordata내용에 포함된 파일이름을 가진 파일만 idx폴더로 복사
+	    	//editordata,project_img내용에 포함된 파일이름을 가진 파일만 idx폴더로 복사
 	    	File temp = null; 	    		
-    		if(dto.getProject_content().contains(file.getName())) {
+    		if(dto.getProject_content().contains(file.getName()) || dto.getProject_img().contains(file.getName())) {
     			temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());    			
-    		}else if(dto.getProject_img().contains(file.getName())) {
-    			temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());   
     		}
 	    	
 	        
@@ -260,28 +355,36 @@ public class SummerNoteController {
 		    			temp.mkdir();
 		    		} else {
 		    			 // 파일 복사를 위해 FileInputStream과 FileOutputStream을 생성합니다.
-		    			FileInputStream fis = null;
-		    			FileOutputStream fos = null;
-		    			try {
-		    				fis = new FileInputStream(file);
-		    				fos = new FileOutputStream(temp);
-		    				byte[] b = new byte[4096];
-		    				int cnt = 0;
-		    				while ((cnt = fis.read(b)) != -1) {
-		    					  // 버퍼를 사용하여 파일 내용을 읽고 복사합니다.
-		    					fos.write(b, 0, cnt);
-		    				}
-		    			} catch (Exception e) {
-		    				e.printStackTrace();
-		    			} finally {
-		    				try {
-		    					//FileInputStream과 FileOutputStream을 닫습니다.
-		    					fis.close();
-		    					fos.close();
-		    				} catch (IOException e) {
-		    					e.printStackTrace();
-		    				}
-		    			}
+//		    			FileInputStream fis = null;
+//		    			FileOutputStream fos = null;
+//		    			try {
+//		    				fis = new FileInputStream(file);
+//		    				fos = new FileOutputStream(temp);
+//		    				byte[] b = new byte[4096];
+//		    				int cnt = 0;
+//		    				while ((cnt = fis.read(b)) != -1) {
+//		    					  // 버퍼를 사용하여 파일 내용을 읽고 복사합니다.
+//		    					fos.write(b, 0, cnt);
+//		    				}
+//		    			} catch (Exception e) {
+//		    				e.printStackTrace();
+//		    			} finally {
+//		    				try {
+//		    					//FileInputStream과 FileOutputStream을 닫습니다.
+//		    					fis.close();
+//		    					fos.close();
+//		    				} catch (IOException e) {
+//		    					e.printStackTrace();
+//		    				}
+//		    			}
+		    			if (temp != null) {
+		                    try {
+		                        // 파일 복사
+		                        FileUtils.copyFile(file, temp);
+		                    } catch (IOException e) {
+		                        e.printStackTrace();
+		                    }
+		                }
 		    		}
 		    	}
 	    		
