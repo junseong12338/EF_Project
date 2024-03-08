@@ -34,7 +34,7 @@ public class ProjectDAO {
 	      return sqlSession.insert("project.insert_category",dto);
 	   }
 	
-	//------------------------------------------------------------------
+	//------------------------------------------------------------------ 성현
 	
 
 	public int select_count(ProjectDTO dto) {
@@ -46,5 +46,8 @@ public class ProjectDAO {
 		return sqlSession.selectList("project.project_list",dto);
 	}
 	
+	public ProjectDTO select_detail(int project_idx) {
+		return sqlSession.selectOne("project.project_detail", project_idx);
+	}
 	
 }

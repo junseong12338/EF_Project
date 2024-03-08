@@ -1,0 +1,17 @@
+상세페이지
+
+<기능>
+	프로젝트 내용, 
+		project_title
+		project_donation
+		project_persent
+		project_diff
+		
+	공지, 
+	리뷰(작성), 
+	좋아요(클릭),
+	알람설정(클릭), 
+	신고하기(클릭), 
+	후원하기(클릭) 
+
+	

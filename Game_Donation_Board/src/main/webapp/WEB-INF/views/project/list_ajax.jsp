@@ -19,7 +19,7 @@
 <c:forEach var="dto" items="${list }">
 	<div class="col-lg-3 col-sm-6">
 		<div class="item">
-			<a href="project_detail?project_idx=${dto.idx }"><!-- 상세페이지 경로 작성 -->
+			<a href="project_detail?project_idx=${dto.project_idx }&${dto.project_title}"><!-- 상세페이지 경로 작성 -->
 				<img src="${dto.project_img }" alt="프로젝트 이미지">
 			</a>
 			<h4>

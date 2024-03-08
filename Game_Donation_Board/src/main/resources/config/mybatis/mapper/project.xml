@@ -154,6 +154,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<!-- 상세페이지 정보 들고오기 -->
+	<select id="project_detail" resultType="project" parameterType="int">
+		SELECT * FROM EF_PROJECT WHERE PROJECT_IDX = #{project_idx}
+	</select>
+	
+	
+	
 	
 	<select id = "pro_list" resultType="project">
 		select * 
