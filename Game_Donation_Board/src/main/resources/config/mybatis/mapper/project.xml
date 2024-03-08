@@ -150,13 +150,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</when>
 				</choose>
 				<!-- choose 기간 end -->
-	</select>
+	</select>	
 	
-	
-	
-	<select id = "pro_list" resultType="project">
-		select * 
-		from EF_PROJECT
+	<!-- 유저번호로 검색한 프로젝트 리스트 -->
+		<select id="userIdx_list" resultType="project">
+		SELECT * 
+		FROM EF_PROJECT
 	</select>
 </mapper>
 

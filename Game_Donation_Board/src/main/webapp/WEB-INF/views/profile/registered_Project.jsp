@@ -45,13 +45,16 @@
             <!-- <p class="section-description" id="history-count">0건의 내역이 있습니다.</p><br> -->
          	
          	<c:forEach var="dto" items="${projectList}">
-         	
+         	<c:set var="list_useridx" scope="request" value="${dto.user_idx}"/>
+         	<c:set var="email_useridx" scope="request" value="${user_email.user_idx}"/>
+         	<c:if test= "${list_useridx eq email_useridx}">
          	<div>
         		<h5>${dto.project_title}</h5> <!-- 프로젝트 제목 표시 -->
         	<div>${dto.project_content}</div>
         	
         		<img src="${dto.project_img}">
     		</div>
+    		</c:if>
          	</c:forEach>
     </div>
         </div>

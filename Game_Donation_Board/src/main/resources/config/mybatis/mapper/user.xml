@@ -36,8 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET USER_ADDR=#{user_addr,jdbcType=VARCHAR}
 		where user_email=#{user_email}
 	</update>
-
-
 	
 	 <!-- EF_PROJECT 테이블에서 게시글을 페이징하여 가져옴 -->
 	<select id="user_list" resultType="user" parameterType="java.util.HashMap"> 
@@ -48,13 +46,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 등록한 프로젝트 조회 -->
 	<select id="user_count" parameterType="int"> 
-	SELECT COUNT(*) FROM EF_PROJECT
+	SELECT * FROM EF_PROJECT
+    WHERE USER_IDX =#{userIdx}
 	</select>
 	
 	<!-- 후원한 프로젝트 조회 -->
 	<select id="donation_list" resultType="dto.DonationDTO">
-	SELECT * 
-	FROM EF_DONATION
+	SELECT * FROM EF_DONATION
 	</select>
 </mapper>
 

@@ -37,14 +37,23 @@ public class UserService {
 		return userDAO.update_point(userId, point);
 	}
 
-	/*
-	 * public UserDTO selectOne(int idx) { return userDAO.selectOne(idx); }
-	 * 
-	 * public List<ProjectDTO> ProjectList() { // 실제로는 데이터베이스에서 프로젝트 목록을 조회하여 반환하는
-	 * 코드가 들어갑니다. List<ProjectDTO> list = userDAO.selectProjectList(); //
-	 * System.out.println(list); return userDAO.selectProjectList(); }
-	 * 
-	 * // 후원 금액 public List<DonationDTO> donationList() { List<DonationDTO> list =
-	 * userDAO.selectdonationList(); return userDAO.selectdonationList(); }
-	 */
+	
+	  public UserDTO selectOne(int idx) {
+		  return userDAO.selectOne(idx); 
+		  
+	  }
+	  
+	  public List<ProjectDTO> ProjectList() { 
+		  // 실제로는 데이터베이스에서 프로젝트 목록을 조회하여 반환하는코드가 들어갑니다. 
+		  List<ProjectDTO> list = userDAO.selectProjectList();
+//		  System.out.println(list); 
+		  return userDAO.selectProjectList(); 
+	}
+	  
+	  // 후원 금액 
+	  public List<DonationDTO> donationList() { 
+		  List<DonationDTO> list = userDAO.selectdonationList(); 
+		  return userDAO.selectdonationList(); 
+	}
+	 
 }
