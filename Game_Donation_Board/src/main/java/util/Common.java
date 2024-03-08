@@ -20,4 +20,8 @@ public class Common {
 	public static class profile{
 		public final static String VIEW_PATH = "/WEB-INF/views/profile/";
 	}
+	
+	public static class project{
+		public final static String VIEW_PATH = "/WEB-INF/views/project/";
+	}
 }

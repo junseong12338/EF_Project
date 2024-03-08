@@ -1,9 +1,11 @@
 package dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import dto.CategoryNumDTO;
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +14,6 @@ public class ProjectDAO {
 	
 	final SqlSession sqlSession;
 	
-
 	public int select_idx() {
 		return sqlSession.selectOne("project.select_idx");
 	}
@@ -25,7 +26,6 @@ public class ProjectDAO {
 		return sqlSession.selectOne("project.select_idx",project_content);
 	}
 	
-
 	public ProjectDTO selectOne_project(int idx) {
 		return sqlSession.selectOne("project.selectOne_project",idx);
 	}
