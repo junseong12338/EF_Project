@@ -26,18 +26,23 @@
     		  let point = document.getElementById("user_point").value;
     		  let idx = document.getElementById("user_idx").value;
     		  let payment = document.getElementById("payment").value;
+    		  if(payment < 1){
+    			  alert('0원 이하로 결제 할 수 없습니다.');
+              	  history.go(0);
+    		  }else{
         	  if(confirm('결제하시겠습니까?')){
-                  IMP.request_pay({
-                      pg : 'kakaopay',
-                      merchant_uid: "IMP"+makeMerchantUid, 
-                      name : '컴퓨터',
-                      amount : Number(payment),
-                      buyer_email : email,
-                      buyer_name : name,
-                      buyer_tel : '010-1234-5678',
-                      buyer_addr : addr,
-                      buyer_postcode : '123-456'
-                  }, function (rsp) { // callback
+            		  IMP.request_pay({
+                          pg : 'kakaopay',
+                          merchant_uid: "IMP"+makeMerchantUid, 
+                          name : payment+' 포인트',
+                          amount : Number(payment),
+                          buyer_email : email,
+                          buyer_name : name,
+                          buyer_tel : '010-1234-5678',
+                          buyer_addr : addr,
+                          buyer_postcode : '123-456'
+            	  }
+            	  , function (rsp) { // callback
                       if (rsp.success) {
                     	  console.log('success');
                      	   $.ajax({
@@ -48,12 +53,15 @@
                     	  alert("결제성공");
                     	  location.href = "/board/mypage_view";
                       } else {
-                    	  console.log('fail');
-                    	  alert("결제실패");
-                    	  history.go(0);
+                        	  console.log('fail');
+                          	  alert(rsp.error_msg);
+                        	  history.go(0);
                       }
                   });
         	  }
+    			  
+    			  
+    		  }
           }
           
           function kgpay(f) {
@@ -65,35 +73,43 @@
     		  let idx = document.getElementById("user_idx").value;
     		  let payment = document.getElementById("payment").value;
         	  //class가 btn_payment인 태그를 선택했을 때 작동한다.
-        	  if(confirm('결제하시겠습니까?')){
-        		IMP.request_pay({
-				      pg : 'html5_inicis', 
-  				      pay_method : 'card',
-                      merchant_uid: "IMP"+makeMerchantUid, 
-                      name : '컴퓨터',
-                      amount : Number(payment),
-                      buyer_email : email,
-                      buyer_name : name,
-                      buyer_tel : '010-1234-5678',
-                      buyer_addr : addr,
-                      buyer_postcode : '123-456'
-        			}, function (rsp) { // callback
-                            if (rsp.success) {
-                          	  console.log('success');
-                           	   $.ajax({
-                           		    url: "user_point_update",
-                           		    data: {"user_email" : email,"payment": payment},
-                           		    type: "POST"
-                           		  });
-                          	  alert("결제성공");
-                          	  location.href = "/board/mypage_view";
-                            } else {
-                          	  console.log('fail');
-                          	  alert(rsp.error_msg);
-                          	  history.go(0);
-                            }
-                        });
-        			}
+    		  if(payment < 1){
+    			  alert('0원 이하로 결제 할 수 없습니다.');
+              	  history.go(0);
+    		  }else{
+    			  if(confirm('결제하시겠습니까?')){
+    	        		IMP.request_pay({
+    					      pg : 'html5_inicis', 
+    	  				      pay_method : 'card',
+    	                      merchant_uid: "IMP"+makeMerchantUid, 
+    	                      name : payment+' 포인트',
+    	                      amount : Number(payment),
+    	                      buyer_email : email,
+    	                      buyer_name : name,
+    	                      buyer_tel : '010-1234-5678',
+    	                      buyer_addr : addr,
+    	                      buyer_postcode : '123-456'
+    	        			}, function (rsp) { // callback
+    	                            if (rsp.success) {
+    	                          	  console.log('success');
+    	                           	   $.ajax({
+    	                           		    url: "user_point_update",
+    	                           		    data: {"user_email" : email,"payment": payment},
+    	                           		    type: "POST"
+    	                           		  });
+    	                          	  alert("결제성공");
+    	                          	  location.href = "/board/mypage_view";
+    	                            } else {
+    	                          	  console.log('fail');
+    	                          	  alert(rsp.error_msg);
+    	                          	  history.go(0);
+    	                            }
+    	                        });
+    	        			}
+    			  
+    		  }
+        	  
+        	 
           }
       </script>
 
@@ -164,8 +180,16 @@
 }
 
 #KG이니시스 {
-      width: 100px; /* 버튼의 너비를 조정합니다. */
-      border-radius:15px;
+  margin-left: 0px; /* 이미지의 너비를 조정합니다. */
+  height: auto;
+     width: 95px; /* 버튼의 너비를 조정합니다. */
+      border-radius:5px;
+      color: #000; /* 텍스트 색상을 변경합니다. */
+  border: none;
+  padding: 5px 15px; /* 내부 여백을 조정합니다. */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s; /* 마우스 오버 시 부드럽게 변화하도록 설정합니다. */
     }
 
     .payment-button:not(:last-child) {
@@ -248,8 +272,7 @@
 					<input type="hidden" value="${user_email.user_name}" id="user_name">
 					<input type="hidden" value="${user_email.user_addr}" id="user_addr">
 					<input type="hidden" value="${user_email.user_point}" id="user_point">
-					<input type="hidden" id="sumpoint">
-                    <input type="number"placeholder="숫자만 입력가능." id="payment">
+                    <input type="number"placeholder="숫자만 입력가능." id="payment" required>
                     </form>
                 </div>
                  <button onclick="kakaoPay(this.form)" id="kakao-pay" class="payment-button">
