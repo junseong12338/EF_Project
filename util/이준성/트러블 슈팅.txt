@@ -1,0 +1,23 @@
+02.25
+
+selectOne() : null 값 반환
+
+원인 : DTO 값과 DB 테이블 변수명 불일치 문제 발생 
+DTO 값 테이블과 동일 하여 에러 수정 
+===
+
+서버 포트 변경 문제
+cmd 키고 사용중 인 포트 확인
+netstat -p tcp -ano 
+
+사용중인 포트 삭제
+taskkill /f /pid 포트번호
+
+
+===
+불필요 서버 삭제
+
+
+===
+JS 오류 
+https://mebadong.tistory.com/73

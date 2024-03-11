@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+      .category {
+          display: none; /* 초기에는 숨겨진 상태 */
+        }
+
+    .heading-section th {
+      color: white;
+      font-size: 34px;
+      text-decoration: none;
+      margin-bottom: 30px;
+    }
+
+    th {
+    color: white;
+    font-weight: bold;
+      padding: 10px;
+    }
+
+    /* 테이블 셀 경계 선 스타일링 */
+    td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    }
+
+    table{border:1px solid white; 
+		      border-collapse:collapse;
+		      text-align:center;}
+		      
+		th{width:80px;}
+
+  .button-container {
+       margin-right: 20%; /* 버튼을 오른쪽에 정렬 */
+      margin-bottom: 20px; /* 버튼과 다음 섹션 사이의 간격 설정 */
+   }
+
+.payment-button {
+  margin-left: 0px;
+  background-color: #FFEB3B; /* 배경색을 변경합니다. */
+  color: #000; /* 텍스트 색상을 변경합니다. */
+  border: none;
+  padding: 5px 15px; /* 내부 여백을 조정합니다. */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s; /* 마우스 오버 시 부드럽게 변화하도록 설정합니다. */
+}
+
+.payment-button img {
+  width: 100px; /* 이미지의 너비를 조정합니다. */
+  height: auto; /* 이미지의 높이를 자동으로 조정합니다. */
+}
+
+#KG이니시스 {
+      width: 100px; /* 버튼의 너비를 조정합니다. */
+      border-radius:15px;
+    }
+
+    .payment-button:not(:last-child) {
+      margin-right: 20px;
+    }
+
+#recharge {
+  margin-left: 0px;
+  background-color: #bb4ab1; /* 배경색을 변경합니다. */
+  color: #fff; /* 텍스트 색상을 변경합니다. */
+  border: none;
+  padding: 5px 23px; /* 내부 여백을 조정합니다. */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s; /* 마우스 오버 시 부드럽게 변화하도록 설정합니다. */
+}
+
+#recharge:hover {
+  background-color: #a400b3; /* 마우스 오버 시 배경색을 변경합니다. */
+}

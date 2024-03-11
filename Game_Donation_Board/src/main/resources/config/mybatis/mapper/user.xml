@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="u">
+
+	<select id="checkEmail" resultType="user" parameterType="String">
+		SELECT * FROM EF_USER WHERE USER_EMAIL =#{user_email}
+	</select>
+	
+	
+	<select id="selectone" resultType="user" parameterType="int">
+		SELECT * FROM EF_USER WHERE USER_idx =#{user_idx}
+	</select>
+	
+   <insert id="insert" parameterType="user">
+        INSERT INTO EF_USER VALUES (SEQ_EF_USER_IDX.NEXTVAL, 1, #{user_email}, #{user_name}, #{user_pw, jdbcType=VARCHAR} , '', 1, '', '', 0)
+   </insert>
+
+	<!-- 포인트 업데이트  -->
+	<update id="update_point" parameterType="user">
+		 UPDATE EF_USER
+        SET user_point = #{user_point}
+        WHERE user_email = #{user_email}
+	</update>
+	
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="user_delete" parameterType="int">
+		DELETE FROM EF_USER
+		WHERE user_idx=#{user_idx}
+	</delete>
+	
+	<!-- 주소지 등록 -->
+	<update id ="update" parameterType="user">
+		UPDATE EF_USER
+		SET USER_ADDR=#{user_addr,jdbcType=VARCHAR}
+		where user_email=#{user_email}
+	</update>
+
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

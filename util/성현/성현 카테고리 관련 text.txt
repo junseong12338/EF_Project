@@ -1,0 +1,68 @@
+메뉴1 ( 홈페이지 카테고리 버튼)
+- 진행중인, 진행예정, 마감된
+
+메뉴2 (셀렉트 박스)
+- 인기순, 최대 후원순, 최신순
+
+
+메뉴3 ( a태그 onclick) - 10개 번호로 변수 옮길거다(배열 map)
+- A, B, C, D, F, G
+
+SQL
+- 스테이서스
+
+
+필드변수 10개 만든다 = false
+onclick 메서드 만들면 매개변수를 받는다 ex) 1,2,3,4
+function send(n){
+	if(n == 1){
+		action = true;
+	}
+}
+
+
+
+ // 무한 스크롤
+    $.ajax({
+        url : "ajax_list",
+        method : "GET",
+        data : {"pageNum="+currentPage,},
+        success:function(data){
+            console.log("ajax 데이터 : " + data);
+
+            $(".project-list-container").append(data);
+            $(".back-drop").hide();
+            isLoading = false;
+            console.log("ajax 잘넘어옴");
+        };
+    });
+
+true인것만 배열로만든다.
+1,2,5 true다
+
+배열을 data에 담고 넘겨준다
+
+컨트롤러
+- 파라미터로 배열을받아서
+for문돌려서 그거를 list담든 map에 담든 담아
+
+-xml 가져가서 
+
+테이블이
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
