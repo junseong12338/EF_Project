@@ -77,7 +77,7 @@ public class SummerNoteService {
 	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
 	public int updateProject(ProjectDTO dto) throws Exception {
 		
-		dto.setProject_status(1);
+		dto.setProject_status(0);
 		
 		
 			CategoryNumDTO categoryDTO = new CategoryNumDTO();

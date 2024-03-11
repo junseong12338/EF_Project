@@ -76,8 +76,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         justify-content: space-between;
       }
       .image-container {
-        width: 300px;
-        height: 200px;
+       width: 246px;
+        height: 300px;
         overflow: hidden;
       }
 

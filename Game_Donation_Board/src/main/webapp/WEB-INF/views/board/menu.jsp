@@ -31,11 +31,10 @@
 							    <ul id="dropdown-container" class="dropdown-list">
 							        <li onclick="location.href='mypage_view'">프로필</li>
 							        <li>후원한 프로젝트</li>
-							        <li onclick="location.href='AdminList'">관리자페이지</li>
-							        
-   									<li onclick="location.href='disconnectNaver?accessToken=' + encodeURIComponent('${accessToken}')">네이버 연동 해제</li>
-   									<li onclick="location.href='unlinkKakaoAccount?accessToken=' + encodeURIComponent('${access_Token}')">카카오 연동 해제</li>
-                                       <li onclick="location.href='project_editor'">작품 등록하기</li>
+							        <li onclick="location.href='project_editor'">작품 등록하기</li>
+							        <li onclick="location.href='AdminPage'">관리자페이지</li>
+   									<%-- <li onclick="location.href='disconnectNaver?accessToken=' + encodeURIComponent('${accessToken}')">네이버 연동 해제</li>
+   									<li onclick="location.href='unlinkKakaoAccount?accessToken=' + encodeURIComponent('${access_Token}')">카카오 연동 해제</li> --%>
    									<hr>
 							        <li onclick="location.href='logout'">로그아웃</li>
 							    </ul>

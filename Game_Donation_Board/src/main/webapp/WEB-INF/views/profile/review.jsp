@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,8 @@
         margin-bottom: 30px;
       }
     </style>
+    
+    <link rel="stylesheet" href="resources/css/menu.css"> 
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/css/fontawesome.css">
@@ -39,35 +42,7 @@
       </div>
     </div>
   </div>
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <a href="index.html" class="logo">
-                        <img src="resources/images/logo.png" alt="">
-                    </a>
-                    <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="검색" id='searchText' name="searchKeyword" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
-                      </form>
-                    </div>
-                    <ul class="nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
-                        <li><a href="mypage_view" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
-                    </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+<%@ include file= "/WEB-INF/views/board/menu.jsp" %>
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -75,8 +50,9 @@
             <div class="row">
                 <div class="col-3g-8">
                     <h4>내가 작성한 리뷰</h4><br>
-            <p class="section-description">작성하신 리뷰는 0건 입니다.</p><br>  
-    </div>
+            <!-- <p class="section-description">작성하신 리뷰는 0건 입니다.</p><br> -->  
+            
+               </div>
         </div>
         </div>
     </div>
@@ -93,6 +69,7 @@
       </div>
     </div>
   </footer>
+  <script src="resources/js/menu.js"></script>  
   <script src="resources/jquery/jquery.min.js"></script>
   <script src="resources/js/bootstrap.min.js"></script>
   <script src="resources/js/isotope.min.js"></script>
