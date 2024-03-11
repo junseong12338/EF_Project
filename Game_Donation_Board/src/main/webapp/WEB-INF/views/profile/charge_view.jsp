@@ -53,8 +53,8 @@
                     	  alert("결제성공");
                     	  location.href = "/board/mypage_view";
                       } else {
-                        	  console.log('fail');
-                          	  alert(rsp.error_msg);
+                        	  console.log(rsp.error_msg);
+                          	  alert('결제실패');
                         	  history.go(0);
                       }
                   });
@@ -100,9 +100,9 @@
     	                          	  alert("결제성공");
     	                          	  location.href = "/board/mypage_view";
     	                            } else {
-    	                          	  console.log('fail');
-    	                          	  alert(rsp.error_msg);
-    	                          	  history.go(0);
+    	                          	  console.log(rsp.error_msg);
+    	                          	  alert('결제실패');
+    	                        	  history.go(0);
     	                            }
     	                        });
     	        			}
