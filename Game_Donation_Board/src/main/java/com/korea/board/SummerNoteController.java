@@ -20,13 +20,16 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
 
+import aspect.ModelAndViewRedirectException;
 import dto.ProjectDTO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +53,17 @@ public class SummerNoteController {
     // C:\\Users\\junhyuk\\Desktop\\이준성\\공부\\GitHub\\EF_Project\\util\\ef_project_img" : 이준성 집 
 	final String contextRoot = "C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img\\";
 
+	// 로그인체크 로그인이 안걸려있으면 ModelAndViewRedirectException예외생성
+	// redirect:/로 이동
+    @ExceptionHandler(ModelAndViewRedirectException.class)
+    public ModelAndView handleRedirectException(ModelAndViewRedirectException ex) {
+        return ex.getModelAndView();
+    }
 	
 	//글 작성 페이지 이동
 	@RequestMapping("project_editor")
-	 public String editor_test() {
+	 public String editor_test(HttpServletRequest request) {
+		System.out.println("글작성페이지 이동 메서드 호출");
 		return Common.project.VIEW_PATH + "project_editor.jsp";
 	}
 	
