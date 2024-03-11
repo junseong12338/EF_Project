@@ -52,12 +52,17 @@ final SqlSession sqlSession;
 	
 
 	public int select_count(ProjectDTO dto) {
-		return sqlSession.selectOne("project.project_count",dto);
+		return sqlSession.selectOne("project.project_count", dto);
 	}
 	
 
 	public List<ProjectDTO> selectList(ProjectDTO dto){
-		return sqlSession.selectList("project.project_list",dto);
+		return sqlSession.selectList("project.project_list", dto);
+	}
+	
+	// user 테이블에 user_name 가져오기
+	public String selectName(int user_idx) {
+		return sqlSession.selectOne("project.user_name", user_idx);
 	}
 	
 	
