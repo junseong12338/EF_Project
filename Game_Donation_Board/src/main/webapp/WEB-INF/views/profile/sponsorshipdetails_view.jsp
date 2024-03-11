@@ -43,18 +43,19 @@
                   <div class="featured-games header-text">
                     <h4>내가 후원한 프로젝트</h4><br>
            <!--  <p class="section-description">1건의 후원 내역이 있습니다.</p><br> -->
-           
-           <c:forEach var="donation_dto" items="${donationList}">
-			
+            <hr>
+            <div style="text-align: center;"><h6><em style="font-size: larger;">${list_count}</em>&nbsp;&nbsp;&nbsp;건의 프로젝트가 있습니다.</h6></div>
+            <hr>
+            
+           <c:forEach var="donation_dto" items="${donationList}">	
 			<div>
         		<h5>${donation_dto.project_title}</h5> <!-- 프로젝트 제목 표시 -->
-        	<div>${donation_dto.project_content}</div>   
-        	    	
-        		<img src="${donation_dto.project_img}">
-        		
+        	<div>${donation_dto.project_content}</div>       	    	
+        		<img src="${donation_dto.project_img}">    		
         		<h5>${donation_dto.donation_money}</h5> <!-- 후원 금액 표시 -->
     		</div>
 	     </c:forEach>
+	     
       </div>
     </div>
         </div>

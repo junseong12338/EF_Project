@@ -40,9 +40,23 @@
             <div class="col-lg-12">
               <div class="main-profile ">
                 <div class="row">
-                                     
+                         <!--  -->
+                  <div class="col-lg-4">
+                    <img src="${dto.project_img}" alt="" style="border-radius: 23px;">
+                  </div>
+                  <div class="col-lg-4 align-self-center">
+                    <div class="main-info header-text">
+                      <span>Offline</span>
+                      <h4>${dto.project_title}</h4>
+                      <p>${dto.project_content}</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 align-self-center">
+                        <!--  -->                                
                     <ul>
-                      <li><a href="myinfo_view">내 정보</a></li>
+                      <li><a href="myinfo_view">
+                      <img src="resources/img/톱니바퀴.jpg" alt="">
+                      내 정보</a></li>
                       <li>잔여 포인트 <span id="remaining-points">${user_email.user_point}</span></li>
                       <li>포인트 충전
                         <a href="charge_view">
@@ -51,6 +65,7 @@
                       </li>
                       <li><a href="sponsorshipdetails_view">후원한 프로젝트 내역</a> | <a href="registered_Project"> 등록한 프로젝트 </a> | <a href="review"> 리뷰 </a></li>
                     </ul>
+                   </div>
                   </div>
                 </div>
                  

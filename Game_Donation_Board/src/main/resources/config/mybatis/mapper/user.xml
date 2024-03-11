@@ -45,8 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</select>
 
 	<!-- 등록한 프로젝트 조회 -->
-	<select id="user_count" parameterType="int"> 
-	SELECT * FROM EF_PROJECT
+	<select id="user_count" parameterType="int" resultType="int"> 
+	SELECT COUNT(*) FROM EF_PROJECT
     WHERE USER_IDX =#{userIdx}
 	</select>
 	

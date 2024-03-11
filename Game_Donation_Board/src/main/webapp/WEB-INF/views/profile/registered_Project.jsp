@@ -34,14 +34,17 @@
       </div>
     </div>
   </div>
+  
   <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
+  
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
             <div class="row">
                 <div class="col-3g-8">
-                    <h4>내가 등록한 프로젝트</h4><br>
+                    <h4><em>내가 등록한</em> 프로젝트</h4><br>
+                    
             <!-- <p class="section-description" id="history-count">0건의 내역이 있습니다.</p><br> -->
          	
          	<c:forEach var="dto" items="${projectList}">
@@ -62,6 +65,7 @@
     </div>
   </div>
   </div>
+  
   <footer>
     <div class="container">
       <div class="row">
