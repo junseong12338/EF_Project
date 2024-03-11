@@ -17,11 +17,15 @@ import com.korea.board.ProjectController;
 import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
+import dto.ProjectStatus;
 import service.KakaoLoginService;
 import service.NaverLoginService;
 import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
+import com.korea.board.ProjectController;
+
+import service.ProjectService;
 
 
 @Configuration
@@ -37,6 +41,7 @@ public class ServletContext implements WebMvcConfigurer {
 	public BoardController boardController(ProjectService projectService) {
 		return new BoardController(projectService);
 	}
+	
 	
 	@Bean
 	public UserLoginController userController(UserService userService) {
@@ -57,6 +62,17 @@ public class ServletContext implements WebMvcConfigurer {
 		return new SummerNoteController(summerNoteService);
 	}
 	
+	@Bean
+	public ProfileController profileController(UserService userService) {
+		return new ProfileController(userService);
+	}
+	
+	@Bean
+	public AdminController adminController(ProjectService projectService) {
+		return new AdminController(projectService);
+	}
+	
+	
 	@Bean ProjectController projectController(ProjectService projectService) {
 		return new ProjectController(projectService);
 	}
@@ -69,14 +85,5 @@ public class ServletContext implements WebMvcConfigurer {
 	    }
 
 	
-	@Bean
-	public ProfileController profileController(UserService userService) {
-		return new ProfileController(userService);
-	}
-	
-	@Bean
-	public AdminController adminController(ProjectService projectService) {
-		return new AdminController(projectService);
-	}
 
 }

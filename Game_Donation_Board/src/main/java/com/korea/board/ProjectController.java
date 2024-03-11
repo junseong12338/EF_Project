@@ -3,6 +3,8 @@ package com.korea.board;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +47,11 @@ public class ProjectController {
 	
 	
 	@RequestMapping("project_list")
-	public String project_list(Model model){
+	public String project_list(Model model,
+								@RequestParam(value="pageNum", defaultValue="1")int page_num_js,
+								@RequestParam(value="sort",defaultValue="0")int sort_js,
+								@RequestParam(value="category_box",required = false)List<Integer> category_js
+								) throws Exception{
 		
 		
 		int total_page_count = 1;
@@ -53,8 +59,7 @@ public class ProjectController {
 		
 		model.addAttribute("total_page_count", total_page_count);
 		
-		
-		return "/WEB-INF/views/project/list.jsp";
+		return Common.project.VIEW_PATH + "list.jsp";
 	}
 	
 	
@@ -74,13 +79,15 @@ public class ProjectController {
 		
 		int page_num = 1;
 		
+		if(page_num_js != 0) {
+			page_num = page_num_js;
+		}
+		
 		int start_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;// 1, 13, 25 ...
 		
 		int end_num = page_num * PAGE_PROJECT_COUNT;// 12, 24, 36 ...
 		
-		
-		
-		
+		// list 범위 저장 -> dto
 		dto.setStart(start_num);
 		dto.setEnd(end_num);
 		
@@ -184,7 +191,7 @@ public class ProjectController {
 		model.addAttribute("page_num", page_num);
 		
 		// ajax - 포워딩
-		return "/WEB-INF/views/project/list_ajax.jsp";
+		return Common.project.VIEW_PATH + "list_ajax.jsp";
 	}
 
 }

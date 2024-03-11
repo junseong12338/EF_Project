@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Cyborg - Awesome HTML5 Template</title>
     
-    <link rel="stylesheet" href="resources/css/mypage.css">
-    <link href="resources//css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="resources/css/fontawesome.css">
-    <link rel="stylesheet" href="resources/css/templatemo-cyborg-gaming.css">
-    <link rel="stylesheet" href="resources/css/owl.css">
-    <link rel="stylesheet" href="resources/css/animate.css">
+    <link rel="stylesheet" href="resources/assets/css/mypage.css">
+    <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="resources/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="resources/assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="resources/assets/css/owl.css">
+    <link rel="stylesheet" href="resources/assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -40,65 +40,68 @@
             <div class="col-lg-12">
               <div class="main-profile ">
                 <div class="row">
-                         <!--  -->
-                  <div class="col-lg-4">
-                    <img src="${dto.project_img}" alt="" style="border-radius: 23px;">
-                  </div>
-                  <div class="col-lg-4 align-self-center">
-                    <div class="main-info header-text">
-                      <span>Offline</span>
-                      <h4>${dto.project_title}</h4>
-                      <p>${dto.project_content}</p>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 align-self-center">
-                        <!--  -->                                
+                                     
                     <ul>
-                      <li><a href="myinfo_view">
-                      <img src="resources/img/톱니바퀴.jpg" alt="">
-                      내 정보</a></li>
-                      <li>잔여 포인트 <span id="remaining-points">${user_email.user_point}</span></li>
-                      <li>포인트 충전
+                      <li><a href="myinfo_view">내 정보</a></li>
+                      <li>
+                        잔여 포인트
+                        <span id="remaining-points"
+                          >${user_email.user_point}</span
+                        >
+                      </li>
+                      <li>
+                        포인트 충전
                         <a href="charge_view">
-                          <button id="recharge-button" style="margin-left: 135px; background-color: #bb4ab1; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.5s;" onmouseover="this.style.backgroundColor='#a400b3'" onmouseout="this.style.backgroundColor='#bb4ab1'">충전하기</button>
+                          <button
+                            id="recharge-button"
+                            style="
+                              margin-left: 135px;
+                              background-color: #bb4ab1;
+                              color: #fff;
+                              border: none;
+                              padding: 5px 10px;
+                              border-radius: 5px;
+                              cursor: pointer;
+                              transition: background-color 0.5s;
+                            "
+                            onmouseover="this.style.backgroundColor='#a400b3'"
+                            onmouseout="this.style.backgroundColor='#bb4ab1'"
+                          >
+                            충전하기
+                          </button>
                         </a>
                       </li>
                       <li><a href="sponsorshipdetails_view">후원한 프로젝트 내역</a> | <a href="registered_Project"> 등록한 프로젝트 </a> | <a href="review"> 리뷰 </a></li>
                     </ul>
-                   </div>
-                  </div>
-                </div>
-                 
                   </div>
                 </div>
               </div>
             </div>
           </div>
-  </div>
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
-          
-          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
         </div>
       </div>
     </div>
-  </footer>
   
-  <script src="resources/jquery/jquery.min.js"></script>
-  <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-  <script src="resources/js/isotope.min.js"></script>
-  <script src="resources/js/owl-carousel.js"></script>
-  <script src="resources/js/tabs.js"></script>
-  <script src="resources/js/popup.js"></script>
-  <script src="resources/js/custom.js"></script> 
+  <script src="resources/assets/jquery/jquery.min.js"></script>
+  <script src="resources/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="resources/assets/js/isotope.min.js"></script>
+  <script src="resources/assets/js/owl-carousel.js"></script>
+  <script src="resources/assets/js/tabs.js"></script>
+  <script src="resources/assets/js/popup.js"></script>
+  <script src="resources/assets/js/custom.js"></script>
   <script type="text/javascript">
-
-//페이지 로드 시 잔여 포인트를 가져오기
-document.addEventListener('DOMContentLoaded', updatepoint);
+         /* function fetchRemainingPoints() {
+	    fetch("/getRemainingPoints")
+	        .then(response => response.text())
+	        .then(data => {
+	            const remainingPoints = parseInt(data); // 서버로부터 받은 포인트 값을 정수로 변환하여 변수에 할당
+	            document.getElementById('remaining-points').textContent = remainingPoints + ' Point';
+	        })
+	        .catch(error => console.error('Error fetching remaining points:', error));
+	  }  */
+      //페이지 로드 시 잔여 포인트를 가져오기
+      document.addEventListener("DOMContentLoaded", fetchRemainingPoints);
   </script>
 
-</body>
+  </body>
 </html>

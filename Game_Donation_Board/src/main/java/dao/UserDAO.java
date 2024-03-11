@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+
 import dto.DonationDTO;
 import dto.ProjectDTO;
+
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 
@@ -25,17 +27,16 @@ public class UserDAO {
 
 		return sqlSession.selectOne("u.checkSocial",user_social);
 	}
+
+	public UserDTO selectone(int user_idx) {
+
+		return sqlSession.selectOne("u.selectone",user_idx);
+	}
 	
 	public int userInsert(UserDTO dto) {
 		return sqlSession.insert("u.insert",dto);
 	}
-	public int update_point(int userId, int point) {
-		
-		Map<String, Integer> params = new HashMap<>();
-	    params.put("userId", userId);
-	    params.put("point", point);
-	    return sqlSession.update("u.update_point_by_user_id", params);
-	}
+	
 
 	public int userDelete(int idx) {
 		
@@ -71,6 +72,11 @@ public class UserDAO {
 		List<DonationDTO> list = sqlSession.selectList("u.donation_list");
 
 		return sqlSession.selectList("u.donation_list");
+	}
+	
+	//유저 보유포인트 업데이트
+	public int userPointUpdate(UserDTO dto) {
+		return sqlSession.update("u.user_update_point",dto);
 	}
 		
 }

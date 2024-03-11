@@ -20,6 +20,9 @@ public class UserService {
 	public UserDTO checkSocial(String user_social) {
 		return userDAO.checkSocial(user_social);
 	}
+	public UserDTO selectone(int user_idx) {
+		return userDAO.selectone(user_idx);
+	}
 	
 	public int userInsert(UserDTO dto) {
 		return userDAO.userInsert(dto);
@@ -33,8 +36,8 @@ public class UserService {
 		return userDAO.userDelete(idx);
 	}
 	
-	public int userPointUpdate(int userId, int point) {
-		return userDAO.update_point(userId, point);
+	public int userPointUpdate(UserDTO dto) {
+		return userDAO.userPointUpdate(dto);
 	}
 
 	

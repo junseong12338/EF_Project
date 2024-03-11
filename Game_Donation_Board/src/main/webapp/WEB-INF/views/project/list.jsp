@@ -30,11 +30,23 @@
   font-size: 0.8rem;
   padding-left: 30px;
 }
+
+.image-container {
+        width: 246px;
+        height: 300px;
+        overflow: hidden;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 100%;
+      }
 </style>
 	
 <script>
 //스크롤 이벤트 처리
 let currentPage = 1;
+let total_page_count = 1;
 let category = [0,0,0,0,0,0,0,0,0,0];
 let sort = 0;
 let sort_date = 0;
@@ -46,21 +58,24 @@ $(window).on("scroll",function(){
     let isBottom = scrollTop + windowHeight >= documentHeight;// 스크롤이 바닥에 닿을 때
 
     if(isBottom){
-        if(currentPage == ${total_page_count}){
+        if(currentPage == total_page_count){
             return;
         }
 
         currentPage++;
         
         console.log("스크롤 - 현재페이지 : " + currentPage);
+
         // 추가로 받아올 페이지를 서버에 Ajax 요청
-        GetList(currentPage);
+        GetList(currentPage, sort, sort_date, category);
     };
 });
 
 // list 가져오기
 const GetList = function(currentPage, sort, sort_date, category){
     console.log("리스트 - 현재페이지 : " + currentPage);
+    console.log("스크롤 - 정렬1 : " + sort);
+    console.log("스크롤 - 정렬2 : " + sort_date);
 
     // 무한 스크롤
     $.ajax({
@@ -77,6 +92,9 @@ const GetList = function(currentPage, sort, sort_date, category){
 
             $(".project-list-container").append(data);
             console.log("ajax 잘넘어옴");
+            
+            // hidden 으로 total_page_count 받아오기
+            total_page_count = document.getElementById("total_page").value;
         }
     });
 };
@@ -173,55 +191,11 @@ function send(n){
 </head>
 <body>
 
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
+  
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
-                        <img src="resources/assets/images/logo.png" alt="">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Search End ***** -->
-                    <div class="search-input">
-                      <form id="search" action="now_project_list" method="GET">
-                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" value="${keyword }"/>
-                        <i class="fa fa-search" type="button"></i>
-                      </form>
-                    </div>
-                    <!-- ***** Search End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="index.html" class="active">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
-                        <li><a href="profile.html">Profile <img src="resources/assets/images/profile-header.jpg" alt=""></a></li>
-                    </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+  <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
   <!-- ***** Header Area End ***** -->
   
   
@@ -304,29 +278,24 @@ function send(n){
             <div class="col-lg-12">
               <div class="project-list header-text">
                 <div class="heading-section">
-                  <h4><em>진행중인</em> 프로젝트</h4>
+                  <h4><em>EZ-FUNDING</em> 프로젝트</h4>
                   
                   <!-- select 박스 Start -->
                   <div>
-                    <form>
                       <select id="select_sort" onchange="send_sort(this.value)">
                         <option value="0">인기순</option>
                         <option value="1">최신순</option>
                         <option value="2">최대 후원순</option>
                       </select>
-                    </form>
-                  </div>
-                  &nbsp;
-                  <div>
-                    <form>
                       <select id="select_sort_date" onchange="send_sort_date(this.value)">
                       	<option value="0">전체보기</option>
                         <option value="1">진행중</option>
                         <option value="2">진행예정</option>
                         <option value="3">마감</option>
                       </select>
-                    </form>
                   </div>
+                  
+
                   <!-- select 박스 End -->
                 </div>  
                 
