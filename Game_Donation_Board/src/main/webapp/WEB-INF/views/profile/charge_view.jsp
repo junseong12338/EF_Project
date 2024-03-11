@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
   		<!-- jQuery -->
@@ -217,7 +218,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
       <span class="dot"></span>
@@ -228,36 +228,7 @@
       </div>
     </div>
   </div>
-
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <a href="index.html" class="logo">
-                        <img src="resources/images/logo.png" alt="">
-                    </a>
-                    <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="검색" id='searchText' name="searchKeyword" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
-                      </form>
-                    </div>
-                    <ul class="nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
-                        <li><a href="mypage_view" class="active">마이페이지 <img src="resources/images/profile-header.jpg" alt=""></a></li>
-                    </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+  <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -268,10 +239,10 @@
                     <p>결제 금액</p>
                     <form name="f">
                     <input type="hidden" value="${user_email.user_idx}" id="user_idx">
-					<input type="hidden" value="${user_email.user_email}" id="user_email">
-					<input type="hidden" value="${user_email.user_name}" id="user_name">
-					<input type="hidden" value="${user_email.user_addr}" id="user_addr">
-					<input type="hidden" value="${user_email.user_point}" id="user_point">
+                    <input type="hidden" value="${user_email.user_email}" id="user_email">
+                    <input type="hidden" value="${user_email.user_name}" id="user_name">
+                    <input type="hidden" value="${user_email.user_addr}" id="user_addr">
+                    <input type="hidden" value="${user_email.user_point}" id="user_point">
                     <input type="number"placeholder="숫자만 입력가능." id="payment" required>
                     </form>
                 </div>

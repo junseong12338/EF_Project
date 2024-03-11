@@ -15,7 +15,7 @@
 <div>
 
 
-<a href="board_list" class="logo"><img src="resources/assets/images/logo.png" alt=""></a>
+<a href="board_list" class="logo"><img src="resources/assets/images/logo.png" style="width: 30%; height: auto;"></a>
 <div class="container" id="container">
   <!-- 회원가입 -->
   <div class="form-container sign-up-container">
@@ -79,4 +79,6 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="resources/js/httpRequest.js"></script>
 <script src="resources/js/login.js"></script>
+
+
 </html>
