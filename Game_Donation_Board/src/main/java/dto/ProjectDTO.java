@@ -36,6 +36,5 @@ public class ProjectDTO {
 	// 달성 퍼센트, 남은 날짜
 	private String persent;
 	private String diff_date;
-	// like count
-	private int like_count;
+
 }

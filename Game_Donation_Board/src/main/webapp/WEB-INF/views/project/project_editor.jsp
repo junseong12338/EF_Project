@@ -370,12 +370,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       //작성완료 함수
       function send(f) {
-        const title = document.getElementById("project_title").value;
-        const content = document.getElementById("summernote").value;
-        const target = document.getElementById("target").value;
-        const main_image = document.getElementById("main_image").value;
-        const start_date = document.getElementById("start_date").value;
-        const end_date = document.getElementById("end_date").value;
+        const title = document.getElementById("project_title");
+        const content = document.getElementById("summernote");
+        const target = document.getElementById("target");
+        const main_image = document.getElementById("main_image");
+        const start_date = document.getElementById("start_date");
+        const end_date = document.getElementById("end_date");
         const category = [];
         const checkboxes =
           document.getElementById("project_editor").elements["category"];
@@ -389,21 +389,47 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           }
         }
 
-        console.log("title : " + title);
-        console.log("content : " + content);
-        console.log("target : " + target);
-        console.log("main_image : " + main_image);
-        console.log("start_date : " + start_date);
-        console.log("end_date : " + end_date);
-        console.log("category : " + category);
-
-        if (content == "") {
-          alert("내용을 입력해주세요");
+        if (title.value == "") {
+          alert("제목을 입력해주세요");
+          title.focus();
           return;
         }
 
-        // f.action = "summernote_send";
-        // f.submit();
+        if (content.value == "") {
+          alert("내용을 입력해주세요");
+          content.focus();
+          return;
+        }
+
+        if (target.value == "") {
+          alert("목표금액을 입력해주세요");
+          target.focus();
+          return;
+        }
+        if (main_image.value == "") {
+          alert("메인 이미지를 선택해주세요");
+          main_image.focus();
+          return;
+        }
+        if (start_date.value == "") {
+          alert("프로젝트 시작 날짜를 선택해주세요");
+          start_date.focus();
+          return;
+        }
+        if (end_date.value == "") {
+          alert("프로젝트 종료 날짜를 선택해주세요");
+          end_date.focus();
+          return;
+        }
+
+        if (category == "") {
+          alert("카테고리를 한개이상 선택해주세요");
+          category.focus();
+          return;
+        }
+
+        f.action = "summernote_send";
+        f.submit();
       }
 
       //목표금액 최대수치 초과 시 value 재설정
@@ -415,6 +441,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }
       }
 
+      //시작날짜를 정하면 종료날짜는 시작날짜 뒤로만 체크할수 있게 변경
       function set_min_endDate() {
         const start_date = document.getElementById("start_date").value;
 

@@ -3,6 +3,8 @@ package com.korea.board;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +47,11 @@ public class ProjectController {
 	
 	
 	@RequestMapping("project_list")
-	public String project_list(Model model){
+	public String project_list(Model model,
+								@RequestParam(value="pageNum", defaultValue="1")int page_num_js,
+								@RequestParam(value="sort",defaultValue="0")int sort_js,
+								@RequestParam(value="category_box",required = false)List<Integer> category_js
+								) throws Exception{
 		
 		
 		int total_page_count = 1;

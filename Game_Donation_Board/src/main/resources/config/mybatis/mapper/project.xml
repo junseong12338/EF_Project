@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
-	<select id="select_idx" resultType="int">
+	<select id="select_next_idx" resultType="int">
 		SELECT SEQ_EF_PROJECT_IDX.NEXTVAL
 		FROM DUAL
 	</select>
@@ -24,17 +24,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 프로젝트 단일 셀렉트 -->
 	<select id="selectOne_project" parameterType="int" resultType="project">
-		SELECT * FROM EF_PROJECT
-		WHERE PROJECT_IDX = #{idx}
-	</select> 
+		SELECT PROJECT_IDX,
+		       USER_IDX,
+		       PROJECT_TITLE,
+		       PROJECT_CONTENT,
+		       PROJECT_STATUS,
+		       PROJECT_IMG,
+		       TO_CHAR(PROJECT_START,'YYYY-MM-DD') AS PROJECT_START,
+		       TO_CHAR(PROJECT_END,'YYYY-MM-DD') AS PROJECT_END,       
+		       PROJECT_TARGET
+	   FROM EF_PROJECT
+	   WHERE PROJECT_IDX=#{idx}
+	</select>
+	
+	<!-- 프로젝트 업데이트 -->
+	<update id="project_update" parameterType="project">
+		UPDATE EF_PROJECT
+		SET PROJECT_TITLE = #{project_title},
+		    PROJECT_CONTENT = #{project_content},
+		    PROJECT_STATUS= #{project_status},
+		    PROJECT_IMG = #{project_img},
+		    PROJECT_START = TO_DATE(#{project_start}, 'YYYY-MM-DD'),
+		    PROJECT_END = TO_DATE(#{project_end}, 'YYYY-MM-DD'),
+		    PROJECT_TARGET = #{project_target}
+		WHERE PROJECT_IDX = #{project_idx}
+	</update>
+	
 	<!-- 카테고리 등록 -->
 	<insert id="insert_category" parameterType="categoryNum">
 		INSERT INTO EF_CATEGORY VALUES(
 			#{project_idx},
-			#{category_num}
+			#{category_idx}
 		)
 	</insert>
 	
+	<!-- 카테고리 삭제 -->
+	<delete id="category_delete" parameterType="int">
+		DELETE FROM EF_CATEGORY
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
+	
+	
+	<select id="select_category" parameterType="int" resultType="categoryNum">
+		SELECT *
+		FROM EF_CATEGORY
+		WHERE PROJECT_IDX = #{idx}
+	</select> 
 	
 	<!-- 리스트 총 개수 반환 -->
 	<select id="project_count" resultType="int" parameterType="project">
@@ -151,6 +186,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</when>
 				</choose>
 				<!-- choose 기간 end -->
+	</select>	
+	
+	
+	<!-- 이준성 -->
+	<!-- 승인안된 모든 프로젝트 리스트 -->
+	<select id = "project_all_count" resultType="int">
+		select count(*) from EF_PROJECT
+	</select>
+	
+	<!-- 유저번호로 검색한 프로젝트 리스트 -->
+	<select id="userIdx_list" resultType="project">
+	SELECT * 
+	FROM EF_PROJECT
+	</select>
+	
+		<!-- 관리자 페이징을 위한 리스트 -->
+	<select id = "getRowTotal" resultType="project" parameterType="java.util.HashMap">		 
+		 select project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end from 
+		(select rank() over(order by project_idx) no, b.*
+		 from ef_project b)
+		 where no between #{start} and #{end}
 	</select>
 	
 	<select id="user_name" resultType="string" parameterType="int">
@@ -168,10 +224,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
-	<select id = "pro_list" resultType="project">
-		select * 
-		from EF_PROJECT
-	</select>
+	<update id="updateStatus" parameterType="int">
+	UPDATE EF_PROJECT
+	SET
+	Project_Status = 1
+	WHERE
+	Project_idx =#{project_idx}
+	
+	</update>
+	
 </mapper>
 
 
