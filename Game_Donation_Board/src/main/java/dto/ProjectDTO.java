@@ -17,23 +17,24 @@ public class ProjectDTO {
 	private String project_img;
 	private String project_start;
 	private String project_end;
-	
-	// DB�� �߰��ؾ��Ѵ�
-	private String project_subtitle;
-	// ���;���
+
+	// sql에서 project_author로 받아와야함
 	private String project_author;
-	// �� �ݵ��ݾ� - sql���� alias �ؼ� �ܾ�� ����
+	// sql에서 project_donation로 받아와야함 
 	private int project_donation;
 	
-	// ī�װ��� 10��
+
 	private List<Integer> category_list;
-	// ���Ĺ��
+	// 정렬
 	private int sort;
-	// list Start,End,Count Num
+	// 진행여부 날짜
+	private int sort_date;
+	// 시작, 끝 값으로 불러올 거임
 	private int start;
 	private int end;
 	private int count;
-	
+	// 달성 퍼센트, 남은 날짜
 	private String persent;
 	private String diff_date;
+
 }
