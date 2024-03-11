@@ -15,7 +15,7 @@ public class ProjectService {
 		return projectDAO.selectOne_project(idx);
 	}
 	
-	//-------------------------------------------------------------- 성현
+	//-------------------------------------------------------------- 성현 list.jsp , list_ajax.jsp
 	
 	// list 갯수
 	public int selectOne(ProjectDTO dto){
@@ -24,12 +24,17 @@ public class ProjectService {
 	
 	// list
 	public List<ProjectDTO> selectList(ProjectDTO dto){
-		return projectDAO.selectList(dto);
-	}
-	
-	// 상세정보
-	public ProjectDTO select_detail(int project_idx) {
-		return projectDAO.select_detail(project_idx);
+		
+		
+		List<ProjectDTO> list = projectDAO.selectList(dto);
+		
+		for(int i = 0; i < list.size(); i++) {
+			// user table 에서 user_name 가져와서 setting
+			String name = projectDAO.selectName(list.get(i).getUser_idx());
+			list.get(i).setProject_author(name);
+		}
+		
+		return list;
 	}
 	
 	//-------------------------------------------------------------- 이준성

@@ -1,17 +1,18 @@
 상세페이지
 
 <기능>
-	프로젝트 내용, 
-		project_title
-		project_donation
-		project_persent
-		project_diff
+1	프로젝트 내용, project_content
+1		project_title
+1		project_donation
+1		project_persent
+1		project_diff
 		
-	공지, 
-	리뷰(작성), 
-	좋아요(클릭),
-	알람설정(클릭), 
-	신고하기(클릭), 
-	후원하기(클릭) 
+1	공지, 
+1	리뷰(작성), 
+1	좋아요(클릭), like_count
+1	알람설정(클릭), 
+1	신고하기(클릭), 
+1	후원하기(클릭) 
 
 	
+idx, title, content, donation, persent, diff, like_count

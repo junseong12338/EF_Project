@@ -53,8 +53,7 @@ public class ProjectController {
 		
 		model.addAttribute("total_page_count", total_page_count);
 		
-		
-		return "/WEB-INF/views/project/list.jsp";
+		return Common.project.VIEW_PATH + "list.jsp";
 	}
 	
 	
@@ -186,7 +185,7 @@ public class ProjectController {
 		model.addAttribute("page_num", page_num);
 		
 		// ajax - 포워딩
-		return "/WEB-INF/views/project/list_ajax.jsp";
+		return Common.project.VIEW_PATH + "list_ajax.jsp";
 	}
 
 }

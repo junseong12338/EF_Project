@@ -153,6 +153,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<!-- choose 기간 end -->
 	</select>
 	
+	<select id="user_name" resultType="string" parameterType="int">
+		SELECT DISTINCT USER_NAME FROM EF_PROJECT p JOIN EF_USER u
+		ON p.user_idx = u.user_idx
+		WHERE p.user_idx = #{user_idx}
+	</select>
+	
 	
 	<!-- 상세페이지 정보 들고오기 -->
 	<select id="project_detail" resultType="project" parameterType="int">
