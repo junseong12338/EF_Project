@@ -62,10 +62,10 @@ public class UserDAO {
 	}
 
 	//프로젝트 한건 가져오기
-	public List<ProjectDTO> selectProjectList() {
-		List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list");
+	public List<ProjectDTO> selectProjectList(int userIdx) {
+		List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list",userIdx);
 //		System.out.println(list);
-		return sqlSession.selectList("project.userIdx_list");
+		return list;
 	}
 
 	public List<DonationDTO> selectdonationList(){

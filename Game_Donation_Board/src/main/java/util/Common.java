@@ -25,6 +25,11 @@ public class Common {
 		public final static String VIEW_PATH = "/WEB-INF/views/project/";
 	}
 	
+	public static class review{
+		public final static String VIEW_PATH = "/WEB-INF/views/review/";
+	}
+	
+	
 	
 	//공지사항 게시판용
 	public static class Admin{

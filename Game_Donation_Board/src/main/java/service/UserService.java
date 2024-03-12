@@ -46,11 +46,11 @@ public class UserService {
 		  
 	  }
 	  
-	  public List<ProjectDTO> ProjectList() { 
+	  public List<ProjectDTO> ProjectList(int userIdx) { 
 		  // 실제로는 데이터베이스에서 프로젝트 목록을 조회하여 반환하는코드가 들어갑니다. 
-		  List<ProjectDTO> list = userDAO.selectProjectList();
+		  List<ProjectDTO> list = userDAO.selectProjectList(userIdx);
 //		  System.out.println(list); 
-		  return userDAO.selectProjectList(); 
+		  return list; 
 	}
 	  
 	  // 후원 금액 

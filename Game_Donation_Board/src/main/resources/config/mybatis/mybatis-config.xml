@@ -11,6 +11,7 @@
 	
 	<typeAliases>
 		
+		 <typeAlias type="dto.ReviewDTO" alias="review"/> 
 		 <typeAlias type="dto.ProjectDTO" alias="project"/> 
 		  <typeAlias type="dto.UserDTO" alias="user"/> 
 		  <typeAlias type="dto.CategoryNumDTO" alias="categoryNum"/> 
@@ -19,6 +20,7 @@
 	</typeAliases>
 		
 	<mappers>
+		<mapper resource="config/mybatis/mapper/review.xml" />
 		<mapper resource="config/mybatis/mapper/user.xml" />
 		<mapper resource="config/mybatis/mapper/project.xml" />
 		

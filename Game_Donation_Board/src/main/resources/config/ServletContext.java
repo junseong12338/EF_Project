@@ -1,6 +1,7 @@
 package config;
 
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -17,6 +18,7 @@ import com.korea.board.ProjectController;
 import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
+import dao.ReviewDAO;
 import dto.ProjectStatus;
 import service.KakaoLoginService;
 import service.NaverLoginService;
@@ -24,6 +26,7 @@ import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
 import com.korea.board.ProjectController;
+import com.korea.board.ReviewController;
 
 import service.ProjectService;
 
@@ -75,6 +78,16 @@ public class ServletContext implements WebMvcConfigurer {
 	
 	@Bean ProjectController projectController(ProjectService projectService) {
 		return new ProjectController(projectService);
+	}
+	
+	@Bean
+	public ReviewDAO review_daoBean(SqlSession sqlSession) {
+		return new ReviewDAO(sqlSession);
+	}
+	
+	@Bean
+	public ReviewController ReviewController(ReviewDAO review_dao) {
+		return new ReviewController(review_dao);
 	}
 	
 	 @Bean(name = "multipartResolver")

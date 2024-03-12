@@ -199,6 +199,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="userIdx_list" resultType="project">
 	SELECT * 
 	FROM EF_PROJECT
+	where user_idx = #{userIdx}
 	</select>
 	
 		<!-- 관리자 페이징을 위한 리스트 -->

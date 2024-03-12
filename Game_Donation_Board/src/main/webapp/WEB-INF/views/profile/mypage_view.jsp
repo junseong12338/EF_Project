@@ -71,7 +71,7 @@
                           </button>
                         </a>
                       </li>
-                      <li><a href="sponsorshipdetails_view">후원한 프로젝트 내역</a> | <a href="registered_Project"> 등록한 프로젝트 </a> | <a href="review"> 리뷰 </a></li>
+                      <li><a href="sponsorshipdetails_view">후원한 프로젝트 내역</a> | <a href="registered_Project"> 등록한 프로젝트 </a> | <a href="review_list"> 리뷰 </a></li>
                     </ul>
                   </div>
                 </div>
