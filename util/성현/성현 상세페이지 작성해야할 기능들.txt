@@ -16,3 +16,28 @@
 
 	
 idx, title, content, donation, persent, diff, like_count
+
+
+<detail>
+버튼 이벤트 (insert)
+1. 신고하기 ( 어디로 데이터가 가야하는가? ) ( form ) ----------- 나중에
+2. 좋아요 ( ajax로 즉시 변해야함 ) - like
+3. 후원하기 - donation ( form )
+
+DB에서 가져와야 하는 데이터 ( project_idx 를 매개변수로 가지고 )
+1. img - project
+2. author - user
+3. category_name(list) - category_name
+4. donation(sum) - donation
+5. persent (donation / target) - controller 에서 작업
+5. target - project
+6. start, end(기간) - project
+7. -> 계산한 diff_date - (service 에서 계산)
+8. like_cnt(sum) - like
+
+ajax 에서 가져올 컨텐츠 부분
+1. content - project
+2. notice - notice (CRUD 작성자만 작성할 수 있는 권한이 있음) 
+	-> 해당 테이블 컬럼 전부다 들고온다 보면됨
+3. review - review (CRUD 로그인 해야만 작성할 수 있는 권한이 있음)
+	-> 해당 테이블 컬럼 전부다 들고온다 보면됨 

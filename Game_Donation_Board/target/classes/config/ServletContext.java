@@ -14,6 +14,7 @@ import com.korea.board.KakaoLoginController;
 import com.korea.board.NaverLoginController;
 import com.korea.board.ProfileController;
 import com.korea.board.ProjectController;
+import com.korea.board.ProjectDetailController;
 import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
@@ -73,8 +74,14 @@ public class ServletContext implements WebMvcConfigurer {
 	}
 	
 	
-	@Bean ProjectController projectController(ProjectService projectService) {
+	@Bean
+	public ProjectController projectController(ProjectService projectService) {
 		return new ProjectController(projectService);
+	}
+	
+	@Bean
+	public ProjectDetailController projectDetailController(ProjectService projectService) {
+		return new ProjectDetailController(projectService);
 	}
 	
 	 @Bean(name = "multipartResolver")

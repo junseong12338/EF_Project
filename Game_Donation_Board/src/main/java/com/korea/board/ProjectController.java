@@ -134,8 +134,8 @@ public class ProjectController {
 		int persent = 0;
 		String diff_date = "";
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate now = LocalDate.now();
 		String today = now.format(formatter);
 		Date start_date = null;
@@ -148,18 +148,11 @@ public class ProjectController {
 			String persent_str  = String.format("%,d", persent);
 			list.get(i).setPersent(persent_str + " %");
 			
-			System.out.println("start : " + list.get(i).getProject_start());
-			System.out.println("end : " + list.get(i).getProject_end());
-			
 			// 남은기간 dto.setDiff_date
-			now_date = (Date)sdf.parse(today);
-			start_date = (Date)sdf.parse(list.get(i).getProject_start());
-			end_date = (Date)sdf.parse(list.get(i).getProject_end());
+			now_date = sdf.parse(today);
+			start_date = sdf.parse(list.get(i).getProject_start());
+			end_date = sdf.parse(list.get(i).getProject_end());
 			
-			System.out.println("now_date : " + now_date);
-			System.out.println("start_date : " + start_date);
-			System.out.println("end_date : " + end_date);
-				
 			if(now_date.getTime() < start_date.getTime()) {
 				diff_date = "진행예정";
 			}else if(now_date.getTime() > end_date.getTime()){
@@ -167,9 +160,7 @@ public class ProjectController {
 			}else {
 				diff_date = String.format("%d 일", ( end_date.getTime() - now_date.getTime() ) / (24*60*60*1000) );
 			}
-				
-			System.out.println(diff_date);
-				
+			
 			list.get(i).setDiff_date(diff_date);
 
 		}

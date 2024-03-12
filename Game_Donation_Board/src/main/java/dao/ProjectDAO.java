@@ -48,14 +48,14 @@ final SqlSession sqlSession;
 		return sqlSession.selectList("project.select_category",idx);
 	}
 	
-	//------------------------------------------------------------------
+	//------------------------------------------------------------------ 성현 project_list
 	
-
+	// 프로젝트 총 갯수 
 	public int select_count(ProjectDTO dto) {
 		return sqlSession.selectOne("project.project_count", dto);
 	}
 	
-
+	// 프로젝트 총 리스트
 	public List<ProjectDTO> selectList(ProjectDTO dto){
 		return sqlSession.selectList("project.project_list", dto);
 	}
@@ -65,11 +65,31 @@ final SqlSession sqlSession;
 		return sqlSession.selectOne("project.user_name", user_idx);
 	}
 	
+	// ----------------------------------------------------------------- 성현 detail
 	
-	
-	public List<ProjectDTO>	ProjectList(){
-		return sqlSession.selectList("project.project_list");
+	// donation 테이블의 정보 가져오기 - sum (project_idx)
+	public int select_donation(int project_idx) {
+		return sqlSession.selectOne("project.donation", project_idx) == null ? 0 : sqlSession.selectOne("project.donation", project_idx);
 	}
+	
+	// user 테이블의 정보 가져오기 (project_idx)
+	public String select_name(int project_idx) {
+		return sqlSession.selectOne("project.user_author", project_idx);
+	}
+	
+	// category_name 테이블의 정보 가져오기 (project_idx)
+	public List<String> selectList(int project_idx){
+		return sqlSession.selectList("project.category_name", project_idx);
+	}
+	
+	// like 테이블의 정보 가져오기 (project_idx)
+	public int select_like(int project_idx) {
+		return sqlSession.selectOne("project.like_cnt", project_idx);
+	}
+	
+	
+	
+	
 	//---------------------------------------------------------------------------------------이준성
 	
 	public int project_all_count(){

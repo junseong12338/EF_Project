@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,10 +18,10 @@
 
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-cyborg-gaming.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="resources/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="resources/assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="resources/assets/css/owl.css">
+    <link rel="stylesheet" href="resources/assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 <!--
 
@@ -29,6 +30,12 @@ TemplateMo 579 Cyborg Gaming
 https://templatemo.com/tm-579-cyborg-gaming
 
 -->
+<script type="text/javascript">
+	let content = false
+	let notice = false
+	let review = false
+</script>
+
   </head>
 
 <body>
@@ -44,7 +51,7 @@ https://templatemo.com/tm-579-cyborg-gaming
       <div class="col-lg-12">
         <div class="page-content">
 
-          <!-- ***** Banner Start ***** -->
+          <!-- ***** Detail Start ***** -->
           <div class="row">
             <div class="col-lg-12">
               <div class="main-profile ">
@@ -95,9 +102,38 @@ https://templatemo.com/tm-579-cyborg-gaming
                         <hr>
                         <div class="col-lg-12">
                           <div>
+                          	<c:choose>
+                          		<c:when test="content">
+                          		</c:when>
+                          		<c:when test="notice">
+                          			
+                          		</c:when>
+                          		<c:when test="review">
+                          			
+                          		</c:when>
+                          	</c:choose>
+                          	<c:if test="content">
+                          	<!-- 프로젝트 내용 Start -->
                             <div class="main-contentbox">
                               <p>${dto.content }</p>
                             </div>
+                            <!-- 프로젝트 내용 End -->
+                            </c:if>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                           </div>
                         </div>
                       </div>
@@ -107,7 +143,8 @@ https://templatemo.com/tm-579-cyborg-gaming
               </div>
             </div>
           </div>
-          <!-- ***** Banner End ***** -->
+          <!-- ***** Detail End ***** -->
+          
         </div>
       </div>
     </div>
@@ -131,11 +168,11 @@ https://templatemo.com/tm-579-cyborg-gaming
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-  <script src="assets/js/isotope.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
-  <script src="assets/js/tabs.js"></script>
-  <script src="assets/js/popup.js"></script>
-  <script src="assets/js/custom.js"></script>
+  <script src="resources/assets/js/isotope.min.js"></script>
+  <script src="resources/assets/js/owl-carousel.js"></script>
+  <script src="resources/assets/js/tabs.js"></script>
+  <script src="resources/assets/js/popup.js"></script>
+  <script src="resources/assets/js/custom.js"></script>
 
 
   </body>

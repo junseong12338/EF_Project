@@ -20,7 +20,7 @@
 	<div class="col-lg-3 col-sm-6">
 		<div class="item">
 			<div class="image-container">
-				<a href="project_detail?dto=${dto.project_idx}"><!-- 상세페이지 경로 작성 -->
+				<a href="project_detail?project_idx=${dto.project_idx}"><!-- 상세페이지 경로 작성 -->
 					<img src="${dto.project_img }" alt="프로젝트 이미지">
 				</a>
 			</div>
