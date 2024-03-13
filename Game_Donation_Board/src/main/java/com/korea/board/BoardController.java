@@ -16,7 +16,6 @@ public class BoardController {
 	
 	@RequestMapping(value = { "/", "board_list" })	
 	public String list(Model model) {
-		System.out.println("list controller test..");
 //		List<ProjectDTO> EF_PROJECT = projectService.selectList_all_list();
 //		model.addAttribute("ProectList",EF_PROJECT);		
 		return Common.Board.VIEW_PATH + "board_list.jsp";
