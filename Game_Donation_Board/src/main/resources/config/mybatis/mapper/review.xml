@@ -9,14 +9,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from ef_review order by review_idx DESC
 	</select>
 	
+	<!-- 리뷰 단일 셀렉트 -->
+	<select id="selectOne_review" parameterType="int" resultType="review">
+		SELECT review_IDX,
+			   project_idx,
+		       USER_IDX,
+		       review_CONTENT
+	   FROM EF_review
+	   WHERE user_IDX=#{user_idx}
+	</select>
+	
+	<select id="user_name" resultType="string" parameterType="int">
+	 select user_name from ef_user
+	 where user_idx = #{user_idx}
+	
+		<!-- select user_name from ef_review r
+		inner join ef_user u
+		on r.user_idx = u.user_idx -->
+	</select>
+	
 	<insert id="review_insert" parameterType="review">
 	insert into ef_review values(
-			seq_review_idx.nextVal,
-			50,
+			EF_REVIEW_SEQ.nextval,
+			#{project_idx},
 			#{user_idx},
 			#{review_content}
 	)
-</insert>
+	</insert>
+	<delete id="review_delete" parameterType="int">
+		DELETE FROM EF_review
+		WHERE review_idx=#{review_idx}
+	</delete>
 	
 </mapper>
 

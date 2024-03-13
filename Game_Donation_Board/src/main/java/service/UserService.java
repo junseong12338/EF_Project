@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class UserService {
+	
 	final UserDAO userDAO;
 
 	public UserDTO checkEmail(String user_email) {

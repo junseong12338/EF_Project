@@ -23,6 +23,7 @@ import dto.ProjectStatus;
 import service.KakaoLoginService;
 import service.NaverLoginService;
 import service.ProjectService;
+import service.ReviewService;
 import service.SummerNoteService;
 import service.UserService;
 import com.korea.board.ProjectController;
@@ -79,17 +80,10 @@ public class ServletContext implements WebMvcConfigurer {
 	@Bean ProjectController projectController(ProjectService projectService) {
 		return new ProjectController(projectService);
 	}
-	
-	@Bean
-	public ReviewDAO review_daoBean(SqlSession sqlSession) {
-		return new ReviewDAO(sqlSession);
+
+	@Bean ReviewController reviewController(ReviewService reviewService) {
+		return new ReviewController(reviewService);
 	}
-	
-	@Bean
-	public ReviewController ReviewController(ReviewDAO review_dao) {
-		return new ReviewController(review_dao);
-	}
-	
 	 @Bean(name = "multipartResolver")
 	    public CommonsMultipartResolver commonsMultipartResolver() {
 	        CommonsMultipartResolver resolver = new CommonsMultipartResolver();

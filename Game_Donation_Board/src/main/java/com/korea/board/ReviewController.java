@@ -3,26 +3,34 @@ package com.korea.board;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import dao.ReviewDAO;
 import dto.ReviewDTO;
+import lombok.RequiredArgsConstructor;
+import service.ReviewService;
 import util.Common;
 
 @Controller
+@RequiredArgsConstructor
 public class ReviewController {
-	ReviewDAO review_dao;
+
+	final ReviewService reviewService;
 	
-	public ReviewController(ReviewDAO review_dao) {
-		this.review_dao = review_dao;
-	}
+	@Autowired
+	HttpServletRequest request;
+	
+	@Autowired
+	HttpSession session;
 	
 	@RequestMapping("review_list")
-	public String select(Model model) {
-		List<ReviewDTO> list = review_dao.selectList();
+	public String select(Model model,ReviewDTO dto) {
+		List<ReviewDTO> list = reviewService.selectList();
 		model.addAttribute("list",list);
 		return Common.review.VIEW_PATH+"review_list.jsp";
 				
@@ -30,9 +38,23 @@ public class ReviewController {
 	
 
 	@RequestMapping("insert")
-	public String insert(ReviewDTO dto, HttpServletRequest request) {
-		int res = review_dao.insert(dto);
-		return "redirect:review_list";
-				
+	public String insert(ReviewDTO dto) {
+		int res = reviewService.reviewInsert(dto);
+		
+		if(res > 0) {
+			return "redirect:review_list";
+		}
+		return null;
 	}
+	
+	@RequestMapping("delete")
+	public String delete(int review_idx) {
+		int res = reviewService.reviewDelete(review_idx);
+		
+		if(res > 0) {
+			return "redirect:review_list";
+		}
+		return null;
+	}
+	
 }

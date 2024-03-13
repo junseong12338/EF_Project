@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import dao.ProjectDAO;
+import dao.ReviewDAO;
 import dao.UserDAO;
 import service.KakaoLoginService;
 import service.NaverLoginService;
 import service.ProjectService;
+import service.ReviewService;
 import service.SummerNoteService;
 import service.UserService;
 
@@ -24,14 +26,19 @@ public class Context_2_dao {
 	public UserDAO userDAO(SqlSession sqlSession) {
 		return new UserDAO(sqlSession);
 	}
-	
+
+	@Bean
+	public ReviewDAO reviewDAO(SqlSession sqlSession) {
+		return new ReviewDAO(sqlSession);
+	}
 	
 	@Bean
 	public ProjectDAO projectDAO(SqlSession sqlSession) {
 		return new ProjectDAO(sqlSession);
 	}
 	
-	@Bean public SummerNoteService summerNoteService(ProjectDAO projectDAO) {
+	@Bean 
+	public SummerNoteService summerNoteService(ProjectDAO projectDAO) {
 		return new SummerNoteService(projectDAO);
 	}
 	
@@ -49,4 +56,9 @@ public class Context_2_dao {
     public KakaoLoginService kakaoLoginService() {
         return new KakaoLoginService();
     }
+	
+	@Bean
+	public ReviewService reviewService(ReviewDAO reviewDAO) {
+		return new ReviewService(reviewDAO);
+	}
 }
