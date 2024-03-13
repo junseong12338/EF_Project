@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 	final UserDAO userDAO;
-
+// --------------------------- 이준성
 	public UserDTO checkEmail(String user_email) {
 		return userDAO.checkEmail(user_email);
 	}
@@ -31,6 +31,7 @@ public class UserService {
 	public int userUpdate(UserDTO dto) {
 		return userDAO.userUpdate(dto);
 	}
+	// --------------------------- 이준성
 	
 	public int userDelete(int idx) {
 		return userDAO.userDelete(idx);
@@ -38,6 +39,10 @@ public class UserService {
 	
 	public int userPointUpdate(UserDTO dto) {
 		return userDAO.userPointUpdate(dto);
+	}
+	
+	public UserDTO selectName(int user_idx) {
+		return userDAO.selectOne(user_idx);
 	}
 
 	

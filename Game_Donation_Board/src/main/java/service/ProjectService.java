@@ -9,6 +9,7 @@ import java.util.List;
 
 
 import dao.ProjectDAO;
+import dto.AdminInfoDTO;
 import dto.PageDTO;
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,6 @@ public class ProjectService {
 		
 		return list;
 	}
-	
 	
 	//--------------------------------------------------------------- 성현 detail.jsp , detail_ajax.jsp
 	
@@ -126,21 +126,30 @@ public class ProjectService {
 	
 	
 	
+		
 	//-------------------------------------------------------------- 이준성
 	//전체 게시물 수 조회
-	public List<ProjectDTO> getRowTotal(HashMap<String, Integer> map){
+	public List<AdminInfoDTO> getRowTotal(HashMap<String, Integer> map){
 		return projectDAO.getRowTotal(map);
 	}
 
+	public String getUserName(int user_idx) {
+		return projectDAO.getUserName(user_idx);
+	}
+	
 	public PageDTO getContentCnt(int currentPage) {
-		int content_cnt = projectDAO.project_all_count();
-		PageDTO pageDTO = new PageDTO(content_cnt,currentPage,Common.Admin.BLOCKLIST,Common.Admin.BLOCKPAGE);
+		int content_cnt = projectDAO.project_wait_count();
+	PageDTO pageDTO = new PageDTO(content_cnt,currentPage,Common.Admin.BLOCKLIST,Common.Admin.BLOCKPAGE);
 		return pageDTO;
 		
 	}
 	
 	public int updateStatus (int project_idx) {
 		return projectDAO.updateStatus(project_idx);
+	}
+	
+	public List<ProjectDTO> Main_limit_list(){
+		return projectDAO.Main_limit_list();
 	}
 
 }

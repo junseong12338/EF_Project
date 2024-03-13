@@ -1,9 +1,12 @@
 package com.korea.board;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
 import service.ProjectService;
 import util.Common;
@@ -16,8 +19,8 @@ public class BoardController {
 	
 	@RequestMapping(value = { "/", "board_list" })	
 	public String list(Model model) {
-//		List<ProjectDTO> EF_PROJECT = projectService.selectList_all_list();
-//		model.addAttribute("ProectList",EF_PROJECT);		
+		List<ProjectDTO> Main_limit_list = projectService.Main_limit_list();
+		model.addAttribute("Main_limit_list",Main_limit_list);		
 		return Common.Board.VIEW_PATH + "board_list.jsp";
 	}
 

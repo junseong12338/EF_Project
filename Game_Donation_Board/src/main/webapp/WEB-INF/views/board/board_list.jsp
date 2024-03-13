@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+   
 
 <title>EZ Funding</title>
     <!-- Bootstrap core CSS -->
@@ -14,37 +14,20 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="resources/assets/css/fontawesome.css">
     <link rel="stylesheet" href="resources/assets/css/templatemo-cyborg-gaming.css">
-   <link rel="stylesheet" href="resources/assets/css/owl.css">
+    <link rel="stylesheet" href="resources/assets/css/owl.css">
     <link rel="stylesheet" href="resources/assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="resources/assets/css/side-bar.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800">
-
+<style type="text/css">
+ img {
+        image-rendering: -webkit-optimize-contrast;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+</style>
 </head>
-<script>
-  function updateTime() {
-    var now = new Date();
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더합니다.
-    var day = now.getDate();
-    var hours = now.getHours();
-    var minutes = now.getMinutes();
-    var seconds = now.getSeconds();
 
-    // 필요에 따라 월과 일이 한 자리 수일 경우 앞에 0을 추가합니다.
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-    hours = hours < 10 ? '0' + hours : hours;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-    var currentTimeString = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-    document.getElementById('current-time').textContent = ' '+currentTimeString;
-  }
-
-  setInterval(updateTime, 100); // 매 초마다 현재 시간 업데이트
-  updateTime(); // 페이지가 로드될 때 초기 시간 설정
-</script>
 <body style="font-family: 'Montserrat', sans-serif';">
 
 
@@ -63,7 +46,7 @@
 		          <h6>Welcome To EZ_Funding</h6>
 		          <h4><em>Join the Quest</em><br> Fund Your Next Adventure!</h4>
 		          <div class="main-button">
-		            <a href="browse.html">후원하기</a>
+		            <a href="charge_view">후원하기</a>
 		          </div>
 		        </div>
 		      </div>
@@ -152,9 +135,6 @@
           </div>
           <!-- ***** Featured Games End ***** -->
 
-
-
-
           <!-- ***** Most Popular Start ***** -->
           <div class="most-popular">
             <div class="row">
@@ -163,90 +143,23 @@
                   <h4><em>신규 등록</em> 프로젝트</h4>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-sm-6">
+                 <c:forEach items="${Main_limit_list}" var="Main_limit_list">
+               <div class="col-lg-3 col-sm-6">
                     <div class="item">
-                      <img src="resources/assets/images/popular-01.jpg" alt="">
-                      <h4>Fortnite<br><span>Sandbox</span></h4>
+                      <img src="${Main_limit_list.project_img}" style="width: 246px; height: 300px;">
+                      <h4>${Main_limit_list.project_title}<br><span>${Main_limit_list.user_idx}</span></h4>
                       <ul>
                         <li><i class="fa fa-star"></i> 4.8</li>
                         <li><i class="fa fa-download"></i> 2.3M</li>
                       </ul>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="resources/assets/images/popular-02.jpg" alt="">
-                      <h4>PubG<br><span>Battle S</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="resources/assets/images/popular-03.jpg" alt="">
-                      <h4>Dota2<br><span>Steam-X</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="resources/assets/images/popular-04.jpg" alt="">
-                      <h4>CS-GO<br><span>Legendary</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                          <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="resources/assets/images/popular-04.jpg" alt="">
-                      <h4>CS-GO<br><span>Legendary</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                          <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="resources/assets/images/popular-04.jpg" alt="">
-                      <h4>CS-GO<br><span>Legendary</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="resources/assets/images/popular-07.jpg" alt="">
-                      <h4>Warface<br><span>Max 3D</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="resources/assets/images/popular-08.jpg" alt="">
-                      <h4>Warcraft<br><span>Legend</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
+                 
+                </c:forEach>
+
                   <div class="col-lg-12">
                     <div class="main-button">
-                      <a href="browse.html">프로젝트 전체보기</a>
+                      <a href="project_list">프로젝트 전체보기</a>
                     </div>
                   </div>
                 </div>
@@ -309,7 +222,6 @@
       <div class="row">
         <div class="col-lg-12">
           <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
-          
           <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
         </div>
       </div>
@@ -317,9 +229,9 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="resources/vendor/jquery/jquery.min.js"></script>
   <script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
   <script src="resources/assets/js/isotope.min.js"></script>
   <script src="resources/assets/js/owl-carousel.js"></script>
   <script src="resources/assets/js/tabs.js"></script>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import dto.AdminInfoDTO;
 import dto.CategoryNumDTO;
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,7 @@ final SqlSession sqlSession;
 	public List<CategoryNumDTO> select_categoryNum(int idx) {
 		return sqlSession.selectList("project.select_category",idx);
 	}
+	
 	
 	//------------------------------------------------------------------ 성현 project_list
 	
@@ -91,16 +93,24 @@ final SqlSession sqlSession;
 	
 	
 	//---------------------------------------------------------------------------------------이준성
-	
-	public int project_all_count(){
-		return sqlSession.selectOne("project.project_all_count");
+		
+	public int project_wait_count(){
+		return sqlSession.selectOne("project.project_wait_count");
 	}
-	
-	public List<ProjectDTO> getRowTotal(HashMap<String, Integer> map){
+
+	public List<AdminInfoDTO> getRowTotal(HashMap<String, Integer> map){
 		return sqlSession.selectList("project.getRowTotal", map);
 	}
 	public int updateStatus(int project_idx){
 		return sqlSession.update("project.updateStatus",project_idx);
+	}
+
+	public String getUserName(int user_idx) {
+		return sqlSession.selectOne("project.getUserName",user_idx);
+	}
+
+	public List<ProjectDTO> Main_limit_list(){
+		return sqlSession.selectList("project.Main_limit_list");
 	}
 	
 

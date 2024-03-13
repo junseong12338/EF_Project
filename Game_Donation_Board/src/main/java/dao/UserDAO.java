@@ -49,7 +49,6 @@ public class UserDAO {
 	}
 	
 	public UserDTO selectOne(int idx) {
-
 		return sqlSession.selectOne("u.user_one",idx);
 	}
 

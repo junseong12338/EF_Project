@@ -221,30 +221,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM EF_LIKE
 		WHERE PROJECT_IDX = #{project_idx}
 	</select>
-	<!-- Detail End -->
-	<!-- 박성현 End -->
-	
-	
-	
-	<!-- 이준성 -->
-	<!-- 승인안된 모든 프로젝트 리스트 -->
-	<select id = "project_all_count" resultType="int">
-		select count(*) from EF_PROJECT
-	</select>
-	
-	<!-- 유저번호로 검색한 프로젝트 리스트 -->
-	<select id="userIdx_list" resultType="project">
-	SELECT * 
-	FROM EF_PROJECT
-	</select>
-	
-		<!-- 관리자 페이징을 위한 리스트 -->
-	<select id = "getRowTotal" resultType="project" parameterType="java.util.HashMap">		 
-		 select project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end from 
-		(select rank() over(order by project_idx) no, b.*
-		 from ef_project b)
-		 where no between #{start} and #{end}
-	</select>
 	
 	<select id="user_name" resultType="string" parameterType="int">
 		SELECT DISTINCT USER_NAME FROM EF_PROJECT p JOIN EF_USER u
@@ -259,7 +235,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<!-- Detail End -->
+	<!-- 박성현 End -->
 	
+		
+	<!-- 이준성 -->
+	<!-- 승인안된 모든 프로젝트 리스트 -->
+	<select id = "project_wait_count" resultType="int">
+		select count(*) from EF_PROJECT
+	</select>
+	
+	<select id = "getUserName" resultType="String">
+		select user_name from EF_USER
+		where user_idx =#{user_idx}
+	</select>
+	
+	<!-- 유저번호로 검색한 프로젝트 리스트 -->
+	<select id="userIdx_list" resultType="project">
+	SELECT * 
+	FROM EF_PROJECT
+	</select>
+	
+	<!-- 관리자 페이징을 위한 리스트 승인 안된것들 -->
+	<select id = "getRowTotal" resultType="admininfo" parameterType="java.util.HashMap">		 
+	SELECT project_idx, p.user_idx, project_title, Project_status, project_img, project_start, project_end, u.user_name
+	FROM (
+	    SELECT project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end,
+	           ROW_NUMBER() OVER (ORDER BY project_idx) AS cnt
+	    FROM ef_project
+	) p
+	JOIN EF_USER u ON p.user_idx = u.user_idx
+	WHERE p.cnt BETWEEN #{start} AND #{end}
+	</select>
 	
 	<update id="updateStatus" parameterType="int">
 	UPDATE EF_PROJECT
@@ -269,6 +276,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	Project_idx =#{project_idx}
 	
 	</update>
+
+	
+	<select id="Main_limit_list" resultType="project">
+	    <![CDATA[
+	        SELECT *
+	        FROM (
+	            SELECT *
+	            FROM ef_project
+	            WHERE project_status = 1
+	            ORDER BY project_idx DESC
+	        )
+	        WHERE ROWNUM <= 8
+	    ]]>
+	</select>
+	
+	
+
+	<!-- 이준성 -->
 	
 </mapper>
 
