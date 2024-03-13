@@ -21,10 +21,9 @@ public class loginCheckAspect {
 	
 	
 	//지정한 메서드 실행 시 실행
-	@Pointcut("execution(* com.korea.board.SummerNoteController.project_editor(..))")
-    public void loginMethodExceution() {
-		 System.out.println("projectEditorMethodExecution이 호출되었습니다...");
-	}
+	@Pointcut("execution(* com.korea.board.SummerNoteController.project_editor(..)) || "
+			+ "execution(* com.korea.board.SummerNoteController.project_modify(..))")
+    public void loginMethodExceution() {}
 	
 	
 	//loginMethodExceution() 실행 전 userEmail Session유무 체크 후 NullPointException발생하면
@@ -38,14 +37,11 @@ public class loginCheckAspect {
         
         // HttpServletRequest를 가져옴
         HttpServletRequest request = attributes.getRequest();
-
-
-		
 		try {
 			String userEmail =  ((UserDTO)(request.getSession().getAttribute("user_email"))).getUser_email();
 			System.out.println(userEmail);
 		} catch (NullPointerException e) {
-			String redirectUrl = "redirect:/login_filter";
+			String redirectUrl = "redirect:/login_filter?status=0";
 			throw new ModelAndViewRedirectException(new ModelAndView(redirectUrl)); 
 		}
 	}

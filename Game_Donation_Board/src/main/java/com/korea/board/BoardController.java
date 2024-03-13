@@ -3,6 +3,7 @@ package com.korea.board;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import service.ProjectService;
@@ -23,8 +24,12 @@ public class BoardController {
 	}
 
 	@RequestMapping("login_filter")
-	 public String login_filter() {
+	 public String login_filter(Model model,@RequestParam(value="status", defaultValue="-1") int status) {
+		
+		model.addAttribute("status",status);
+		
 		return Common.Board.VIEW_PATH + "login_filter.jsp";
+		
 	}
 
 	

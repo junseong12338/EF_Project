@@ -341,17 +341,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             processData: false,
           });
         }
-
-        $(".note-video-btn").click(function(){
+        $(".btn.btn-primary.note-btn.note-btn-primary.note-video-btn").attr("id","video_btn");
+        
+      	//썸머노트 동영상 링크 처리
+        $(document).on('click', '#video_btn', function(){
           // 주어진 YouTube URL
           const url = $(".note-video-url").val();
-
           // YouTube 동영상 ID를 추출하는 정규표현식
           var videoIdRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
 
           // 동영상 ID 추출
           var match = url.match(videoIdRegex);
           var videoId = match && match[1];
+          
+          //URL유효성 검사
 
           const iframeUrl = "https://www.youtube.com/embed/" + videoId;
 
@@ -363,7 +366,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               height: '500px' // 세로 크기 설정
           });
 
-          $('.note-editable').append(iframe);
+          if(!(videoId === null)){
+        	  console.log("1");
+          	$('.note-editable').append(iframe);
+        	  $(".note-video-url").val("");    	  
+          }else{
+        	  console.log("2");
+        	  alert('올바르지않는 형식입니다.');
+        	  $(".note-video-url").val("");    	  
+          }
         })
 
       });
