@@ -29,9 +29,16 @@ public class DetailDTO {
 	
 	// 카테고리 이름
 	private List<String> category_name;
-	
 	// like 수
 	private int like_cnt;
+	
+	// 현재 사용자의 이름
+	private String nick;
+
+	// 현재 사용자가 좋아요를 누른건지 아닌지
+	private String heart_user_idx;
+	
+	
 	
 	// 내용
 	private String content;

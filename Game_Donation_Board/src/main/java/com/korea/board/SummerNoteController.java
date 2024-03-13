@@ -48,7 +48,7 @@ public class SummerNoteController {
 	//각자 컴퓨터 이미지 기본경로 설정 
 	//예: C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : 이준성 학원 경로
     // C:\\Users\\junhyuk\\Desktop\\이준성\\공부\\GitHub\\EF_Project\\util\\ef_project_img" : 이준성 집 
-	final String contextRoot = "C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img\\";
+	final String contextRoot = "C:\\hyuni\\develop\\work\\git\\util\\ef_project_img\\";
 
 	
 	//글 작성 페이지 이동
