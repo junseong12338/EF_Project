@@ -1,15 +1,13 @@
 package context;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import aspect.loginCheckAspect;
 
 @Configuration
-@EnableAspectJAutoProxy
-@ComponentScan(basePackages = "aspect")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class Context_4_AOP {
 	
 	@Bean
@@ -17,4 +15,5 @@ public class Context_4_AOP {
 		
 		return new loginCheckAspect();
 	}
+	
 }

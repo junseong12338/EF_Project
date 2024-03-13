@@ -22,9 +22,9 @@ public class BoardController {
 		return Common.Board.VIEW_PATH + "board_list.jsp";
 	}
 
-	@RequestMapping("editor_test")
-	 public String editor_test() {
-		return Common.Board.VIEW_PATH + "editor_test.jsp";
+	@RequestMapping("login_filter")
+	 public String login_filter() {
+		return Common.Board.VIEW_PATH + "login_filter.jsp";
 	}
 
 	

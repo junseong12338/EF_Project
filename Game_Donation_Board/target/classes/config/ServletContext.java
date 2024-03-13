@@ -3,6 +3,7 @@ package config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -30,6 +31,7 @@ import service.ProjectService;
 
 @Configuration
 @EnableWebMvc
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ServletContext implements WebMvcConfigurer {
 	
 	@Override

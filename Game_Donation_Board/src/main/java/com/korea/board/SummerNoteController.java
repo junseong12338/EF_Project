@@ -62,7 +62,7 @@ public class SummerNoteController {
 	
 	//글 작성 페이지 이동
 	@RequestMapping("project_editor")
-	 public String editor_test(HttpServletRequest request) {
+	 public String project_editor(HttpServletRequest request) {
 		System.out.println("글작성페이지 이동 메서드 호출");
 		return Common.project.VIEW_PATH + "project_editor.jsp";
 	}

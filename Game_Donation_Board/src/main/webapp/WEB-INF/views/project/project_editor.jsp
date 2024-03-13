@@ -104,6 +104,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               enctype="multipart/form-data"
               id="project_editor"
             >
+            <div id="iframeContainer"></div>
               <input
                 type="hidden"
                 name="project_main_img"
@@ -195,8 +196,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   >
                     작성 완료
                   </button>
-                </div>
+                </div>                
               </div>
+            
             </form>
           </div>
         </div>
@@ -273,9 +275,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             // 줄간격
             ["height", ["height"]],
             // 그림첨부, 링크만들기, 동영상첨부
-            ["insert", ["picture", "link", "video"]],
+            ["insert", ["picture","video"]],
             // 코드보기, 확대해서보기, 도움말
-            ["view", ["codeview", "fullscreen", "help"]],
+            ["view", ["help"]],
           ],
           // 추가한 글꼴
           fontNames: [
@@ -294,6 +296,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           //콜백함수
           callbacks: {
             onImageUpload: function (files, editor, welEditable) {
+              console.log("callbacks함수 호출");
               //파일 다중 업로드
               for (var i = files.length - 1; i >= 0; i--) {
                 uploadSummernoteImageFile(files[i], this);
@@ -338,6 +341,31 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             processData: false,
           });
         }
+
+        $(".note-video-btn").click(function(){
+          // 주어진 YouTube URL
+          const url = $(".note-video-url").val();
+
+          // YouTube 동영상 ID를 추출하는 정규표현식
+          var videoIdRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+
+          // 동영상 ID 추출
+          var match = url.match(videoIdRegex);
+          var videoId = match && match[1];
+
+          const iframeUrl = "https://www.youtube.com/embed/" + videoId;
+
+          console.log("videoId : " + videoId);
+          var iframe = $('<iframe>', {
+              src: iframeUrl, // 아이프레임의 소스 URL
+              frameborder: '0', // 테두리 없음
+              width: '100%', // 가로 크기 설정
+              height: '500px' // 세로 크기 설정
+          });
+
+          $('.note-editable').append(iframe);
+        })
+
       });
 
       //메인이미지(썸네일) 등록 ajax함수
