@@ -82,4 +82,6 @@ public class ProjectDetailController {
 		
 		return Common.project.VIEW_PATH + "detail.jsp";
 	}
+	
+	
 }

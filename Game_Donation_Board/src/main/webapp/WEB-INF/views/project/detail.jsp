@@ -41,7 +41,7 @@
 	/* wanted : (프로젝트 내용, 공지, 리뷰) = (0,1,2) */
 	let wanted = 0;
 	
-	const GetFunction = function(wanted){
+	const GetFn = function(wanted){
 		console.log("원하는 content : " + wanted)
 		
 		$.ajax({
@@ -53,11 +53,30 @@
 			success:function(data){
 				console.log("ajax_detail data : " + data);
 				
+				$(".detail_content").empty();
 				$(".detail_content").append(data);
 				console.log("ajax_detail 잘 넘어옴");
 			}
 		})
 	};
+	
+	function show_content(n){
+		wanted = n;
+		GetFn(wanted);
+	}
+	function show_notice(n){
+		wanted = n;
+		GetFn(wanted);
+	}
+	function show_review(n){
+		wanted = n;
+		GetFn(wanted);
+	}
+	
+	$(document).ready(function(){
+		GetFn(0);
+	})
+	
 </script>
 
 

@@ -114,8 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<!-- 반복 foreach end -->
 				) AL
 				
-			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
-				AND AL.PROJECT_STATUS = 1
+			WHERE AL.PROJECT_STATUS = 1
 				
 				<!-- choose 기간 start -->
 				<choose>

@@ -51,3 +51,6 @@ ajax 처리 ( - ajax 틀 설계 해야함 )
 	버튼 클릭 시 해당 내용 select
 
 
+ajax 
+
+
