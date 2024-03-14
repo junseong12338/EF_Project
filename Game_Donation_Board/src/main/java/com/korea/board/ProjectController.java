@@ -56,7 +56,6 @@ public class ProjectController {
 		
 		int total_page_count = 1;
 		
-		
 		model.addAttribute("total_page_count", total_page_count);
 		
 		return Common.project.VIEW_PATH + "list.jsp";

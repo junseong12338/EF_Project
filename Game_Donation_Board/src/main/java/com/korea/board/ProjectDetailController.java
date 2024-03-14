@@ -3,7 +3,10 @@ package com.korea.board;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.DetailDTO;
 import dto.ProjectDTO;
+import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import service.ProjectService;
 import util.Common;
@@ -22,8 +26,11 @@ public class ProjectDetailController {
 	
 	final ProjectService projectService;
 	
+	@Autowired
+	HttpSession session;
+	
 	@RequestMapping("project_detail")
-	public String project_detail(Model model, @RequestParam(required = true, value="project_idx") int project_idx) {
+	public String project_detail(Model model, @RequestParam(required = true, value="project_idx") int project_idx) throws Exception {
 		//ex) project_detail?project_idx = 23;
 		
 		// 반환할 데이터를 담을 객체
@@ -66,6 +73,29 @@ public class ProjectDetailController {
 		int like = projectService.selectLike(project_idx);
 		
 		result_dto.setLike_cnt(like);
+		
+		// --------------------------------- heart check
+		// 로그인을 했는지 체크
+		// jsp 에서 session에 저장된 정보를 dto 불러서 사용할 것
+		// 좋아요를 누른건지 체크
+		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
+		int user_idx = dto_user.getUser_idx();
+		
+		// project_idx, user_idx(사용자) 두개의 변수를 sql에 보내야하므로 HashMap ㄱㄱ
+		HashMap<String, Object> map_idx = new HashMap<String, Object>();
+		map_idx.put("project_idx", project_idx);
+		map_idx.put("user_idx", user_idx);
+		
+		// like 테이블에서 두개의 idx와 같은 행 개수 가져오기
+		int res = projectService.selectOne(map_idx);
+		
+		// 좋아요를 눌럿다면 1 아니면 0
+		if(res == 1) {
+			result_dto.setIs_heart(res);// 1
+		}else {
+			result_dto.setIs_heart(res);// 0
+		}
+		
 
 		// 바인딩
 		model.addAttribute("dto", result_dto);
@@ -76,7 +106,7 @@ public class ProjectDetailController {
 	
 	
 	// content ajax controller
-	@RequestMapping("ajax_detail")
+	@RequestMapping("detail_ajax")
 	public String ajax_detail(Model model, @RequestParam(value="wanted") int wanted,
 											@RequestParam(value="project_idx") int project_idx) {
 		// ajax_detail?wanted=1&project_idx=3
@@ -92,16 +122,41 @@ public class ProjectDetailController {
 	}
 	
 	
-	// 좋아요 수정 할 수 있는 ajax
-	@RequestMapping("heart_ajax")
-	@ResponseBody
-	public String heart_ajax(Model model) {
+	// 좋아요 추가 ajax
+	@RequestMapping("heart_plus_ajax")
+	public int heart_plus_ajax(Model model, @RequestParam(value="project_idx") int project_idx,
+											@RequestParam(value="like_cnt") int like_cnt) {
 		
-		// 로그인을 했는지 체크
-		// 좋아요를 누른건지 체크
-		// 좋아요 추가, 취소
+		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
+		int user_idx = dto_user.getUser_idx();
 		
+		HashMap<String, Object> map_idx = new HashMap<String, Object>();
+		map_idx.put("project_idx", project_idx);
+		map_idx.put("user_idx", user_idx);
 		
-		return "";
+		int res = projectService.insert_heart(map_idx);
+		String result = "";
+		
+		if(res > 0) {
+			result = "['is_heart' : " + like_cnt + 1 + "]"; 
+		}
+		
+		return 0;
+	}
+	
+	// 좋아요 추가 ajax
+	@RequestMapping("heart_minus_ajax")
+	public int heart_minus_ajax(Model model, @RequestParam(value="project_idx") int project_idx) {
+		
+		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
+		int user_idx = dto_user.getUser_idx();
+		
+		HashMap<String, Object> map_idx = new HashMap<String, Object>();
+		map_idx.put("project_idx", project_idx);
+		map_idx.put("user_idx", user_idx);
+		
+		int res = projectService.delete_heart(map_idx);
+		
+		return 0;
 	}
 }

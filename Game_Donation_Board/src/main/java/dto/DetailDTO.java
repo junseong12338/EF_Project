@@ -31,9 +31,7 @@ public class DetailDTO {
 
 	// like 수
 	private int like_cnt;
-	// 현재 사용자의 이름
-	private String nick;
-	// 현재 사용자가 좋아요를 누른건지 아닌지
-	private String heart_user_idx;
+	// 현재 사용자가 좋아요를 누른건지(1) 아닌지(0)
+	private int is_heart;
 	
 }
