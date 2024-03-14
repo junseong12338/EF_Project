@@ -40,15 +40,17 @@
 <script>
 	/* wanted : (프로젝트 내용, 공지, 리뷰) = (0,1,2) */
 	let wanted = 0;
+	let is_heart = false;
 	
-	const GetFn = function(wanted){
+	const GetDetail = function(wanted){
 		console.log("원하는 content : " + wanted)
 		
 		$.ajax({
 			url : "ajax_detail",
 			method : "GET",
 			data : {
-				wanted : wanted
+				wanted : wanted,
+				project_idx : ${dto.project_idx}
 			},
 			success:function(data){
 				console.log("ajax_detail data : " + data);
@@ -57,24 +59,46 @@
 				$(".detail_content").append(data);
 				console.log("ajax_detail 잘 넘어옴");
 			}
-		})
+		})		
 	};
+	
+	const GetHeart = function(){
+		
+		$.ajax({
+			url : "heart_ajax",
+			method : "POST",
+			data : {
+				project_idx : ${dto.project_idx}
+			},
+			success:function(data){
+				console.log("ajax_heart data : " + data);
+				
+				let like_img = '';
+				
+				data.dsad
+				if(!is_heart){
+					
+				}else{
+					
+				}
+				
+				
+			}
+		})
+	}
 	
 	function show_content(n){
 		wanted = n;
-		GetFn(wanted);
+		GetDetail(wanted);
 	}
-	function show_notice(n){
-		wanted = n;
-		GetFn(wanted);
-	}
+
 	function show_review(n){
 		wanted = n;
-		GetFn(wanted);
+		GetDetail(wanted);
 	}
 	
 	$(document).ready(function(){
-		GetFn(0);
+		GetDetail(0);
 	})
 	
 </script>
@@ -106,7 +130,9 @@
                       <h4>${dto.title }</h4>
                       <h6>&nbsp;${dto.author }</h6>
                       <br>
-                      <p>카테고리 1, 카테고리 2, 카테고리 3, 카테고리 4, 카테고리 5, ...</p>
+                      <c:forEach var="category_name" items="list">
+                      	<p>${category_name }</p>
+                      </c:forEach>
                       <div class="main-border-button">
                         <a href="#">프로젝트 후원하기</a>
                       </div>
@@ -120,10 +146,18 @@
                       
                       <li>펀딩 기간 <span>${dto.start } ~ ${dto.end }</span></li>
                       <li>
-                      	<div class="main-border-button">
-	                        <a>좋아요<span>&nbsp; ${dto.like_cnt }</span> </a>
-	                        <a>알람</a>
-	                        <a>신고</a>
+                      	<div class="main-border-button" id="heart">
+	                        <a >좋아요<span>&nbsp; ${dto.like_cnt }</span> </a>
+                      		<c:choose>
+                      			<!-- 로그인 시 -->
+                      			<c:when test="${user_email.user_idx ne null }">
+                      				
+                      			</c:when>
+                      			<!-- 비 로그인 시 -->
+                      			<c:otherwise>
+                      				
+                      			</c:otherwise>
+                      		</c:choose>
                         </div>
                       </li>
                     </ul>
@@ -141,8 +175,7 @@
                         <div class="col-lg-12">
                           <div class="main-border-button" id="detail-box">
                             <a href="#detail-box" onclick="show_content(0)">프로젝트 내용</a>
-                            <a href="#detail-box" onclick="show_notice(1)">공지</a>
-                            <a href="#detail-box" onclick="show_review(2)">리뷰</a>
+                            <a href="#detail-box" onclick="show_review(1)">리뷰</a>
                           </div>
                         </div>
                         <hr><hr><hr><hr>

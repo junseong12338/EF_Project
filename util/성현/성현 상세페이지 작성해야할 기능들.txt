@@ -51,6 +51,18 @@ ajax 처리 ( - ajax 틀 설계 해야함 )
 	버튼 클릭 시 해당 내용 select
 
 
-ajax 
+<좋아요>
+비로그인(user_email.user_idx eq null)
+	빈 하트 src="heart" href="";
+	좋아요 수 
+로그인(user_email.user_idx ne null)
+	하트를 누른 프로젝트(project_idx 들고 db가서 null이 아니라면 ok)
+		꽉찬 하트 src="heart-fill" href="javascript:like_fn()"
+		좋아요 수	
+	하트를 안누른 프로젝트(project_idx 들고 db가서 null이 이라면 ok)
+		빈 하트 src="heart" href="javascript:like_fn(??)"	
+		좋아요 수
 
+	* 하트를 누른지 안누른지 detailDTO에 변수를 설정 -> html에는 hidden으로 저장
 
+	like_fn 에서 좋아요 수 +1, -1 해주자
