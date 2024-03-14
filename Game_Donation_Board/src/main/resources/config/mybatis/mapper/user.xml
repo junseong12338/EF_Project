@@ -58,6 +58,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="SelectName" resultType="user" parameterType="int">
 		SELECT user_name FROM EF_USER where user_idx =#{user_idx}
 	</select>
+	
+	<!-- 정진수 -->
+	<!-- 유저 1건 가져오기 -->
+	<select id="selectone" parameterType="int" resultType="user">
+		SELECT *
+		FROM EF_USER
+		WHERE USER_IDX = #{user_idx}
+	</select>
+	
+	<!-- 유저 이미지 업데이트 -->
+	<update id="user_img_update" parameterType="user">
+		UPDATE EF_USER SET
+		USER_IMG = #{user_img}
+		WHERE USER_IDX = #{user_idx}
+	</update>
 </mapper>
 
 

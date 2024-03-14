@@ -22,7 +22,8 @@ public class loginCheckAspect {
 	
 	//지정한 메서드 실행 시 실행
 	@Pointcut("execution(* com.korea.board.SummerNoteController.project_editor(..)) || "
-			+ "execution(* com.korea.board.SummerNoteController.project_modify(..))")
+			+ "execution(* com.korea.board.SummerNoteController.project_modify(..)) ||"
+			+ "execution(* com.korea.board.ProfileController.mypage_view(..))")
     public void loginMethodExceution() {}
 	
 	
@@ -38,8 +39,8 @@ public class loginCheckAspect {
         // HttpServletRequest를 가져옴
         HttpServletRequest request = attributes.getRequest();
 		try {
-			String userEmail =  ((UserDTO)(request.getSession().getAttribute("user_email"))).getUser_email();
-			System.out.println(userEmail);
+			UserDTO userEmail =  ((UserDTO)(request.getSession().getAttribute("user_email")));
+			System.out.println(userEmail.getUser_status());
 		} catch (NullPointerException e) {
 			String redirectUrl = "redirect:/login_filter?status=0";
 			throw new ModelAndViewRedirectException(new ModelAndView(redirectUrl)); 

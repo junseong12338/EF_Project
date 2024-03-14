@@ -155,13 +155,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         id="main_image_show"
                       />
                     </div>
-                    메인이미지를 선택해주세요 :
-                    <input
-                      type="file"
-                      name="main_image"
-                      id="main_image"
-                      onchange="main_image_send()"
-                    />
+                    <div class="main-border-button">
+			          	<a href="javascript: js(); event.preventDefault();"><label for="main_image" id="file_label">이미지 선택</label></a>
+			          	<input
+		                      type="file"
+		                      name="main_image"
+		                      id="main_image"
+		                      onchange="main_image_send()"
+		                      style="display: none;"
+		                    />
+			        </div>
                   </div>
                   <div class="category-container">
                     카테고리 설정<br />
@@ -231,6 +234,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
       $(document).ready(function () {
+    	  
         // 현재 날짜를 가져오는 함수
         function getCurrentDate() {
           const today = new Date();
@@ -375,7 +379,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           }
         })
 
-      });
+      });//도큐먼트 레디 닫히는부분
 
       //메인이미지(썸네일) 등록 ajax함수
       function main_image_send() {

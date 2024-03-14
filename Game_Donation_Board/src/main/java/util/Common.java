@@ -25,6 +25,13 @@ public class Common {
 		public final static String VIEW_PATH = "/WEB-INF/views/project/";
 	}
 	
+	public static class img_root{
+		//각자 컴퓨터 이미지 기본경로 설정 
+		//예: C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : 이준성 학원 경로
+	    // C:\\Users\\junhyuk\\Desktop\\이준성\\공부\\GitHub\\EF_Project\\util\\ef_project_img" : 이준성 집 
+		public final static String IMG_ROOT = "C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img\\";
+	}
+	
 	
 	//공지사항 게시판용
 	public static class Admin{

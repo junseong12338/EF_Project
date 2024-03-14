@@ -171,14 +171,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         id="main_image_show"
                       />
                     </div>
-                    메인이미지를 선택해주세요 :
-                    <input
-                      type="file"
-                      name="main_image"
-                      id="main_image"
-                      onchange="main_image_send()"
-                      value="${dto.project_img}"
-                    />
+                    <div class="main-border-button">
+			          	<a href="javascript: js(); event.preventDefault();"><label for="main_image" id="file_label">이미지 선택</label></a>
+			          	<input
+		                      type="file"
+		                      name="main_image"
+		                      id="main_image"
+		                      onchange="main_image_send()"
+		                      value="${dto.project_img}"
+		                      style="display: none;"
+		                    />
+			        </div>
                   </div>
                   <div class="category-container">
                     카테고리 설정<br />

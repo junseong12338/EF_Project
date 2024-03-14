@@ -64,5 +64,13 @@ public class UserService {
 		  List<DonationDTO> list = userDAO.selectdonationList(); 
 		  return userDAO.selectdonationList(); 
 	}
+	  
+	//-------------- 정진수
+	  
+	 //유저 이미지 업데이트
+	 public int updateUserImg(UserDTO dto) {
+		 
+		 return userDAO.userImgUpdate(dto);
+	 }
 	 
 }

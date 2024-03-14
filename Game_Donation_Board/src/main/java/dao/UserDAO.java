@@ -80,4 +80,10 @@ public class UserDAO {
 		return sqlSession.update("u.user_update_point",dto);
 	}
 		
+	
+	//------정진수
+	//유저이미지 업데이트
+	public int userImgUpdate(UserDTO dto) {
+		return sqlSession.update("u.user_img_update",dto);
+	}
 }
