@@ -33,14 +33,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			EF_REVIEW_SEQ.nextval,
 			#{project_idx},
 			#{user_idx},
-			#{review_content}
+			#{review_content},
+			SYSDATE
 	)
 	</insert>
 	<delete id="review_delete" parameterType="int">
 		DELETE FROM EF_review
 		WHERE review_idx=#{review_idx}
 	</delete>
-	
+	<!-- 현재 시간과 저장 시간의 날짜 차이를 확인 (소수점 이하 제외) -->
+	<select id="day">
+		SELECT review_idx, #{regdate}, TRUNC(SYSDATE-#{regdate})
+		FROM  ef_review;
+	</select>
+	<!-- 현재 시간과 저장 시간의 개월 차이를 확인 -->
+		<select id="month">
+		SELECT review_idx, #{regdate}, TRUNC(MONTHS_BETWEEN(SYSDATE, #{regdate}))
+		FROM   ef_review;
+	</select>
 </mapper>
 
 

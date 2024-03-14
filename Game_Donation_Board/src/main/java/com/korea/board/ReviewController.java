@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.ReviewDAO;
 import dto.ReviewDTO;
@@ -48,13 +49,19 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("delete")
+	@ResponseBody
 	public String delete(int review_idx) {
 		int res = reviewService.reviewDelete(review_idx);
 		
-		if(res > 0) {
-			return "redirect:review_list";
+		String result="no";
+
+		if( res == 1) {
+			result="yes";
 		}
-		return null;
+
+		String finRes= String.format("[{'res':'%s'}]",result);
+		
+		return finRes;
 	}
 	
 }
