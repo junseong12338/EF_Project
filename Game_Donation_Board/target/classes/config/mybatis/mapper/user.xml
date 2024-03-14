@@ -53,6 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="donation_list" resultType="dto.DonationDTO">
 	SELECT * FROM EF_DONATION
 	</select>
+	
+	
+	<select id="SelectName" resultType="user" parameterType="int">
+		SELECT user_name FROM EF_USER where user_idx =#{user_idx}
+	</select>
 </mapper>
 
 

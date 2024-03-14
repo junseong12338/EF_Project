@@ -104,7 +104,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               enctype="multipart/form-data"
               id="project_editor"
             >
-            <div id="iframeContainer"></div>
               <input
                 type="hidden"
                 name="project_main_img"
@@ -196,9 +195,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   >
                     작성 완료
                   </button>
-                </div>                
+                </div>
               </div>
-            
             </form>
           </div>
         </div>

@@ -71,6 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE PROJECT_IDX = #{idx}
 	</select> 
 	
+	
+	<!-- 박성현 Start -->
+	<!-- project-list Start -->
 	<!-- 리스트 총 개수 반환 -->
 	<select id="project_count" resultType="int" parameterType="project">
 		SELECT COUNT(AL.PROJECT_IDX)
@@ -111,8 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<!-- 반복 foreach end -->
 				) AL
 				
-			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
-				AND AL.PROJECT_STATUS = 1
+			WHERE AL.PROJECT_STATUS = 1
 				
 				<!-- choose 기간 start -->
 				<choose>
@@ -187,26 +189,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				</choose>
 				<!-- choose 기간 end -->
 	</select>	
+	<!-- project-list End -->
 	
-	
-	<!-- 이준성 -->
-	<!-- 승인안된 모든 프로젝트 리스트 -->
-	<select id = "project_all_count" resultType="int">
-		select count(*) from EF_PROJECT
+	<!-- Detail Start -->
+	<!-- 해당 프로젝트의 후원 총합 SUM -->
+	<select id="donation" resultType="int" parameterType="int">
+		SELECT SUM(DONATION_MONEY) 
+		FROM EF_DONATION
+		WHERE PROJECT_IDX = #{project_idx} 
 	</select>
 	
-	<!-- 유저번호로 검색한 프로젝트 리스트 -->
-	<select id="userIdx_list" resultType="project">
-	SELECT * 
-	FROM EF_PROJECT
+	<!-- 해당 프로젝트를 게시한 유저 이름 -->
+	<select id="user_author" resultType="string" parameterType="int">
+		SELECT USER_NAME 
+		FROM EF_USER u JOIN EF_PROJECT p
+		ON u.USER_IDX = p.USER_IDX
+		WHERE p.PROJECT_IDX = #{project_idx}
 	</select>
 	
-		<!-- 관리자 페이징을 위한 리스트 -->
-	<select id = "getRowTotal" resultType="project" parameterType="java.util.HashMap">		 
-		 select project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end from 
-		(select rank() over(order by project_idx) no, b.*
-		 from ef_project b)
-		 where no between #{start} and #{end}
+	<!-- 해당 프로젝트의 카테고리 이름 list -->
+	<select id="category_name" resultType="string" parameterType="int">
+		SELECT n.CATEGORY_NAME
+		FROM EF_CATEGORY c JOIN EF_CATEGORY_NAME n
+		ON c.CATEGORY_IDX = n.CATEGORY_IDX
+		WHERE c.PROJECT_IDX = #{project_idx}
+	</select>
+	
+	<!-- 해당 프로젝트의 좋아요 수 COUNT -->
+	<select id="like_cnt" resultType="int" parameterType="int">
+		SELECT COUNT(USER_IDX)
+		FROM EF_LIKE
+		WHERE PROJECT_IDX = #{project_idx}
 	</select>
 	
 	<select id="user_name" resultType="string" parameterType="int">
@@ -222,7 +235,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<!-- Detail End -->
+	<!-- 박성현 End -->
 	
+		
+	<!-- 이준성 -->
+	<!-- 승인안된 모든 프로젝트 리스트 -->
+	<select id = "project_wait_count" resultType="int">
+		select count(*) from EF_PROJECT
+	</select>
+	
+	<select id = "getUserName" resultType="String">
+		select user_name from EF_USER
+		where user_idx =#{user_idx}
+	</select>
+
+	
+	<!-- 관리자 페이징을 위한 리스트 승인 안된것들 -->
+	<select id = "getRowTotal" resultType="admininfo" parameterType="java.util.HashMap">		 
+	SELECT project_idx, p.user_idx, project_title, Project_status, project_img, project_start, project_end, u.user_name
+	FROM (
+	    SELECT project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end,
+	           ROW_NUMBER() OVER (ORDER BY project_idx) AS cnt
+	    FROM ef_project
+	) p
+	JOIN EF_USER u ON p.user_idx = u.user_idx
+	WHERE p.cnt BETWEEN #{start} AND #{end}
+	</select>
 	
 	<update id="updateStatus" parameterType="int">
 	UPDATE EF_PROJECT
@@ -232,6 +271,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	Project_idx =#{project_idx}
 	
 	</update>
+
+	
+	<select id="Main_limit_list" resultType="project">
+	    <![CDATA[
+	        SELECT *
+	        FROM (
+	            SELECT *
+	            FROM ef_project
+	            WHERE project_status = 1
+	            ORDER BY project_idx DESC
+	        )
+	        WHERE ROWNUM <= 8
+	    ]]>
+	</select>
+	<!-- 이준성 -->
+	
+	<!-- 이영찬 -->
+		<!-- 유저번호로 검색한 프로젝트 리스트 -->
+	<select id="userIdx_list" resultType="project">
+	SELECT * 
+	FROM EF_PROJECT
+	</select>
+	<!-- 이영찬 -->
 	
 </mapper>
 

@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import dao.NoticeDAO;
 import dao.ProjectDAO;
 import dao.UserDAO;
 import service.KakaoLoginService;
@@ -49,4 +50,9 @@ public class Context_2_dao {
     public KakaoLoginService kakaoLoginService() {
         return new KakaoLoginService();
     }
+	
+	@Bean
+	public NoticeDAO noticeDAO(SqlSession sqlSession) {
+		return new NoticeDAO(sqlSession);
+	}
 }

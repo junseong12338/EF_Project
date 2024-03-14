@@ -71,6 +71,26 @@ public class ProfileController {
 	}
 	
 	
+	@RequestMapping("notice_list")
+	public String notice() {
+
+		return "/WEB-INF/views/notice/notice_list.jsp";
+	
+	}
+	
+	 @RequestMapping("insert") 
+	  public String insert(String user_name,String notice_content) { 
+		  
+		  System.out.println(user_name);
+	  
+		 return "redirect:notice_list"; 
+	 }
+	
+	 @RequestMapping("notice_insert_form")
+	 public String imsert_form(String user_name,String notice_content) {
+		 return  "/WEB-INF/views/notice/notice_insert_form.jsp";
+	 }
+	 
 	@RequestMapping("review")
 	public String review() {
 		
@@ -108,8 +128,8 @@ public class ProfileController {
 	
 	  @RequestMapping("registered_Project") 
 	  public String getProjectList(Model model) { 
-		  //int userIdx =((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
-	  List<ProjectDTO> EF_PROJCET = userService.ProjectList();
+		  int userIdx =((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
+	  List<ProjectDTO> EF_PROJCET = userService.ProjectList(userIdx);
 	  
 	   //모델에 프로젝트 목록 추가
 	   model.addAttribute("projectList", EF_PROJCET);

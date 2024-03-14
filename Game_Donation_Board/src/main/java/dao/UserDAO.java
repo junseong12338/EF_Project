@@ -49,7 +49,6 @@ public class UserDAO {
 	}
 	
 	public UserDTO selectOne(int idx) {
-
 		return sqlSession.selectOne("u.user_one",idx);
 	}
 
@@ -61,13 +60,15 @@ public class UserDAO {
 		return sqlSession.selectOne("u.user_count");
 	}
 
+	
+	// 이영찬
+	
 	//프로젝트 한건 가져오기
-	public List<ProjectDTO> selectProjectList() {
-		List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list");
-//		System.out.println(list);
-		return sqlSession.selectList("project.userIdx_list");
-	}
-
+		public List<ProjectDTO> selectProjectList(int userIdx) {
+			List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list",userIdx);
+//			System.out.println(list);
+			return list;
+		}
 	public List<DonationDTO> selectdonationList(){
 		List<DonationDTO> list = sqlSession.selectList("u.donation_list");
 
