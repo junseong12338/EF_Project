@@ -234,6 +234,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM EF_PROJECT WHERE PROJECT_IDX = #{project_idx}
 	</select>
 	
+	<!-- like 테이블에서 두개의 idx와 같은 행 개수 가져오기 -->
+	<select id="map_idx" resultType="int" parameterType="java.util.HashMap">
+		SELECT COUNT(*) FROM EF_LIKE WHERE PROJECT_IDX = #{project_idx} AND USER_IDX = #{user_idx}
+	</select>
+	
+	<!-- insert heart -->
+	<insert id="insert_heart" parameterType="java.util.HashMap">
+		INSERT INTO EF_LIKE VALUES(
+				#{user_idx}, 
+				#{project_idx}
+		)
+	</insert>
+	
+	<!-- delete heart -->
+	<delete id="delete_heart" parameterType="java.util.HashMap">
+		DELETE FROM EF_LIKE
+		WHERE USER_IDX = #{user_idx} AND PROJECT_IDX = #{project_idx}
+	</delete>
 	
 	<!-- Detail End -->
 	<!-- 박성현 End -->

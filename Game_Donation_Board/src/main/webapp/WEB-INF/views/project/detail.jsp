@@ -89,9 +89,11 @@
 				url : "heart_plus_ajax",
 				method : "GET",
 				data : {
-					project_idx : ${dto.project_idx}
+					project_idx : ${dto.project_idx},
+					like_cnt : ${dto.like_cnt}
 				},
 				success : function(data){
+					console.log(data);
 					
 					let heart = data[0].is_heart
 					
@@ -99,11 +101,13 @@
 					$("#heart").text(heart);
 					
 					console.log("하트추가 성공 : " + heart);
+					
+					// 하트를 바꾸자
+					$(this).html("<img id='heart-fill' alt='꽉 찬 하트' src='resources/img/icons8-heart-fill.png' style='wigth: 16px; height: 16px'>좋아요");
 				}
 			})
 			
-			// 하트를 바꾸자
-			$(this).html("<img id='heart-fill' alt='꽉 찬 하트' src='resources/img/icons8-heart-fill.png' style='wigth: 16px; height: 16px'>좋아요");
+			
 			
 		// 꽉찬 하트 클릭
 		}else if($(this).children('img').attr('id') == "heart-fill"){
@@ -117,6 +121,7 @@
 					like_cnt : ${dto.like_cnt}
 				},
 				success : function(data){
+					console.log(data);
 					
 					let heart = data[0].is_heart
 					
@@ -124,11 +129,13 @@
 					$("#heart").text(heart);
 					
 					console.log("하트빼기 성공 : " + heart);
+					
+					// 하트를 바꾸자
+					$(this).html("<img id='heart-not-fill' alt='빈 하트' src='resources/img/icons8-heart.png' style='wigth: 16px; height: 16px'>좋아요");
 				}
 			})
 			
-			// 하트를 바꾸자
-			$(this).html("<img id='heart-not-fill' alt='빈 하트' src='resources/img/icons8-heart.png' style='wigth: 16px; height: 16px'>좋아요");
+			
 			
 		}
 	})
@@ -189,21 +196,14 @@
                       
                       	<!-- 하트 버튼, 좋아요 숫자 Start -->
                       	<div class="main-border-button heart">
-	                  
-	                        <!-- 로그인 체크 -->
                       		<c:choose>
-                      			<!-- 로그인 시 -->
                       			<c:when test="${user_email.user_idx ne null }">
-                      			
-                      				<!-- 내가 좋아요를 누른 프로젝트인가 ? -->
                       				<c:choose>
-                      					<!-- yes : 1 -->
                       					<c:when test="${dto.is_heart eq 1}">
                       						<a href="javascript:void(0)" class="heart-click" >
                       							<img id="heart-fill" alt="꽉 찬 하트" src="resources/img/icons8-heart-fill.png" style="wigth: 16px; height: 16px">좋아요
 		                      				</a>
                       					</c:when>
-                      					<!-- no : 0 -->
                       					<c:otherwise>
                       						<a href="javascript:void(0)" class="heart-click" >
                       							<img id="heart-not-fill" alt="빈 하트" src="resources/img/icons8-heart.png" style="wigth: 16px; height: 16px">좋아요
@@ -211,8 +211,6 @@
                       					</c:otherwise>
                       				</c:choose>	
                       			</c:when>
-                      			
-                      			<!-- 비 로그인 시 -->
                       			<c:otherwise>
                       				<a href="javascript:void(0)" class="heart-not-click">
                       					<img alt="빈 하트" src="resources/img/icons8-heart.png" style="wigth: 16px; height: 16px">좋아요

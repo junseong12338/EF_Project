@@ -89,7 +89,20 @@ final SqlSession sqlSession;
 		return sqlSession.selectOne("project.like_cnt", project_idx);
 	}
 	
+	// like 테이블에서 두개의 idx와 같은 행 개수 가져오기
+	public int selectOne(HashMap<String, Object> map_idx) {
+		return sqlSession.selectOne("project.map_idx", map_idx);
+	}
 	
+	// insert heart
+	public int insert_heart(HashMap<String, Object> map_idx) {
+		return sqlSession.insert("project.insert_heart", map_idx);
+	}
+	
+	// delete heart
+	public int delete_heart(HashMap<String, Object> map_idx) {
+		return sqlSession.insert("project.delete_heart", map_idx);
+	}
 	
 	
 	//---------------------------------------------------------------------------------------이준성

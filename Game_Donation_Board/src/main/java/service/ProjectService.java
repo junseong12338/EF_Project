@@ -124,7 +124,20 @@ public class ProjectService {
 		return projectDAO.select_like(project_idx);
 	}
 	
+	// like 테이블에서 두개의 idx와 같은 행 개수 가져오기 (map_idx)
+	public int selectOne(HashMap<String, Object> map_idx) {
+		return projectDAO.selectOne(map_idx);
+	}
 	
+	// insert heart
+	public int insert_heart(HashMap<String, Object> map_idx) {
+		return projectDAO.insert_heart(map_idx);
+	}
+	
+	// delete heart
+	public int delete_heart(HashMap<String, Object> map_idx) {
+		return projectDAO.delete_heart(map_idx);
+	}
 	
 		
 	//-------------------------------------------------------------- 이준성

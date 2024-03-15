@@ -79,23 +79,27 @@ public class ProjectDetailController {
 		// jsp 에서 session에 저장된 정보를 dto 불러서 사용할 것
 		// 좋아요를 누른건지 체크
 		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
-		int user_idx = dto_user.getUser_idx();
 		
-		// project_idx, user_idx(사용자) 두개의 변수를 sql에 보내야하므로 HashMap ㄱㄱ
-		HashMap<String, Object> map_idx = new HashMap<String, Object>();
-		map_idx.put("project_idx", project_idx);
-		map_idx.put("user_idx", user_idx);
-		
-		// like 테이블에서 두개의 idx와 같은 행 개수 가져오기
-		int res = projectService.selectOne(map_idx);
-		
-		// 좋아요를 눌럿다면 1 아니면 0
-		if(res == 1) {
-			result_dto.setIs_heart(res);// 1
-		}else {
-			result_dto.setIs_heart(res);// 0
+		if(dto_user != null) {
+			
+			int user_idx = dto_user.getUser_idx();
+			
+			// project_idx, user_idx(사용자) 두개의 변수를 sql에 보내야하므로 HashMap ㄱㄱ
+			HashMap<String, Object> map_idx = new HashMap<String, Object>();
+			map_idx.put("project_idx", project_idx);
+			map_idx.put("user_idx", user_idx);
+			
+			// like 테이블에서 두개의 idx와 같은 행 개수 가져오기
+			int res = projectService.selectOne(map_idx);
+			
+			// 좋아요를 눌럿다면 1 아니면 0
+			if(res == 1) {
+				result_dto.setIs_heart(res);// 1
+			}else {
+				result_dto.setIs_heart(res);// 0
+			}
+			
 		}
-		
 
 		// 바인딩
 		model.addAttribute("dto", result_dto);
@@ -124,7 +128,8 @@ public class ProjectDetailController {
 	
 	// 좋아요 추가 ajax
 	@RequestMapping("heart_plus_ajax")
-	public int heart_plus_ajax(Model model, @RequestParam(value="project_idx") int project_idx,
+	@ResponseBody
+	public String heart_plus_ajax(Model model, @RequestParam(value="project_idx") int project_idx,
 											@RequestParam(value="like_cnt") int like_cnt) {
 		
 		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
@@ -136,17 +141,20 @@ public class ProjectDetailController {
 		
 		int res = projectService.insert_heart(map_idx);
 		String result = "";
+		int result_cnt = like_cnt + 1;
 		
 		if(res > 0) {
-			result = "['is_heart' : " + like_cnt + 1 + "]"; 
+			result = "['is_heart' : " + result_cnt + "]"; 
 		}
 		
-		return 0;
+		return result;
 	}
 	
 	// 좋아요 추가 ajax
 	@RequestMapping("heart_minus_ajax")
-	public int heart_minus_ajax(Model model, @RequestParam(value="project_idx") int project_idx) {
+	@ResponseBody
+	public String heart_minus_ajax(Model model, @RequestParam(value="project_idx") int project_idx,
+												@RequestParam(value="like_cnt") int like_cnt) {
 		
 		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
 		int user_idx = dto_user.getUser_idx();
@@ -157,6 +165,13 @@ public class ProjectDetailController {
 		
 		int res = projectService.delete_heart(map_idx);
 		
-		return 0;
+		String result = "";
+		int result_cnt = like_cnt - 1;
+		
+		if(res > 0) {
+			result = "['is_heart' : " + result_cnt + "]"; 
+		}
+		
+		return result;
 	}
 }
