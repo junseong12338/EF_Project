@@ -28,6 +28,10 @@ public class ReviewDAO {
 	public String selectName(int user_idx) {
 		return sqlSession.selectOne("r.user_name",user_idx);
 	}
+
+	public int selectregdate(int review_idx) {
+		return sqlSession.selectOne("r.regdate",review_idx);
+	}
 	
 	//리뷰 추가
 	public int reviewInsert(ReviewDTO dto){

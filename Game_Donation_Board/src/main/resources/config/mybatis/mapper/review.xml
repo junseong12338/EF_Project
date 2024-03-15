@@ -22,10 +22,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="user_name" resultType="string" parameterType="int">
 	 select user_name from ef_user
 	 where user_idx = #{user_idx}
+	</select>
 	
-		<!-- select user_name from ef_review r
-		inner join ef_user u
-		on r.user_idx = u.user_idx -->
+	 <select id="regdate" resultType="int" parameterType="int">
+		 SELECT FLOOR((SYSDATE - REGDATE) * 86400) FROM EF_REVIEW WHERE REVIEW_IDX = #{review_idx}
 	</select>
 	
 	<insert id="review_insert" parameterType="review">

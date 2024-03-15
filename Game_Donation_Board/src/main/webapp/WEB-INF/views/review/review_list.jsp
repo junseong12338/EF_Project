@@ -19,10 +19,12 @@ function send(f){
 }
 
 function del(f){
-	var url = "delete";
-	var param = "review_idx="+f.review_idx.value;
-	
-	sendRequest(url,param,resultFn,"post");
+	if(confirm("삭제하시겠습니까?")){
+		var url = "delete";
+		var param = "review_idx="+f.review_idx.value;
+		
+		sendRequest(url,param,resultFn,"post");
+	}
 }
 function resultFn(){
 	if(xhr.readyState == 4 && xhr.status== 200){
@@ -66,28 +68,17 @@ function resultFn(){
 		</div>
 		<div class="user_info">
 		<span>&nbsp;&nbsp;${dto.user_name}</span>
+		<span>&nbsp;&nbsp;${dto.regdate}</span>
 		<c:if test="${dto.user_idx eq user_email.user_idx}">
            <input type="hidden" value="${user_email.user_idx}" id="user_idx" name="user_idx">
 			<input type="hidden" value="${dto.user_idx}" name="idx" id="review_user_idx" >
 			<input type="hidden" value="${dto.review_idx}" name="idx" id="review_idx">
-			<input type="button" value="수정" onclick="modify(this.form)">
 			<input type="button" value="삭제" onclick="del(this.form)"><br><br>
 		</c:if>
 		</div>
 		<div class="type_content">${dto.review_content}</div><br><br>
 		<div>
-		<input type="hidden" value="${dto.regdate}" name="regdate" id="regdate" >
-		<script>
-		var today = new Date();   
-		var hours = today.getHours(); // 시
-		var minutes = today.getMinutes();  // 분
-		var seconds = today.getSeconds();  // 초
-		var milliseconds = today.getMilliseconds();
-		var makeMerchantUid = hours +  minutes + seconds + milliseconds;
-		let regdate = document.getElementById("regdate").value;
-		console.log(regdate);
-		</script>
-		<p id="regdate_write"></p>
+		
 		<p>-------------------------------------------------------------------------</p>
 		</div>
 		</div>

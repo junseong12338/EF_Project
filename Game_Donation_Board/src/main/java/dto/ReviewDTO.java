@@ -6,4 +6,6 @@ import lombok.Data;
 public class ReviewDTO {
 	private int review_idx,project_idx,user_idx;
 	private String review_content, user_name, regdate;
+	
+	
 }
