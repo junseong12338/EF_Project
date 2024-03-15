@@ -15,19 +15,21 @@
                     <a href="board_list" class="logo">
                         <img src="resources/assets/images/logo.png" alt="">
                     </a>
-                   
                     <ul class="nav">
                         <li><a href="board_list" class="active">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
+                        <li><a href="project_list">List</a></li>
+                        <li style="pointer-events: none;"><pre>           </pre></li>
 		                <c:choose>
 							<c:when test="${empty user_email }">
 								<li><a href="login_form">로그인/회원가입 <img src="resources/assets/images/user.png"></a></li>
  							</c:when>
 							<c:when test="${not empty user_email }">
 							<li>
-							    <a href="#" onclick="toggleDropdown()" >${user_email.user_name}<img src="resources/assets/images/user.png"></a>
+							    <a href="#" onclick="toggleDropdown()" >${user_email.user_name}ss
+							    
+							    <img src="${user_email.user_img}">
+							
+							    </a>
 							    <ul id="dropdown-container" class="dropdown-list">
 							        <li onclick="location.href='mypage_view'">프로필</li>
 							        <li>후원한 프로젝트</li>

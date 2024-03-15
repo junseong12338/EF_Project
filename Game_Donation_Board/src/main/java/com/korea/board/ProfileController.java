@@ -267,6 +267,12 @@ public class ProfileController {
 			String user_folder = contextRoot + "user/";
 			String user_img_name = user_main_img.substring(user_main_img.indexOf("/ef_project_img/user/") + "/ef_project_img/user/".length());
 			removeDummyFiles(getFileNamesFromFolder(user_folder, user_img_name), user_folder);
+			
+			//이미지 등록 후 세션 업데이트
+			UserDTO resDTO = userService.selectone(user_idx);
+			
+			session.invalidate();
+			session.setAttribute("user_email", resDTO);
 		}
 		
 		return "redirect:mypage_view";		
@@ -287,6 +293,12 @@ public class ProfileController {
 			String user_folder = contextRoot + "user/";
 			String user_img_name = "";
 			removeDummyFiles(getFileNamesFromFolder(user_folder, user_img_name), user_folder);
+			
+			//이미지 등록 후 세션 업데이트
+			UserDTO resDTO = userService.selectone(user_idx);
+			
+			session.invalidate();
+			session.setAttribute("user_email", resDTO);
 		}
 		
 		return "redirect:mypage_view";		
