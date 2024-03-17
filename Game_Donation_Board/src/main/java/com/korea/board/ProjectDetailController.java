@@ -126,11 +126,16 @@ public class ProjectDetailController {
 	}
 	
 	
-	// 좋아요 추가 ajax
-	@RequestMapping("heart_plus_ajax")
+	
+	// 좋아요 ajax
+//	@SuppressWarnings("unchecked")
+	@RequestMapping("heart_ajax")
 	@ResponseBody
-	public String heart_plus_ajax(Model model, @RequestParam(value="project_idx") int project_idx,
-											@RequestParam(value="like_cnt") int like_cnt) {
+	public JSONObject heart_plus_ajax(Model model, @RequestParam(value="project_idx") int project_idx,
+											@RequestParam(value="heart_check") int heart_check) {
+		// heart : 1 -> 하트 수 증가, -1 -> 하트 수 감소, 0 -> 데이터가 안왔다
+		
+		System.out.println("heart start");
 		
 		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
 		int user_idx = dto_user.getUser_idx();
@@ -139,39 +144,21 @@ public class ProjectDetailController {
 		map_idx.put("project_idx", project_idx);
 		map_idx.put("user_idx", user_idx);
 		
-		int res = projectService.insert_heart(map_idx);
-		String result = "";
-		int result_cnt = like_cnt + 1;
+		int res = 0;
+		int like = 0;
+		JSONObject obj = new JSONObject();
 		
-		if(res > 0) {
-			result = "['is_heart' : " + result_cnt + "]"; 
+		if(heart_check == 1) {// 하트 수 증가
+			res = projectService.insert_heart(map_idx);
+			like = projectService.selectLike(project_idx);
+			obj.put("heart", like);
+		}else if(heart_check == -1) {
+			res = projectService.delete_heart(map_idx);
+			like = projectService.selectLike(project_idx);
+			obj.put("heart", like);
 		}
 		
-		return result;
+		return obj;
 	}
 	
-	// 좋아요 추가 ajax
-	@RequestMapping("heart_minus_ajax")
-	@ResponseBody
-	public String heart_minus_ajax(Model model, @RequestParam(value="project_idx") int project_idx,
-												@RequestParam(value="like_cnt") int like_cnt) {
-		
-		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
-		int user_idx = dto_user.getUser_idx();
-		
-		HashMap<String, Object> map_idx = new HashMap<String, Object>();
-		map_idx.put("project_idx", project_idx);
-		map_idx.put("user_idx", user_idx);
-		
-		int res = projectService.delete_heart(map_idx);
-		
-		String result = "";
-		int result_cnt = like_cnt - 1;
-		
-		if(res > 0) {
-			result = "['is_heart' : " + result_cnt + "]"; 
-		}
-		
-		return result;
-	}
 }

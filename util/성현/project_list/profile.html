@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!--
 
 TemplateMo 579 Cyborg Gaming
@@ -27,6 +29,40 @@ TemplateMo 579 Cyborg Gaming
 https://templatemo.com/tm-579-cyborg-gaming
 
 -->
+<script>
+  function heart(n){
+		heart_check = n;
+		console.log("heart : " + heart);
+		
+		$.ajax({
+			url : "heart_ajax",
+			method : "GET",
+			data : {
+				project_idx : ${dto.project_idx},
+				like_cnt : ${dto.like_cnt},
+				heart_check : heart_check
+			},success : function(data){
+				console.log(data);
+				
+				let new_heart = data.heart_cnt;
+				
+				// 꽉 찬 하트를 클릭시, 빈 하트로 바꿔주기
+				if(n == -1){
+					$('.heart > a').attr('onclick', "heart(1)"); // 메서드 변경
+					$('.heart > a > img').attr('src', "resources/img/icons8-heart.png"); // 빈 하트 이미지
+					$('.heart > a > span').html("좋아요 $nbsp;"+new_heart); // 하트 수 갱신
+				// 빈 하트 클릭시, 꽉 찬 하트로 바꿔주기
+				}else if(n == 1){
+					$('.heart > a').attr('onclick', "heart(-1)"); // 메서드 변경
+					$('.heart > a > img').attr('src', "resources/img/icons8-heart-fill.png"); // 꽉찬 하트 이미지
+					$('.heart > a > span').html("좋아요 $nbsp;"+new_heart); // 하트 수 갱신
+				};
+			}
+		})
+	}
+
+</script>
+
   </head>
 
 <body>

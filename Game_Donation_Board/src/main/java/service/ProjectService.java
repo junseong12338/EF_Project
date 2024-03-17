@@ -71,7 +71,7 @@ public class ProjectService {
 		int persent = 0;
 		
 		// persent
-		persent = donation / target;
+		persent = ( donation / target ) * 100;
 		String persent_str  = String.format("%,d", persent);
 		
 		String diff_date = "";

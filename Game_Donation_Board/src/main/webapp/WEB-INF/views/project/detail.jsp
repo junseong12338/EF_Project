@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="resources/assets/css/owl.css">
     <link rel="stylesheet" href="resources/assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 <style>
 .image-container {
@@ -35,11 +37,49 @@
   width: 100%;
   height: 100%;
 }
+
+.heart img{
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+}
+
+.modal{
+	position:absolute;
+	display:none;
+         
+	justify-content: center;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-body{
+    position:absolute;
+    top:50%; 
+            
+    width:400px;
+    height:700px;
+
+    padding:40px;  
+
+    text-align: center;
+
+    background-color: rgb(255,255,255);
+    border-radius:10px;
+    box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
+
+    transform:translateY(-50%);
+}
 </style>
 
 <script>
 	/* wanted : (프로젝트 내용, 공지, 리뷰) = (0,1,2) */
 	let wanted = 0;
+	let heart_check = 0;
 	
 	const GetDetail = function(wanted){
 		console.log("원하는 content : " + wanted)
@@ -54,8 +94,8 @@
 			success:function(data){
 				console.log("ajax_detail data : " + data);
 				
-				$(".detail_content").empty();
-				$(".detail_content").append(data);
+				$(".detail-content").empty();
+				$(".detail-content").append(data);
 				console.log("ajax_detail 잘 넘어옴");
 			}
 		})		
@@ -76,75 +116,47 @@
 		GetDetail(0);
 	})
 	
-	// 로그인 했을 때의 a태그 클래스 : heart-click
-	$(".heart-click").unbind("click");
-	$(".heart-click").click(function() {
-		console.log("heart-click");
+	
+	// 하트 이벤트
+	function heart(n){
+		heart_check = n;
+		console.log("heart : " + heart_check);
 		
-		// 빈 하트 클릭
-		if($(this).children('img').attr('id') == "heart-not-fill"){
-			console.log("빈 하트 클릭");
-			
-			$.ajax({
-				url : "heart_plus_ajax",
-				method : "GET",
-				data : {
-					project_idx : ${dto.project_idx},
-					like_cnt : ${dto.like_cnt}
-				},
-				success : function(data){
-					console.log(data);
-					
-					let heart = data[0].is_heart
-					
-					// 하트 수 갱신
-					$("#heart").text(heart);
-					
-					console.log("하트추가 성공 : " + heart);
-					
-					// 하트를 바꾸자
-					$(this).html("<img id='heart-fill' alt='꽉 찬 하트' src='resources/img/icons8-heart-fill.png' style='wigth: 16px; height: 16px'>좋아요");
-				}
-			})
-			
-			
-			
-		// 꽉찬 하트 클릭
-		}else if($(this).children('img').attr('id') == "heart-fill"){
-			console.log("꽉찬 하트 클릭");
-			
-			$.ajax({
-				url : "heart_minus_ajax",
-				method : "GET",
-				data : {
-					project_idx : ${dto.project_idx},
-					like_cnt : ${dto.like_cnt}
-				},
-				success : function(data){
-					console.log(data);
-					
-					let heart = data[0].is_heart
-					
-					// 하트 수 갱신
-					$("#heart").text(heart);
-					
-					console.log("하트빼기 성공 : " + heart);
-					
-					// 하트를 바꾸자
-					$(this).html("<img id='heart-not-fill' alt='빈 하트' src='resources/img/icons8-heart.png' style='wigth: 16px; height: 16px'>좋아요");
-				}
-			})
-			
-			
-			
+		$.ajax({
+			url : "heart_ajax",
+			method : "GET",
+			data : {
+				project_idx : ${dto.project_idx},
+				heart_check : heart_check
+			},success : function(data){
+				console.log(data);
+				
+				let new_heart = data.heart;
+				
+				// 꽉 찬 하트를 클릭시, 빈 하트로 바꿔주기
+				if(n == -1){
+					$('.heart > a').attr('onclick', "heart(1)"); // 메서드 변경
+					$('.heart > a > img').attr('src', "resources/img/icons8-heart.png"); // 빈 하트 이미지
+					$('.like_cnt').html("&nbsp; "+new_heart); // 하트 수 갱신
+				// 빈 하트 클릭시, 꽉 찬 하트로 바꿔주기
+				}else if(n == 1){
+					$('.heart > a').attr('onclick', "heart(-1)"); // 메서드 변경
+					$('.heart > a > img').attr('src', "resources/img/icons8-heart-fill.png"); // 꽉찬 하트 이미지
+					$('.like_cnt').html("&nbsp; "+new_heart); // 하트 수 갱신
+				};
+			}
+		})
+	};
+	
+	function donation(){
+		
+		if(${user_email.user_idx} == null){
+			alert("로그인이 필요한 서비스입니다.");
+			return;
 		}
-	})
-	
-	
-	
-	
-	
-	
+		
+		document.querySelector('.modal').style.display="flex";
+	}
 	
 	
 	
@@ -155,7 +167,6 @@
 <body>
 
   <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
-  <!-- ***** Header Area End ***** -->
 
   <div class="container">
     <div class="row">
@@ -181,7 +192,7 @@
                       	<p>${category_name }</p>
                       </c:forEach>
                       <div class="main-border-button">
-                        <a href="#">프로젝트 후원하기</a>
+                        <a href="javascript:void(0)" onclick="donation()">프로젝트 후원하기</a>
                       </div>
                     </div>
                   </div>
@@ -200,24 +211,26 @@
                       			<c:when test="${user_email.user_idx ne null }">
                       				<c:choose>
                       					<c:when test="${dto.is_heart eq 1}">
-                      						<a href="javascript:void(0)" class="heart-click" >
-                      							<img id="heart-fill" alt="꽉 찬 하트" src="resources/img/icons8-heart-fill.png" style="wigth: 16px; height: 16px">좋아요
+                      						<a href="javascript:void(0)" onclick="heart(-1)" >
+                      							<img src="resources/img/icons8-heart-fill.png" style=>
+                      							<span class="like_cnt">&nbsp; ${dto.like_cnt }</span>
 		                      				</a>
                       					</c:when>
                       					<c:otherwise>
-                      						<a href="javascript:void(0)" class="heart-click" >
-                      							<img id="heart-not-fill" alt="빈 하트" src="resources/img/icons8-heart.png" style="wigth: 16px; height: 16px">좋아요
+                      						<a href="javascript:void(0)" onclick="heart(1)" >
+                      							<img src="resources/img/icons8-heart.png">
+                      							<span class="like_cnt">&nbsp; ${dto.like_cnt }</span>
 		                      				</a>		
                       					</c:otherwise>
                       				</c:choose>	
                       			</c:when>
                       			<c:otherwise>
-                      				<a href="javascript:void(0)" class="heart-not-click">
-                      					<img alt="빈 하트" src="resources/img/icons8-heart.png" style="wigth: 16px; height: 16px">좋아요
+                      				<a href="javascript:void(0)">
+                      					<img src="resources/img/icons8-heart.png">
+                      					<span class="like_cnt">&nbsp; ${dto.like_cnt }</span>
                       				</a>
                       			</c:otherwise>
                       		</c:choose>
-                      		<span id="heart">&nbsp; ${dto.like_cnt }</span>
                         </div>
                         <!-- 하트 버튼, 좋아요 숫자 End -->
                       </li>
@@ -259,6 +272,35 @@
         </div>
       </div>
     </div>
+  </div>
+  
+  <div class="modal">
+  	<div class="modal-body">
+  		 <form>
+         	 <div class="image-container">
+               	<img src="${dto.img }" alt="" style="border-radius: 23px;">
+             </div>
+             <div class="mb-3">
+    	         <label class="form-label">프로젝트 명</label>
+	             <input class="form-control form-control-sm" id="project_title" value="${dto.title }" readonly>
+             </div>
+             <!-- 상품 이름 -->
+             <div class="mb-3">
+    	         <label class="form-label">프로젝트 팀</label>
+	             <input class="form-control form-control-sm" id="project_author" value="${dto.author }" readonly>
+             </div>
+             <!-- 상품 가격 -->
+             <div class="mb-3">
+                 <label class="form-label">후원 포인트</label>
+                 <input class="form-control form-control-sm" id="point_donation" placeholder="후원 가능한 포인트 : ??">
+             </div>
+             <!-- 히든 인풋 -->
+             <input type="hidden" id="productId">
+             <!-- 전송 버튼 -->
+             <button type="button" id="pay-btn" onclick="donation_check(this.form)">후원하기</button>
+	         <button type="button" onclick="cancle()">취소</button>
+         </form>
+  	</div>
   </div>
   
   <footer>

@@ -4,7 +4,7 @@
 
 <c:choose>
 	<c:when test="${wanted eq 0 }">
-		<p>${dto.content }</p>
+		<p>${content }</p>
 	</c:when>
 	<c:when test="${wanted eq 1 }">
 		<p>${review }</p>
