@@ -75,11 +75,43 @@
     transform:translateY(-50%);
 }
 </style>
+<script src="resources/js/httpRequest.js"></script>
+<script type="text/javascript">
 
+function send(f){
+	f.action="insert"
+	f.submit();
+	
+	
+}
+
+function del(f){
+	if(confirm("삭제하시겠습니까?")){
+		var url = "delete";
+		var param = "review_idx="+f.review_idx.value;
+		
+		sendRequest(url,param,resultFn,"post");
+	}
+}
+function resultFn(){
+	if(xhr.readyState == 4 && xhr.status== 200){
+		var data = xhr.responseText;
+		var json = (new Function('return'+data))();
+		
+		if(json[0].res == 'no'){
+			alert("삭제실패");
+			return;
+		} 
+			alert("삭제성공");
+	}
+}
+</script>
 <script>
 	/* wanted : (프로젝트 내용, 공지, 리뷰) = (0,1,2) */
 	let wanted = 0;
 	let heart_check = 0;
+	
+	
 	
 	const GetDetail = function(wanted){
 		console.log("원하는 content : " + wanted)

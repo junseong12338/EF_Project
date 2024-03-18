@@ -1,36 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="resources/js/httpRequest.js"></script>
-<script type="text/javascript">
 
-function send(f){
-	f.action="insert"
-	f.submit();
-}
-
-function del(f){
-	if(confirm("삭제하시겠습니까?")){
-		var url = "delete";
-		var param = "review_idx="+f.review_idx.value;
-		
-		sendRequest(url,param,resultFn,"post");
-	}
-}
-function resultFn(){
-	if(xhr.readyState == 4 && xhr.status== 200){
-		var data = xhr.responseText;
-		var json = (new Function('return'+data))();
-		
-		if(json[0].res == 'no'){
-			alert("삭제실패");
-			return;
-		} 
-			alert("삭제성공");
-			location.href="/board/detail_ajax";
-	}
-}
-</script>
 
 <c:choose>
 	<c:when test="${wanted eq 0 }">
