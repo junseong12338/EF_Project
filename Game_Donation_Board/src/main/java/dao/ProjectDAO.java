@@ -105,6 +105,24 @@ final SqlSession sqlSession;
 	}
 	
 	
+	// EF_USER 테이블의 user_point 차감 - update
+	public int update_point(HashMap<String, Object> map) {
+		return sqlSession.update("d.update_point", map);
+	}
+	// 사용자가 이 프로젝트에 후원한적이 있는지 체크
+	public int select_used(HashMap<String, Object> map) {
+		return sqlSession.selectOne("d.select_used", map);
+	}
+	// 후원한 적 YES
+	public int update_donation(HashMap<String, Object> map) {
+		return sqlSession.update("d.update_donation", map);
+	}
+	// 후원한 적 NO
+	public int insert_donation(HashMap<String, Object> map) {
+		return sqlSession.insert("d.insert_donation", map);
+	}
+	
+	
 	//---------------------------------------------------------------------------------------이준성
 		
 	public int project_wait_count(){

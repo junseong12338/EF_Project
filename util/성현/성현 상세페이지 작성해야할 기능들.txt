@@ -66,3 +66,53 @@ ajax 처리 ( - ajax 틀 설계 해야함 )
 	* 하트를 누른지 안누른지 detailDTO에 변수를 설정 -> html에는 hidden으로 저장
 
 	like_fn 에서 좋아요 수 +1, -1 해주자
+
+
+<후원하기> - modal
+받아와야 하는 정보
+	1. img
+	2. title
+	3. author
+	4. 자기자신의 포인트
+	5. hidden(user_idx)
+
+결제버튼 - donation_check(this.form) -> user_idx, donation-point -> (sql)
+취소버튼 - cancle() -> modal-display = none;
+
+
+
+
+
+
+
+
+
+<0318> 해야할 것
+1. 모달창 css
+2. 잔여 포인트 데이터 가져오기
+3. 포인트 후원하기 클릭시 이벤트 로직
+	클릭시 DB에 변경되어야 하는 컬럼
+		1.ef_user 테이블의 user_point 감소 해당 value만큼
+		2. ef_donation 테이블의 
+			- 후원한 적이 있다면 update
+			- 후원한 적이 없다면 insert
+
+4. 리스트 페이지 오류 확인 ( merge 후에 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

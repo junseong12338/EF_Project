@@ -16,7 +16,6 @@
     <!-- Bootstrap core CSS -->
     <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="resources/assets/css/fontawesome.css">
     <link rel="stylesheet" href="resources/assets/css/templatemo-cyborg-gaming.css">
@@ -82,7 +81,7 @@
 	let heart_check = 0;
 	
 	const GetDetail = function(wanted){
-		console.log("원하는 content : " + wanted)
+		/* console.log("원하는 content : " + wanted) */
 		
 		$.ajax({
 			url : "detail_ajax",
@@ -92,11 +91,11 @@
 				project_idx : ${dto.project_idx}
 			},
 			success:function(data){
-				console.log("ajax_detail data : " + data);
+				/* console.log("ajax_detail data : " + data); */
 				
 				$(".detail-content").empty();
 				$(".detail-content").append(data);
-				console.log("ajax_detail 잘 넘어옴");
+				/* console.log("ajax_detail 잘 넘어옴"); */
 			}
 		})		
 	};
@@ -120,7 +119,7 @@
 	// 하트 이벤트
 	function heart(n){
 		heart_check = n;
-		console.log("heart : " + heart_check);
+		/* console.log("heart : " + heart_check); */
 		
 		$.ajax({
 			url : "heart_ajax",
@@ -128,8 +127,9 @@
 			data : {
 				project_idx : ${dto.project_idx},
 				heart_check : heart_check
-			},success : function(data){
-				console.log(data);
+			},
+			success : function(data){
+				/* console.log(data); */
 				
 				let new_heart = data.heart;
 				
@@ -149,16 +149,50 @@
 	};
 	
 	function donation(){
-		let idx = document.getElementById('user_idx');
+		
+		let idx = document.getElementById('user_idx').value;
+		let diff_date = document.getElementById('diff_date').value;
+		
 		if(idx == ''){
 			alert("로그인이 필요한 서비스입니다.");
+			return;
+		}
+		
+		if(diff_date == '마감' || diff_date == '진행예정'){
+			alert("프로젝트 후원기간에 해당하지 않습니다.");
 			return;
 		}
 		
 		document.querySelector('.modal').style.display="flex";
 	};
 	
-	
+	function donation_check(f){
+		let idx = f.user_idx.value;
+		let point = f.user_point.value;
+		let money = f.point_donation.value;
+		
+		let regex = /^[0-9]*$/;
+		
+		if(money == ''){
+			alert("후원할 포인트를 입력하세요.");
+			return;
+		};
+		
+		if(!regex.test(money)){
+			alert("숫자만 입력하세요.");
+			return;
+		}
+		
+		if(money > point){
+			alert("보유한 포인트보다 많이 후원할 수 없습니다.");
+			return;
+		};
+		
+		f.action = "donation?user_idx="+idx+"&use_point="+money+"&project_idx="+${dto.project_idx}+"&user_point="+point;
+		f.method = "POST";
+		f.submit();
+		
+	};
 	
 	
 	function cancle(){
@@ -299,12 +333,14 @@
              <!-- 상품 가격 -->
              <div class="mb-3">
                  <label class="form-label">후원 포인트</label>
-                 <input class="form-control form-control-sm" id="point_donation" placeholder="후원 가능한 포인트 : ??">
+                 <input class="form-control form-control-sm" id="point_donation" placeholder="후원 가능한 포인트 : ${user_email.user_point } point">
              </div>
              <!-- 히든 인풋 -->
+             <input type="hidden" id="user_point" value="${user_email.user_point }">
              <input type="hidden" id="user_idx" value="${user_email.user_idx }">
+             <input type="hidden" id="diff_date" value="${dto.diff_date }">
              <!-- 전송 버튼 -->
-             <button type="button" id="donation-btn" onclick="donation_check(this.form)">후원하기</button>
+             <button type="button" onclick="donation_check(this.form)">후원하기</button>
 	         <button type="button" onclick="cancle()">취소</button>
          </form>
   	</div>

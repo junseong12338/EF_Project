@@ -161,4 +161,45 @@ public class ProjectDetailController {
 		return obj;
 	}
 	
+	
+	@RequestMapping("donation")
+	public String donation(Model model, int user_idx, int use_point, int project_idx, int user_point) {
+		// donation?user_idx=11&user_point=1234&project_idx=321
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("user_idx", user_idx);
+		map.put("use_point", use_point);
+		map.put("project_idx", project_idx);
+		
+		int diff_point = (int)(user_point - use_point);
+		map.put("diff_point", diff_point);
+		
+		// EF_USER 테이블의 user_point 차감 - update
+		int res = projectService.update_point(map);
+		if(res > 0) {
+			System.out.println("point update 성공");
+		}else {
+			System.out.println("point update 실패");
+		};
+		
+		// EF_DONATION 테이블의 insert, update
+		// 사용자가 이 프로젝트에 후원한적이 있는지 체크
+		int yes = projectService.select_used(map);
+		int result = 0;
+		
+		// 후원한 적 YES
+		if(yes > 0) {
+			result = projectService.update_donation(map);
+		}else {// 후원한 적 NO
+			result = projectService.insert_donation(map);
+		};
+		
+		if(result > 0) {
+			System.out.println("donation 성공");
+		}else {
+			System.out.println("donation 실패");
+		}
+		
+		return Common.project.VIEW_PATH + "detail.jsp";
+	}
+	
 }
