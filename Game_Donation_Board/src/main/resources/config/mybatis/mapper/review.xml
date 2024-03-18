@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="r">
 
 
-	<select id="review_list" resultType="review">
-		select * from ef_review order by review_idx DESC
+	<select id="review_list" resultType="review" parameterType="int">
+	select * from ef_review where project_idx=#{project_idx} order by review_idx DESC
 	</select>
 	
 	<!-- 리뷰 단일 셀렉트 -->

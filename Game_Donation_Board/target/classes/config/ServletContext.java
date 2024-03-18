@@ -26,19 +26,9 @@ import service.ProjectService;
 import service.ReviewService;
 import service.SummerNoteService;
 import service.UserService;
-import com.korea.board.ProjectController;
 import com.korea.board.ReviewController;
 import com.korea.board.ProjectDetailController;
-import com.korea.board.SummerNoteController;
-import com.korea.board.UserLoginController;
 
-import dto.ProjectStatusDTO;
-import service.KakaoLoginService;
-import service.NaverLoginService;
-import service.ProjectService;
-import service.SummerNoteService;
-import service.UserService;
-import com.korea.board.ProjectController;
 
 import service.ProjectService;
 
@@ -86,19 +76,18 @@ public class ServletContext implements WebMvcConfigurer {
 	public AdminController adminController(ProjectService projectService) {
 		return new AdminController(projectService);
 	}
-	
-	
-	@Bean ProjectController projectController(ProjectService projectService) {
-		return new ProjectController(projectService);
-	}
 
 	@Bean ReviewController reviewController(ReviewService reviewService) {
 		return new ReviewController(reviewService);
 	}
+	@Bean
+	public ProjectController projectController(ProjectService projectService) {
+		return new ProjectController(projectService);
+	}
 	
 	@Bean
-	public ProjectDetailController projectDetailController(ProjectService projectService) {
-		return new ProjectDetailController(projectService);
+	public ProjectDetailController projectDetailController(ProjectService projectService,ReviewService reviewService) {
+		return new ProjectDetailController(projectService,reviewService);
 	}
 	
 	 @Bean(name = "multipartResolver")

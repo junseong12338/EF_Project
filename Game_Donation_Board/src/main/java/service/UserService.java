@@ -58,6 +58,7 @@ public class UserService {
 		  List<ProjectDTO> list = userDAO.selectProjectList(userIdx);
 //		  System.out.println(list); 
 		  return list; 
+	  }
 	  public List<ProjectDTO> ProjectList() { 
 		  // 실제로는 데이터베이스에서 프로젝트 목록을 조회하여 반환하는코드가 들어갑니다. 
 		  List<ProjectDTO> list = userDAO.selectProjectList();

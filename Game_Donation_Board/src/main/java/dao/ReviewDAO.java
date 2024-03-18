@@ -18,9 +18,9 @@ public class ReviewDAO {
 		this.sqlSession = sqlSession;
 	}
     
-    //리뷰 전체 조회
-	public List<ReviewDTO> selectList(){
-		List<ReviewDTO> list = sqlSession.selectList("r.review_list");
+    //프로젝트 별 조회
+	public List<ReviewDTO> selectList(int project_idx){
+		List<ReviewDTO> list = sqlSession.selectList("r.review_list",project_idx);
 		return list;
 	}
 	

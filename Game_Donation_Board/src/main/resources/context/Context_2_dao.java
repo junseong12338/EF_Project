@@ -60,4 +60,5 @@ public class Context_2_dao {
 	@Bean
 	public ReviewService reviewService(ReviewDAO reviewDAO) {
 		return new ReviewService(reviewDAO);
+	}
 }

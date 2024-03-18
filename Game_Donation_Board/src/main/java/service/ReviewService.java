@@ -43,9 +43,9 @@ public class ReviewService {
 		return msg;
 	}
 	
-	public List<ReviewDTO> selectList(){
+	public List<ReviewDTO> selectList(int project_idx){
 		
-		List<ReviewDTO> list = reviewDAO.selectList();
+		List<ReviewDTO> list = reviewDAO.selectList(project_idx);
 		
 		// 자세한건 나중에 - 수정해야함
 		for(int i = 0; i < list.size(); i++) {

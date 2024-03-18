@@ -92,6 +92,8 @@
 				project_idx : ${dto.project_idx}
 			},
 			success:function(data){
+				console.log(project_idx);
+				console.log(project_idx.value);
 				console.log("ajax_detail data : " + data);
 				
 				$(".detail-content").empty();
@@ -303,6 +305,7 @@
              </div>
              <!-- 히든 인풋 -->
              <input type="hidden" id="user_idx" value="${user_email.user_idx }">
+             <input type="hidden" id="project_idx" value="${dto.project_idx}">
              <!-- 전송 버튼 -->
              <button type="button" id="donation-btn" onclick="donation_check(this.form)">후원하기</button>
 	         <button type="button" onclick="cancle()">취소</button>

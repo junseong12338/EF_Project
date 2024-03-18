@@ -65,6 +65,7 @@ public class UserDAO {
 		List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list",userIdx);
 //		System.out.println(list);
 		return list;
+	}
 	public List<ProjectDTO> selectProjectList() {
 		List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list");
 //		System.out.println(list);

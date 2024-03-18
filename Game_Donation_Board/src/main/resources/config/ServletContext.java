@@ -86,8 +86,8 @@ public class ServletContext implements WebMvcConfigurer {
 	}
 	
 	@Bean
-	public ProjectDetailController projectDetailController(ProjectService projectService) {
-		return new ProjectDetailController(projectService);
+	public ProjectDetailController projectDetailController(ProjectService projectService,ReviewService reviewService) {
+		return new ProjectDetailController(projectService,reviewService);
 	}
 	
 	 @Bean(name = "multipartResolver")
