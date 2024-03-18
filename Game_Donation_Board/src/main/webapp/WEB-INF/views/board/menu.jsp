@@ -25,7 +25,7 @@
  							</c:when>
 							<c:when test="${not empty user_email }">
 							<li>
-							    <a href="#" onclick="toggleDropdown()" >${user_email.user_name}ss
+							    <a href="#" onclick="toggleDropdown()" >${user_email.user_name}
 							    
 							    <img src="${user_email.user_img}">
 							

@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 										ORDER BY A.PROJECT_IDX DESC
 									</when>
 									<when test="sort == 2">
-										ORDER BY C.PROJECT_DONATION DESC, A.PROJECT_IDX DESC
+										ORDER BY C.PROJECT_DONATION ASC, A.PROJECT_IDX DESC
 									</when>
 								</choose>
 								<!-- sort end -->
@@ -112,23 +112,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</foreach>
 				</if>
 				<!-- 반복 foreach end -->
-				) AL
-				
-			WHERE AL.PROJECT_STATUS = 1
-				
+				AND A.PROJECT_STATUS = 1
 				<!-- choose 기간 start -->
 				<choose>
 					<when test="sort_date == 1">
-						AND AL.PROJECT_START <![CDATA[<]]> SYSDATE AND AL.PROJECT_END <![CDATA[>]]> SYSDATE
+						AND A.PROJECT_START <![CDATA[<]]> SYSDATE AND A.PROJECT_END <![CDATA[>]]> SYSDATE
 					</when>
 					<when test="sort_date == 2">
-						AND AL.PROJECT_START <![CDATA[>]]> SYSDATE 
+						AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
 					</when>
 					<when test="sort_date == 3">
-						AND AL.PROJECT_END <![CDATA[<]]> SYSDATE
+						AND A.PROJECT_END <![CDATA[<]]> SYSDATE
 					</when>
 				</choose>
 				<!-- choose 기간 end -->
+				) AL
+				
+				
 	</select>
 
 
@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 										ORDER BY A.PROJECT_IDX DESC
 									</when>
 									<when test="sort == 2">
-										ORDER BY C.PROJECT_DONATION DESC, A.PROJECT_IDX DESC
+										ORDER BY C.PROJECT_DONATION ASC, A.PROJECT_IDX DESC
 									</when>
 								</choose>
 								<!-- sort end -->
@@ -170,24 +170,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</foreach>
 				</if>
 				<!-- 반복 foreach end -->
-				) AL
-				
-			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
-				AND AL.PROJECT_STATUS = 1
-				
+				AND A.PROJECT_STATUS = 1
 				<!-- choose 기간 start -->
 				<choose>
 					<when test="sort_date == 1">
-						AND AL.PROJECT_START <![CDATA[<]]> SYSDATE AND AL.PROJECT_END <![CDATA[>]]> SYSDATE
+						AND A.PROJECT_START <![CDATA[<]]> SYSDATE AND A.PROJECT_END <![CDATA[>]]> SYSDATE
 					</when>
 					<when test="sort_date == 2">
-						AND AL.PROJECT_START <![CDATA[>]]> SYSDATE
+						AND A.PROJECT_START <![CDATA[>]]> SYSDATE
 					</when>
 					<when test="sort_date == 3">
-						AND AL.PROJECT_END <![CDATA[<]]> SYSDATE
+						AND A.PROJECT_END <![CDATA[<]]> SYSDATE
 					</when>
 				</choose>
 				<!-- choose 기간 end -->
+				) AL
+				
+			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
+				
 	</select>	
 	<!-- project-list End -->
 	
