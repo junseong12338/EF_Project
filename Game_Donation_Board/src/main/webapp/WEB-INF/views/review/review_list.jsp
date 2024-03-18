@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/review_list.css" />
-<script src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+<script src="resources/js/httpRequest.js"></script>
 <script type="text/javascript">
 
 
@@ -64,7 +64,7 @@ function resultFn(){
 	<form action="f">
 		<div class="review_box" border="1" align="left">
 		<div class="user_img">
-			<img src="${user_email.user_img}" alt="image"/>
+			<img src="${dto.user_img}" alt="image"/>
 		</div>
 		<div class="user_info">
 		<span>&nbsp;&nbsp;${dto.user_name}</span>
@@ -73,12 +73,12 @@ function resultFn(){
            <input type="hidden" value="${user_email.user_idx}" id="user_idx" name="user_idx">
 			<input type="hidden" value="${dto.user_idx}" name="idx" id="review_user_idx" >
 			<input type="hidden" value="${dto.review_idx}" name="idx" id="review_idx">
-			<input type="button" value="삭제" onclick="del(this.form)"><br><br>
+			<input type="button" value="삭제" onclick="del(this.form)">
 		</c:if>
+		<br><br>
 		</div>
-		<div class="type_content">${dto.review_content}</div><br><br>
+		<div class="type_content">${dto.review_content}</div>
 		<div>
-		
 		<p>-------------------------------------------------------------------------</p>
 		</div>
 		</div>

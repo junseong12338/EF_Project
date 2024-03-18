@@ -51,6 +51,8 @@ public class ReviewService {
 		for(int i = 0; i < list.size(); i++) {
 			String name = reviewDAO.selectName(list.get(i).getUser_idx());
 			int date = reviewDAO.selectregdate(list.get(i).getReview_idx());
+			String userimg = reviewDAO.selectuserimg(list.get(i).getUser_idx());
+			list.get(i).setUser_img(userimg);
 			list.get(i).setRegdate(calculateTime(date));
 			list.get(i).setUser_name(name);
 		}

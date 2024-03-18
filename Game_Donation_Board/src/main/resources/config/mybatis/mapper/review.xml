@@ -19,6 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   WHERE user_IDX=#{user_idx}
 	</select>
 	
+	
+	<select id="user_img" resultType="string" parameterType="int">
+	 select user_img from ef_user
+	 where user_idx = #{user_idx}
+	</select>
+	
 	<select id="user_name" resultType="string" parameterType="int">
 	 select user_name from ef_user
 	 where user_idx = #{user_idx}
