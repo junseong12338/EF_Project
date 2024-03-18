@@ -73,6 +73,26 @@
 
     transform:translateY(-50%);
 }
+
+.form-label{
+	color:#ec6090;
+}
+
+.donation-btn{
+    font-size: 14px;
+    color: #ec6090;
+    background-color: transparent;
+    border: 1px solid #ec6090;
+    padding: 12px 30px;
+    display: inline-block;
+    border-radius: 25px;
+    font-weight: 400;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+}
 </style>
 
 <script>
@@ -177,6 +197,11 @@
 			alert("후원할 포인트를 입력하세요.");
 			return;
 		};
+		
+		if(money <= 0){
+			alert("0 point 이상 후원할 수 있습니다.");
+			return;
+		}
 		
 		if(!regex.test(money)){
 			alert("숫자만 입력하세요.");
@@ -340,8 +365,8 @@
              <input type="hidden" id="user_idx" value="${user_email.user_idx }">
              <input type="hidden" id="diff_date" value="${dto.diff_date }">
              <!-- 전송 버튼 -->
-             <button type="button" onclick="donation_check(this.form)">후원하기</button>
-	         <button type="button" onclick="cancle()">취소</button>
+             <button class="donation-btn" type="button" onclick="donation_check(this.form)">후원하기</button>
+	         <button class="donation-btn" type="button" onclick="cancle()">취소</button>
          </form>
   	</div>
   </div>
