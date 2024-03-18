@@ -68,7 +68,7 @@
 
     text-align: center;
 
-    background-color: rgb(255,255,255);
+    background-color: #1F2122;
     border-radius:10px;
     box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
 
@@ -136,7 +136,7 @@
 				// 꽉 찬 하트를 클릭시, 빈 하트로 바꿔주기
 				if(n == -1){
 					$('.heart > a').attr('onclick', "heart(1)"); // 메서드 변경
-					$('.heart > a > img').attr('src', "resources/img/icons8-heart.png"); // 빈 하트 이미지
+					$('.heart > a > img').attr('src', "resources/img/icons8.png"); // 빈 하트 이미지
 					$('.like_cnt').html("&nbsp; "+new_heart); // 하트 수 갱신
 				// 빈 하트 클릭시, 꽉 찬 하트로 바꿔주기
 				}else if(n == 1){
@@ -149,14 +149,21 @@
 	};
 	
 	function donation(){
-		
-		if(${user_email.user_idx} == null){
+		let idx = document.getElementById('user_idx');
+		if(idx == ''){
 			alert("로그인이 필요한 서비스입니다.");
 			return;
 		}
 		
 		document.querySelector('.modal').style.display="flex";
-	}
+	};
+	
+	
+	
+	
+	function cancle(){
+		document.querySelector('.modal').style.display="none";
+	};
 	
 	
 	
@@ -218,7 +225,7 @@
                       					</c:when>
                       					<c:otherwise>
                       						<a href="javascript:void(0)" onclick="heart(1)" >
-                      							<img src="resources/img/icons8-heart.png">
+                      							<img src="resources/img/icons8.png">
                       							<span class="like_cnt">&nbsp; ${dto.like_cnt }</span>
 		                      				</a>		
                       					</c:otherwise>
@@ -226,7 +233,7 @@
                       			</c:when>
                       			<c:otherwise>
                       				<a href="javascript:void(0)">
-                      					<img src="resources/img/icons8-heart.png">
+                      					<img src="resources/img/icons8.png">
                       					<span class="like_cnt">&nbsp; ${dto.like_cnt }</span>
                       				</a>
                       			</c:otherwise>
@@ -295,9 +302,9 @@
                  <input class="form-control form-control-sm" id="point_donation" placeholder="후원 가능한 포인트 : ??">
              </div>
              <!-- 히든 인풋 -->
-             <input type="hidden" id="productId">
+             <input type="hidden" id="user_idx" value="${user_email.user_idx }">
              <!-- 전송 버튼 -->
-             <button type="button" id="pay-btn" onclick="donation_check(this.form)">후원하기</button>
+             <button type="button" id="donation-btn" onclick="donation_check(this.form)">후원하기</button>
 	         <button type="button" onclick="cancle()">취소</button>
          </form>
   	</div>
