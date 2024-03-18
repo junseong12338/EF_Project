@@ -11,10 +11,11 @@
 	
 	<typeAliases>
 		
-		 <typeAlias type="dto.ReviewDTO" alias="review"/> 
-		 <typeAlias type="dto.ProjectDTO" alias="project"/> 
-		  <typeAlias type="dto.UserDTO" alias="user"/> 
-		  <typeAlias type="dto.CategoryNumDTO" alias="categoryNum"/> 
+		 <typeAlias type="dto.ReviewDTO" alias="review"/>
+		<typeAlias type="dto.AdminInfoDTO" alias="admininfo"/>
+		<typeAlias type="dto.ProjectDTO" alias="project"/> 
+		<typeAlias type="dto.UserDTO" alias="user"/> 
+		<typeAlias type="dto.CategoryNumDTO" alias="categoryNum"/> 
 		  
 		  
 	</typeAliases>

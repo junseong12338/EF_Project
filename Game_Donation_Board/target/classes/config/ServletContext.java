@@ -28,6 +28,17 @@ import service.SummerNoteService;
 import service.UserService;
 import com.korea.board.ProjectController;
 import com.korea.board.ReviewController;
+import com.korea.board.ProjectDetailController;
+import com.korea.board.SummerNoteController;
+import com.korea.board.UserLoginController;
+
+import dto.ProjectStatusDTO;
+import service.KakaoLoginService;
+import service.NaverLoginService;
+import service.ProjectService;
+import service.SummerNoteService;
+import service.UserService;
+import com.korea.board.ProjectController;
 
 import service.ProjectService;
 
@@ -84,6 +95,12 @@ public class ServletContext implements WebMvcConfigurer {
 	@Bean ReviewController reviewController(ReviewService reviewService) {
 		return new ReviewController(reviewService);
 	}
+	
+	@Bean
+	public ProjectDetailController projectDetailController(ProjectService projectService) {
+		return new ProjectDetailController(projectService);
+	}
+	
 	 @Bean(name = "multipartResolver")
 	    public CommonsMultipartResolver commonsMultipartResolver() {
 	        CommonsMultipartResolver resolver = new CommonsMultipartResolver();

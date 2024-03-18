@@ -35,7 +35,7 @@ public class PageDTO {
 			}
 			prevPage = min -1;
 			nextPage = max + 1;
-
+			
 		}
 	
 }

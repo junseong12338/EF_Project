@@ -49,7 +49,6 @@ public class UserDAO {
 	}
 	
 	public UserDTO selectOne(int idx) {
-
 		return sqlSession.selectOne("u.user_one",idx);
 	}
 
@@ -66,6 +65,10 @@ public class UserDAO {
 		List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list",userIdx);
 //		System.out.println(list);
 		return list;
+	public List<ProjectDTO> selectProjectList() {
+		List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list");
+//		System.out.println(list);
+		return sqlSession.selectList("project.userIdx_list");
 	}
 
 	public List<DonationDTO> selectdonationList(){

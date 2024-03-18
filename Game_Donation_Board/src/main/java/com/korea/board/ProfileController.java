@@ -108,8 +108,8 @@ public class ProfileController {
 	
 	  @RequestMapping("registered_Project") 
 	  public String getProjectList(Model model) { 
-		  int userIdx =((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
-	  List<ProjectDTO> EF_PROJCET = userService.ProjectList(userIdx);
+		  //int userIdx =((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
+	  List<ProjectDTO> EF_PROJCET = userService.ProjectList();
 	  
 	   //모델에 프로젝트 목록 추가
 	   model.addAttribute("projectList", EF_PROJCET);

@@ -14,6 +14,7 @@ public class UserService {
 	
 	final UserDAO userDAO;
 
+// --------------------------- 이준성
 	public UserDTO checkEmail(String user_email) {
 		return userDAO.checkEmail(user_email);
 	}
@@ -32,6 +33,7 @@ public class UserService {
 	public int userUpdate(UserDTO dto) {
 		return userDAO.userUpdate(dto);
 	}
+	// --------------------------- 이준성
 	
 	public int userDelete(int idx) {
 		return userDAO.userDelete(idx);
@@ -39,6 +41,10 @@ public class UserService {
 	
 	public int userPointUpdate(UserDTO dto) {
 		return userDAO.userPointUpdate(dto);
+	}
+	
+	public UserDTO selectName(int user_idx) {
+		return userDAO.selectOne(user_idx);
 	}
 
 	
@@ -52,6 +58,11 @@ public class UserService {
 		  List<ProjectDTO> list = userDAO.selectProjectList(userIdx);
 //		  System.out.println(list); 
 		  return list; 
+	  public List<ProjectDTO> ProjectList() { 
+		  // 실제로는 데이터베이스에서 프로젝트 목록을 조회하여 반환하는코드가 들어갑니다. 
+		  List<ProjectDTO> list = userDAO.selectProjectList();
+//		  System.out.println(list); 
+		  return userDAO.selectProjectList(); 
 	}
 	  
 	  // 후원 금액 

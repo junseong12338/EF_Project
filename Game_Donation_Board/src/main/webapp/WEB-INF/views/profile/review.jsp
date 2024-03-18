@@ -51,8 +51,8 @@
                 <div class="col-3g-8">
                     <h4>내가 작성한 리뷰</h4><br>
             <!-- <p class="section-description">작성하신 리뷰는 0건 입니다.</p><br> -->  
+            
                </div>
-               
         </div>
         </div>
     </div>
