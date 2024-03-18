@@ -109,21 +109,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <form
               method="post"
               enctype="multipart/form-data"
-              id="project_editor"
+              id="admin_notice_editor"
             >
-              <input
-                type="hidden"
-                name="project_main_img"
-                id="project_main_img"
-              />
+              
               <div id="project_editor">
                 <div class="title-box">
                   <div id="title">
                     제목 :
                     <input
                       type="text"
-                      name="project_title"
-                      id="project_title"
+                      name="admin_notice_title"
+                      id="admin_notice_title"
                     />
                   </div>
                 </div>
@@ -131,85 +127,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <div class="content-box">
                   <textarea id="summernote" name="editordata"></textarea>
                 </div>
-                <div class="project-setting">
-                  <div class="date-setting">
-                    시작날짜 :
-                    <input
-                      type="date"
-                      name="start_date"
-                      id="start_date"
-                      onchange="set_min_endDate()"
-                    />
-                    종료날짜 :
-                    <input type="date" name="end_date" id="end_date" />
-                  </div>
-                  <div class="targetmoney-setting">
-                    목표 후원금액 :
-                    <input
-                      type="number"
-                      name="target"
-                      id="target"
-                      onchange="target_maxvalue()"
-                    />
-                  </div>
-                </div>
-                <div class="image-category-setting">
-                  <div class="image-setting-container">
-                    <div class="image-container">
-                      <img
-                        src="resources/img/preview.jpg"
-                        class="img-rounded"
-                        id="main_image_show"
-                      />
-                    </div>
-                    <div class="main-border-button">
-			          	<a href="javascript: js(); event.preventDefault();"><label for="main_image" id="file_label">이미지 선택</label></a>
-			          	<input
-		                      type="file"
-		                      name="main_image"
-		                      id="main_image"
-		                      onchange="main_image_send()"
-		                      style="display: none;"
-		                    />
-			        </div>
-                  </div>
-                  <div class="category-container">
-                    <table>
-                      <caption> 카테고리 설정</caption>
-                    <tr>
-                      <td> <input type="checkbox" name="category" value="1" />
-                        1인칭</td>
-                      <td><input type="checkbox" name="category" value="2" />
-                        레이싱</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="category" value="3" />
-                        생존</td>
-                      <td><input type="checkbox" name="category" value="4" />
-                        슈팅</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="category" value="5" />
-                        스포츠</td>
-                      <td><input type="checkbox" name="category" value="6" />
-                        액션</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="category" value="7" />
-                        오픈 월드</td>
-                      <td> <input type="checkbox" name="category" value="8" />
-                        전략</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="category" value="9" />
-                        전투</td>
-                      <td><input type="checkbox" name="category" value="10" />
-                        타워 디펜스</td>
-                    </tr>
-                    </table>
-                    
-                  </div>
-                </div>
+                
+                
                 <div class="submit-button">
                   <button
                     type="button"
@@ -255,22 +174,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <script>
       $(document).ready(function () {
     	  
-        // 현재 날짜를 가져오는 함수
-        function getCurrentDate() {
-          const today = new Date();
-          const year = today.getFullYear();
-          let month = today.getMonth() + 1;
-          let day = today.getDate();
-
-          // 월과 일이 한 자리 숫자인 경우 앞에 0을 추가
-          month = month < 10 ? "0" + month : month;
-          day = day < 10 ? "0" + day : day;
-          return year + "-" + month + "-" + day;
-        }
-
-        // 현재 날짜 이후의 날짜만 선택 가능하도록 설정
-        const futureDateInput = document.getElementById("start_date");
-        futureDateInput.min = getCurrentDate();
+       
 
         $("#summernote").summernote({
           height: 700, // 에디터 높이
@@ -401,54 +305,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       });//도큐먼트 레디 닫히는부분
 
-      //메인이미지(썸네일) 등록 ajax함수
-      function main_image_send() {
-        var preview = new FileReader();
-        preview.onload = function (e) {
-          // img id 값
-          document.getElementById("main_image_show").src = e.target.result;
-        };
-        // input id 값
-        preview.readAsDataURL(document.getElementById("main_image").files[0]);
-
-        data = new FormData();
-
-        data.append("file", document.getElementById("main_image").files[0]);
-
-        $.ajax({
-          data: data,
-          type: "POST",
-          url: "uploadSummernoteImageFile",
-          contentType: false,
-          enctype: "multipart/form-data",
-          processData: false,
-          success: function (data) {
-            console.log(data.url);
-            document.getElementById("project_main_img").value = data.url;
-          },
-        });
-      }
+      
 
       //작성완료 함수
       function send(f) {
-        const title = document.getElementById("project_title");
+        const title = document.getElementById("admin_notice_title");
         const content = document.getElementById("summernote");
-        const target = document.getElementById("target");
-        const main_image = document.getElementById("main_image");
-        const start_date = document.getElementById("start_date");
-        const end_date = document.getElementById("end_date");
-        const category = [];
-        const checkboxes =
-          document.getElementById("project_editor").elements["category"];
-
-        for (let i = 0; i < checkboxes.length; i++) {
-          const checkbox = checkboxes[i];
-
-          // 체크된 체크박스의 값을 배열에 추가
-          if (checkbox.checked) {
-            category.push(checkbox.value);
-          }
-        }
+        
 
         if (title.value == "") {
           alert("제목을 입력해주세요");
@@ -462,65 +325,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           return;
         }
 
-        if (target.value == "") {
-          alert("목표금액을 입력해주세요");
-          target.focus();
-          return;
-        }
-        if (main_image.value == "") {
-          alert("메인 이미지를 선택해주세요");
-          main_image.focus();
-          return;
-        }
-        if (start_date.value == "") {
-          alert("프로젝트 시작 날짜를 선택해주세요");
-          start_date.focus();
-          return;
-        }
-        if (end_date.value == "") {
-          alert("프로젝트 종료 날짜를 선택해주세요");
-          end_date.focus();
-          return;
-        }
-
-        if (category == "") {
-          alert("카테고리를 한개이상 선택해주세요");
-          category.focus();
-          return;
-        }
-		
+        
         removeBeforeUnload();
-        f.action = "summernote_send";
+        f.action = "admin_summernote_send";
         f.submit();
       }
 
-      //목표금액 최대수치 초과 시 value 재설정
-      function target_maxvalue() {
-        console.log(document.getElementById("target").value);
-        if (document.getElementById("target").value > 100000000) {
-          alert("목표금액은 100.000.000원을 초과할 수 없습니다.");
-          document.getElementById("target").value = 100000000;
-        }
-      }
-
-      //시작날짜를 정하면 종료날짜는 시작날짜 뒤로만 체크할수 있게 변경
-      function set_min_endDate() {
-        const start_date = document.getElementById("start_date").value;
-
-        const dateObject = new Date(start_date);
-
-        const year = dateObject.getFullYear();
-        let month = dateObject.getMonth() + 1;
-        let day = dateObject.getDate() + 1;
-
-        // 월과 일이 한 자리 숫자인 경우 앞에 0을 추가
-        month = month < 10 ? "0" + month : month;
-        day = day < 10 ? "0" + day : day;
-
-        const futureDateInput = document.getElementById("end_date");
-        futureDateInput.min = year + "-" + month + "-" + day;
-      }
-      
       function removeBeforeUnload() {
           $(window).off('beforeunload');
       }

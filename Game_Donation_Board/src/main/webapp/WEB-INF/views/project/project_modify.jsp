@@ -90,6 +90,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         display: flex;
         justify-content: space-between;
       }
+      
+       td{       
+	    width: 150px;
+	    height: 30px;
+      }
+      
     </style>
   </head>
   <body style="font-family: 'Montserrat', sans-serif">
@@ -108,6 +114,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 type="hidden"
                 name="project_main_img"
                 id="project_main_img"
+                value="${dto.project_img}"
               />
               <input
                 type="hidden"
@@ -184,77 +191,39 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			        </div>
                   </div>
                   <div class="category-container">
-                    카테고리 설정<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category1"
-                      value="1"
-                    />
-                    1 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category2"
-                      value="2"
-                    />
-                    2<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category3"
-                      value="3"
-                    />
-                    3 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category4"
-                      value="4"
-                    />
-                    4<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category5"
-                      value="5"
-                    />
-                    5 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category6"
-                      value="6"
-                    />
-                    6<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category7"
-                      value="7"
-                    />
-                    7 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category8"
-                      value="8"
-                    />
-                    8<br />
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category9"
-                      value="9"
-                    />
-                    9 &nbsp;
-                    <input
-                      type="checkbox"
-                      name="category"
-                      id="category10"
-                      value="10"
-                    />
-                    10<br />
+                    <table>
+                      <caption> 카테고리 설정</caption>
+                    <tr>
+                      <td> <input type="checkbox" name="category" id="category1" value="1" />
+                        1인칭</td>
+                      <td><input type="checkbox" name="category" id="category2" value="2" />
+                        레이싱</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" id="category3" value="3" />
+                        생존</td>
+                      <td><input type="checkbox" name="category" id="category4" value="4" />
+                        슈팅</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" id="category5" value="5" />
+                        스포츠</td>
+                      <td><input type="checkbox" name="category" id="category6" value="6" />
+                        액션</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" id="category7" value="7" />
+                        오픈 월드</td>
+                      <td> <input type="checkbox" name="category" id="category8" value="8" />
+                        전략</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" id="category9" value="9" />
+                        전투</td>
+                      <td><input type="checkbox" name="category" id="category10" value="10" />
+                        타워 디펜스</td>
+                    </tr>
+                    </table>
                   </div>
                 </div>
                 <div class="submit-button">
@@ -481,7 +450,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         const title = document.getElementById("project_title");
         const content = document.getElementById("summernote");
         const target = document.getElementById("target");
-        const main_image = document.getElementById("main_image");
+        const main_image = document.getElementById("project_main_img");
         const start_date = document.getElementById("start_date");
         const end_date = document.getElementById("end_date");
         const category = [];
@@ -535,7 +504,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           category.focus();
           return;
         }
-
+		
+        removeBeforeUnload();
         f.action = "update_send";
         f.submit();
       }
@@ -573,6 +543,31 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           document.getElementById("category" + category[i]).checked = true;
         }
       }
+      
+      function removeBeforeUnload() {
+          $(window).off('beforeunload');
+      }
+      
+      $(window).on('beforeunload', function() {
+    	    return "정말로 벗어나시겠습니까?";
+    	});
+
+    	$(window).on('unload', function() {
+    	    // 더미 데이터 삭제 작업 수행
+    	    $.ajax({
+    	        url: "pageOutDelete",
+    	        type: "POST",
+    	        success: function(response) {
+    	            console.log("더미 데이터 삭제 성공");
+    	        },
+    	        error: function(xhr, status, error) {
+    	            console.error("더미 데이터 삭제 실패:", error);
+    	        }
+    	    });
+    	});
+	
+      
+      
     </script>
   </body>
 </html>

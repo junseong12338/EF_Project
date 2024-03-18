@@ -32,8 +32,8 @@ public class Context_2_dao {
 		return new ProjectDAO(sqlSession);
 	}
 	
-	@Bean public SummerNoteService summerNoteService(ProjectDAO projectDAO) {
-		return new SummerNoteService(projectDAO);
+	@Bean public SummerNoteService summerNoteService(ProjectDAO projectDAO, UserDAO userDAO) {
+		return new SummerNoteService(projectDAO,userDAO);
 	}
 	
 	@Bean

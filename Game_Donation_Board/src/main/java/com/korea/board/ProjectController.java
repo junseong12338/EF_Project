@@ -144,7 +144,7 @@ public class ProjectController {
 		
 		for(int i = 0; i < list.size(); i++) {
 			// 퍼센트 dto.setPersent
-			persent = list.get(i).getProject_donation() / list.get(i).getProject_target();
+			persent = ((int)((double)list.get(i).getProject_donation() / (double)list.get(i).getProject_target()*100));
 			String persent_str  = String.format("%,d", persent);
 			list.get(i).setPersent(persent_str + " %");
 			

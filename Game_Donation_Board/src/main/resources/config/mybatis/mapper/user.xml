@@ -73,6 +73,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		USER_IMG = #{user_img}
 		WHERE USER_IDX = #{user_idx}
 	</update>
+	
+	<!-- 어드민 공지사항 다음번호 가져오기 -->
+	<select id="select_next_idx" resultType="int">
+		SELECT SEQ_EF_ADMIN_NOTICE_IDX.NEXTVAL
+		FROM DUAL
+	</select>
+	
+	<!-- 어드민 공지사항 insert -->
+	<insert id="insert_admin_notice" parameterType="adminNotice">
+		INSERT INTO EF_ADMIN_NOTICE VALUES(
+			#{ad_notice_idx},
+			#{ad_notice_title},
+			#{ad_notice_content},
+			''
+		)
+	</insert>
 </mapper>
 
 

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-
+import dto.AdminNoticeDTO;
 import dto.DonationDTO;
 import dto.ProjectDTO;
 
@@ -85,5 +85,15 @@ public class UserDAO {
 	//유저이미지 업데이트
 	public int userImgUpdate(UserDTO dto) {
 		return sqlSession.update("u.user_img_update",dto);
+	}
+	
+	//공지사항 다음번호 가져오기
+	public int select_admin_notice_next_idx() {
+		return sqlSession.selectOne("u.select_next_idx");
+	}
+	
+	//공지사항 인서트
+	public int insert_admin_notice(AdminNoticeDTO dto) {
+		return sqlSession.insert("u.insert_admin_notice",dto);
 	}
 }

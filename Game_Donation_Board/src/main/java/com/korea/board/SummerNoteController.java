@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.JsonObject;
 
 import aspect.ModelAndViewRedirectException;
+import dto.AdminNoticeDTO;
 import dto.ProjectDTO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -73,12 +74,12 @@ public class SummerNoteController {
 		if(idx == 0) {
 			return "redirect:/";
 		}
-		
+		int userIdx = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
 		
 		ProjectDTO dto = summerNoteService.projectSelectOne(idx);
 		
 		//프로젝트번호 무결성체크
-		if(dto == null) {
+		if(dto == null || userIdx != dto.getUser_idx()) {
 			return "redirect:/";
 		}
 		
@@ -217,8 +218,8 @@ public class SummerNoteController {
 		
 
 		
-//		return "redirect:/";
-		return Common.project.VIEW_PATH + "project_editor.jsp";
+		return "redirect:/";
+		
 	}
 	
 	/*
@@ -263,7 +264,7 @@ public class SummerNoteController {
 			    String idx_folder = contextRoot + project_idx + "/";
 			    
 			    //idx폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
-			    removeDummyFiles(getFileNamesFromFolder(idx_folder), idx_folder);
+//			    removeDummyFiles(getFileNamesFromFolder(idx_folder), idx_folder);
 			    
 			    //temp폴더 안 editordata내용안, project_main_img에 이미지이름이 포함되어있는 파일만 
 			    //idx폴더로 복사
@@ -284,6 +285,58 @@ public class SummerNoteController {
 		return "redirect:/";
 	}
 	
+	//공지사항 작성 메서드
+	@RequestMapping("admin_summernote_send")
+	public String adminNoticeSend(HttpServletRequest sendRequest) {
+		String admin_notice_title = sendRequest.getParameter("admin_notice_title");
+		String editordata = sendRequest.getParameter("editordata");
+		
+		AdminNoticeDTO dto = new AdminNoticeDTO();
+		
+		dto.setAd_notice_title(admin_notice_title);
+		dto.setAd_notice_content(editordata);
+		
+		try {
+			int idx = summerNoteService.insertAdminNotice(dto);
+			
+			if(!(idx == -1)) {
+				// temp폴더 안 글작성에쓰인 이미지,파일을 
+				//idx번호로된 폴더를 만들어 파일복사 후 
+				//temp폴더 안 더미 데이터 삭제
+				
+				//temp폴더 경로
+			    String temp_folder = contextRoot + "temp\\";
+			    //idx폴더 경로
+			    String idx_folder = contextRoot + "admin\\"+idx + "\\";
+			    
+			    System.out.println("getFileNamesFromFolder(temp_folder) : " + getFileNamesFromFolder(temp_folder).toString());
+			    
+			    //temp폴더 안 editordata내용안에 이미지이름이 포함되어있는 파일만 
+			    //idx폴더로 복사
+			    fileUpload(temp_folder, idx_folder,dto);
+				
+			    //temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
+			    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/"; 
+	}
+	
+	/*
+	 * 글 작성,수정 도중 페이지를 벗어나면 동작
+	 * temp폴더 안 작성자 email이 포함되어있는 파일을 삭제
+	 */
+	@RequestMapping("pageOutDelete")
+	@ResponseBody
+	public void pageOutDelete() {
+		//temp폴더 경로
+	    String temp_folder = contextRoot + "temp\\";
+		//temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
+	    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+	}
 	
 	// temp폴더 안 session에 저장된 userEmail값이 이름에 포함된 이미지파일 이름을 리스트로 반환
 	private List<String> getFileNamesFromFolder(String folderName) {
@@ -333,7 +386,7 @@ public class SummerNoteController {
 	}
 	
 	// temp폴더 안 파일 idx폴더로 옮기기
-	private void fileUpload(String temp_folder, String idx_folder, ProjectDTO dto) {
+	private void fileUpload(String temp_folder, String idx_folder, Object dto) {
 	    // temp폴더와 idx폴더경로 설정
 	    File folder1;
 	    File folder2;
@@ -348,14 +401,25 @@ public class SummerNoteController {
 	    if (!folder2.exists())
 	        folder2.mkdirs();
 	    
+	   
 	    // 파일 이름 반복문
 	    File[] target_files = folder1.listFiles();
+	   
 	    for (File file : target_files) {
 	        
 	    	//editordata,project_img내용에 포함된 파일이름을 가진 파일만 idx폴더로 복사
-	    	File temp = null; 	    		
-    		if(dto.getProject_content().contains(file.getName()) || dto.getProject_img().contains(file.getName())) {
-    			temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());    			
+	    	File temp = null;
+	    	if(dto instanceof ProjectDTO) {
+	    		ProjectDTO Pdto = (ProjectDTO)dto;
+	    		if(Pdto.getProject_content().contains(file.getName()) || Pdto.getProject_img().contains(file.getName())) {
+	    			temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());    			
+	    		}
+	    	}else if(dto instanceof AdminNoticeDTO) {
+    			AdminNoticeDTO Adto = (AdminNoticeDTO)dto;
+    			
+    			if(Adto.getAd_notice_content().contains(file.getName())) {
+	    			temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());    			
+	    		}
     		}
 	    	
 	        
@@ -364,29 +428,6 @@ public class SummerNoteController {
 		    		if (file.isDirectory()) {
 		    			temp.mkdir();
 		    		} else {
-		    			 // 파일 복사를 위해 FileInputStream과 FileOutputStream을 생성합니다.
-//		    			FileInputStream fis = null;
-//		    			FileOutputStream fos = null;
-//		    			try {
-//		    				fis = new FileInputStream(file);
-//		    				fos = new FileOutputStream(temp);
-//		    				byte[] b = new byte[4096];
-//		    				int cnt = 0;
-//		    				while ((cnt = fis.read(b)) != -1) {
-//		    					  // 버퍼를 사용하여 파일 내용을 읽고 복사합니다.
-//		    					fos.write(b, 0, cnt);
-//		    				}
-//		    			} catch (Exception e) {
-//		    				e.printStackTrace();
-//		    			} finally {
-//		    				try {
-//		    					//FileInputStream과 FileOutputStream을 닫습니다.
-//		    					fis.close();
-//		    					fos.close();
-//		    				} catch (IOException e) {
-//		    					e.printStackTrace();
-//		    				}
-//		    			}
 		    			if (temp != null) {
 		                    try {
 		                        // 파일 복사
