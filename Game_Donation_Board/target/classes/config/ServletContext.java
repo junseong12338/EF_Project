@@ -13,23 +13,20 @@ import com.korea.board.AdminController;
 import com.korea.board.BoardController;
 import com.korea.board.KakaoLoginController;
 import com.korea.board.NaverLoginController;
-
+import com.korea.board.NoticeController;
 import com.korea.board.ProfileController;
 import com.korea.board.ProjectController;
 import com.korea.board.ProjectDetailController;
 import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
-import dto.ProjectStatusDTO;
+import dao.NoticeDAO;
 import service.KakaoLoginService;
 import service.NaverLoginService;
 import service.ProfileService;
 import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
-import com.korea.board.ProjectController;
-
-import service.ProjectService;
 
 
 @Configuration
@@ -74,7 +71,7 @@ public class ServletContext implements WebMvcConfigurer {
 	}
 	
 	@Bean
-	public AdminController adminController(ProjectService projectService,UserService userService) {
+	public AdminController adminController(ProjectService projectService,UserService userService ) {
 		return new AdminController(projectService,userService);
 	}
 	
@@ -96,6 +93,9 @@ public class ServletContext implements WebMvcConfigurer {
 	        return resolver;
 	    }
 
-	 
+	 @Bean
+		public NoticeController noticeController(NoticeDAO noticeDAO) {
+			return new NoticeController(noticeDAO);
+		}
 
 }

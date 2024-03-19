@@ -2,7 +2,6 @@ package com.korea.board;
 
 import java.util.HashMap;
 import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -126,11 +125,13 @@ public class AdminController {
 
 	
    //정진수
-   //사이트 공지사항 작성 페이지
+   //운영자 공지사항 작성 페이지
    @RequestMapping("admin_notice_editor")
-   public String adminNoticeEditor() { 
+   public String adminNoticeEditor() {
      return Common.User.VIEW_PATH + "admin_notice_editor.jsp";
    }	 
+   
+   
    
   // 로그인체크 로그인이 안걸려있으면 ModelAndViewRedirectException예외생성
 	// redirect:/로 이동

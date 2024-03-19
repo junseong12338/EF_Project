@@ -15,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 public class ProjectDAO {
 	
 final SqlSession sqlSession;
-	
+	//----------------------------정진수
+
 	//프로젝트 시퀀스 번호 가져오기
 	public int select_next_idx() {
 		return sqlSession.selectOne("project.select_next_idx");
@@ -50,6 +51,20 @@ final SqlSession sqlSession;
 		return sqlSession.selectList("project.select_category",idx);
 	}
 	
+	//프로젝트 삭제
+	public int delete_project(int idx) {
+		return sqlSession.delete("project.delete_project",idx);
+	}
+	
+	//좋아요 삭제
+	public int delete_like(int idx) {
+		return sqlSession.delete("project.delete_like",idx);
+	}
+	
+	//도네이션 삭제
+	public int delete_donation(int idx) {
+		return sqlSession.delete("project.delete_donation",idx);
+	}
 	
 	//------------------------------------------------------------------ 성현 project_list
 	

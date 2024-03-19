@@ -3,6 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
+<!-- 정진수 -->
 	<select id="select_next_idx" resultType="int">
 		SELECT SEQ_EF_PROJECT_IDX.NEXTVAL
 		FROM DUAL
@@ -70,6 +71,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM EF_CATEGORY
 		WHERE PROJECT_IDX = #{idx}
 	</select> 
+	
+	<!-- 프로젝트 삭제 -->
+	<delete id="delete_project" parameterType="int">
+		DELETE FROM EF_PROJECT
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="delete_like" parameterType="int">
+		DELETE FROM EF_LIKE
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
+	
+	<!-- 도네이션 삭제 -->
+	<delete id="delete_donation" parameterType="int">
+		DELETE FROM EF_DONATION
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
 	
 	
 	<!-- 박성현 Start -->

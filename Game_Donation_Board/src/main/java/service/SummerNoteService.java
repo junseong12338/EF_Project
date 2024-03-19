@@ -108,7 +108,26 @@ public class SummerNoteService {
 	}
 	
 	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
-	public int insertAdminNotice(AdminNoticeDTO dto) {
+	public int deleteProject(int idx) {
+		
+		int res = projectDAO.delete_project(idx);
+		
+		if(res > 0) {
+			res = projectDAO.delete_categery(idx);
+			if(res>0) {
+				projectDAO.delete_like(idx);				
+				projectDAO.delete_donation(idx);
+					
+				return res;
+			}
+		}
+		
+		
+		return 0;
+	}
+	
+	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
+	public int insertAdminNotice(AdminNoticeDTO dto, String userEmail) {
 		
 		int idx = userDAO.select_admin_notice_next_idx();
 		if(idx >0) {
@@ -124,6 +143,31 @@ public class SummerNoteService {
 		}
 		
 		return -1;
+	}
+	
+	public int updateAdminNotice(AdminNoticeDTO dto, String userEmail) {
+		
+		String replace_editordata = dto.getAd_notice_content().replaceAll("/temp/", "/admin/"+dto.getAd_notice_idx()+"/");
+		
+		
+		dto.setAd_notice_content(replace_editordata);
+		
+		
+		
+		int res = userDAO.update_admin_notice(dto);
+		
+		return res;
+		
+	}
+	
+	//어드민 공지사항 삭제
+	public int deleteAdminNotice(int idx) {
+		return userDAO.deleteAdminNotice(idx);
+	}
+	
+	//어드민 공지사항 한건 가져오기
+	public AdminNoticeDTO selectAdminNoticeOne(int idx) {
+		return userDAO.selectAdminNoticeOne(idx);
 	}
 	
 }

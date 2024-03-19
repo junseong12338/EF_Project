@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Cyborg - Awesome HTML5 Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+<script>
+  function heart(n){
+		heart_check = n;
+		console.log("heart : " + heart);
+		
+		$.ajax({
+			url : "heart_ajax",
+			method : "GET",
+			data : {
+				project_idx : ${dto.project_idx},
+				like_cnt : ${dto.like_cnt},
+				heart_check : heart_check
+			},success : function(data){
+				console.log(data);
+				
+				let new_heart = data.heart_cnt;
+				
+				// 꽉 찬 하트를 클릭시, 빈 하트로 바꿔주기
+				if(n == -1){
+					$('.heart > a').attr('onclick', "heart(1)"); // 메서드 변경
+					$('.heart > a > img').attr('src', "resources/img/icons8-heart.png"); // 빈 하트 이미지
+					$('.heart > a > span').html("좋아요 $nbsp;"+new_heart); // 하트 수 갱신
+				// 빈 하트 클릭시, 꽉 찬 하트로 바꿔주기
+				}else if(n == 1){
+					$('.heart > a').attr('onclick', "heart(-1)"); // 메서드 변경
+					$('.heart > a > img').attr('src', "resources/img/icons8-heart-fill.png"); // 꽉찬 하트 이미지
+					$('.heart > a > span').html("좋아요 $nbsp;"+new_heart); // 하트 수 갱신
+				};
+			}
+		})
+	}
+
+</script>
+
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/logo.png" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Search End ***** -->
+                    <div class="search-input">
+                      <form id="search" action="#">
+                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+                        <i class="fa fa-search"></i>
+                      </form>
+                    </div>
+                    <!-- ***** Search End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="browse.html">Browse</a></li>
+                        <li><a href="details.html">Details</a></li>
+                        <li><a href="streams.html">Streams</a></li>
+                        <li><a href="profile.html" class="active">Profile <img src="assets/images/profile-header.jpg" alt=""></a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+
+          <!-- ***** Banner Start ***** -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="main-profile ">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <img src="assets/images/profile.jpg" alt="" style="border-radius: 23px;">
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="main-info header-text">
+                      <h4>프로젝트 제목</h4>
+                      <h6>&nbsp;작성자</h6>
+                      <br>
+                      <p>카테고리 1, 카테고리 2, 카테고리 3, 카테고리 4, 카테고리 5, ...</p>
+                      <br>
+                      <div class="main-border-button">
+                        <a href="#" >프로젝트 후원하기</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <ul>
+                      <li>모인금액 <span>3,000,000원 (100%)</span></li>
+                      <li>목표금액 <span>500,000 원</span></li>
+                      <li>기간 <span>start ~ end ( 15일 )</span></li>
+                      <li>
+                        <button>좋아요&nbsp; <span>숫자</span> </button>
+                        <i class="fa fa-check"></i>
+                        <button>신고</button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="clips">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="heading-section">
+                            <h4><em>Your Most Popular</em> Clips</h4>
+                          </div>
+                        </div>
+                        <div class="col-lg-12">
+                          <div class="main-border-button">
+                            <a href="#">프로젝트 내용</a>
+                            <a href="#">공지</a>
+                            <a href="#">리뷰</a>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="col-lg-12">
+                          <div>
+                            <div class="main-contentbox">
+                              <p>내용</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Banner End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
+          
+          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/tabs.js"></script>
+  <script src="assets/js/popup.js"></script>
+  <script src="assets/js/custom.js"></script>
+
+
+  </body>
+
+</html>

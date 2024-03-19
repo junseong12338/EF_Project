@@ -14,7 +14,8 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
+		
 		return new Class[] { Context_1_mybatis.class,Context_2_dao.class ,Context_3_fileupload.class,Context_4_AOP.class};
 	}
 	

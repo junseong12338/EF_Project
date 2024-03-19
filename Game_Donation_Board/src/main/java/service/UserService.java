@@ -34,6 +34,7 @@ public class UserService {
 	public int userUpdate(UserDTO dto) {
 		return userDAO.userUpdate(dto);
 	}
+	// --------------------------- 이준성
 	
 	public List<AdminNoticeDTO> admin_notice_list() {
 		return userDAO.admin_notice_list();

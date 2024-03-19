@@ -93,7 +93,7 @@
                                 <c:forEach items="${Main_Like_Project_list}" var="likeProject" varStatus="loop">
                                     <li style="display: flex; align-items: center;">
                                         <span>${loop.index + 1}</span>
-                                        <img src="${likeProject.user_img}" alt="" style="max-width: 46px; border-radius: 50%; margin-right: 15px;">
+                                        <img src="${likeProject.user_img}" style="max-width: 46px; border-radius: 50%; margin-right: 15px;">
                                         <h6 style="color: #fff;">${likeProject.user_name}</h6>
                                 <h6 style="color: #fff; display: flex; align-items: center; margin-left: auto; margin-right: 20px;">
 								    <img src="resources/img/icons8-heart-fill.png" style="margin-right: 5px;">${likeProject.project_like}
@@ -131,8 +131,8 @@
                                                     <a href="#">New</a>
                                                 </div>
                                                 <ul>
-                                                    <li><a href="#"> <img src="resources/img/icons8-heart-fill.png" style="margin-right: 5px;"></i> ${newRegistration.project_like}</a></li>
-                                                    <li><a href="#"><i class="fa fa-dollar" style="color: #fff"></i > 1000 % </a></li>
+                                                    <li><a href="#"><i class="fa fa-heart" style="color: #fff"></i> ${newRegistration.project_like}</a></li>
+                                                    <li><a href="#"><i class="fa fa-dollar" style="color: #fff"></i> 1000 % </a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -169,7 +169,7 @@
                         <c:forEach items="${Main_To_be_released_list}" var="TobeReleased">
                             <div class="item">
                                 <ul>
-                                    <li><img src="${TobeReleased.project_img}" class="templatemo-item"></li>
+                                    <li><img src="${TobeReleased.project_img}" style="width: 80px; height: 80px;" class="templatemo-item"></li>
                                     <li><h4>${TobeReleased.project_title}</h4><span>${TobeReleased.user_name}</span></li>
                                     <li><h4>공개 날짜</h4><span>${TobeReleased.project_start.substring(0, 10)}</span></li>
                                     <li></li>

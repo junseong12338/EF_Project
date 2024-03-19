@@ -135,7 +135,7 @@
                                         <li></li>
                                         <li> 
                                         	<div class="main-border-button">
-                                        		<a href="admin_notice_modify" style="margin-left: 55px;">공지 수정</a>
+                                        		<a href="admin_notice_modify?idx=${NoticeList.ad_notice_idx}" style="margin-left: 55px;">공지 수정</a>
                                         	</div>
                                         </li>
                                         <li><hr></li>

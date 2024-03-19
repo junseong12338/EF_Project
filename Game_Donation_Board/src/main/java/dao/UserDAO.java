@@ -116,4 +116,19 @@ public class UserDAO {
 	public int insert_admin_notice(AdminNoticeDTO dto) {
 		return sqlSession.insert("u.insert_admin_notice",dto);
 	}
+	
+	//공지사항 1건 가져오기
+	public AdminNoticeDTO selectAdminNoticeOne(int idx) {
+		return sqlSession.selectOne("u.selectOne_admin_notice",idx);
+	}
+	
+	//공지사항 수정
+	public int update_admin_notice(AdminNoticeDTO dto) {
+		return sqlSession.update("u.update_admin_notice",dto);
+	}
+	
+	//공지사항 삭제
+	public int deleteAdminNotice(int idx) {
+		return sqlSession.delete("u.delete_admin_notice",idx);
+	}
 }

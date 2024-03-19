@@ -11,6 +11,7 @@
 	
 	<typeAliases>
 		<typeAlias type="dto.ProjectMainListDTO" alias="mainlist"/>
+	<typeAlias type="dto.NoticeDTO" alias="notice"/>
 		<typeAlias type="dto.AdminInfoDTO" alias="admininfo"/>
 		<typeAlias type="dto.ProjectDTO" alias="project"/> 
 		<typeAlias type="dto.UserDTO" alias="user"/> 
@@ -24,7 +25,7 @@
 		<mapper resource="config/mybatis/mapper/user.xml" />
 		<mapper resource="config/mybatis/mapper/project.xml" />
 		<mapper resource="config/mybatis/mapper/detail.xml" />
-		<mapper resource="config/mybatis/mapper/profile.xml" />
-	</mappers>
-	
+		<mapper resource="config/mybatis/mapper/notice.xml" />
+		<mapper resource="config/mybatis/mapper/profile.xml"/>
+		</mappers>
 </configuration>

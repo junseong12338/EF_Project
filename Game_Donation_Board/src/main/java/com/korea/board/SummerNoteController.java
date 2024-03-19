@@ -78,6 +78,8 @@ public class SummerNoteController {
 		
 		ProjectDTO dto = summerNoteService.projectSelectOne(idx);
 		
+		
+		
 		//프로젝트번호 무결성체크
 		if(dto == null || userIdx != dto.getUser_idx()) {
 			return "redirect:/";
@@ -99,14 +101,43 @@ public class SummerNoteController {
 		return Common.project.VIEW_PATH + "project_modify.jsp";
 	}
 	
+	//운영자 공지사항 수정 페이지
+   @RequestMapping("admin_notice_modify")
+   public String adminNoticeModify(Model model, @RequestParam(value="idx", defaultValue="0") int idx) {
+	   if(idx == 0) {
+		   return "redirect:/";
+	   }
+	   	AdminNoticeDTO dto = summerNoteService.selectAdminNoticeOne(idx);
+	   
+	   if(dto == null) {
+		   return "redirect:/";
+	   }
+	   	
+	   	//temp폴더 경로
+	    String temp_folder = contextRoot + "temp/";
+	    //idx폴더 경로
+	    String idx_folder = contextRoot + "admin\\"+idx + "\\";;
+	    
+	    //idx폴더 안 editordata내용안, project_main_img에 이미지이름이 포함되어있는 파일만 
+	    //temp폴더로 복사
+	    fileUpload(idx_folder, temp_folder,dto);
+	   
+	    model.addAttribute("dto",dto);
+	    
+	    
+	   
+	   return Common.User.VIEW_PATH + "admin_notice_modify.jsp";
+   }
+	
 	/*
 	 * 글 작성중 이미지파일 등록 시 
 	 * temp폴더에 임시 이미지 등록
 	 */
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile)  {
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest sendRequest)  {
 		JsonObject jsonObject = new JsonObject();
+		
 		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 		
 		// 실질적인 파일 저장루트, 파일이름에 session으로 받은 유저 이메일을 이미지 이름에 포함하여 관리
@@ -171,6 +202,7 @@ public class SummerNoteController {
 		String project_main_img = sendRequest.getParameter("project_main_img");
 		String editordata = sendRequest.getParameter("editordata");
 		int user_idx = ((UserDTO)(sendRequest.getSession().getAttribute("user_email"))).getUser_idx();
+		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 		
 		
 		try {
@@ -209,7 +241,7 @@ public class SummerNoteController {
 		    fileUpload(temp_folder, idx_folder,dto);
 			
 		    //temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
-		    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+		    removeDummyFiles(getFileNamesFromFolder(temp_folder,userEmail), temp_folder);
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,6 +266,7 @@ public class SummerNoteController {
 		String project_main_img = sendRequest.getParameter("project_main_img");
 		String editordata = sendRequest.getParameter("editordata");
 		int user_idx = ((UserDTO)(sendRequest.getSession().getAttribute("user_email"))).getUser_idx();
+		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 		int project_idx = Integer.parseInt(sendRequest.getParameter("project_idx"));
 		
 		try {
@@ -264,14 +297,14 @@ public class SummerNoteController {
 			    String idx_folder = contextRoot + project_idx + "/";
 			    
 			    //idx폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
-			    removeDummyFiles(getFileNamesFromFolder(idx_folder), idx_folder);
+			    removeDummyFiles(getFileNamesFromFolder(idx_folder,userEmail), idx_folder);
 			    
 			    //temp폴더 안 editordata내용안, project_main_img에 이미지이름이 포함되어있는 파일만 
 			    //idx폴더로 복사
 			    fileUpload(temp_folder, idx_folder,dto);
 				
 			    //temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
-			    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+			    removeDummyFiles(getFileNamesFromFolder(temp_folder,userEmail), temp_folder);
 			}
 			
 		    
@@ -285,11 +318,58 @@ public class SummerNoteController {
 		return "redirect:/";
 	}
 	
+	//글 삭제 메서드
+	@RequestMapping("project_delete")
+	public String project_delete(@RequestParam(value="idx", defaultValue="0") int idx) {
+		int userIdx = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
+		
+		if(idx ==0) {
+			return "redirect:/";
+		}
+		
+		ProjectDTO dto = summerNoteService.projectSelectOne(idx);
+		
+		if(dto == null) {
+			return "redirect:/";
+		}
+		
+		if(dto.getUser_idx() != userIdx) {
+			return "redirect:/";
+		}
+		
+		try {
+			int res = summerNoteService.deleteProject(idx);
+			
+			if(res > 0) {
+				String idx_folder = contextRoot + idx + "/";
+				
+				File folder = new File(idx_folder);
+				
+				// 폴더 삭제
+		        if (folder.exists()) { // 폴더가 존재하는지 확인
+		            if (folder.isDirectory()) { // 폴더인지 확인
+		                deleteFolder(folder);
+		            } else {
+		                System.out.println("경로가 폴더가 아닙니다.");
+		            }
+		        } else {
+		            System.out.println("폴더가 존재하지 않습니다.");
+		        }
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";
+	}
+	
 	//공지사항 작성 메서드
 	@RequestMapping("admin_summernote_send")
 	public String adminNoticeSend(HttpServletRequest sendRequest) {
 		String admin_notice_title = sendRequest.getParameter("admin_notice_title");
 		String editordata = sendRequest.getParameter("editordata");
+		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 		
 		AdminNoticeDTO dto = new AdminNoticeDTO();
 		
@@ -297,7 +377,7 @@ public class SummerNoteController {
 		dto.setAd_notice_content(editordata);
 		
 		try {
-			int idx = summerNoteService.insertAdminNotice(dto);
+			int idx = summerNoteService.insertAdminNotice(dto,userEmail);
 			
 			if(!(idx == -1)) {
 				// temp폴더 안 글작성에쓰인 이미지,파일을 
@@ -309,20 +389,105 @@ public class SummerNoteController {
 			    //idx폴더 경로
 			    String idx_folder = contextRoot + "admin\\"+idx + "\\";
 			    
-			    System.out.println("getFileNamesFromFolder(temp_folder) : " + getFileNamesFromFolder(temp_folder).toString());
+			    
 			    
 			    //temp폴더 안 editordata내용안에 이미지이름이 포함되어있는 파일만 
 			    //idx폴더로 복사
 			    fileUpload(temp_folder, idx_folder,dto);
 				
 			    //temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
-			    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+			    removeDummyFiles(getFileNamesFromFolder(temp_folder,userEmail), temp_folder);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return "redirect:/"; 
+	}
+	
+	//공지사항 수정 메서드
+	@RequestMapping("admin_summernote_modify")
+	public String admin_summernote_modify(HttpServletRequest sendRequest) {
+		int admin_notice_idx = Integer.parseInt(sendRequest.getParameter("admin_notice_idx"));
+		String admin_notice_title = sendRequest.getParameter("admin_notice_title");
+		String editordata = sendRequest.getParameter("editordata");
+		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
+		
+		
+		AdminNoticeDTO dto = new AdminNoticeDTO();
+		
+		dto.setAd_notice_idx(admin_notice_idx);
+		dto.setAd_notice_title(admin_notice_title);
+		dto.setAd_notice_content(editordata);
+		
+		try {
+			int res = summerNoteService.updateAdminNotice(dto,userEmail);
+			
+			if(res > 0) {
+				// temp폴더 안 글작성에쓰인 이미지,파일을 
+				//idx번호로된 폴더를 만들어 파일복사 후 
+				//temp폴더 안 더미 데이터 삭제
+				
+				//temp폴더 경로
+			    String temp_folder = contextRoot + "temp\\";
+			    //idx폴더 경로
+			    String idx_folder = contextRoot + "admin\\"+admin_notice_idx + "\\";
+			    
+			   
+			    
+			    //idx폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
+			    removeDummyFiles(getFileNamesFromFolder(idx_folder,userEmail), idx_folder);
+			    
+			    //temp폴더 안 editordata내용안에 이미지이름이 포함되어있는 파일만 
+			    //idx폴더로 복사
+			    fileUpload(temp_folder, idx_folder,dto);
+				
+			    //temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
+			    removeDummyFiles(getFileNamesFromFolder(temp_folder,userEmail), temp_folder);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/";
+	}
+	
+	//공지사항 삭제 메서드
+	@RequestMapping("admin_notice_delete")
+	public String admin_notice_delete(@RequestParam(value="idx", defaultValue="0") int idx) {
+		
+		if(idx < 1) {
+			return "redirect:/";
+		}
+		
+		
+		
+		if(summerNoteService.selectAdminNoticeOne(idx) == null) {
+			return "redirect:/";			
+		}
+		
+		int res = summerNoteService.deleteAdminNotice(idx);
+		
+		if(res > 0) {
+			String idx_folder = contextRoot + "admin\\"+idx + "\\";
+			//File객체 생성
+			File folder = new File(idx_folder);
+			
+			// 폴더 삭제
+	        if (folder.exists()) { // 폴더가 존재하는지 확인
+	            if (folder.isDirectory()) { // 폴더인지 확인
+	                deleteFolder(folder);
+	            } else {
+	                System.out.println("경로가 폴더가 아닙니다.");
+	            }
+	        } else {
+	            System.out.println("폴더가 존재하지 않습니다.");
+	        }
+		}
+			
+		
+		
+		return "redirect:/";
 	}
 	
 	/*
@@ -332,19 +497,23 @@ public class SummerNoteController {
 	@RequestMapping("pageOutDelete")
 	@ResponseBody
 	public void pageOutDelete() {
-		System.out.println("pageOutDelete");
+		
+		String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
 		//temp폴더 경로
-	    String temp_folder = contextRoot + "temp\\";
+		String temp_folder = contextRoot + "temp\\";
+		
+		
 		//temp폴더 안 글작성자의 email이 이름에포함된 모든 이미지파일 삭제
-	    removeDummyFiles(getFileNamesFromFolder(temp_folder), temp_folder);
+		removeDummyFiles(getFileNamesFromFolder(temp_folder,userEmail), temp_folder);
+		
 	}
 	
 	// temp폴더 안 session에 저장된 userEmail값이 이름에 포함된 이미지파일 이름을 리스트로 반환
-	private List<String> getFileNamesFromFolder(String folderName) {
+	private List<String> getFileNamesFromFolder(String folderName, String userEmail) {
 	    // 파일이름을 담을 리스트 객체
 	    List<String> fileNames = new ArrayList<>();
 	    //세션에 저장된 userEmail
-	    String userEmail = ((UserDTO)request.getSession().getAttribute("user_email")).getUser_email();
+	    
 	    
 	    // 폴더 경로 설정
 	    File folder = new File(folderName);
@@ -443,6 +612,21 @@ public class SummerNoteController {
 	    	}
 	}
 	
-	
-	
+	//폴더 삭제 메서드
+	public void deleteFolder(File folder) {
+			
+		File[] files = folder.listFiles(); // 폴더 내의 파일 목록 가져오기
+
+	    if (files != null) {
+	        for (File file : files) {
+	            if (file.isDirectory()) { // 폴더인 경우 재귀적으로 삭제
+	                deleteFolder(file);
+	            } else { // 파일인 경우 삭제
+	                file.delete();
+	            }
+	        }
+	    }
+	    folder.delete(); // 폴더 삭제
+	    System.out.println("폴더가 성공적으로 삭제되었습니다.");
+	}	
 }

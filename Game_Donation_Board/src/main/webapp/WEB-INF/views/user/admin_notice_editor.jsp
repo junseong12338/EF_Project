@@ -174,6 +174,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <script>
       $(document).ready(function () {
     	  
+       
+
         $("#summernote").summernote({
           height: 700, // 에디터 높이
           minHeight: null, // 최소 높이
@@ -340,6 +342,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     	$(window).on('unload', function() {
     	    // 더미 데이터 삭제 작업 수행
     	    $.ajax({
+    	    	
     	        url: "pageOutDelete",
     	        type: "POST",
     	        success: function(response) {

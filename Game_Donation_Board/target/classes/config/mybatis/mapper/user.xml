@@ -110,6 +110,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			''
 		)
 	</insert>
+	
+	<!-- 어드민 공지사항 한건 셀렉트 -->
+	<select id="selectOne_admin_notice" parameterType="int" resultType="adminNotice">
+		SELECT *
+		FROM EF_ADMIN_NOTICE
+		WHERE AD_NOTICE_IDX = #{idx}
+	</select>
+	
+	<!-- 어드민 공지사항 업데이트 -->
+	<update id="update_admin_notice" parameterType="adminNotice">
+		UPDATE EF_ADMIN_NOTICE SET
+		AD_NOTICE_TITLE = #{ad_notice_title},
+		AD_NOTICE_CONTENT = #{ad_notice_content}
+		WHERE AD_NOTICE_IDX = #{ad_notice_idx}
+	</update>
+	
+	<!-- 어드민 공지사항 삭제 -->
+	<delete id="delete_admin_notice" parameterType="int">
+		DELETE FROM EF_ADMIN_NOTICE
+		WHERE AD_NOTICE_IDX = #{idx}
+	</delete>
 </mapper>
 
 
