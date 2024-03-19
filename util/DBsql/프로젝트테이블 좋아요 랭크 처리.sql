@@ -25,20 +25,30 @@ ROLLBACK;
 
 -- √÷¡æ∫ª 
 SELECT A.*
-FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX ASC) AS "RANK_NO" ,C.DONATION_SUM
+FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (ORDER BY C.DONATION_RATE ASC, A.PROJECT_IDX ASC) AS "RANK_NO" ,C.DONATION_SUM, C.DONATION_RATE
         FROM EF_PROJECT A, (SELECT A.PROJECT_IDX, 
-                          COUNT(B.PROJECT_IDX) AS "LIKE_COUNT"
+                            COUNT(B.PROJECT_IDX) AS "LIKE_COUNT"
                             FROM EF_PROJECT A
                             LEFT JOIN EF_LIKE B ON A.PROJECT_IDX = B.PROJECT_IDX
                             GROUP BY A.PROJECT_IDX) B,
-                            (SELECT A.PROJECT_IDX, 
-                          SUM(B.DONATION_MONEY) AS "DONATION_SUM"
-                            FROM EF_PROJECT A
-                            LEFT JOIN EF_DONATION B ON A.PROJECT_IDX = B.PROJECT_IDX
-                            GROUP BY A.PROJECT_IDX)C
-        WHERE A.PROJECT_IDX = B.PROJECT_IDX AND
-            A.PROJECT_IDX = C.PROJECT_IDX) A
+                           (SELECT B.PROJECT_IDX, DONATION_SUM, 
+                            ROUND(B.DONATION_SUM / A.PROJECT_TARGET*100) AS DONATION_RATE
+                            FROM EF_PROJECT A,(SELECT A.PROJECT_IDX, 
+                                               SUM(B.DONATION_MONEY) AS "DONATION_SUM"
+                                               FROM EF_PROJECT A
+                                               LEFT JOIN EF_DONATION B ON A.PROJECT_IDX = B.PROJECT_IDX
+                                               GROUP BY A.PROJECT_IDX) B
+                            WHERE A.PROJECT_IDX = B.PROJECT_IDX)C
+        WHERE A.PROJECT_IDX = B.PROJECT_IDX 
+        AND A.PROJECT_IDX = C.PROJECT_IDX
+        AND A.PROJECT_IDX IN (SELECT PROJECT_IDX
+                              FROM EF_CATEGORY
+                              WHERE CATEGORY_IDX = 1)
+        ) A
 WHERE A.RANK_NO BETWEEN 1 AND 10;
 
 
-INSERT INTO EF_DONATION VALUES(1,3,50000);
+
+
+
+INSERT INTO EF_DONATION VALUES(1,35,20000);

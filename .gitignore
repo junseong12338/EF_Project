@@ -1,9 +1,8 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,windows
 
 ### Eclipse ###
-.metadata
+.metadata/
 bin/
 tmp/
 *.tmp
@@ -14,9 +13,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-# 특정 경로만 제외하고 받아옴
-!.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/Game_Donation_Board/resources
-
 
 # External tool builders
 .externalToolBuilders/
@@ -124,7 +120,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
+
+# End of https://www.toptal.com/developers/gitignore/api/eclipse,java,windows
 *.project
 *.properties
-Game_Donation_Board/.classpath
-Game_Donation_Board/target/
+Servers/

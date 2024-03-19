@@ -8,13 +8,14 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import context.Context_1_mybatis;
 import context.Context_2_dao;
 import context.Context_3_fileupload;
+import context.Context_4_AOP;
 
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
 	
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		// TODO Auto-generated method stub
-		return new Class[] { Context_1_mybatis.class,Context_2_dao.class ,Context_3_fileupload.class};
+		// TODO Auto-generated method stub	
+		return new Class[] { Context_1_mybatis.class,Context_2_dao.class ,Context_3_fileupload.class,Context_4_AOP.class};
 	}
 	
 	@Override

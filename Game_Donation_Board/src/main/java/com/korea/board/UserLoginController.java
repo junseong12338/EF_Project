@@ -29,7 +29,6 @@ public class UserLoginController {
 		if (dto == null) return "[{\"param\":\"no_email\"}]";
 		if (!dto.getUser_pw().equals(user_pw)) return "[{\"param\":\"no_pw\"}]";
 		
-		session.setMaxInactiveInterval(3600);
 		session.setAttribute("user_email", dto);
 	
 		return "[{\"param\":\"clear\"}]";
@@ -40,8 +39,8 @@ public class UserLoginController {
 	@RequestMapping("logout")
 	public String logout() {
 		
-		session.removeAttribute("user_email");
-		session.removeAttribute("accessToken");
+		session.invalidate();
+
  
 		return "redirect:board_list";
 	}
@@ -49,11 +48,16 @@ public class UserLoginController {
 	// 회원 가입
 	@RequestMapping("user_insert")
 	public String user_insert(UserDTO dto) {
+		
 		int res = userService.userInsert(dto);
 		
+	
+		
 		if (res > 0) {
+			dto.setUser_img("resources/assets/images/user.png");
 			session.setAttribute("user_email", dto);
 			return "redirect:board_list";
+			
 		}
 		
 		return null;

@@ -1,10 +1,16 @@
 package service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.ProjectDAO;
+import dao.UserDAO;
+import dto.AdminNoticeDTO;
+import dto.CategoryNumDTO;
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
 
@@ -13,36 +19,110 @@ public class SummerNoteService {
 	
 	final ProjectDAO projectDAO;
 	
-	//±Û ÀÛ¼º Ã³¸® ¸Þ¼­µå
+	final UserDAO userDAO;
+	
+	//ï¿½ï¿½ ï¿½Û¼ï¿½ Ã³ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
 	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
-	public int insertProject(String editordata) throws Exception {
+	public int insertProject(ProjectDTO dto) throws Exception {
 		
-		ProjectDTO dto = new ProjectDTO();
-		
-		dto.setUser_idx(0);
-		dto.setProject_title("1234556");
-		dto.setProject_start("2020-03-09");
-		dto.setProject_end("2020-03-29");
-		dto.setProject_target(10000000);
 		dto.setProject_status(0);
 		
 		
 		
-		int idx = projectDAO.select_idx();
+		
+		int idx = projectDAO.select_next_idx();
 		
 		if(idx > 0) {
-			
+			CategoryNumDTO categoryDTO = new CategoryNumDTO();
 			dto.setProject_idx(idx);
 			
-			String replace_editordata = editordata.replaceAll("/temp/", "/"+idx+"/");
+			String replace_editordata = dto.getProject_content().replaceAll("/temp/", "/"+idx+"/");
+			String reqlace_mainImg = dto.getProject_img().replaceAll("/temp/", "/"+idx+"/");
 			
 			dto.setProject_content(replace_editordata);
+			dto.setProject_img(reqlace_mainImg);
 			
 			
 			projectDAO.insert_project(dto);
 			
+			categoryDTO.setProject_idx(idx);
+			
+			for(int categoryNum : dto.getCategory_list()) {
+				categoryDTO.setCategory_idx(categoryNum);
+				projectDAO.insert_categoryNum(categoryDTO);
+			}
+			
 			return idx;
 		}
+		return -1;
+	}
+	
+	public ProjectDTO projectSelectOne(int idx) {
+		List<Integer> categoryNumList = new ArrayList<Integer>();
+
+		ProjectDTO projectDTO = projectDAO.selectOne_project(idx);
+		
+		List<CategoryNumDTO> categoryDTO = projectDAO.select_categoryNum(idx);
+		
+		
+		if(!categoryDTO.isEmpty()) {
+		
+			for(CategoryNumDTO dto : categoryDTO) {
+				categoryNumList.add(dto.getCategory_idx());
+			}
+			projectDTO.setCategory_list(categoryNumList);
+		}
+		
+		
+		
+		return projectDTO;
+	}
+	
+	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
+	public int updateProject(ProjectDTO dto) throws Exception {
+		
+		dto.setProject_status(0);
+		
+		
+			CategoryNumDTO categoryDTO = new CategoryNumDTO();
+			
+			
+			String replace_editordata = dto.getProject_content().replaceAll("/temp/", "/"+ dto.getProject_idx() +"/");
+			String reqlace_mainImg = dto.getProject_img().replaceAll("/temp/", "/"+ dto.getProject_idx() +"/");
+			
+			dto.setProject_content(replace_editordata);
+			dto.setProject_img(reqlace_mainImg);
+			
+			
+			int res = projectDAO.update_project(dto);
+			
+			projectDAO.delete_categery(dto.getProject_idx());
+			
+			for(int categoryNum : dto.getCategory_list()) {			
+				categoryDTO.setProject_idx(dto.getProject_idx());
+				categoryDTO.setCategory_idx(categoryNum);
+				projectDAO.insert_categoryNum(categoryDTO);
+			}
+			
+			return res;
+	}
+	
+	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
+	public int insertAdminNotice(AdminNoticeDTO dto) {
+		
+		int idx = userDAO.select_admin_notice_next_idx();
+		if(idx >0) {
+			String replace_editordata = dto.getAd_notice_content().replaceAll("/temp/", "/admin/"+idx+"/");
+			dto.setAd_notice_idx(idx);
+			dto.setAd_notice_content(replace_editordata);
+			
+			int res = userDAO.insert_admin_notice(dto);
+			
+			if(res > 0) {
+				return idx;
+			}
+		}
+		
 		return -1;
 	}
 	

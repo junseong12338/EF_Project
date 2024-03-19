@@ -3,15 +3,19 @@
 
 <configuration>
 	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
 		<setting name="cacheEnabled" value="false" />
 		<setting name="useGeneratedKeys" value="true" />
 		<setting name="defaultExecutorType" value="REUSE" />
 	</settings>
 	
 	<typeAliases>
-		
-		 <typeAlias type="dto.ProjectDTO" alias="project"/> 
-		  <typeAlias type="dto.UserDTO" alias="user"/> 
+		<typeAlias type="dto.ProjectMainListDTO" alias="mainlist"/>
+		<typeAlias type="dto.AdminInfoDTO" alias="admininfo"/>
+		<typeAlias type="dto.ProjectDTO" alias="project"/> 
+		<typeAlias type="dto.UserDTO" alias="user"/> 
+		<typeAlias type="dto.CategoryNumDTO" alias="categoryNum"/> 
+		<typeAlias type="dto.AdminNoticeDTO" alias="adminNotice"/> 
 		  
 		  
 	</typeAliases>
@@ -19,7 +23,8 @@
 	<mappers>
 		<mapper resource="config/mybatis/mapper/user.xml" />
 		<mapper resource="config/mybatis/mapper/project.xml" />
-		
+		<mapper resource="config/mybatis/mapper/detail.xml" />
+		<mapper resource="config/mybatis/mapper/profile.xml" />
 	</mappers>
 	
 </configuration>

@@ -4,10 +4,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+import dao.ProfileDAO;
 import dao.ProjectDAO;
 import dao.UserDAO;
 import service.KakaoLoginService;
 import service.NaverLoginService;
+import service.ProfileService;
 import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
@@ -31,8 +34,14 @@ public class Context_2_dao {
 		return new ProjectDAO(sqlSession);
 	}
 	
-	@Bean public SummerNoteService summerNoteService(ProjectDAO projectDAO) {
-		return new SummerNoteService(projectDAO);
+	@Bean
+	public ProfileDAO profileDAO(SqlSession sqlSession) {
+		return new ProfileDAO(sqlSession);
+	}
+	
+	
+	@Bean public SummerNoteService summerNoteService(ProjectDAO projectDAO, UserDAO userDAO) {
+		return new SummerNoteService(projectDAO,userDAO);
 	}
 	
 	@Bean
@@ -49,4 +58,15 @@ public class Context_2_dao {
     public KakaoLoginService kakaoLoginService() {
         return new KakaoLoginService();
     }
+	
+
+	@Bean
+	public ProfileService profileService(ProfileDAO profileDAO) {
+		return new ProfileService(profileDAO);
+	}
+	
+	
+
+	
+
 }
