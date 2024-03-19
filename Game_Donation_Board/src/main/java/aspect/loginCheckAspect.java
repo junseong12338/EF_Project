@@ -24,7 +24,8 @@ public class loginCheckAspect {
 	@Pointcut("execution(* com.korea.board.SummerNoteController.project_editor(..)) || "
 			+ "execution(* com.korea.board.SummerNoteController.project_modify(..)) ||"
 			+ "execution(* com.korea.board.ProfileController.mypage_view(..)) ||"
-			+ "execution(* com.korea.board.AdminController.adminNoticeEditor(..))")
+			+ "execution(* com.korea.board.AdminController.adminNoticeEditor(..)) ||"
+			+ "execution(* com.korea.board.SummerNoteController.adminNoticeModify(..))")
 	
     public void loginMethodExceution() {}
 	

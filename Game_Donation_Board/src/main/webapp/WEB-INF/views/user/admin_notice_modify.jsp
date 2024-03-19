@@ -111,6 +111,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               enctype="multipart/form-data"
               id="admin_notice_editor"
             >
+            <input type="hidden" id="admin_notice_idx" name="admin_notice_idx" value="${dto.ad_notice_idx}">
               
               <div id="project_editor">
                 <div class="title-box">
@@ -120,12 +121,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       type="text"
                       name="admin_notice_title"
                       id="admin_notice_title"
+                      value="${dto.ad_notice_title}"
                     />
                   </div>
                 </div>
 
                 <div class="content-box">
-                  <textarea id="summernote" name="editordata"></textarea>
+                  <textarea id="summernote" name="editordata">${dto.ad_notice_content}</textarea>
                 </div>
                 
                 
@@ -307,7 +309,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       
 
-      //작성완료 함수
+      //수정완료 함수
       function send(f) {
         const title = document.getElementById("admin_notice_title");
         const content = document.getElementById("summernote");
@@ -327,7 +329,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
         
         removeBeforeUnload();
-        f.action = "admin_summernote_send";
+        f.action = "admin_summernote_modify";
         f.submit();
       }
 

@@ -29,7 +29,8 @@ public class Common {
 		//각자 컴퓨터 이미지 기본경로 설정 
 		//예: C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : 이준성 학원 경로
 	    // C:\\Users\\junhyuk\\Desktop\\이준성\\공부\\GitHub\\EF_Project\\util\\ef_project_img" : 이준성 집 
-		public final static String IMG_ROOT = "C:\\Users\\Administrator\\Desktop\\바탕화면 정리\\yc\\EF_Project\\EF_Project\\util\\ef_project_img\\";
+		// C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img : 정진수 노트북
+		public final static String IMG_ROOT = "C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img\\";
 	}
 	
 	
