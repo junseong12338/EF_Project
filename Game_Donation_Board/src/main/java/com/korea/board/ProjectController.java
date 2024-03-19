@@ -151,6 +151,12 @@ public class ProjectController {
 			String persent_str  = String.format("%,d", persent);
 			list.get(i).setPersent(persent_str + " %");
 			
+			// donation
+			
+			 String donation_str = String.format("%,d",list.get(i).getProject_donation());
+			 
+			
+			
 			// 남은기간 dto.setDiff_date
 			now_date = sdf.parse(today);
 			start_date = sdf.parse(list.get(i).getProject_start());

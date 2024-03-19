@@ -28,6 +28,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{use_point}
 		)
 	</insert>
+	
+	<!-- review table selectList -->
+	<select id="select_review" resultType="review" parameterType="java.util.HashMap">
+		SELECT r.USER_IDX, REVIEW_CONTENT, REGDATE, u.USER_NAME, u.USER_IMG
+		FROM EF_REVIEW r INNER JOIN EF_USER u
+		ON r.USER_IDX = u.USER_IDX
+		WHERE PROJECT_IDX = #{project_idx}
+		ORDER BY REVIEW_IDX DESC
+	</select>
+	
 </mapper>
 
 

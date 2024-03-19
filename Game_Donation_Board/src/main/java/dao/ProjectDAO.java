@@ -9,6 +9,7 @@ import dto.AdminInfoDTO;
 import dto.CategoryNumDTO;
 import dto.ProjectDTO;
 import dto.ProjectMainListDTO;
+import dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -68,7 +69,7 @@ final SqlSession sqlSession;
 		return sqlSession.selectOne("project.user_name", user_idx);
 	}
 	
-	// ----------------------------------------------------------------- 성현 detail
+	// ----------------------------------------------------------------- 성현 detail.jsp
 	
 	// donation 테이블의 정보 가져오기 - sum (project_idx)
 	public int select_donation(int project_idx) {
@@ -105,7 +106,7 @@ final SqlSession sqlSession;
 		return sqlSession.insert("project.delete_heart", map_idx);
 	}
 	
-	
+	//--------------------------------------------------------------------------- 성현 detail_ajax.jsp
 	// EF_USER 테이블의 user_point 차감 - update
 	public int update_point(HashMap<String, Object> map) {
 		return sqlSession.update("d.update_point", map);
@@ -121,6 +122,11 @@ final SqlSession sqlSession;
 	// 후원한 적 NO
 	public int insert_donation(HashMap<String, Object> map) {
 		return sqlSession.insert("d.insert_donation", map);
+	}
+	
+	// review
+	public List<ReviewDTO> selectList_review(HashMap<String, Object> map){
+		return sqlSession.selectList("d.select_review", map);
 	}
 	
 	

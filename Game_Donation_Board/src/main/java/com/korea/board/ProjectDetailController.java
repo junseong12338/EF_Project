@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.DetailDTO;
 import dto.ProjectDTO;
+import dto.ReviewDTO;
 import dto.UserDTO;
 
 import dto.DetailDTO;
@@ -118,12 +119,17 @@ public class ProjectDetailController {
 											@RequestParam(value="project_idx") int project_idx) {
 		// ajax_detail?wanted=1&project_idx=3
 		
+		// content
 		ProjectDTO dto = projectService.selectOne(project_idx);
 		String content = dto.getProject_content();
 		
+		// review
+		List<ReviewDTO> list = projectService.selectList_review(project_idx);
+		
+		
 		model.addAttribute("wanted", wanted);
 		model.addAttribute("content", content);
-//		model.addAttribute("review", review);
+		model.addAttribute("list", list);
 		
 		return Common.project.VIEW_PATH + "detail_ajax.jsp";
 	}

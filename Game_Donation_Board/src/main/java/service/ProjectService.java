@@ -7,12 +7,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import dao.ProjectDAO;
 import dto.AdminInfoDTO;
 import dto.PageDTO;
 import dto.ProjectDTO;
 import dto.ProjectMainListDTO;
+import dto.ReviewDTO;
+import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import util.Common;
 
@@ -20,6 +25,9 @@ import util.Common;
 public class ProjectService {
 
 	final ProjectDAO projectDAO;
+	
+	@Autowired
+	HttpSession session;
 		
 	public ProjectDTO select_project(int idx) {
 		return projectDAO.selectOne_project(idx);
@@ -120,6 +128,7 @@ public class ProjectService {
 		return projectDAO.selectList(project_idx);
 	}
 	
+	//--------------------------------------------------------------------------- 성현 detail_ajax.jsp
 	// like 테이블의 정보 가져오기 (project_idx)
 	public int selectLike(int project_idx) {
 		return projectDAO.select_like(project_idx);
@@ -157,6 +166,67 @@ public class ProjectService {
 	// 후원한 적 NO
 	public int insert_donation(HashMap<String, Object> map) {
 		return projectDAO.insert_donation(map);
+	}
+	
+	
+	// review
+	public List<ReviewDTO> selectList_review(int project_idx){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
+		
+		// diff_date
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate now = LocalDate.now();
+		String today = now.format(formatter);
+		Date now_date = null;
+		Date regdate = null;
+		long diff = 0;
+		String diff_date = null;
+
+		if(dto_user != null) {
+			int user_idx = dto_user.getUser_idx();
+			
+			map.put("user_idx", user_idx);
+			map.put("project_idx", project_idx);
+			
+			List<ReviewDTO> list = projectDAO.selectList_review(map);
+			
+			for(int i = 0; i < list.size(); i++) {
+				
+				try {
+					now_date = sdf.parse(today);
+					regdate = sdf.parse(list.get(i).getRegdate());
+					diff = now_date.getTime() - regdate.getTime();
+					String diff_day = String.format("d일 전", diff / (24*60*60*1000) );
+					String diff_hour = String.format( "d시간 전", diff / (60*60*1000) );
+					String diff_min = String.format( "d분 전", diff / (60*1000) );
+					String diff_sec = String.format("d초 전", diff / (1000) );
+							
+					
+					if(diff / ( 60*1000 ) < 1) {// 1분보다 작으면 초
+						diff_date = diff_sec;
+					}else if(diff / ( 60*60*1000 ) < 1) {// 1시간보다 작으면 분
+						diff_date = diff_min;
+					}else if(diff / ( 24*60*60*1000 ) < 1) {// 1일보다 작으면 시
+						diff_date = diff_hour;
+					}else {// 아니면 일
+						diff_date = diff_day;
+					}
+					
+					list.get(i).setDiff_date(diff_date);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			return list;
+		}
+		
+		return null; 
 	}
 	
 		

@@ -93,6 +93,67 @@
     position: relative;
     overflow: hidden;
 }
+
+
+.review-register {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    height: 60px;
+    margin: 14px 0px 0px;
+    padding: 0px 20px;
+    background: #1f2122;
+    border: 1px solid rgb(240, 240, 240);
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 12px, rgba(0, 0, 0, 0.03) 0px 0.8px 0px;
+    font: 400 14px / 24px "Noto Sans KR";
+    color: rgb(158, 158, 158);
+}
+
+.review-register-btn{
+	width: 32px;
+    height: 32px;
+}
+
+.item {
+    padding: 28px 16px 16px 16px;
+}
+
+.user-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 auto;
+    max-width: 100%;
+}
+
+.img {
+    display: inline-block;
+    background-size: cover;
+    background-position: 50% 38%;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    box-shadow: rgb(208, 208, 208) 0px 0px 1px 0px inset, rgb(208, 208, 208) 0px 0px 1px 0px;
+    margin-right: 0px;
+    margin-top: 5px;
+}
+
+.regdate-row {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+
 </style>
 
 <script>
