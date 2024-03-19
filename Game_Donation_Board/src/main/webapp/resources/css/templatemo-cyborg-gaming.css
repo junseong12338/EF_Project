@@ -1,4 +1,4 @@
-/*
+/* /*
 
 TemplateMo 579 Cyborg Gaming
 
@@ -6,7 +6,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
 */
 
-/* ---------------------------------------------
+---------------------------------------------
 Table of contents
 ------------------------------------------------
 01. font & reset css
@@ -19,18 +19,18 @@ Table of contents
 08. contact
 09. footer
 
---------------------------------------------- */
-/* 
+---------------------------------------------
+
 ---------------------------------------------
 font & reset css
 --------------------------------------------- 
-*/
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900");
-/* 
+
 ---------------------------------------------
 reset
 --------------------------------------------- 
-*/
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, div
 pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q,
 s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
@@ -116,11 +116,11 @@ img {
   overflow: hidden;
 }
 
-/* 
+
 ---------------------------------------------
 Global Styles
 --------------------------------------------- 
-*/
+
 html,
 body {
   background: #1f2122;
@@ -226,11 +226,11 @@ section {
   text-decoration: underline;
 }
 
-/* 
+
 ---------------------------------------------
 Pre-loader Style
 --------------------------------------------- 
-*/
+
 
 .js-preloader {
   position: fixed;
@@ -328,11 +328,11 @@ Pre-loader Style
 
 
 
-/* 
+
 ---------------------------------------------
 Header Style
 --------------------------------------------- 
-*/
+
 
 .background-header {
   background-color: #fff !important;
@@ -766,11 +766,10 @@ Header Style
   }
 }
 
-/* 
+
 ---------------------------------------------
 Banner Style
 --------------------------------------------- 
-*/
 
 
 .main-banner {
@@ -800,11 +799,11 @@ Banner Style
   color: #ec6090;
 }
 
-/* 
+
 ---------------------------------------------
 Most Popular Style
 --------------------------------------------- 
-*/
+
 
 .most-popular {
   margin-top: 60px;
@@ -869,11 +868,11 @@ Most Popular Style
   margin-bottom: -53px;
 }
 
-/* 
+
 ---------------------------------------------
 Gaming Library Style
 --------------------------------------------- 
-*/
+
 
 .gaming-library {
   margin-top: 60px;
@@ -935,11 +934,11 @@ Gaming Library Style
   margin-bottom: -53px;
 }
 
-/* 
+
 ---------------------------------------------
 Footer Style
 --------------------------------------------- 
-*/
+
 
 footer p {
   text-align: center;
@@ -957,11 +956,11 @@ footer p a:hover {
   color: #ec6090;
 }
 
-/* 
+
 ---------------------------------------------
 Featured Games Style
 --------------------------------------------- 
-*/
+
 
 .featured-games {
   border-radius: 23px;
@@ -1135,11 +1134,11 @@ Featured Games Style
   font-size: 15px;
 }
 
-/* 
+
 ---------------------------------------------
 Start Stream Style
 --------------------------------------------- 
-*/
+
 
 .start-stream .heading-section {
   margin-top: 60px;
@@ -1165,11 +1164,11 @@ Start Stream Style
   margin-top: 30px;
 }
 
-/* 
+
 ---------------------------------------------
 Live Stream Style
 --------------------------------------------- 
-*/
+
 
 .live-stream {
   margin-top: 60px;
@@ -1268,11 +1267,11 @@ Live Stream Style
   margin-bottom: -53px;
 }
 
-/* 
+
 ---------------------------------------------
 Featured Banner Style
 --------------------------------------------- 
-*/
+
 
 .feature-banner .thumb {
   position: relative;
@@ -1296,11 +1295,11 @@ Featured Banner Style
   color: #ec6090;
 }
 
-/* 
+
 ---------------------------------------------
 Game Details Style
 --------------------------------------------- 
-*/
+
 
 .game-details h2 {
   font-size: 45px;
@@ -1393,11 +1392,11 @@ Game Details Style
   width: 100%;
 } 
 
-/* 
+
 ---------------------------------------------
 Other Related Style
 --------------------------------------------- 
-*/
+
 
 .other-games {
   border-radius: 23px;
@@ -1451,11 +1450,11 @@ Other Related Style
   color: #ec6090;
 }
 
-/* 
+
 ---------------------------------------------
 Top Streamers Style
 --------------------------------------------- 
-*/
+
 
 .top-streamers {
   border-radius: 23px;
@@ -1516,11 +1515,11 @@ Top Streamers Style
   padding: 8px 20px;
 }
 
-/* 
+
 ---------------------------------------------
 Profile Style
 --------------------------------------------- 
-*/
+
 
 .main-profile {
   border-radius: 23px;
@@ -1632,11 +1631,11 @@ Profile Style
   text-align: center;
 }
 
-/* 
+
 ---------------------------------------------
 Responsive Style
 --------------------------------------------- 
-*/
+
 
 body {
   overflow-x: hidden;
@@ -1733,4 +1732,4 @@ body {
   .gaming-library .item ul li {
     width: 16%;
   }
-}
+} */

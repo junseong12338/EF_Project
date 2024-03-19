@@ -15,10 +15,5 @@ public class UserDTO  {
 	private String user_content;
 	private String user_addr;
 	private int user_point;
-
 	private String user_social;
-	
-
-
-	
 }

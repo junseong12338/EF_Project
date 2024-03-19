@@ -125,6 +125,3 @@ $RECYCLE.BIN/
 *.project
 *.properties
 Servers/
-Game_Donation_Board/.classpath/
-Game_Donation_Board/target/
-Game_Donation_Board/.settings/

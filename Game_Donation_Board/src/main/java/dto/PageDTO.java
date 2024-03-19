@@ -1,8 +1,10 @@
 package dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class PageDTO {
 	// 최소 페이지 번호
 		private int min;
@@ -35,7 +37,7 @@ public class PageDTO {
 			}
 			prevPage = min -1;
 			nextPage = max + 1;
-
+			
 		}
 	
 }

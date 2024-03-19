@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.ProjectDAO;
+import dao.UserDAO;
+import dto.AdminNoticeDTO;
 import dto.CategoryNumDTO;
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class SummerNoteService {
 	
 	final ProjectDAO projectDAO;
+	
+	final UserDAO userDAO;
 	
 	//�� �ۼ� ó�� �޼���
 	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
@@ -101,6 +105,25 @@ public class SummerNoteService {
 			}
 			
 			return res;
+	}
+	
+	@Transactional(rollbackFor=Exception.class, propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
+	public int insertAdminNotice(AdminNoticeDTO dto) {
+		
+		int idx = userDAO.select_admin_notice_next_idx();
+		if(idx >0) {
+			String replace_editordata = dto.getAd_notice_content().replaceAll("/temp/", "/admin/"+idx+"/");
+			dto.setAd_notice_idx(idx);
+			dto.setAd_notice_content(replace_editordata);
+			
+			int res = userDAO.insert_admin_notice(dto);
+			
+			if(res > 0) {
+				return idx;
+			}
+		}
+		
+		return -1;
 	}
 	
 }

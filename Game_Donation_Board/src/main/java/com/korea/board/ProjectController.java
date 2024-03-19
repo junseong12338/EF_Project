@@ -1,10 +1,10 @@
 package com.korea.board;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,11 +122,7 @@ public class ProjectController {
 		
 		dto.setCategory_list(category);
 		
-		System.out.println(category);
-		System.out.println(sort);
-		System.out.println(sort_date);
 		
-
 		int list_count = projectService.selectOne(dto);
 		
 		int total_page_count = (int)Math.ceil(list_count / (double)PAGE_PROJECT_COUNT);
@@ -137,52 +133,37 @@ public class ProjectController {
 		
 		int persent = 0;
 		String diff_date = "";
-		long diff = 0;
 		
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		
-		Date now = new Date();
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate now = LocalDate.now();
+		String today = now.format(formatter);
+		Date start_date = null;
+		Date end_date = null;
+		Date now_date = null;
 		
 		for(int i = 0; i < list.size(); i++) {
 			// 퍼센트 dto.setPersent
-			persent = list.get(i).getProject_donation() / list.get(i).getProject_target();
+			persent = ((int)((double)list.get(i).getProject_donation() / (double)list.get(i).getProject_target()*100));
 			String persent_str  = String.format("%,d", persent);
 			list.get(i).setPersent(persent_str + " %");
 			
 			// 남은기간 dto.setDiff_date
-			Date start_date = sdf.parse(list.get(i).getProject_start());
+			now_date = sdf.parse(today);
+			start_date = sdf.parse(list.get(i).getProject_start());
+			end_date = sdf.parse(list.get(i).getProject_end());
 			
-			Date end_date = sdf.parse(list.get(i).getProject_end());
-			
-			if(now.getTime() > start_date.getTime()) {
-				diff = end_date.getTime() - now.getTime();
-			}else if(now.getTime() > end_date.getTime()){
-				diff = -1;
-			}
-			
-			if(now.getTime() > end_date.getTime()) {
-				diff = -1;
-			}else if(now.getTime() > start_date.getTime()) {
-				diff = end_date.getTime() - now.getTime();
-			}else{
-				diff = 0;
-			}
-			
-			if(diff == 0) {
+			if(now_date.getTime() < start_date.getTime()) {
 				diff_date = "진행예정";
-			}else if(diff == -1){
+			}else if(now_date.getTime() > end_date.getTime()){
 				diff_date = "마감";
 			}else {
-				diff_date = String.format("%d 일", ( diff / (24 * 60 * 60 * 1000L) ) % 365);
+				diff_date = String.format("%d 일", ( end_date.getTime() - now_date.getTime() ) / (24*60*60*1000) );
 			}
 			
 			list.get(i).setDiff_date(diff_date);
-			
+
 		}
-		
-		
 		
 		// 바인딩
 		model.addAttribute("total_page_count", total_page_count);

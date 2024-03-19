@@ -121,10 +121,11 @@
     <title>Cyborg - Awesome HTML5 Template</title>
 
     <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="resources/css/fontawesome.css">
-    <link rel="stylesheet" href="resources/css/templatemo-cyborg-gaming.css">
-    <link rel="stylesheet" href="resources/css/owl.css">
-    <link rel="stylesheet" href="resources/css/animate.css">
+    <link rel="stylesheet" href="resources/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="resources/assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="resources/assets/css/owl.css">
+    <link rel="stylesheet" href="resources/assets/css/animate.css">
+    
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
@@ -228,7 +229,7 @@
       </div>
     </div>
   </div>
-  <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
+  
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -247,34 +248,24 @@
                     </form>
                 </div>
                  <button onclick="kakaoPay(this.form)" id="kakao-pay" class="payment-button">
-                  <img src="./resources/images/카카오페이.jpg" alt="카카오페이">
+                  <img src="./resources/assets/images/카카오페이.jpg" alt="카카오페이">
                 </button>
                 <button onclick="kgpay(this.form)" id="KG이니시스" class="KG이니시스">
-                <img src="./resources/images/KG이니시스.jpg" alt="KG이니시스">
+                <img src="./resources/assets/images/KG이니시스.jpg" alt="KG이니시스">
               </button>
               </div><br>
             </div>
             </div>
         </div>
     </div>
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
-          
-          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
-        </div>
-      </div>
-    </div>
-  </footer>
+  
 
-  <script src="resources/jquery/jquery.min.js"></script>
-  <script src="resources/js/bootstrap.min.js"></script>
-  <script src="resources/js/isotope.min.js"></script>
-  <script src="resources/js/owl-carousel.js"></script>
-  <script src="resources/js/tabs.js"></script>
-  <script src="resources/js/popup.js"></script>
-  <script src="resources/js/custom.js"></script>
+ <script src="resources/assets/jquery/jquery.min.js"></script>
+  <script src="resources/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="resources/assets/js/isotope.min.js"></script>
+  <script src="resources/assets/js/owl-carousel.js"></script>
+  <script src="resources/assets/js/tabs.js"></script>
+  <script src="resources/assets/js/popup.js"></script>
+  <script src="resources/assets/js/custom.js"></script>
 </body>
 </html>

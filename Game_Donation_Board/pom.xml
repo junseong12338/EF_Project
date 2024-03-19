@@ -99,8 +99,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>5.1.20.RELEASE</version>
 		</dependency>
-
-
+		
 		<!-- guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -137,6 +136,11 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version> <!-- 최신 버전을 확인하여 업데이트하세요 -->
 		</dependency>
 		<!-- Logging -->
 		<dependency>

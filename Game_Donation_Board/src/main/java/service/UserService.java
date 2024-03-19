@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 	final UserDAO userDAO;
-
+// --------------------------- 이준성
 	public UserDTO checkEmail(String user_email) {
 		return userDAO.checkEmail(user_email);
 	}
@@ -31,6 +31,7 @@ public class UserService {
 	public int userUpdate(UserDTO dto) {
 		return userDAO.userUpdate(dto);
 	}
+	// --------------------------- 이준성
 	
 	public int userDelete(int idx) {
 		return userDAO.userDelete(idx);
@@ -39,6 +40,10 @@ public class UserService {
 	public int userPointUpdate(UserDTO dto) {
 		return userDAO.userPointUpdate(dto);
 	}
+	
+	public UserDTO selectName(int user_idx) {
+		return userDAO.selectOne(user_idx);
+	}
 
 	
 	  public UserDTO selectOne(int idx) {
@@ -46,11 +51,12 @@ public class UserService {
 		  
 	  }
 	  
-	  public List<ProjectDTO> ProjectList() { 
+	  // --------- 이영찬
+	  public List<ProjectDTO> ProjectList(int userIdx) { 
 		  // 실제로는 데이터베이스에서 프로젝트 목록을 조회하여 반환하는코드가 들어갑니다. 
-		  List<ProjectDTO> list = userDAO.selectProjectList();
+		  List<ProjectDTO> list = userDAO.selectProjectList(userIdx);
 //		  System.out.println(list); 
-		  return userDAO.selectProjectList(); 
+		  return list; 
 	}
 	  
 	  // 후원 금액 
@@ -58,5 +64,13 @@ public class UserService {
 		  List<DonationDTO> list = userDAO.selectdonationList(); 
 		  return userDAO.selectdonationList(); 
 	}
+	  
+	//-------------- 정진수
+	  
+	 //유저 이미지 업데이트
+	 public int updateUserImg(UserDTO dto) {
+		 
+		 return userDAO.userImgUpdate(dto);
+	 }
 	 
 }

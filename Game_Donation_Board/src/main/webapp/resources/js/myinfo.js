@@ -1,91 +1,56 @@
-//실시간으로 이메일 형식 유효성 검사
-function validateEmail(input) {
-    const email = input.value;
-    const emailError = document.getElementById('email-error');
-    const re = /\S+@\S+\.\S+/;
-    if (!re.test(email)) {
-        emailError.textContent = '올바른 이메일 주소를 입력하세요.';
-    } else {
-        emailError.textContent = '';
-    }
-}
 
-// 전체 폼 데이터 검증, 이메일 주소 형식이 올바르지 않으면 DB로 전송 막음.
-function validateForm() {
-    const emailInput = document.getElementById('email');
-    const emailError = document.getElementById('email-error');
-
-    // 이메일 주소 유효성 검사
-    const re = /\S+@\S+\.\S+/;
-    if (!re.test(emailInput.value)) {
-        emailError.textContent = '올바른 이메일 주소를 입력하세요.';
-        return false; // 폼 제출 방지
-    } else {
-        emailError.textContent = ''; // 에러 메시지 초기화
-        return true; // 폼 제출 허용
-    }
-}
 
 function sample4_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-             
                 var roadAddr = data.roadAddress; // 도로명 주소 변수
-              /*   var extraRoadAddr = ''; */ // 참고 항목 변수
-
-       
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                  /*   extraRoadAddr += data.bname; */
-                }
-             
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                  /*  extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName); */
-                }
-             
-                /* if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                } */
-
                 document.getElementById('sample4_postcode').value = data.zonecode;
                 document.getElementById("sample4_roadAddress").value = roadAddr;
-              /*   document.getElementById("sample4_jibunAddress").value = data.jibunAddress; */
-                
-                if(roadAddr !== ''){
-              /*       document.getElementById("sample4_extraAddress").value = extraRoadAddr; */
-                } else {
-                    document.getElementById("sample4_extraAddress").value = '';
-                }
-
                 var guideTextBox = document.getElementById("guide");
-
-                if(data.autoRoadAddress) {
-                /*     var expRoadAddr = data.autoRoadAddress + extraRoadAddr; */
-                  /*   guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')'; */
-                  /*   guideTextBox.style.display = 'block'; */
-
-                } else {
-                   /*  guideTextBox.innerHTML = ''; */
-                   /*  guideTextBox.style.display = 'none'; */
-                }
             }
         }).open();
     }
 
+	let name_check = false;
+	
+	function checkName(f) {
+    let user_name = f.user_name.value.trim();
+    // 이름이 공백인 경우
+    if (user_name === '') {
+        let span = document.getElementById("check_name");
+        span.innerHTML = "이름을 입력해주세요.";
+        name_check = false; // 이메일 유효성 검사 결과를 false로 설정
+        return; // 함수 종료
+    } else {
+        let span = document.getElementById("check_name");
+        span.innerHTML = "";
+        name_check = true;
+    }
+}
+	
 
+function updatemyinfo(event,f) {
 
-
-	function addRess(f) {
-
-           
-		let user_addr = f.postal_code.value.trim() +  f.road_name.value.trim() +f.detailed_address.value.trim();
-
-		
-	    f.user_addr.value = user_addr;
-	 // 폼 제출
+    console.log('실행됨');
+    let user_addr = f.postal_code.value.trim()+'/' + f.road_name.value.trim()+'/' + f.detailed_address.value.trim();
+    let user_name = f.user_name.value.trim();
+	
+	checkName(f);
+	
+    if (name_check) {
+    
+        f.user_name.value = user_name;
+        console.log(user_name);
+        f.user_addr.value = user_addr;
         f.action = "address_update";
         f.method = "POST";
-        f.submit();
-	}
+        return true; // 기본 동작 중단하지 않음
+    }else{
+        event.preventDefault(); // 폼 제출 기본 동작 막기
+    	return false; 
+    }
+    
+}		
 	
 	function deleteAccount(form) {
 	    // 회원 탈퇴를 확인하고 진행할 수 있는 다이얼로그나 로직을 추가할 수 있습니다.
@@ -95,3 +60,4 @@ function sample4_execDaumPostcode() {
 	        form.submit();
 	    }
 	}
+	

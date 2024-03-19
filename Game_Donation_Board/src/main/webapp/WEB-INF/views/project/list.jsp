@@ -32,15 +32,15 @@
 }
 
 .image-container {
-        width: 246px;
-        height: 300px;
-        overflow: hidden;
-      }
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
 
-      .image-container img {
-        width: 100%;
-        height: 100%;
-      }
+.image-container img {
+  width: 100%;
+  height: 100%;
+}
 </style>
 	
 <script>
