@@ -3,6 +3,7 @@ package config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -12,6 +13,7 @@ import com.korea.board.AdminController;
 import com.korea.board.BoardController;
 import com.korea.board.KakaoLoginController;
 import com.korea.board.NaverLoginController;
+import com.korea.board.NoticeController;
 import com.korea.board.ProfileController;
 import com.korea.board.ProjectController;
 import com.korea.board.ProjectDetailController;
@@ -19,8 +21,10 @@ import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
 import dto.ProjectStatusDTO;
+import dao.NoticeDAO;
 import service.KakaoLoginService;
 import service.NaverLoginService;
+import service.ProfileService;
 import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
@@ -31,6 +35,7 @@ import service.ProjectService;
 
 @Configuration
 @EnableWebMvc
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ServletContext implements WebMvcConfigurer {
 	
 	@Override
@@ -59,13 +64,14 @@ public class ServletContext implements WebMvcConfigurer {
 		return new KakaoLoginController(userService,kakaoLoginService);
 	}
 	
-	@Bean SummerNoteController summerNoteController(SummerNoteService summerNoteService) {
+	@Bean 
+	public SummerNoteController summerNoteController(SummerNoteService summerNoteService) {
 		return new SummerNoteController(summerNoteService);
 	}
 	
 	@Bean
-	public ProfileController profileController(UserService userService) {
-		return new ProfileController(userService);
+	public ProfileController profileController(UserService userService, ProfileService profileService) {
+		return new ProfileController(userService, profileService);
 	}
 	
 	@Bean
@@ -91,6 +97,9 @@ public class ServletContext implements WebMvcConfigurer {
 	        return resolver;
 	    }
 
-	
+	 @Bean
+		public NoticeController noticeController(NoticeDAO noticeDAO) {
+			return new NoticeController(noticeDAO);
+		}
 
 }

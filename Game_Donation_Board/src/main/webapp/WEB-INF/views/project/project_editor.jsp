@@ -90,6 +90,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         display: flex;
         justify-content: space-between;
       }
+      
+      td{       
+	    width: 150px;
+	    height: 30px;
+      }
+      
+      
     </style>
   </head>
   <body style="font-family: 'Montserrat', sans-serif">
@@ -155,36 +162,52 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         id="main_image_show"
                       />
                     </div>
-                    메인이미지를 선택해주세요 :
-                    <input
-                      type="file"
-                      name="main_image"
-                      id="main_image"
-                      onchange="main_image_send()"
-                    />
+                    <div class="main-border-button">
+			          	<a href="javascript: js(); event.preventDefault();"><label for="main_image" id="file_label">이미지 선택</label></a>
+			          	<input
+		                      type="file"
+		                      name="main_image"
+		                      id="main_image"
+		                      onchange="main_image_send()"
+		                      style="display: none;"
+		                    />
+			        </div>
                   </div>
                   <div class="category-container">
-                    카테고리 설정<br />
-                    <input type="checkbox" name="category" value="1" />
-                    1 &nbsp;
-                    <input type="checkbox" name="category" value="2" />
-                    2<br />
-                    <input type="checkbox" name="category" value="3" />
-                    3 &nbsp;
-                    <input type="checkbox" name="category" value="4" />
-                    4<br />
-                    <input type="checkbox" name="category" value="5" />
-                    5 &nbsp;
-                    <input type="checkbox" name="category" value="6" />
-                    6<br />
-                    <input type="checkbox" name="category" value="7" />
-                    7 &nbsp;
-                    <input type="checkbox" name="category" value="8" />
-                    8<br />
-                    <input type="checkbox" name="category" value="9" />
-                    9 &nbsp;
-                    <input type="checkbox" name="category" value="10" />
-                    10<br />
+                    <table>
+                      <caption> 카테고리 설정</caption>
+                    <tr>
+                      <td> <input type="checkbox" name="category" value="1" />
+                        1인칭</td>
+                      <td><input type="checkbox" name="category" value="2" />
+                        레이싱</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" value="3" />
+                        생존</td>
+                      <td><input type="checkbox" name="category" value="4" />
+                        슈팅</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" value="5" />
+                        스포츠</td>
+                      <td><input type="checkbox" name="category" value="6" />
+                        액션</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" value="7" />
+                        오픈 월드</td>
+                      <td> <input type="checkbox" name="category" value="8" />
+                        전략</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="category" value="9" />
+                        전투</td>
+                      <td><input type="checkbox" name="category" value="10" />
+                        타워 디펜스</td>
+                    </tr>
+                    </table>
+                    
                   </div>
                 </div>
                 <div class="submit-button">
@@ -231,6 +254,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
       $(document).ready(function () {
+    	  
         // 현재 날짜를 가져오는 함수
         function getCurrentDate() {
           const today = new Date();
@@ -273,9 +297,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             // 줄간격
             ["height", ["height"]],
             // 그림첨부, 링크만들기, 동영상첨부
-            ["insert", ["picture", "link", "video"]],
+            ["insert", ["picture","video"]],
             // 코드보기, 확대해서보기, 도움말
-            ["view", ["codeview", "fullscreen", "help"]],
+            ["view", ["help"]],
           ],
           // 추가한 글꼴
           fontNames: [
@@ -294,6 +318,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           //콜백함수
           callbacks: {
             onImageUpload: function (files, editor, welEditable) {
+              console.log("callbacks함수 호출");
               //파일 다중 업로드
               for (var i = files.length - 1; i >= 0; i--) {
                 uploadSummernoteImageFile(files[i], this);
@@ -338,7 +363,43 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             processData: false,
           });
         }
-      });
+        $(".btn.btn-primary.note-btn.note-btn-primary.note-video-btn").attr("id","video_btn");
+        
+      	//썸머노트 동영상 링크 처리
+        $(document).on('click', '#video_btn', function(){
+          // 주어진 YouTube URL
+          const url = $(".note-video-url").val();
+          // YouTube 동영상 ID를 추출하는 정규표현식
+          var videoIdRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+
+          // 동영상 ID 추출
+          var match = url.match(videoIdRegex);
+          var videoId = match && match[1];
+          
+          //URL유효성 검사
+
+          const iframeUrl = "https://www.youtube.com/embed/" + videoId;
+
+          console.log("videoId : " + videoId);
+          var iframe = $('<iframe>', {
+              src: iframeUrl, // 아이프레임의 소스 URL
+              frameborder: '0', // 테두리 없음
+              width: '100%', // 가로 크기 설정
+              height: '500px' // 세로 크기 설정
+          });
+
+          if(!(videoId === null)){
+        	  console.log("1");
+          	$('.note-editable').append(iframe);
+        	  $(".note-video-url").val("");    	  
+          }else{
+        	  console.log("2");
+        	  alert('올바르지않는 형식입니다.');
+        	  $(".note-video-url").val("");    	  
+          }
+        })
+
+      });//도큐먼트 레디 닫히는부분
 
       //메인이미지(썸네일) 등록 ajax함수
       function main_image_send() {
@@ -427,7 +488,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           category.focus();
           return;
         }
-
+		
+        removeBeforeUnload();
         f.action = "summernote_send";
         f.submit();
       }
@@ -458,6 +520,28 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         const futureDateInput = document.getElementById("end_date");
         futureDateInput.min = year + "-" + month + "-" + day;
       }
+      
+      function removeBeforeUnload() {
+          $(window).off('beforeunload');
+      }
+      
+      $(window).on('beforeunload', function() {
+    	    return "정말로 벗어나시겠습니까?";
+    	});
+
+    	$(window).on('unload', function() {
+    	    // 더미 데이터 삭제 작업 수행
+    	    $.ajax({
+    	        url: "pageOutDelete",
+    	        type: "POST",
+    	        success: function(response) {
+    	            console.log("더미 데이터 삭제 성공");
+    	        },
+    	        error: function(xhr, status, error) {
+    	            console.error("더미 데이터 삭제 실패:", error);
+    	        }
+    	    });
+    	});
     </script>
   </body>
 </html>

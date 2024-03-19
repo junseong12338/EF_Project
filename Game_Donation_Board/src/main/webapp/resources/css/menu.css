@@ -44,3 +44,32 @@
     border: none; /* 기본적인 테두리를 없앱니다. */
     border-top: 1px solid #1a1a1a; /* 위쪽 테두리를 추가하여 수평선을 만듭니다. */
 }
+
+
+@media (max-width: 991px) {
+	 #dropdown-container {
+	        width: 200px; /* 원하는 너비로 설정하세요 */
+	}
+	.dropdown-list {
+	    display: none;
+	    position: fixed;
+	    left: 50%; /* 왼쪽 끝에서부터 가로 중앙으로 이동 */
+	    transform: translateX(-50%); /* 요소의 가로길이의 절반만큼 왼쪽으로 이동하여 가운데 정렬 */
+	    background-color: #fff;
+	    border: 1px solid #ccc;
+	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+	    padding: 10px 0px;
+	    margin-top: 8px; /* 드롭다운 메뉴와 트리거 사이의 간격 설정 */
+	    z-index: 1000; /* 다른 요소 위에 나타나도록 설정 */
+	    border-radius: 15px; /* 네모를 둥글게 조정 */
+	    text-align: center; /* 가운데 정렬을 위한 추가 */
+	}
+	
+	.dropdown-list hr {
+   		display: none;
+	}
+ 
+ 
+}
+
+}

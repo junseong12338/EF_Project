@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="profile">
+
+	<!-- 리뷰 갯수 카운트 -->
+	<select id="user_review_count" resultType="int" parameterType="int">
+ 		select count(*) from ef_review
+		where user_idx =#{user_idx}
+	</select>
+	
+	<!-- 후원한 프로젝트 내역 갯수 카운트 -->
+	<select id="user_Sponsored_Project_Details" resultType="int" parameterType="int">
+ 		select count(*) from ef_donation
+		where user_idx =#{user_idx}
+	</select>
+	
+	<!-- 등록한 프로젝트 갯수 카운트 -->
+	<select id="user_registered_project" resultType="int" parameterType="int">
+ 		select count(*) from ef_project
+		where user_idx =#{user_idx}
+	</select>
+	
+</mapper>

@@ -3,38 +3,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>EZ Funding</title>
-<!-- Bootstrap core CSS -->
-<link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Additional CSS Files -->
-<link rel="stylesheet" href="resources/assets/css/fontawesome.css">
-<link rel="stylesheet" href="resources/assets/css/templatemo-cyborg-gaming.css">
-<link rel="stylesheet" href="resources/assets/css/owl.css">
-<link rel="stylesheet" href="resources/assets/css/animate.css">
-<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-<link rel="stylesheet" href="resources/assets/css/side-bar.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800">
-<link rel="stylesheet" href="resources/css/adminList.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>EZ Funding</title>
+    <!-- Bootstrap core CSS -->
+    <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="resources/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="resources/assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="resources/assets/css/owl.css">
+    <link rel="stylesheet" href="resources/assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="resources/assets/css/side-bar.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800">
+    <link rel="stylesheet" href="resources/css/adminList.css">
 </head>
 <body style="font-family: 'Montserrat', sans-serif';">
 <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <div class="page-content" >
-                <!-- AdminPage 내용 -->
-                <div class="gaming-library">
+            <div class="page-content" id='status'>
+                <div class="gaming-library" id="admin-page-content">
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="heading-section">
-                                <h4><a href = "#" ><em>승인 대기</em> 프로젝트</a></h4>
+                                <h4>
+                                    <a href="javascript:void(0)" onclick="${status == 0 ? '' : 'fetchStatusData(\'AdminPage?page=1&status=0\')'}" style="${status == 0 ? 'color: #e75e8d; pointer-events: none;' : ''}">
+                                        ${status == 0 ? '<em>승인 대기</em>' : '승인 대기'} 프로젝트
+                                    </a>
+                                </h4>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="heading-section">
-                                <h4><a href = "#" >승인 완료 프로젝트</a></h4>
+                                <h4>
+                                    <a href="javascript:void(0)" onclick="${status == 0 ? 'fetchStatusData(\'AdminPage?page=1&status=1\')' : ''}" style="${status == 0 ? '' : 'color: #e75e8d; pointer-events: none;'}">
+                                        ${status == 1 ? '<em>승인 완료</em>' : '승인 완료'} 프로젝트
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="heading-section">
+                                <h4>
+                                    <a href="javascript:void(0)" style="color: #666; pointer-events: none;">
+                                       공지 사항 등록
+                                    </a>
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -46,13 +62,22 @@
                             <li></li>
                             <li></li>
                             <li>
-                                <div class="main-border-button">
-                                    <a href="#" onclick="toggleAllApprovalStatus()">전체 승인</a>
-                                </div>
+                                <c:choose>
+                                    <c:when  test="${status == 0}">
+                                        <div class="main-border-button">
+                                            <a href="javascript:void(0)" onclick="toggleAllApprovalStatus()">전체 선택</a>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="main-border-button">
+                                            <a href="javascript:void(0)" onclick="toggleAllRevertApprovalStatus()">전체 선택</a>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </li>
                         </ul>
                     </div>
-                    <div class="item" id="admin-page-content">
+                    <div class="item" >
                         <c:forEach items="${AdminInfo}" var="AdminInfo">
                             <ul style="text-align: center;">
                                 <li><img class="templatemo-item" src="${AdminInfo.project_img}" ></li>
@@ -73,9 +98,18 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <div class="main-border-button">
-                                        <a href="javascript:void(0)" onclick="toggleApprovalStatus(this)" data-project-idx="${AdminInfo.project_idx}" data-project-status="0">승인 대기</a>
-                                    </div>
+                                    <c:choose>
+                                        <c:when test="${status == 0}">
+                                            <div class="main-border-button">
+                                                <a href="javascript:void(0)" onclick="toggleApprovalStatus(this)" data-project-idx="${AdminInfo.project_idx}" data-project-status="0">승인 대기</a>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="main-border-button">
+                                                <a href="javascript:void(0)" onclick="toggleRevertApprovalStatus(this)" data-project-idx="${AdminInfo.project_idx}" data-project-status="1">해제 대기</a>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </li>
                             </ul>
                         </c:forEach>
@@ -83,38 +117,47 @@
                     <div class="pagination-container" id="pagination-container">
                         <ul>
                             <c:choose>
-                                <c:when test="${page.prevPage <= 0}">
-                                    <li><a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${page.prevPage}')">이전</a></li>
+                                <c:when test="${page.currentPage == 1}">
+                                    <li><a href="javascript:void(0)" style="pointer-events: none;"> &lt;&lt;</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${page.prevPage}')">이전</a></li>
+                                    <li><a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${page.prevPage+1}&status=${status}')"> &lt;&lt;</a></li>
                                 </c:otherwise>
                             </c:choose>
                             <c:forEach var='idx' begin="${page.min}" end="${page.max}">
                                 <li>
                                     <c:choose>
                                         <c:when test="${idx == page.currentPage}">
-                                            <a href="javascript:void(0)" style="color: #e75e8d; pointer-events: none;" onclick="fetchPageData('AdminPage?page=${idx}')">${idx}</a>
+                                            <a href="javascript:void(0)" style="color: #e75e8d; pointer-events: none;">${page.currentPage}</a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${idx}')">${idx}</a>
+                                            <a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${idx}&status=${status}')">${idx}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </li>
                             </c:forEach>
                             <c:choose>
-                                <c:when test="${page.max >= page.pageCnt}">
-                                    <li><a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${page.nextPage}')">다음</a></li>
+                                <c:when test="${page.max == page.currentPage}">
+                                    <li><a href="javascript:void(0)" style="pointer-events: none;">&gt;&gt;</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${page.nextPage}')">다음</a></li>
+                                    <li><a href="javascript:void(0)" onclick="fetchPageData('AdminPage?page=${page.nextPage-1}&status=${status}')"> &gt;&gt;</a></li>
                                 </c:otherwise>
                             </c:choose>
                         </ul>
                     </div>
-                    <div class="main-button">
-                        <a href="javascript:void(0)" onclick="applyApproval()">승인 적용</a>
-                    </div>
+                    <c:choose>
+                        <c:when test="${status == 0}">   
+                            <div class="main-button">
+                                <a href="javascript:void(0)" onclick="applyApproval(1, 'AdminPage?page=${page.currentPage}&status=${status}')">승인 적용</a>
+                            </div>       
+                        </c:when>
+                        <c:otherwise>
+                            <div class="main-button">  
+                                <a href="javascript:void(0)" onclick="applyApproval(0, 'AdminPage?page=${page.currentPage}&status=${status}')">해제 적용</a>
+                            </div>    
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
@@ -125,65 +168,5 @@
 <script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/adminList.js"></script>
 <script src="resources/js/httpRequest.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    // 페이지 버튼 클릭 이벤트에 대한 처리
-    $('.pagination-container a').on('click', function(event) {
-        event.preventDefault(); // 기본 동작 중단
-        var pageUrl = $(this).attr('href'); // 클릭된 페이지의 URL
-        fetchPageData(pageUrl);
-    });
-});
-
-function fetchPageData(pageUrl) {
-    // AJAX 호출을 통해 해당 페이지의 HTML 정보 요청
-    $.ajax({
-        type: 'GET',
-        url: pageUrl,
-        success: function(data) {
-        	event.preventDefault();
-            var itemHtml = $(data).find('#admin-page-content').html(); // .item 클래스를 가진 요소의 HTML 가져오기
-            var paginationHtml = $(data).find('.pagination-container').html(); // .pagination-container 클래스를 가진 요소의 HTML 가져오기
-            $('#admin-page-content').html(itemHtml); // .item 클래스를 가진 요소의 HTML을 페이지에 적용
-            $('#pagination-container').html(paginationHtml); // .pagination-container 클래스를 가진 요소의 HTML을 페이지에 적용
-        },
-        error: function(xhr, status, error) {
-            console.error('AJAX 호출이 실패하였습니다.');
-            // 실패 시 처리할 내용 추가
-        }
-    });
-}
-
-function applyApproval() {
-    var approvedProjects = document.querySelectorAll('.main-border-button a[data-project-status="1"]');
-    var approvedProjectData = [];
-
-    approvedProjects.forEach(function(project) {
-        var projectIdx = project.dataset.projectIdx;
-        var projectStatus = project.dataset.projectStatus;
-        approvedProjectData.push({ project_idx: projectIdx, project_status: projectStatus });
-    });
-
-    // JSON 형식으로 데이터 변환
-    var requestData = JSON.stringify(approvedProjectData);
-
-    // 서버로 POST 요청 전송
-    $.ajax({
-        type: "POST",
-        url: "Status",
-        contentType: "application/json", // 요청의 데이터 형식을 JSON으로 설정
-        data: requestData, // JSON 형식으로 변환된 데이터 전송
-        success: function(response) {
-            console.log("서버 요청이 성공적으로 전송되었습니다.");
-            alert("승인완료");
-            location.reload();            
-        },
-        error: function(xhr, status, error) {
-            console.error("서버 요청이 실패하였습니다.");
-            // 서버 요청이 실패한 경우에 대한 처리를 여기에 추가
-        }
-    });
-}
-</script>
 </body>
 </html>

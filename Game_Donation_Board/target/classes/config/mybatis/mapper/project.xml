@@ -81,13 +81,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								<!-- sort start --> 
 								<choose>
 									<when test="sort == 0">
-										ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX ASC
+										ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX DESC
 									</when>
 									<when test="sort == 1">
-										ORDER BY A.PROJECT_IDX ASC
+										ORDER BY A.PROJECT_IDX DESC
 									</when>
 									<when test="sort == 2">
-										ORDER BY C.PROJECT_DONATION DESC, A.PROJECT_IDX ASC
+										ORDER BY C.PROJECT_DONATION ASC, A.PROJECT_IDX DESC
 									</when>
 								</choose>
 								<!-- sort end -->
@@ -112,23 +112,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</foreach>
 				</if>
 				<!-- 반복 foreach end -->
-				) AL
-				
-			WHERE AL.PROJECT_STATUS = 1
-				
+				AND A.PROJECT_STATUS = 1
 				<!-- choose 기간 start -->
 				<choose>
 					<when test="sort_date == 1">
-						AND AL.PROJECT_START <![CDATA[<]]> SYSDATE AND AL.PROJECT_END <![CDATA[>]]> SYSDATE
+						AND A.PROJECT_START <![CDATA[<]]> SYSDATE AND A.PROJECT_END <![CDATA[>]]> SYSDATE
 					</when>
 					<when test="sort_date == 2">
-						AND AL.PROJECT_START <![CDATA[<]]> SYSDATE
+						AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
 					</when>
 					<when test="sort_date == 3">
-						AND AL.PROJECT_END <![CDATA[<]]> SYSDATE
+						AND A.PROJECT_END <![CDATA[<]]> SYSDATE
 					</when>
 				</choose>
 				<!-- choose 기간 end -->
+				) AL
+				
+				
 	</select>
 
 
@@ -139,13 +139,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								<!-- sort start --> 
 								<choose>
 									<when test="sort == 0">
-										ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX ASC
+										ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX DESC
 									</when>
 									<when test="sort == 1">
-										ORDER BY A.PROJECT_IDX ASC
+										ORDER BY A.PROJECT_IDX DESC
 									</when>
 									<when test="sort == 2">
-										ORDER BY C.PROJECT_DONATION DESC, A.PROJECT_IDX ASC
+										ORDER BY C.PROJECT_DONATION ASC, A.PROJECT_IDX DESC
 									</when>
 								</choose>
 								<!-- sort end -->
@@ -170,24 +170,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</foreach>
 				</if>
 				<!-- 반복 foreach end -->
-				) AL
-				
-			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
-				AND AL.PROJECT_STATUS = 1
-				
+				AND A.PROJECT_STATUS = 1
 				<!-- choose 기간 start -->
 				<choose>
 					<when test="sort_date == 1">
-						AND AL.PROJECT_START <![CDATA[<]]> SYSDATE AND AL.PROJECT_END <![CDATA[>]]> SYSDATE
+						AND A.PROJECT_START <![CDATA[<]]> SYSDATE AND A.PROJECT_END <![CDATA[>]]> SYSDATE
 					</when>
 					<when test="sort_date == 2">
-						AND AL.PROJECT_START <![CDATA[<]]> SYSDATE
+						AND A.PROJECT_START <![CDATA[>]]> SYSDATE
 					</when>
 					<when test="sort_date == 3">
-						AND AL.PROJECT_END <![CDATA[<]]> SYSDATE
+						AND A.PROJECT_END <![CDATA[<]]> SYSDATE
 					</when>
 				</choose>
 				<!-- choose 기간 end -->
+				) AL
+				
+			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
+				
 	</select>	
 	<!-- project-list End -->
 	
@@ -253,9 +253,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE USER_IDX = #{user_idx} AND PROJECT_IDX = #{project_idx}
 	</delete>
 	
-	
-	
-	
 	<!-- Detail End -->
 	<!-- 박성현 End -->
 	
@@ -263,58 +260,146 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 이준성 -->
 	<!-- 승인안된 모든 프로젝트 리스트 -->
 	<select id = "project_wait_count" resultType="int">
-		select count(*) from EF_PROJECT
+		SELECT 
+			count(*) 
+		FROM 
+			EF_PROJECT
+		WHERE 
+			project_status=#{status}
+		
 	</select>
 	
 	<select id = "getUserName" resultType="String">
-		select user_name from EF_USER
-		where user_idx =#{user_idx}
+		SELECT 
+			user_name 
+		FROM 
+			EF_USER
+		WHERE 
+			user_idx =#{user_idx}
+	</select>
+
+	
+	<!-- 관리자 페이징을 위한  승인 안된 리스트 -->
+	<select id = "getRowTotal" resultType="admininfo" parameterType="java.util.HashMap">		 
+		SELECT 
+			project_idx, p.user_idx, project_title, Project_status, project_img, project_start, project_end, u.user_name
+		FROM (
+		    SELECT 
+		    	project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end,
+	            ROW_NUMBER() OVER (ORDER BY project_idx) AS cnt
+		    FROM 
+		    	ef_project
+		    where 
+		    	project_status=#{status}
+		) p
+		JOIN 
+			EF_USER u ON p.user_idx = u.user_idx
+		WHERE 
+			p.cnt BETWEEN #{start} AND #{end}
 	</select>
 	
+	<!-- 관리자 페이징을 위한 승인 업데이트 -->
+	<update id="updateStatus" parameterType="java.util.HashMap">
+		UPDATE 
+			EF_PROJECT
+		SET
+			Project_Status = #{status}
+		WHERE
+			Project_idx = #{project_idx}
+	</update>
+
+	<!-- 최대 후원순 정렬 + 좋아요 -->
+	<select id="Main_donation_list" resultType="mainlist">
+		<![CDATA[
+			SELECT 
+			    project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end, user_name, user_img, project_target, donation_money, project_like
+			FROM (
+			    SELECT 
+			        p.project_idx, p.user_idx, p.project_title, p.Project_status, p.project_img, p.project_start, p.project_end, u.user_name, u.user_img, p.project_target, d.donation_money, l.project_like
+			    FROM 
+			        EF_PROJECT p
+			    JOIN 
+			        EF_USER u ON p.user_idx = u.user_idx
+			    LEFT JOIN 
+			        (SELECT project_idx, SUM(donation_money) as donation_money FROM EF_DONation GROUP BY project_idx) d ON p.project_idx = d.project_idx
+			    LEFT JOIN 
+			        (SELECT project_idx, COUNT(*) as project_like FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+			)
+			WHERE ROWNUM <= 6 and Project_status = 1
+		  ]]>
+	</select>
+		
+	<!-- 신규 등록 프로젝트 + 마감일 남은것들 + 좋아요 + 후원 금액 -->
+	<select id="Main_New_registration_list" resultType="mainlist">
+	    <![CDATA[
+		SELECT 
+		    project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end, user_name, user_img, project_target, donation_money, like_count
+		FROM (
+		    SELECT 
+		        p.project_idx, p.user_idx, p.project_title, p.project_status, p.project_img, p.project_start, p.project_end, u.user_name, u.user_img, p.project_target, d.donation_money, l.like_count
+		    FROM 
+		        EF_PROJECT p
+		    JOIN 
+		        EF_USER u ON p.user_idx = u.user_idx
+		    LEFT JOIN 
+		        (SELECT project_idx, SUM(donation_money) as donation_money FROM EF_DONation GROUP BY project_idx) d ON p.project_idx = d.project_idx
+		    LEFT JOIN 
+		        (SELECT project_idx, COUNT(*) as like_count FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+		    WHERE 
+		        ROWNUM <= 8 
+		        AND Project_status = 1
+		        AND p.project_start <= SYSDATE
+		        AND p.project_end >= SYSDATE
+		    ORDER BY project_idx DESC
+		)
+	    ]]>
+	</select>
+	
+	<!-- 등록 예정 프로젝트 -->
+	<select id="Main_To_be_released_list" resultType="mainlist">
+		SELECT 
+		    p.project_idx, p.user_idx, p.project_title, p.project_status, p.project_img, p.project_start, p.project_end, u.user_name
+		FROM 
+		    EF_PROJECT p
+		JOIN 
+		    EF_USER u ON p.user_idx = u.user_idx
+		WHERE 
+		    p.project_status = 1
+		    AND TRUNC(p.project_start) <![CDATA[>]]> TRUNC(SYSDATE)
+		ORDER BY 
+		    p.project_start DESC
+	</select>
+	
+	<!-- 추천 수 정렬 -->
+	<select id="Main_Like_Project_list" resultType="mainlist">
+		<![CDATA[
+			SELECT 
+			    project_idx, user_idx, Project_status,  user_name, user_img, project_like
+			FROM (
+			    SELECT 
+			        p.project_idx, p.user_idx, p.Project_status, u.user_name, u.user_img, l.project_like
+			    FROM 
+			        EF_PROJECT p
+			    JOIN 
+			        EF_USER u ON p.user_idx = u.user_idx
+			    LEFT JOIN 
+			        (SELECT project_idx, COUNT(*) as project_like FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+			    WHERE ROWNUM <= 5 
+			        AND Project_status = 1
+			        AND l.project_like IS NOT NULL 
+			    ORDER BY l.project_like DESC 
+			)
+		]]>
+	</select>	
+	<!-- 이준성 -->
+	
+	<!-- 이영찬 -->
 	<!-- 유저번호로 검색한 프로젝트 리스트 -->
 	<select id="userIdx_list" resultType="project">
 	SELECT * 
 	FROM EF_PROJECT
 	</select>
-	
-	<!-- 관리자 페이징을 위한 리스트 승인 안된것들 -->
-	<select id = "getRowTotal" resultType="admininfo" parameterType="java.util.HashMap">		 
-	SELECT project_idx, p.user_idx, project_title, Project_status, project_img, project_start, project_end, u.user_name
-	FROM (
-	    SELECT project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end,
-	           ROW_NUMBER() OVER (ORDER BY project_idx) AS cnt
-	    FROM ef_project
-	) p
-	JOIN EF_USER u ON p.user_idx = u.user_idx
-	WHERE p.cnt BETWEEN #{start} AND #{end}
-	</select>
-	
-	<update id="updateStatus" parameterType="int">
-	UPDATE EF_PROJECT
-	SET
-	Project_Status = 1
-	WHERE
-	Project_idx =#{project_idx}
-	
-	</update>
-
-	
-	<select id="Main_limit_list" resultType="project">
-	    <![CDATA[
-	        SELECT *
-	        FROM (
-	            SELECT *
-	            FROM ef_project
-	            WHERE project_status = 1
-	            ORDER BY project_idx DESC
-	        )
-	        WHERE ROWNUM <= 8
-	    ]]>
-	</select>
-	
-	
-
-	<!-- 이준성 -->
+	<!-- 이영찬 -->
 	
 </mapper>
 

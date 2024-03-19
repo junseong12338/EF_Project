@@ -50,15 +50,18 @@
         }
     });
 
-    // 창 크기 조정 이벤트
-    $(window).resize(function () {
-        let width = $(window).width();
-        if (width > 992 && $(window).width() < 992) {
-            location.reload();
-        } else if (width < 992 && $(window).width() > 992) {
-            location.reload();
-        }
-    });
+// 창 크기 조정 이벤트
+$(window).resize(function () {
+    let width = $(window).width();
+    let headerHeight = $('header').outerHeight();
+    if (width > 992 && $('.menu-trigger').hasClass('active')) {
+        $('.header-area .nav').slideDown(200);
+    } else if (width > 992 && !$('.menu-trigger').hasClass('active')) {
+        $('.header-area .nav').css('display', 'block');
+    } else if (width < 992 && $(window).width() > 992) {
+        location.reload();
+    }
+});
 
     // 메뉴 탭 이벤트
     $(document).on("click", ".naccs .menu div", function () {

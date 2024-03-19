@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import dto.AdminInfoDTO;
 import dto.CategoryNumDTO;
 import dto.ProjectDTO;
+import dto.ProjectMainListDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -125,24 +126,35 @@ final SqlSession sqlSession;
 	
 	//---------------------------------------------------------------------------------------이준성
 		
-	public int project_wait_count(){
-		return sqlSession.selectOne("project.project_wait_count");
+	public int project_wait_count(int status){
+		return sqlSession.selectOne("project.project_wait_count",status);
 	}
 
 	public List<AdminInfoDTO> getRowTotal(HashMap<String, Integer> map){
 		return sqlSession.selectList("project.getRowTotal", map);
 	}
-	public int updateStatus(int project_idx){
-		return sqlSession.update("project.updateStatus",project_idx);
+	public int updateStatus(HashMap<String, Integer> map){
+		return sqlSession.update("project.updateStatus",map);
 	}
 
 	public String getUserName(int user_idx) {
 		return sqlSession.selectOne("project.getUserName",user_idx);
 	}
 
-	public List<ProjectDTO> Main_limit_list(){
-		return sqlSession.selectList("project.Main_limit_list");
+	public List<ProjectMainListDTO> Main_New_registration_list(){
+		return sqlSession.selectList("project.Main_New_registration_list");
 	}
+	public List<ProjectMainListDTO> Main_donation_list(){
+		return sqlSession.selectList("project.Main_donation_list");
+	}
+	public List<ProjectMainListDTO> Main_To_be_released_list(){
+		return sqlSession.selectList("project.Main_To_be_released_list");
+	}
+	public List<ProjectMainListDTO> Main_Like_Project_list(){
+		return sqlSession.selectList("project.Main_Like_Project_list");
+	}
+
+
 	
 
 

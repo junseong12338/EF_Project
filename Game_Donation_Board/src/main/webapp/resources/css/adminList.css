@@ -33,4 +33,17 @@
 	  	backface-visibility:hidden;
 	}
 
+
+	#status h4 a {
+	   transition: color 0.4s ease; /* 색깔 변화에 대한 transition 설정 */
+	}
+	
+	#status h4 a:hover {
+	    color: #e75e8d; /* hover 시 색깔 변화 */
+	}
+	
+	#status h4 a {
+		text-decoration: none;
+		color: #666;
+	  }
 </style>

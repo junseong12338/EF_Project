@@ -12,6 +12,7 @@ import dao.ProjectDAO;
 import dto.AdminInfoDTO;
 import dto.PageDTO;
 import dto.ProjectDTO;
+import dto.ProjectMainListDTO;
 import lombok.RequiredArgsConstructor;
 import util.Common;
 
@@ -71,7 +72,7 @@ public class ProjectService {
 		int persent = 0;
 		
 		// persent
-		persent = ( donation / target ) * 100;
+		persent = (int)((double)donation / target*100);
 		String persent_str  = String.format("%,d", persent);
 		
 		String diff_date = "";
@@ -169,19 +170,30 @@ public class ProjectService {
 		return projectDAO.getUserName(user_idx);
 	}
 	
-	public PageDTO getContentCnt(int currentPage) {
-		int content_cnt = projectDAO.project_wait_count();
+	public PageDTO getContentCnt(int currentPage,int status) {
+		int content_cnt = projectDAO.project_wait_count(status);
 	PageDTO pageDTO = new PageDTO(content_cnt,currentPage,Common.Admin.BLOCKLIST,Common.Admin.BLOCKPAGE);
 		return pageDTO;
 		
 	}
 	
-	public int updateStatus (int project_idx) {
-		return projectDAO.updateStatus(project_idx);
+	public int updateStatus (HashMap<String, Integer> map) {
+		return projectDAO.updateStatus(map);
 	}
 	
-	public List<ProjectDTO> Main_limit_list(){
-		return projectDAO.Main_limit_list();
+	public List<ProjectMainListDTO> Main_New_registration_list(){
+		return projectDAO.Main_New_registration_list();
 	}
-
+	
+	public List <ProjectMainListDTO>Main_donation_list(){
+		return projectDAO.Main_donation_list();
+	}
+	public List <ProjectMainListDTO>Main_To_be_released_list(){
+		return projectDAO.Main_To_be_released_list();
+	}
+	
+	public List<ProjectMainListDTO> Main_Like_Project_list(){
+		return projectDAO.Main_Like_Project_list();
+	}
+	
 }
