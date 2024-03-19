@@ -23,8 +23,10 @@ public class ProjectDTO {
 	// sql에서 project_donation로 받아와야함 
 	private int project_donation;
 	
-
+	// 카테고리
 	private List<Integer> category_list;
+	// 케테고리 사이즈
+	private int category_list_size;
 	// 정렬
 	private int sort;
 	// 진행여부 날짜

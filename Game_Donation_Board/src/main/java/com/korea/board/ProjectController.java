@@ -70,6 +70,8 @@ public class ProjectController {
 							@RequestParam(defaultValue = "0", value="sort_date")int sort_date_js,
 							@RequestParam(required = true, value="category_box[]")List<String> category_js) throws Exception{
 		
+		long startTime = System.currentTimeMillis();
+		
 		// 변수를 넘겨주기위한 dto
 		ProjectDTO dto = new ProjectDTO();
 		
@@ -121,6 +123,7 @@ public class ProjectController {
 		}
 		
 		dto.setCategory_list(category);
+		dto.setCategory_list_size(category.size());
 		
 		
 		int list_count = projectService.selectOne(dto);
@@ -170,6 +173,10 @@ public class ProjectController {
 		model.addAttribute("list_count", list_count);
 		model.addAttribute("list", list);
 		model.addAttribute("page_num", page_num);
+		
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println(endTime - startTime);
 		
 		// ajax - 포워딩
 		return Common.project.VIEW_PATH + "list_ajax.jsp";

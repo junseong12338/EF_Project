@@ -76,118 +76,82 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- project-list Start -->
 	<!-- 리스트 총 개수 반환 -->
 	<select id="project_count" resultType="int" parameterType="project">
-		SELECT COUNT(AL.PROJECT_IDX)
-			FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (
-								<!-- sort start --> 
-								<choose>
-									<when test="sort == 0">
-										ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX DESC
-									</when>
-									<when test="sort == 1">
-										ORDER BY A.PROJECT_IDX DESC
-									</when>
-									<when test="sort == 2">
-										ORDER BY C.PROJECT_DONATION ASC, A.PROJECT_IDX DESC
-									</when>
-								</choose>
-								<!-- sort end -->
-								 ) AS "RANK_NO" , C.PROJECT_DONATION
-					FROM EF_PROJECT A,	( SELECT P.PROJECT_IDX, COUNT ( L.PROJECT_IDX ) AS "LIKE_COUNT"
-										FROM EF_PROJECT P LEFT JOIN EF_LIKE L 
-										ON P.PROJECT_IDX = L.PROJECT_IDX
-										GROUP BY P.PROJECT_IDX ) B ,	( SELECT P.PROJECT_IDX, SUM ( D.DONATION_MONEY ) AS "PROJECT_DONATION"
-																		FROM EF_PROJECT P LEFT OUTER JOIN EF_DONATION D
-																		ON P.PROJECT_IDX = D.PROJECT_IDX
-																		GROUP BY P.PROJECT_IDX ) C
-
-			WHERE A.PROJECT_IDX = B.PROJECT_IDX
-				AND A.PROJECT_IDX = C.PROJECT_IDX
-		
-				<!-- 반복 foreach start -->
-				<if test="category_list != null">
-					<foreach collection="category_list" item="c">
-					AND A.PROJECT_IDX IN ( SELECT PROJECT_IDX
-							FROM EF_CATEGORY
-							WHERE CATEGORY_IDX = #{c} )
-					</foreach>
-				</if>
-				<!-- 반복 foreach end -->
-				AND A.PROJECT_STATUS = 1
-				<!-- choose 기간 start -->
-				<choose>
-					<when test="sort_date == 1">
-						AND A.PROJECT_START <![CDATA[<]]> SYSDATE AND A.PROJECT_END <![CDATA[>]]> SYSDATE
-					</when>
-					<when test="sort_date == 2">
-						AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
-					</when>
-					<when test="sort_date == 3">
-						AND A.PROJECT_END <![CDATA[<]]> SYSDATE
-					</when>
-				</choose>
-				<!-- choose 기간 end -->
-				) AL
-				
-				
+		SELECT COUNT(PROJECT_IDX)
+		FROM EF_PROJECT 
+		WHERE PROJECT_STATUS = 1
+		<!-- 후원 기간 -->
+		<choose>
+		    <when test="sort_date == 1">
+		        AND PROJECT_START <![CDATA[<]]> SYSDATE AND PROJECT_END <![CDATA[>]]> SYSDATE
+		    </when>
+		    <when test="sort_date == 2">
+		       AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
+		    </when>
+		    <when test="sort_date == 3">
+		        AND A.PROJECT_END <![CDATA[<]]> SYSDATE
+		    </when>
+		</choose>
+		<!-- 카테고리 -->
+		<if test="category_list != null">
+	    AND PROJECT_IDX IN (SELECT PROJECT_IDX
+	                        FROM EF_CATEGORY
+	                        <foreach item="c" collection="category_list" open="WHERE" separator="OR" close="">
+	                            CATEGORY_IDX = #{c}
+	                        </foreach>
+	                        GROUP BY PROJECT_IDX
+	                        HAVING COUNT(CATEGORY_IDX) >= #{category_list_size}
+	                        )
+		</if>
 	</select>
 
 
 	<!-- 프로젝트 리스트 가져오기 -->
 	<select id="project_list" resultType="project" parameterType="project">
-		SELECT AL.*
-			FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (
-								<!-- sort start --> 
-								<choose>
-									<when test="sort == 0">
-										ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX DESC
-									</when>
-									<when test="sort == 1">
-										ORDER BY A.PROJECT_IDX DESC
-									</when>
-									<when test="sort == 2">
-										ORDER BY C.PROJECT_DONATION ASC, A.PROJECT_IDX DESC
-									</when>
-								</choose>
-								<!-- sort end -->
-								 ) AS "RANK_NO" , C.PROJECT_DONATION
-					FROM EF_PROJECT A,	( SELECT P.PROJECT_IDX, COUNT ( L.PROJECT_IDX ) AS "LIKE_COUNT"
-										FROM EF_PROJECT P LEFT JOIN EF_LIKE L 
-										ON P.PROJECT_IDX = L.PROJECT_IDX
-										GROUP BY P.PROJECT_IDX ) B ,	( SELECT P.PROJECT_IDX, SUM ( D.DONATION_MONEY ) AS "PROJECT_DONATION"
-																		FROM EF_PROJECT P LEFT OUTER JOIN EF_DONATION D
-																		ON P.PROJECT_IDX = D.PROJECT_IDX
-																		GROUP BY P.PROJECT_IDX ) C
-
-			WHERE A.PROJECT_IDX = B.PROJECT_IDX
-				AND A.PROJECT_IDX = C.PROJECT_IDX
+		SELECT p.project_idx, user_idx, project_title, project_content, project_img, project_start, project_end, project_target, NVL(l.like_count, 0) as like_count, NVL(d.project_donation, 0) as project_donation
+		FROM EF_PROJECT p 
+		LEFT OUTER JOIN LC l
+		ON p.project_idx = l.project_idx
+		LEFT OUTER JOIN DS d
+		ON p.project_idx = d.project_idx
 		
-				<!-- 반복 foreach start -->
-				<if test="category_list != null">
-					<foreach collection="category_list" item="c">
-					AND A.PROJECT_IDX IN ( SELECT PROJECT_IDX
-							FROM EF_CATEGORY
-							WHERE CATEGORY_IDX = #{c} )
-					</foreach>
-				</if>
-				<!-- 반복 foreach end -->
-				AND A.PROJECT_STATUS = 1
-				<!-- choose 기간 start -->
-				<choose>
-					<when test="sort_date == 1">
-						AND A.PROJECT_START <![CDATA[<]]> SYSDATE AND A.PROJECT_END <![CDATA[>]]> SYSDATE
-					</when>
-					<when test="sort_date == 2">
-						AND A.PROJECT_START <![CDATA[>]]> SYSDATE
-					</when>
-					<when test="sort_date == 3">
-						AND A.PROJECT_END <![CDATA[<]]> SYSDATE
-					</when>
-				</choose>
-				<!-- choose 기간 end -->
-				) AL
-				
-			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
-				
+		WHERE PROJECT_STATUS = 1
+		<!-- 후원 기간 -->
+		<choose>
+		    <when test="sort_date == 1">
+		        AND PROJECT_START <![CDATA[<]]> SYSDATE AND PROJECT_END <![CDATA[>]]> SYSDATE
+		    </when>
+		    <when test="sort_date == 2">
+		       AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
+		    </when>
+		    <when test="sort_date == 3">
+		        AND A.PROJECT_END <![CDATA[<]]> SYSDATE
+		    </when>
+		</choose>
+		<!-- 카테고리 -->
+		<if test="category_list != null">
+	    AND p.PROJECT_IDX IN (SELECT PROJECT_IDX
+	                        FROM EF_CATEGORY
+	                        <foreach item="c" collection="category_list" open="WHERE" separator="OR" close="">
+	                            CATEGORY_IDX = #{c}
+	                        </foreach>
+	                        GROUP BY PROJECT_IDX
+	                        HAVING COUNT(CATEGORY_IDX) >= #{category_list_size}
+	                        )
+		</if>
+		<!-- list scroll event range -->
+		AND ROWNUM BETWEEN #{start} AND #{end}
+		ORDER BY <choose>
+		            <when test="sort == 0">
+		                LIKE_COUNT DESC, p.PROJECT_IDX DESC
+		            </when>
+		            <when test="sort == 1">
+		                p.PROJECT_IDX DESC
+		            </when>
+		            <when test="sort == 2">
+		                PROJECT_DONATION DESC, p.PROJECT_IDX DESC
+		            </when>
+		        </choose>
+						
 	</select>	
 	<!-- project-list End -->
 	
@@ -311,7 +275,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 최대 후원순 정렬 + 좋아요 -->
 	<select id="Main_donation_list" resultType="mainlist">
 		<![CDATA[
-			SELECT 
+			SELECT
 			    project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end, user_name, user_img, project_target, donation_money, project_like
 			FROM (
 			    SELECT 
