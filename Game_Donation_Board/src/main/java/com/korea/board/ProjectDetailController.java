@@ -130,17 +130,6 @@ public class ProjectDetailController {
 											@RequestParam(value="project_idx") int project_idx) {
 		// ajax_detail?wanted=1&project_idx=3
 		
-		// 포워딩
-		return Common.project.VIEW_PATH + "detail.jsp";
-	}
-	
-	
-	// content ajax controller
-	@RequestMapping("detail_ajax")
-	public String ajax_detail(Model model, @RequestParam(value="wanted") int wanted,
-											@RequestParam(value="project_idx") int project_idx) {
-		// ajax_detail?wanted=1&project_idx=3
-		
 		// content
 		ProjectDTO dto = projectService.selectOne(project_idx);
 		String content = dto.getProject_content();
@@ -158,6 +147,7 @@ public class ProjectDetailController {
 	
 	// review register
 	@RequestMapping("review_register")
+	@ResponseBody
 	public void review_register(@RequestParam(value="user_idx") int user_idx,
 								@RequestParam(value="project_idx") int project_idx,
 								@RequestParam(value="input_content") String input_content) {

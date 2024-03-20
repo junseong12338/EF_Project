@@ -16,14 +16,14 @@
 					<a href="javascript:void(0)" onclick="register_review()"><img alt="등록" src="resources/img/icons8-register.png"></a>
 				</div>
 			</div>
-			<div class="review-list">
+			<div class="review-list" style="color: white;">
 				<c:forEach var="dto" items="${list }">
 				<div class="item">
 					<div class="user-row">
 						<img class="img" src="${dto.user_img }" alt="사용자 이미지">
 						<span>${dto.user_name }</span>
 					</div>
-					<div class="content-row">${dto.content }</div>
+					<div class="content-row">${dto.review_content }</div>
 					<div class="regdate-row">${dto.diff_date }</div>
 				</div>
 				</c:forEach>

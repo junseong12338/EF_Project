@@ -17,7 +17,7 @@
 		<typeAlias type="dto.UserDTO" alias="user"/> 
 		<typeAlias type="dto.CategoryNumDTO" alias="categoryNum"/> 
 		<typeAlias type="dto.AdminNoticeDTO" alias="adminNotice"/> 
-		  
+		<typeAlias type="dto.ReviewDTO" alias="review"/> 
 		  
 	</typeAliases>
 		

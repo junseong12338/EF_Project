@@ -29,7 +29,7 @@
     </style>
 </head>
 
-<body style="font-family: 'Montserrat', sans-serif;">
+<body >
 
 <%@ include file="menu.jsp" %>
 
@@ -57,7 +57,7 @@
                 <!-- ***** Featured Games Start ***** -->
                 <div class="row" style="margin-top: 30px;">
                     <div class="col-lg-8">
-                        <div class="featured-games header-text">
+                        <div class="featured-games header-text" style="height: 590px;">
                             <div class="heading-section">
                                 <h4><em>최다 후원</em> 프로젝트</h4>
                             </div>
@@ -72,10 +72,8 @@
                                                 <h6>달성 퍼샌트</h6>
                                             </div>
                                         </div>
-                                        <h4>&nbsp;${donation.project_title}<br><span style="color:  #999">&nbsp;${donation.user_name}</span></h4>
-                                        <ul>
-										<li> <i class="fa fa-dollar" style="color: #fff"></i>&nbsp; ${donation.donation_money}</li>
-                                        </ul>
+                                        <h4>&nbsp;${donation.project_title}<br><span style="color:  #999">&nbsp;${donation.user_name}<br>&nbsp;${donation.donation_money} &#8361;</span></h4>
+                                       
                                     </div>
                                 </c:forEach>
                             </div>
@@ -120,7 +118,7 @@
                     <div class="row">
                         <c:forEach items="${Main_New_registration_list}" var="newRegistration">
                             <div class="col-lg-3 col-sm-6">
-                                <div class="item">
+                                <div class="item" style="height: 440px;">
                                     <div class="thumb" >
                                         <a href="project_detail?project_idx=${newRegistration.project_idx}">
                                             <img src="${newRegistration.project_img}" style="width: 246px; height: 246px;">

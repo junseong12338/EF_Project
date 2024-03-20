@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SEQ_EF_REVIEW_IDX.NEXTVAL,
 			#{project_idx},
 			#{user_idx},
-			#{content},
-			SYSDATE
+			#{review_content},
+			TO_DATE(#{regdate},'yyyy-MM-dd HH24:mi:ss')
 		)
 	</insert>
 	

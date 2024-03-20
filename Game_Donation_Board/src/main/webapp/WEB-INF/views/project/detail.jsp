@@ -291,7 +291,7 @@
 		let input_content = document.getElementById("review-content").value;
 		let user_idx = document.getElementById("user_idx").value;
 		
-		if(user_idx = ''){
+		if(user_idx == ''){
 			alert("로그인 후 이용해주세요");
 			return;
 		}
@@ -355,9 +355,9 @@
                   </div>
                   <div class="col-lg-4">
                     <ul>
-                      <li>모인금액 <span>${dto.donation_str } 원 ( ${dto.persent} )</span></li>
+                      <li>모인금액 <span>${dto.donation_str } &#8361; ( ${dto.persent} )</span></li>
                       <li>남은기간 <span>${dto.diff_date }</span></li>
-                      <li>목표금액 <span>${dto.target_str } 원</span></li>
+                      <li>목표금액 <span>${dto.target_str } &#8361;</span></li>
                       
                       <li>펀딩 기간 <span>${dto.start } ~ ${dto.end }</span></li>
                       <li>

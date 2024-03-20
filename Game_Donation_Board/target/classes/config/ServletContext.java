@@ -20,6 +20,7 @@ import com.korea.board.ProjectDetailController;
 import com.korea.board.SummerNoteController;
 import com.korea.board.UserLoginController;
 
+import dto.ProjectStatusDTO;
 import dao.NoticeDAO;
 import service.KakaoLoginService;
 import service.NaverLoginService;

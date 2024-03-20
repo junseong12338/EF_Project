@@ -153,36 +153,6 @@ public class ProjectService {
 	public int update_point(HashMap<String, Object> map) {
 		return projectDAO.update_point(map);
 	}
-	
-	// EF_DONATION 테이블의 insert, update
-	// 사용자가 이 프로젝트에 후원한적이 있는지 체크
-	public int select_used(HashMap<String, Object> map) {
-		return projectDAO.select_used(map);
-	}
-	// 후원한 적 YES
-	public int update_donation(HashMap<String, Object> map) {
-		return projectDAO.update_donation(map);
-	}
-	// 후원한 적 NO
-	public int insert_donation(HashMap<String, Object> map) {
-		return projectDAO.insert_donation(map);
-	}
-	
-	// insert heart
-	public int insert_heart(HashMap<String, Object> map_idx) {
-		return projectDAO.insert_heart(map_idx);
-	}
-	
-	// delete heart
-	public int delete_heart(HashMap<String, Object> map_idx) {
-		return projectDAO.delete_heart(map_idx);
-	}
-	
-	// EF_USER 테이블의 user_point 차감 - update
-	public int update_point(HashMap<String, Object> map) {
-		return projectDAO.update_point(map);
-	}
-	
 	// EF_DONATION 테이블의 insert, update
 	// 사용자가 이 프로젝트에 후원한적이 있는지 체크
 	public int select_used(HashMap<String, Object> map) {
@@ -200,38 +170,38 @@ public class ProjectService {
 	public List<ReviewDTO> selectList_review(int project_idx){
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		UserDTO dto_user = (UserDTO)session.getAttribute("user_email");
 		
 		// diff_date
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate now = LocalDate.now();
-		String today = now.format(formatter);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		LocalDate now = LocalDate.now();
+//		String today = now.format(formatter);
+		Date currentDate = new Date(); // 현재 시간
 		Date now_date = null;
 		Date regdate = null;
 		long diff = 0;
 		String diff_date = null;
 
-		if(dto_user != null) {
-			int user_idx = dto_user.getUser_idx();
+		
 			
-			map.put("user_idx", user_idx);
 			map.put("project_idx", project_idx);
 			
 			List<ReviewDTO> list = projectDAO.selectList_review(map);
 			
 			for(int i = 0; i < list.size(); i++) {
-				
 				try {
-					now_date = sdf.parse(today);
+//					now_date = sdf.parse(today);
+					now_date = sdf.parse(sdf.format(currentDate));
 					regdate = sdf.parse(list.get(i).getRegdate());
 					diff = now_date.getTime() - regdate.getTime();
-					String diff_day = String.format("d일 전", diff / (24*60*60*1000) );
-					String diff_hour = String.format( "d시간 전", diff / (60*60*1000) );
-					String diff_min = String.format( "d분 전", diff / (60*1000) );
-					String diff_sec = String.format("d초 전", diff / (1000) );
+					String diff_day = String.format("%d일 전", diff / (24*60*60*1000) );
+					String diff_hour = String.format( "%d시간 전", diff / (60*60*1000) );
+					String diff_min = String.format( "%d분 전", diff / (60*1000) );
+					String diff_sec = String.format("%d초 전", diff / (1000) );
 							
-					
+					System.out.println("diff : " + diff);
+					System.out.println("now_date : " + now_date);
+					System.out.println("regdate : " + regdate);
 					if(diff / ( 60*1000 ) < 1) {// 1분보다 작으면 초
 						diff_date = diff_sec;
 					}else if(diff / ( 60*60*1000 ) < 1) {// 1시간보다 작으면 분
@@ -247,23 +217,28 @@ public class ProjectService {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				System.out.println("============================");
 				
 			}
 			
 			return list;
-		}
 		
-		return null; 
+		
+	
 	}
 	
 	// review register
 	public int insert_review(int user_idx, int project_idx, String input_content) {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentDate = new Date(); // 현재 시간
+		String now_date = sdf.format(currentDate);
 		ReviewDTO dto = new ReviewDTO();
+		System.out.println("now_date : " + now_date);
 		// 매개변수로 보낼 dto setting
 		dto.setUser_idx(user_idx);
 		dto.setProject_idx(project_idx);
-		dto.setContent(input_content);
+		dto.setReview_content(input_content);
+		dto.setRegdate(now_date);
 		
 		return projectDAO.insert_review(dto);
 	}

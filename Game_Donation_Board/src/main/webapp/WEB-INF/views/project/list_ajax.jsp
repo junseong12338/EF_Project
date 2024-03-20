@@ -18,13 +18,13 @@
 
 <c:forEach var="dto" items="${list }">
 	<div class="col-lg-3 col-sm-6">
-		<div class="item">
+		<div class="item" style="height: 440px">
 			<div class="image-container">
 				<a href="project_detail?project_idx=${dto.project_idx}">
 					<img src="${dto.project_img }" alt="프로젝트 이미지">
 				</a>
 			</div>
-			<h4>
+			<h4 style="max-width:120px">
 				${dto.project_title}
 				<br>
 				<span>${dto.project_author}</span>
@@ -40,7 +40,7 @@
 				</li>
 				<li>
 					<i class="fa fa-download"></i>
-					${dto.donation_str}&nbsp;원
+					${dto.donation_str}&nbsp; &#8361;
 				</li>
 			</ul>
 		</div>

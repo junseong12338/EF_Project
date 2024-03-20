@@ -11,7 +11,7 @@ public class ReviewDTO {
 	private String user_img;
 	private String user_name;
 	
-	private String content;
+	private String review_content;
 	private String regdate;
 	
 	// regdate - sysdate
