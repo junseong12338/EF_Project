@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.DetailDTO;
 import dto.ProjectDTO;
-import dto.ReviewDTO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import service.ProjectService;
-import service.ReviewService;
 import util.Common;
 
 @Controller
@@ -27,7 +25,6 @@ import util.Common;
 public class ProjectDetailController {
 	
 	final ProjectService projectService;
-	final ReviewService reviewService;
 	@Autowired
 	HttpSession session;
 	
@@ -119,42 +116,13 @@ public class ProjectDetailController {
 		
 		ProjectDTO dto = projectService.selectOne(project_idx);
 		String content = dto.getProject_content();
-		List<ReviewDTO> list = reviewService.selectList(project_idx);
-		System.out.println(list);
 		
-		model.addAttribute("list",list);
 		model.addAttribute("wanted", wanted);
 		model.addAttribute("content", content);
 		model.addAttribute("project_idx", project_idx);
 //		model.addAttribute("review", review);
 		
 		return Common.project.VIEW_PATH + "detail_ajax.jsp";
-	}
-	
-	@RequestMapping("insert")
-	public void insert(ReviewDTO dto,@RequestParam(value="project_idx") int project_idx) {
-		int res = reviewService.reviewInsert(dto);
-		if(res > 0) {
-			System.out.println("insert 성공");
-		}else {
-			System.out.println("insert 실패");
-		}
-	}
-	
-	@RequestMapping("delete")
-	@ResponseBody
-	public String delete(int review_idx) {
-		int res = reviewService.reviewDelete(review_idx);
-		
-		String result="no";
-
-		if( res == 1) {
-			result="yes";
-		}
-
-		String finRes= String.format("[{'res':'%s'}]",result);
-		
-		return finRes;
 	}
 	
 	

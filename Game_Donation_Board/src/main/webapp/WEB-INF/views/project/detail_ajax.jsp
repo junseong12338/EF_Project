@@ -18,7 +18,7 @@
 			
 				<th>내용</th>
 				<td>		
-					<textarea row="5" cols="50" name="review_content" style="resize:none;"wrap="on"></textarea>
+					<textarea row="5" cols="50" name="review_content" id="review_content" style="resize:none;"wrap="on"></textarea>
 				</td>
 				<td>	
 				<input type="button" value="등록하기" onclick="send(this.form);">

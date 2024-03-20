@@ -79,10 +79,22 @@
 <script type="text/javascript">
 
 function send(f){
-	f.action="insert"
-	f.submit();
-	
-	
+		var url = "insert";
+		var param = "user_idx="+f.user_idx.value+"project_idx="+f.project_idx.value+"review_content="+f.review_content.value;
+		
+		sendRequest(url,param,resultFn,"post");
+}
+function resultFn(){
+	if(xhr.readyState == 4 && xhr.status== 200){
+		var data = xhr.responseText;
+		var json = (new Function('return'+data))();
+		
+		if(json[0].res == 'no'){
+			alert("등록실패");
+			return;
+		} 
+			alert("등록성공");
+	}
 }
 
 function del(f){
