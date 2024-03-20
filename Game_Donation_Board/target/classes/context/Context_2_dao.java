@@ -19,8 +19,8 @@ import service.UserService;
 public class Context_2_dao {
 
 	@Bean
-	public UserService userService(UserDAO userDAO) {
-		return new UserService(userDAO);
+	public UserService userService(UserDAO userDAO, ProjectDAO projectDAO) {
+		return new UserService(userDAO,projectDAO);
 	}
 	
 	@Bean

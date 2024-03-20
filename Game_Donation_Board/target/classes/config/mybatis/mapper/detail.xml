@@ -6,12 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- EF_USER 테이블의 user_point 차감 - update -->
 	<update id="update_point" parameterType="java.util.HashMap">
 		UPDATE EF_USER
-		SET user_point = #{user_point}
+		SET user_point = #{diff_point}
 		WHERE user_idx = #{user_idx}
 	</update>
 	<!-- 사용자가 이 프로젝트에 후원한적이 있는지 체크 -->
-	<select id="select_used" parameterType="java.util.HashMap">
-		SELECT USER_IDX FROM EF_DONATION
+	<select id="select_used" parameterType="java.util.HashMap" resultType="int">
+		SELECT COUNT(USER_IDX) FROM EF_DONATION
 		WHERE user_idx = #{user_idx} AND project_idx = #{project_idx}
 	</select>
 	<!-- 후원한 적 YES -->
@@ -23,8 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 후원한 적 NO -->
 	<insert id="insert_donation" parameterType="java.util.HashMap">
 		INSERT INTO EF_DONATION VALUES(
-			#{project_idx},
 			#{user_idx},
+			#{project_idx},
 			#{use_point}
 		)
 	</insert>

@@ -40,7 +40,7 @@
 				</li>
 				<li>
 					<i class="fa fa-download"></i>
-					${dto.donation_str}&nbsp; &#8361;
+					${dto.project_target}&nbsp; &#8361;
 				</li>
 			</ul>
 		</div>

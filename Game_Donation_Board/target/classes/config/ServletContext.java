@@ -28,6 +28,9 @@ import service.ProfileService;
 import service.ProjectService;
 import service.SummerNoteService;
 import service.UserService;
+import com.korea.board.ProjectController;
+
+import service.ProjectService;
 
 
 @Configuration
@@ -72,7 +75,7 @@ public class ServletContext implements WebMvcConfigurer {
 	}
 	
 	@Bean
-	public AdminController adminController(ProjectService projectService,UserService userService ) {
+	public AdminController adminController(ProjectService projectService, UserService userService) {
 		return new AdminController(projectService,userService);
 	}
 	

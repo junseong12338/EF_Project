@@ -31,52 +31,53 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-<div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
+<body style="font-family: 'Montserrat', 'sans-serif';">
 <%@ include file= "/WEB-INF/views/board/menu.jsp" %>
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div class="col-lg-12">
-        <div class="page-content">
-            <div class="row">
-                <div class="col-3g-8">
-                    <h4>내가 작성한 리뷰</h4><br>
-            <!-- <p class="section-description">작성하신 리뷰는 0건 입니다.</p><br> -->  
-            
-               </div>
-        </div>
-        </div>
-    </div>
-  </div>
-  </div> 
-  <footer>
-    <div class="container">
-      <div class="row">
         <div class="col-lg-12">
-          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
-          
-          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
+            <div class="page-content" id='status'>
+                <div class="gaming-library" id="admin-page-content">
+                    <div class="row">
+                        <div class="col-lg-4" >
+                            <div class="heading-section">
+                                <h4>
+                                  	<em>내가 작성한</em> 리뷰
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <ul style="text-align: center;">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <c:forEach items="${reviewList}" var="dto"  varStatus="count">
+                    	<div class="item" >
+                            <ul style="text-align: center;">
+                          		 <li></li>
+                                <li><h4>${count.index + 1}</h4></li>
+                                <li><img class="templatemo-item" src="${user_email.user_img}" ></li>
+                                <li><h4>제목</h4><span><a href="project_detail?project_idx=${ dto.project_idx}">${dto.project_name}</a></span></li>
+                                <li><h4>내용</h4><span style="color: white;">${dto.review_content}</span></li>
+                                <li></li>
+                                
+                            </ul> 
+                   	 </div>
+                  </c:forEach>     
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </footer>
-  <script src="resources/js/menu.js"></script>  
-  <script src="resources/jquery/jquery.min.js"></script>
-  <script src="resources/js/bootstrap.min.js"></script>
-  <script src="resources/js/isotope.min.js"></script>
-  <script src="resources/js/owl-carousel.js"></script>
-  <script src="resources/js/tabs.js"></script>
-  <script src="resources/js/popup.js"></script>
-  <script src="resources/js/custom.js"></script>
-
+</div>
+<!-- Bootstrap core JavaScript -->
+<script src="resources/vendor/jquery/jquery.min.js"></script>
+<script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/js/httpRequest.js"></script>
 </body>
 </html>

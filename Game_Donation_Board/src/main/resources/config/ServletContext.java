@@ -75,8 +75,8 @@ public class ServletContext implements WebMvcConfigurer {
 	}
 	
 	@Bean
-	public AdminController adminController(ProjectService projectService) {
-		return new AdminController(projectService);
+	public AdminController adminController(ProjectService projectService, UserService userService) {
+		return new AdminController(projectService,userService);
 	}
 	
 	

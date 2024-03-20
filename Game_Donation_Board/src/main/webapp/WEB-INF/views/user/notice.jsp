@@ -39,7 +39,7 @@
 	                   <c:forEach items="${NoticeList}" var="NoticeList" varStatus="count">
 	                       <ul style="text-align: center;">
 	                           <li><h4>${count.index + 1}</h4></li>
-	                           <li><h4>${NoticeList.ad_notice_idx}</h4></li>
+	                           <li></li>
 	                           <li><h4>${NoticeList.ad_notice_title}</h4></li>
 	                           <li></li>
 	                           <li></li>

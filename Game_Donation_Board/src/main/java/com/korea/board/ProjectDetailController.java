@@ -210,13 +210,7 @@ public class ProjectDetailController {
 		int diff_point = (int)(user_point - use_point);
 		map.put("diff_point", diff_point);
 		
-		// EF_USER 테이블의 user_point 차감 - update
-		int res = projectService.update_point(map);
-		if(res > 0) {
-			System.out.println("point update 성공");
-		}else {
-			System.out.println("point update 실패");
-		};
+		
 		
 		// EF_DONATION 테이블의 insert, update
 		// 사용자가 이 프로젝트에 후원한적이 있는지 체크
@@ -230,13 +224,22 @@ public class ProjectDetailController {
 			result = projectService.insert_donation(map);
 		};
 		
+		
+		
 		if(result > 0) {
+			// EF_USER 테이블의 user_point 차감 - update
+			int res = projectService.update_point(map);
+			if(res > 0) {
+				System.out.println("point update 성공");
+			}else {
+				System.out.println("point update 실패");
+			};
 			System.out.println("donation 성공");
 		}else {
 			System.out.println("donation 실패");
 		}
 		
-		return Common.project.VIEW_PATH + "detail.jsp";
+		return "redirect:project_detail?project_idx=" + project_idx;
 	}
 	
 }

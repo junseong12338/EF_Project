@@ -10,7 +10,7 @@
 		<div class="review">
 			<div class="review-register">
 				<div class="review-content-input">
-					<input id="review-content" placeholder="EZ-FUNDING REVIEW REGISTER">
+					<input id="review-content" placeholder="EZ-FUNDING REVIEW REGISTER" style="width: 730px;">
 				</div>
 				<div class="review-register-btn">
 					<a href="javascript:void(0)" onclick="register_review()"><img alt="등록" src="resources/img/icons8-register.png"></a>

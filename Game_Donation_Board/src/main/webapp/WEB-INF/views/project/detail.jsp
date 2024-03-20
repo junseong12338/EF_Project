@@ -345,9 +345,11 @@
                       <h4>${dto.title }</h4>
                       <h6>&nbsp;${dto.author }</h6>
                       <br>
-                      <c:forEach var="category_name" items="list">
-                      	<p>${category_name }</p>
+                      	<p style="color:#999;">
+                      <c:forEach var="category_name" items="${dto.category_name}" >
+                      	#${category_name }&nbsp;
                       </c:forEach>
+                      	</p>
                       <div class="main-border-button">
                         <a href="javascript:void(0)" onclick="donation()">프로젝트 후원하기</a>
                       </div>

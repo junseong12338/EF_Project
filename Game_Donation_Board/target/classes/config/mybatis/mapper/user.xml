@@ -64,17 +64,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE "no" BETWEEN #{start} AND #{end}
  	</select>
 
-	<!-- 등록한 프로젝트 조회 -->
-	<select id="user_count" parameterType="int"> 
+	<!-- 내가 등록한 프로젝트 조회 -->
+	<select id="user_project" parameterType="int" resultType="dto.ProjectDTO"> 
 	SELECT * FROM EF_PROJECT
-    WHERE USER_IDX =#{userIdx}
+    WHERE USER_IDX =#{user_idx}
 	</select>
 	
 	<!-- 후원한 프로젝트 조회 -->
-	<select id="donation_list" resultType="dto.DonationDTO">
-	SELECT * FROM EF_DONATION
+	<select id="donation_list"  parameterType="int" resultType="dto.DonationDTO">
+		SELECT * FROM EF_DONATION
+		WHERE USER_IDX =#{user_idx}
 	</select>
 	
+	<!-- 사용자가 작성한 리뷰 가져오기  -->
+	<select id="user_review" parameterType="int" resultType="dto.ReviewDTO"> 
+	SELECT * FROM EF_REVIEW
+    WHERE USER_IDX =#{user_idx}
+	</select>
+	<!-- 이영찬 end -->
 	
 	<select id="SelectName" resultType="user" parameterType="int">
 		SELECT user_name FROM EF_USER where user_idx =#{user_idx}

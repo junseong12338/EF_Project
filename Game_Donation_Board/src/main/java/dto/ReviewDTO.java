@@ -14,6 +14,8 @@ public class ReviewDTO {
 	private String review_content;
 	private String regdate;
 	
+	private String project_name;
+	
 	// regdate - sysdate
 	private String diff_date;
 }

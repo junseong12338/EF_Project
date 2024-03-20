@@ -48,11 +48,12 @@
                    	 <div class="item" > 
                             <ul style="text-align: center;">
                              <li><h4>${count.index + 1}</h4></li>
-                                <li><img class="templatemo-item" src="" ></li>
+                                <li><img class="templatemo-item" src="${dto.project_img}" ></li>
                                 <li><h4>프로젝트 제목</h4><span><a href="project_detail?project_idx=${dto.project_idx}">${dto.project_title}</a></span></li>
                                 <li><h4>후원 시작일</h4><span>${dto.project_start.substring(0, 10)}</span></li>
                                 <li><h4>후원 종료일</h4><span>${dto.project_end.substring(0, 10)}</span></li>
-                                <li></li>
+                                <li><div class="main-border-button">
+                        			<a href="project_modify?idx=${dto.project_idx}" id="openModalBtn">수정하기</a></div></li>
                             </ul>
                     	</div> 
                 </c:forEach>      

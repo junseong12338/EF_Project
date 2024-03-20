@@ -46,7 +46,7 @@
                                 <h6>Welcome To EZ_Funding</h6>
                                 <h4><em>Join the Quest</em><br> Fund Your Next Adventure!</h4>
                                 <div class="main-button">
-                                    <a href="charge_view">후원하기</a>
+                                    <a href="project_list">후원하기</a>
                                 </div>
                             </div>
                         </div>
