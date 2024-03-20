@@ -1,6 +1,10 @@
 package com.korea.board;
 
-import java.util.HashMap;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dto.ProjectDTO;
 import lombok.RequiredArgsConstructor;
@@ -27,44 +32,159 @@ public class ProjectController {
 	
 	@Autowired
 	HttpSession session;
-
-	@RequestMapping(value={"/","project_list"})
-	public String project_list(Model model) {
+	
+	@RequestMapping("project_test")
+	public String project_view(Model model) {
+		int idx = Integer.parseInt(request.getParameter("idx"));
 		
-		// «—∆‰¿Ã¡ˆø° 12∞≥æø «•Ω√«“ ∞Õ
-		final int PAGE_PROJECT_COUNT = 12;
+		ProjectDTO dto = projectService.select_project(idx);
 		
-		int pageNum = 1;
-		String strPageNum = request.getParameter("pageNum");
+		model.addAttribute("dto",dto);
 		
-		if(strPageNum != null) {
-			pageNum = Integer.parseInt(strPageNum);
-		}
+		return Common.Board.VIEW_PATH + "project_view.jsp";
+	}
+	
+	
+	
+	@RequestMapping("project_list")
+	public String project_list(Model model,
+								@RequestParam(value="pageNum", defaultValue="1")int page_num_js,
+								@RequestParam(value="sort",defaultValue="0")int sort_js,
+								@RequestParam(value="category_box",required = false)List<Integer> category_js
+								) throws Exception{
 		
-		int startList = (pageNum - 1) * PAGE_PROJECT_COUNT;
-		int endList = pageNum * PAGE_PROJECT_COUNT;
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startList", startList);
-		map.put("endList", endList);
+		int total_page_count = 1;
 		
-		HashMap<String, Object> selectMap = projectService.selectList(map);
 		
-		// ¿˙¿Âµ» «¡∑Œ¡ß∆Æ(list) √— ∞πºˆ
-		int listTotal = (int)selectMap.get("listTotal");
-		// ∫“∑Øø√ «¡∑Œ¡ß∆Æ(list) - ∆‰¿Ã¡ˆπ¯»£ø° «ÿ¥Á«œ¥¬ !
-		List<ProjectDTO> list = (List<ProjectDTO>)selectMap.get("list");
+		model.addAttribute("total_page_count", total_page_count);
 		
-		model.addAttribute("listTotal", listTotal);
-		model.addAttribute("list", list);
-		
-		return Common.Project_list.VIEW_PATH + "project_list.jsp";
+		return Common.project.VIEW_PATH + "list.jsp";
 	}
 	
 	
 	@RequestMapping("ajax_list")
-	public String ajax_list() {
+	public String ajax_list(Model model,
+							@RequestParam(defaultValue = "1", value="pageNum" )int page_num_js,
+							@RequestParam(defaultValue = "0", value="sort")int sort_js,
+							@RequestParam(defaultValue = "0", value="sort_date")int sort_date_js,
+							@RequestParam(required = true, value="category_box[]")List<String> category_js) throws Exception{
 		
+		long startTime = System.currentTimeMillis();
+		
+		// Î≥ÄÏàòÎ•º ÎÑòÍ≤®Ï£ºÍ∏∞ÏúÑÌïú dto
+		ProjectDTO dto = new ProjectDTO();
+		
+		
+		final int PAGE_PROJECT_COUNT = 12;
+		
+		
+		int page_num = 1;
+		
+		if(page_num_js != 0) {
+			page_num = page_num_js;
+		}
+		
+		int start_num = 1 + (page_num - 1) * PAGE_PROJECT_COUNT;// 1, 13, 25 ...
+		
+		int end_num = page_num * PAGE_PROJECT_COUNT;// 12, 24, 36 ...
+		
+		// list Î≤îÏúÑ Ï†ÄÏû• -> dto
+		dto.setStart(start_num);
+		dto.setEnd(end_num);
+		
+		
+		
+		int sort = 0;
+		if(sort_js != 0) {
+			sort = sort_js;
+		}
+		
+		dto.setSort(sort);
+		
+		// ÏßÑÌñâÏó¨Î∂Ä 
+		int sort_date = 0;
+		if(sort_date_js != 0) {
+			sort_date = sort_date_js;
+		}
+		
+		dto.setSort_date(sort_date);
+		
+		// Ïπ¥ÌÖåÍ≥†Î¶¨
+		List<Integer> category = new ArrayList<>();
+		
+		if(category_js != null) {
+			for(int i = 0; i < category_js.size(); i++) {
+				if(!category_js.get(i).equals("0")) {
+					category.add(Integer.parseInt(category_js.get(i)));
+				}
+				
+			}
+		}
+		
+		dto.setCategory_list(category);
+		dto.setCategory_list_size(category.size());
+		
+		
+		int list_count = projectService.selectOne(dto);
+		
+		int total_page_count = (int)Math.ceil(list_count / (double)PAGE_PROJECT_COUNT);
+		
+		
+		List<ProjectDTO> list = projectService.selectList(dto);
+		
+		
+		int persent = 0;
+		String diff_date = "";
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate now = LocalDate.now();
+		String today = now.format(formatter);
+		Date start_date = null;
+		Date end_date = null;
+		Date now_date = null;
+		
+		for(int i = 0; i < list.size(); i++) {
+			// ÌçºÏÑºÌä∏ dto.setPersent
+			persent = ((int)((double)list.get(i).getProject_donation() / (double)list.get(i).getProject_target()*100));
+			String persent_str  = String.format("%,d", persent);
+			list.get(i).setPersent(persent_str + " %");
+			
+			// donation
+			
+			String donation_str = String.format("%,d",list.get(i).getProject_donation());
+			list.get(i).setDonation_str(donation_str);
+			
+			// ÎÇ®ÏùÄÍ∏∞Í∞Ñ dto.setDiff_date
+			now_date = sdf.parse(today);
+			start_date = sdf.parse(list.get(i).getProject_start());
+			end_date = sdf.parse(list.get(i).getProject_end());
+			
+			if(now_date.getTime() < start_date.getTime()) {
+				diff_date = "ÏßÑÌñâÏòàÏ†ï";
+			}else if(now_date.getTime() > end_date.getTime()){
+				diff_date = "ÎßàÍ∞ê";
+			}else {
+				diff_date = String.format("%d Ïùº", ( end_date.getTime() - now_date.getTime() ) / (24*60*60*1000) );
+			}
+			
+			list.get(i).setDiff_date(diff_date);
+
+		}
+		
+		// Î∞îÏù∏Îî©
+		model.addAttribute("total_page_count", total_page_count);
+		model.addAttribute("list_count", list_count);
+		model.addAttribute("list", list);
+		model.addAttribute("page_num", page_num);
+		
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println(endTime - startTime);
+		
+		// ajax - Ìè¨ÏõåÎî©
+		return Common.project.VIEW_PATH + "list_ajax.jsp";
 	}
 
 }

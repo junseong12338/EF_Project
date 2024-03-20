@@ -20,15 +20,15 @@ function sendRequest(url, param, callBack, method){
 	createRequest();//HTTP request생성
 
 	//전송타입 구분
-	var httpMethod = 
+	let httpMethod = 
 	(method!='POST' && method!='post')?'GET':'POST';
 	
 	//파라미터 구분
-	var httpParam = 
+	let httpParam = 
 	(param==null || param == '')?null:param;
 	
 	//접근 url
-	var httpURL = url;
+	let httpURL = url;
 	
 	//요청 방식이 get방식이고, 전달할 파라미터 값이 있다면
 	//url경로를 제작 해야 한다.(.../test.jsp?ch=123)

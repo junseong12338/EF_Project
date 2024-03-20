@@ -1,0 +1,20 @@
+오류
+	< 실행 오류 404 >
+	- branch 생성하고 projectlist 구현파트에서 로직작성 후 첫 실행에서 404 에러 발생
+		> 클래스 내용 수정에 있어서 import 파일을 제거 하지 않은 부분을 제거하고,
+		   bild path 재설정하여 실행하였을 때 xml파일의 오류인 것이 콘솔에 확인됨.
+		> xml에서 HashMap 을 alias하여 변수를 받은 것이 오류를 발생시킨 것을 확인
+		   수정 후 재실행 결과 정상적으로 실행확인
+	@ 해결하기 어려웠던 점은 기능을 분리하여 작성하지 않았고, 에러내용이 콘솔에 나오지 않아서
+	    원래 해결하던 방법을 사용하지 못했음..
+		@> exception 처리를 자주하면 더욱 빨리 처리할 수 있을 것 같음.
+
+	< 0304 >
+	project_list.jsp
+	- css 파일 https로드 하는 곳 에러뜸
+		> <script src="https://code.jquery.com/jquery-3.4.1.js"></script> import 로 해결
+
+	ajax_list?pageNum=1&sort=0&category=~~ 
+	- 매개변수 보내는 부분에서 category 매개변수를 받지못하는 에러
+	- 400 Error
+		> ajax 로 배열을 Controller 에서 받을 때 @requestParam(value="parameterName[]") List<String> 이렇게 받아야함 !!

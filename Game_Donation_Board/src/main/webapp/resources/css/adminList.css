@@ -1,0 +1,49 @@
+.pagination-container a  {
+   transition: color 0.4s ease; /* 색깔 변화에 대한 transition 설정 */
+}
+
+ .pagination-container a:hover {
+    color: #e75e8d; /* hover 시 색깔 변화 */
+}
+
+	.pagination-container {
+       display: flex;
+       justify-content: flex-end;
+   }
+   .pagination-container ul {
+       display: flex;
+       list-style: none;
+       margin: 0;
+       padding: 0;
+   }
+   .pagination-container ul li {
+       margin-left: 10px; /* 각 페이지 링크 사이 간격 설정 */
+  }
+  .pagination-container ul li a {
+      text-decoration: none;
+       color: #666;
+  }
+  
+	.item img {
+		width : 80px;
+		height : 80px;
+		margin: 10px 0 10px 0px;
+		image-rendering:-webkit-optimize-contrast;
+	  	transform:translateZ(0);
+	  	backface-visibility:hidden;
+	}
+
+
+	#status h4 a {
+	   transition: color 0.4s ease; /* 색깔 변화에 대한 transition 설정 */
+	}
+	
+	#status h4 a:hover {
+	    color: #e75e8d; /* hover 시 색깔 변화 */
+	}
+	
+	#status h4 a {
+		text-decoration: none;
+		color: #666;
+	  }
+</style>
