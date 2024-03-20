@@ -1,0 +1,118 @@
+상세페이지
+
+<기능>
+1	프로젝트 내용, project_content
+1		project_title
+1		project_donation
+1		project_persent
+1		project_diff
+		
+1	공지, 
+1	리뷰(작성), 
+1	좋아요(클릭), like_count
+1	알람설정(클릭), 
+1	신고하기(클릭), 
+1	후원하기(클릭) 
+
+	
+idx, title, content, donation, persent, diff, like_count
+
+
+<detail>
+버튼 이벤트 (insert)
+1. 신고하기 ( 어디로 데이터가 가야하는가? ) ( form ) ----------- 나중에
+2. 좋아요 ( ajax로 즉시 변해야함 ) - like
+3. 후원하기 - donation ( form )
+
+DB에서 가져와야 하는 데이터 ( project_idx 를 매개변수로 가지고 )
+1. img - project
+2. author - user
+3. category_name(list) - category_name
+4. donation(sum) - donation
+5. persent (donation / target) - controller 에서 작업
+5. target - project
+6. start, end(기간) - project
+7. -> 계산한 diff_date - (service 에서 계산)
+8. like_cnt(sum) - like
+
+ajax 에서 가져올 컨텐츠 부분
+1. content - project
+2. notice - notice (CRUD 작성자만 작성할 수 있는 권한이 있음) 
+	-> 해당 테이블 컬럼 전부다 들고온다 보면됨
+3. review - review (CRUD 로그인 해야만 작성할 수 있는 권한이 있음)
+	-> 해당 테이블 컬럼 전부다 들고온다 보면됨 
+
+
+ajax 처리 ( - ajax 틀 설계 해야함 )
+1. 좋아요 ( default : 빈하트 )
+	로그인 했을 경우 - 빈하트 클릭 시 -> 하트 + 1 and 꽉찬 하트
+	비 로그인 경우 - 빈 하트 클릭 시 -> 로그인 해야 한다는 alert 출력
+2. 컨텐츠, 공지, 리뷰 ( default : 컨텐츠 )
+	버튼 클릭 시 해당 내용 select
+
+
+<좋아요>
+비로그인(user_email.user_idx eq null)
+	빈 하트 src="heart" href="";
+	좋아요 수 
+로그인(user_email.user_idx ne null)
+	하트를 누른 프로젝트(project_idx 들고 db가서 null이 아니라면 ok)
+		꽉찬 하트 src="heart-fill" href="javascript:like_fn()"
+		좋아요 수	
+	하트를 안누른 프로젝트(project_idx 들고 db가서 null이 이라면 ok)
+		빈 하트 src="heart" href="javascript:like_fn(??)"	
+		좋아요 수
+
+	* 하트를 누른지 안누른지 detailDTO에 변수를 설정 -> html에는 hidden으로 저장
+
+	like_fn 에서 좋아요 수 +1, -1 해주자
+
+
+<후원하기> - modal
+받아와야 하는 정보
+	1. img
+	2. title
+	3. author
+	4. 자기자신의 포인트
+	5. hidden(user_idx)
+
+결제버튼 - donation_check(this.form) -> user_idx, donation-point -> (sql)
+취소버튼 - cancle() -> modal-display = none;
+
+
+
+
+
+
+
+
+
+<0318> 해야할 것
+1. 모달창 css
+2. 잔여 포인트 데이터 가져오기
+3. 포인트 후원하기 클릭시 이벤트 로직
+	클릭시 DB에 변경되어야 하는 컬럼
+		1.ef_user 테이블의 user_point 감소 해당 value만큼
+		2. ef_donation 테이블의 
+			- 후원한 적이 있다면 update
+			- 후원한 적이 없다면 insert
+
+4. 리스트 페이지 오류 확인 ( merge 후에 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
