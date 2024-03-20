@@ -1,20 +1,23 @@
 package service;
 
-import dao.UserDAO;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import dao.ProjectDAO;
 import dao.UserDAO;
-import dto.AdminNoticeDTO;
 import dto.DonationDTO;
-import dto.PageDTO;
 import dto.ProjectDTO;
+import dto.ReviewDTO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-import util.Common;
 
 @RequiredArgsConstructor
 public class UserService {
 	final UserDAO userDAO;
+	final ProjectDAO projectDAO;
 // --------------------------- 이준성
 	public UserDTO checkEmail(String user_email) {
 		return userDAO.checkEmail(user_email);
@@ -72,18 +75,47 @@ public class UserService {
 	  }
 	  
 	  // --------- 이영찬
-	  public List<ProjectDTO> ProjectList(int userIdx) { 
+	  
+	  // 사용자가 등록한 프로젝트 보기
+	  public List<ProjectDTO> ProjectList (int user_idx){ 
 		  // 실제로는 데이터베이스에서 프로젝트 목록을 조회하여 반환하는코드가 들어갑니다. 
-		  List<ProjectDTO> list = userDAO.selectProjectList(userIdx);
-//		  System.out.println(list); 
-		  return list; 
+		  List<ProjectDTO> list = userDAO.selectProjectList(user_idx);			
+		  return list;
 	}
 	  
 	  // 후원 금액 
-	  public List<DonationDTO> donationList() { 
-		  List<DonationDTO> list = userDAO.selectdonationList(); 
-		  return userDAO.selectdonationList(); 
+	  public List<DonationDTO> donationList(int user_idx) { 
+		  List<DonationDTO> list = userDAO.selectdonationList(user_idx); 
+		  
+		  if(!list.isEmpty()) {
+			  for(DonationDTO dto : list) {
+				  ProjectDTO ddto = projectDAO.selectOne_project(dto.getProject_idx());
+				  if(ddto != null) {
+					  dto.setProject_title(ddto.getProject_title());
+				  }
+			  }
+		  }
+		  
+		  return list;
+//		  return userDAO.selectdonationList(user_idx); 
 	}
+	  
+	  // 사용자가 작성한 리뷰 보기
+	  public List<ReviewDTO> reviewList(int user_idx) {
+		 List<ReviewDTO> list = userDAO.userReviewList(user_idx);
+		 
+		 if(!list.isEmpty()) {
+			 for(ReviewDTO dto: list) {
+				 ProjectDTO pdto = projectDAO.selectOne_project(dto.getProject_idx());
+				 if(pdto != null) {
+					 dto.setProject_name(pdto.getProject_title());
+				 }
+			 }
+			 
+		 }
+		 
+		 return list;
+	  }
 	  
 	//-------------- 정진수
 	  

@@ -78,14 +78,13 @@ public class UserDAO {
 	
 	//프로젝트 한건 가져오기
 		public List<ProjectDTO> selectProjectList(int userIdx) {
-			List<ProjectDTO> list = sqlSession.selectList("project.userIdx_list",userIdx);
-//			System.out.println(list);
+			List<ProjectDTO> list = sqlSession.selectList("u.user_project",userIdx);
 			return list;
 		}
-	public List<DonationDTO> selectdonationList(){
-		List<DonationDTO> list = sqlSession.selectList("u.donation_list");
-
-		return sqlSession.selectList("u.donation_list");
+		// 후원
+	public List<DonationDTO> selectdonationList(int user_idx){
+		
+		return sqlSession.selectList("u.donation_list",user_idx);
 	}
 	
 	//유저 보유포인트 업데이트
@@ -96,6 +95,20 @@ public class UserDAO {
 	// 유저 프로젝트 갯수 업데이트
 	public int userProjectCount(UserDTO dto) {
 		return sqlSession.update("u.user_project_count",dto);
+	}
+	
+	// 유저가 작성한 리뷰 가져오기
+	public List<ReviewDTO> userReviewList(int user_idx){
+		List<ReviewDTO> list = sqlSession.selectList("u.user_review",user_idx);
+		
+		return list;
+	}
+	
+	// 유저가 작성한 프로젝트 가져오기
+	public List<ProjectDTO> userProjectList(int user_idx){
+		List<ProjectDTO> list = sqlSession.selectList("u.user_project",user_idx);
+		
+		return list;
 	}
 	
 

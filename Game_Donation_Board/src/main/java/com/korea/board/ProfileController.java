@@ -64,6 +64,10 @@ import com.github.scribejava.core.model.Response;
 import com.google.gson.JsonObject;
 
 import aspect.ModelAndViewRedirectException;
+
+
+
+import dto.ReviewDTO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import service.ProfileService;
@@ -95,22 +99,19 @@ public class ProfileController {
         return ex.getModelAndView();
     }
 	
-
 	
 	@RequestMapping("mypage_view")
 	public String mypage_view(Model model) {
 		UserDTO userdto = (UserDTO)request.getSession().getAttribute("user_email");
 //		 리뷰 , 내가 등록한 프로젝트, 후원한 프로젝트,
 		int user_idx = userdto.getUser_idx();
-		int reviewCount = profileService.reviewCount(user_idx);
+		int review = profileService.reviewCount(user_idx);
 		int sponsored_Project_Details = profileService.sponsored_Project_Details(user_idx);
 		int registered_project = profileService.registered_project(user_idx); 
-		 
-
 	    
 //	  가져온 각각의 갯수를 Model에 담아서 View로 전달
-      model.addAttribute("dto",userdto);
-	    model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("dto",userdto);
+	    model.addAttribute("reviewCount", review);
 	    model.addAttribute("registered_project", registered_project);
 	    model.addAttribute("sponsored_Project_Details", sponsored_Project_Details);
 	    
@@ -125,7 +126,6 @@ public class ProfileController {
 			
 		String email = userDTO.getUser_email();
 		String name = userDTO.getUser_name();
-		System.out.println(userDTO.getUser_addr());
 		model.addAttribute("user",userDTO);
 		model.addAttribute("email",email);
 		model.addAttribute("name",name);
@@ -160,8 +160,10 @@ public class ProfileController {
 	 }
 	 
 	@RequestMapping("review")
-	public String review() {
+	public String review(Model model, @RequestParam(value = "user_idx") int user_idx) {
 		
+		List<ReviewDTO> EF_REVIEW = userService.reviewList(user_idx);	
+		model.addAttribute("reviewList", EF_REVIEW);
 		return Common.profile.VIEW_PATH + "review.jsp";
 	
 	}
@@ -199,9 +201,8 @@ public class ProfileController {
 	}
 	
 	  @RequestMapping("registered_Project") 
-	  public String getProjectList(Model model) { 
-		  int userIdx =((UserDTO)request.getSession().getAttribute("user_email")).getUser_idx();
-	  List<ProjectDTO> EF_PROJCET = userService.ProjectList(userIdx);
+	  public String getProjectList(Model model,  @RequestParam(value = "user_idx") int user_idx) { 
+	  List<ProjectDTO> EF_PROJCET = userService.ProjectList(user_idx);
 	  
 	   //모델에 프로젝트 목록 추가
 	   model.addAttribute("projectList", EF_PROJCET);
@@ -210,10 +211,11 @@ public class ProfileController {
 	   return Common.profile.VIEW_PATH +"registered_Project.jsp"; 
 	}
 	  
+	  // 후원 한 프로젝트
 	  @RequestMapping("sponsorshipdetails_view") 
-	  public String sponsorshipdetails_view(Model model) { 
+	  public String sponsorshipdetails_view(Model model, @RequestParam(value = "user_idx") int user_idx) { 
 		  
-	  List<DonationDTO> EF_DONATION = userService.donationList();
+	  List<DonationDTO> EF_DONATION = userService.donationList(user_idx);
 	  
 	  model.addAttribute("donationlist", EF_DONATION);
 	  
@@ -224,7 +226,6 @@ public class ProfileController {
 	@RequestMapping(value = "user_point_update")
 	@ResponseBody
 	public String user_point_update(String user_email,int payment) {
-		System.out.println(user_email);
 		UserDTO dto = userService.checkEmail(user_email);
 		int point = dto.getUser_point();
 		dto.setUser_point(point+payment);

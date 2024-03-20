@@ -168,13 +168,13 @@ display: block;
                       	내 정보<a href="myinfo_view"><span>수정하기</span></a>
                       </li>
                       <li>
-                        후원한 프로젝트 내역 <a href="sponsorshipdetails_view"><span>${sponsored_Project_Details}개</span></a>
+                        후원한 프로젝트 내역 <a href="sponsorshipdetails_view?user_idx=${user_email.user_idx}"><span>${sponsored_Project_Details}개</span></a>
                       </li>
                        <li>
-                        등록한 프로젝트<a href="registered_Project"><span>${registered_project}개</span></a>
+                        등록한 프로젝트<a href="registered_Project?user_idx=${user_email.user_idx}"><span>${registered_project}개</span></a>
                       </li>
                       <li>
-                        리뷰<a href="review"><span>${reviewCount}개</span></a>
+                       리뷰<a href="review?user_idx=${user_email.user_idx}"><span>${reviewCount}개</span></a>
                       </li>
                       <li>
                         잔여 포인트 <span id="remaining-points">${user_email.user_point}</span>
