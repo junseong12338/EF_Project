@@ -69,13 +69,13 @@
 							                <img src="${donation.project_img}" style="height: 393px; 
 							                        <c:choose>
 							                            <c:when test="${count.index == 0}">
-							                                border: 2px solid gold;
+							                                border: 3px solid gold;
 							                            </c:when>
 							                            <c:when test="${count.index == 1}">
-							                                border: 2px solid silver;
+							                                border: 3px solid silver;
 							                            </c:when>
 							                            <c:when test="${count.index == 2}">
-							                                border: 2px solid #CD7F32; 
+							                                border: 3px solid #CD7F32; 
 							                            </c:when>
 							                   
 							                        </c:choose>
@@ -127,7 +127,7 @@
                                         <span>${count.index + 1}</span>
                                         <span style=" font-size: 12px;">${likeProject.project_title}</span>
 		                                <h6 style="color: #fff; display: flex; align-items: center; margin-top : 10px; margin-left: auto; margin-right: 20px;">
-										    <img src="resources/img/icons8-heart-fill.png" style="margin-right: 5px; ">${likeProject.project_like}
+										    <img src="resources/img/icons8-heart-fill.png" style="margin-right: 5px; "> ${likeProject.project_like}
 										</h6>
 		                                <div class="main-button" style="margin-top : 10px; font-size: 14px;">
 		                                    <a href="project_detail?project_idx=${likeProject.project_idx}">Show View</a>
@@ -162,7 +162,7 @@
                                 <a href="#">New</a>
                             </div>
                             <ul>
-                                <li><a href="#"><i class="fa fa-heart" style="color: #fff"></i>${newRegistration.project_like}</a></li>
+                                <li><a href="#"><i class="fa fa-heart" style="color: #fff"></i> ${newRegistration.project_like}</a></li>
                                 <li><a href="#" id="achievementPercentage_${status.index}" style="display: inline-block; color:#fff; text-align: right;"><i class="fa fa-heart" style="color: #fff"></i></a></li>
                             </ul>
                         </div>
