@@ -30,7 +30,7 @@ public class Common {
 		//예: C:\\Users\\admin\\Desktop\\EF_work\\EF_Project\\util\\ef_project_img : 이준성 학원 경로
 	    // C:\\Users\\junhyuk\\Desktop\\이준성\\공부\\GitHub\\EF_Project\\util\\ef_project_img" : 이준성 집 
 		// C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img : 정진수 노트북
-		public final static String IMG_ROOT = "C:\\jjs_project\\spring\\koricWorkspace\\EF_Project\\util\\ef_project_img\\";
+		public final static String IMG_ROOT = "C:\\Users\\junhyuk\\Desktop\\이준성\\공부\\GitHub\\EF_Project\\util\\ef_project_img\\";
 	}
 	
 	

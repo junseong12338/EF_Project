@@ -221,16 +221,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
+
   
   <div class="container">
     <div class="row">
@@ -250,10 +241,10 @@
                     </form>
                 </div>
                  <button onclick="kakaoPay(this.form)" id="kakao-pay" class="payment-button">
-                  <img src="resources/assets/images/카카오페이.jpg" alt="카카오페이">
+                  <img src="resources/img/kakaopay.jpg" alt="카카오페이" >
                 </button>
                 <button onclick="kgpay(this.form)" id="KG이니시스" class="KG이니시스">
-                <img src="resources/assets/images/KG이니시스.jpg" alt="KG이니시스">
+                <img src="resources/img/KG.jpg" alt="KG이니시스" >
               </button>
               </div><br>
             </div>

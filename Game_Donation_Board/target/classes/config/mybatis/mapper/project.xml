@@ -307,8 +307,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			        (SELECT project_idx, SUM(donation_money) as donation_money FROM EF_DONation GROUP BY project_idx) d ON p.project_idx = d.project_idx
 			    LEFT JOIN 
 			        (SELECT project_idx, COUNT(*) as project_like FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+			    WHERE 
+			        p.Project_status = 1
+			    ORDER BY 
+			        d.donation_money asc 
 			)
-			WHERE ROWNUM <= 6 and Project_status = 1
+			WHERE ROWNUM <= 6
 		  ]]>
 	</select>
 		
@@ -316,10 +320,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="Main_New_registration_list" resultType="mainlist">
 	    <![CDATA[
 		SELECT 
-		    project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end, user_name, user_img, project_target, donation_money, like_count
+		    project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end, user_name, user_img, project_target, donation_money, project_like
 		FROM (
 		    SELECT 
-		        p.project_idx, p.user_idx, p.project_title, p.project_status, p.project_img, p.project_start, p.project_end, u.user_name, u.user_img, p.project_target, d.donation_money, l.like_count
+		        p.project_idx, p.user_idx, p.project_title, p.project_status, p.project_img, p.project_start, p.project_end, u.user_name, u.user_img, p.project_target, d.donation_money, l.project_like
 		    FROM 
 		        EF_PROJECT p
 		    JOIN 
@@ -327,7 +331,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    LEFT JOIN 
 		        (SELECT project_idx, SUM(donation_money) as donation_money FROM EF_DONation GROUP BY project_idx) d ON p.project_idx = d.project_idx
 		    LEFT JOIN 
-		        (SELECT project_idx, COUNT(*) as like_count FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+		        (SELECT project_idx, COUNT(*) as project_like FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
 		    WHERE 
 		        ROWNUM <= 8 
 		        AND Project_status = 1

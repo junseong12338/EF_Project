@@ -62,20 +62,55 @@
                                 <h4><em>최다 후원</em> 프로젝트</h4>
                             </div>
                             <div class="owl-features owl-carousel">
-                                <c:forEach items="${Main_donation_list}" var="donation">
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <a href="project_detail?project_idx=${donation.project_idx}">
-                                                <img src="${donation.project_img}" style="height: 393px;" alt="">
-                                            </a>
-                                            <div class="hover-effect">
-                                                <h6>달성 퍼샌트</h6>
-                                            </div>
-                                        </div>
-                                        <h4>&nbsp;${donation.project_title}<br><span style="color:  #999">&nbsp;${donation.user_name}<br>&nbsp;${donation.donation_money} &#8361;</span></h4>
-                                       
-                                    </div>
-                                </c:forEach>
+							<c:forEach items="${Main_donation_list}" var="donation" varStatus="count">
+							    <div class="item">
+							        <div class="thumb" style="position: relative; border-radius: 15px;">
+							            <a href="project_detail?project_idx=${donation.project_idx}">
+							                <img src="${donation.project_img}" style="height: 393px; 
+							                        <c:choose>
+							                            <c:when test="${count.index == 0}">
+							                                border: 2px solid gold;
+							                            </c:when>
+							                            <c:when test="${count.index == 1}">
+							                                border: 2px solid silver;
+							                            </c:when>
+							                            <c:when test="${count.index == 2}">
+							                                border: 2px solid #CD7F32; 
+							                            </c:when>
+							                   
+							                        </c:choose>
+							                        " alt="">
+							                <span style="position: absolute; top: 10px; left: 10px; padding: 5px; border-radius: 5px; font-weight: bold;
+							                            background-color: 
+							                            <c:choose>
+							                                <c:when test="${count.index == 0}">
+							                                    gold; color: black;
+							                                </c:when>
+							                                <c:when test="${count.index == 1}">
+							                                    silver; color: black;
+							                                </c:when>
+							                                <c:when test="${count.index == 2}">
+							                                    #CD7F32; color: black;
+							                                </c:when>
+							                                <c:otherwise>
+							                                    #CD7F32; color: black; border: none;
+							                                </c:otherwise>
+							                            </c:choose>;
+							                            ">
+							                    <c:choose>
+							                        <c:when test="${count.index < 3}">
+							                            ${count.index + 1}위
+							                        </c:when>
+							                        <c:otherwise>
+							                            ${count.index + 1}위
+							                        </c:otherwise>
+							                    </c:choose>
+							                </span>
+							            </a>
+							        </div>
+							        <h4>&nbsp;${donation.project_title}<br><span style="color: #999">&nbsp;${donation.user_name}<br>&nbsp;${donation.donation_money} &#8361;</span></h4>
+							    </div>
+							</c:forEach>
                             </div>
                         </div>
                     </div>
@@ -87,16 +122,14 @@
                                 <h4><em>인기</em> 프로젝트</h4>
                             </div>
                             <ul>
-                                <c:forEach items="${Main_Like_Project_list}" var="likeProject" varStatus="loop">
+                                <c:forEach items="${Main_Like_Project_list}" var="likeProject" varStatus="count">
                                     <li style="display: flex; align-items: center;">
-                                        <span>${loop.index + 1}</span>
-                                        
-                                        <span>${likeProject.project_title}</span>
-                                     	
+                                        <span>${count.index + 1}</span>
+                                        <span style=" font-size: 12px;">${likeProject.project_title}</span>
 		                                <h6 style="color: #fff; display: flex; align-items: center; margin-top : 10px; margin-left: auto; margin-right: 20px;">
 										    <img src="resources/img/icons8-heart-fill.png" style="margin-right: 5px; ">${likeProject.project_like}
 										</h6>
-		                                <div class="main-button" style="margin-top : 10px;">
+		                                <div class="main-button" style="margin-top : 10px; font-size: 14px;">
 		                                    <a href="project_detail?project_idx=${likeProject.project_idx}">Show View</a>
 		                                </div>
                                     </li>
@@ -115,40 +148,73 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <c:forEach items="${Main_New_registration_list}" var="newRegistration">
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="item" style="height: 440px;">
-                                    <div class="thumb" >
-                                        <a href="project_detail?project_idx=${newRegistration.project_idx}">
-                                            <img src="${newRegistration.project_img}" style="width: 246px; height: 246px;">
-                                        </a>
-                                        <div class="hover-effect">
-                                            <div class="content">
-                                                <div class="live">
-                                                    <a href="#">New</a>
-                                                </div>
-                                                <ul>
-                                                    <li><a href="#"><i class="fa fa-heart" style="color: #fff"></i> ${newRegistration.project_like}</a></li>
-                                                    <li><a href="#"><i class="fa fa-dollar" style="color: #fff"></i> 1000 % </a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>   
-
-                                    <div class="down-content" style="display: flex; text-align: center;">
-                                        <div class="avatar" style="margin-right: 10px;">
-                                            <img src="${newRegistration.user_img}" alt="" style="max-width: 46px; border-radius: 50%;">
-                                        </div>
-
-                                        <h4 style="display: inline-block; margin-top: 10px; margin-left: -10px;">${newRegistration.project_title}</h4> 
-                                    </div>
-                                    <span style="display: inline-block; color:#e75e8d;">${newRegistration.user_name}</span>
-                                    <span style="display: inline-block; vertical-align: top; margin-left: 10px; color:#999;"> ${newRegistration.donation_money} 원  돠주셈 남음</span>
-                                </div>
+<div class="row">
+    <c:forEach items="${Main_New_registration_list}" var="newRegistration" varStatus="status">
+        <div class="col-lg-3 col-sm-6">
+            <div class="item" style="height: 420px;">
+                <div class="thumb">
+                    <a href="project_detail?project_idx=${newRegistration.project_idx}">
+                        <img src="${newRegistration.project_img}" style="width: 246px; height: 246px;">
+                    </a>
+                    <div class="hover-effect">
+                        <div class="content">
+                            <div class="live">
+                                <a href="#">New</a>
                             </div>
-                        </c:forEach>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-heart" style="color: #fff"></i>${newRegistration.project_like}</a></li>
+                                <li><a href="#" id="achievementPercentage_${status.index}" style="display: inline-block; color:#fff; text-align: right;"><i class="fa fa-heart" style="color: #fff"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
+                </div>
+
+                <div class="down-content" style="display: flex; text-align: center;">
+                    <div class="avatar" style="margin-right: 10px;">
+                        <img src="${newRegistration.user_img}" alt="" style="max-width: 46px; border-radius: 50%;">
+                    </div>
+                    <h4 style="display: inline-block; margin-top: 10px; margin-left: -10px;">${newRegistration.project_title}</h4>
+                </div>
+                <span style="display: inline-block; color:#e75e8d;">${newRegistration.user_name}</span>
+                <br>
+                <span style="display: inline-block; color:#999; text-align: right;">${newRegistration.donation_money}&#8361;</span>
+                <span id="remainingDays_${status.index}" style="display: inline-block; color:#999; text-align: right;"></span>
+                <script>
+                    // 종료일로부터 남은 일수를 계산하고 화면에 출력하는 함수
+                    function calculateRemainingDays(endDate, elementId) {
+                        var endDateTime = new Date(endDate.replace(/-/g, '/')); // '-'를 '/'로 변환하여 사용
+                        var now = new Date();
+                        var timeDiff = endDateTime.getTime() - now.getTime();
+                        var remainingDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                        var element = document.getElementById(elementId);
+                        element.innerText = remainingDays > 0 ? remainingDays + '일 남음' : '마감';
+                    }
+
+                    // 목표금액과 모인 금액을 비교하여 달성 퍼센트를 계산하는 함수
+                    function calculateAchievementPercentage(targetAmount, collectedAmount) {
+                        return Math.floor((collectedAmount / targetAmount) * 100); // 소수점을 버리고 내림하여 반환
+                    }
+
+                    // 문서 로드가 완료된 후 실행되는 함수
+                    document.addEventListener('DOMContentLoaded', function() {
+                        calculateRemainingDays('${newRegistration.project_end}', 'remainingDays_${status.index}');
+                        
+                        // 목표금액과 모인 금액을 비교하여 달성 퍼센트를 계산하고 출력
+                        var targetAmount = ${newRegistration.project_target}; // 목표금액
+                        var collectedAmount = ${newRegistration.donation_money}; // 모인금액
+                        var achievementPercentage = calculateAchievementPercentage(targetAmount, collectedAmount);
+                        document.getElementById('achievementPercentage_${status.index}').innerText = achievementPercentage + '% 달성';
+                    });
+                </script>
+            </div>
+        </div>
+    </c:forEach>
+</div>
+
+
+
+
+
 
                     <div class="col-lg-12">
                         <div class="main-button">
