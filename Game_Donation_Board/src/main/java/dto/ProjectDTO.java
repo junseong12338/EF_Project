@@ -22,6 +22,8 @@ public class ProjectDTO {
 	private String project_author;
 	// sql에서 project_donation로 받아와야함 
 	private int project_donation;
+	// donation String.format
+	private String donation_str;
 	
 	// 카테고리
 	private List<Integer> category_list;

@@ -124,9 +124,14 @@ final SqlSession sqlSession;
 		return sqlSession.insert("d.insert_donation", map);
 	}
 	
-	// review
+	// review select
 	public List<ReviewDTO> selectList_review(HashMap<String, Object> map){
 		return sqlSession.selectList("d.select_review", map);
+	}
+	
+	// review register
+	public int insert_review(ReviewDTO dto) {
+		return sqlSession.insert("d.insert_review", dto);
 	}
 	
 	

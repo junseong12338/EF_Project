@@ -153,9 +153,8 @@ public class ProjectController {
 			
 			// donation
 			
-			 String donation_str = String.format("%,d",list.get(i).getProject_donation());
-			 
-			
+			String donation_str = String.format("%,d",list.get(i).getProject_donation());
+			list.get(i).setDonation_str(donation_str);
 			
 			// 남은기간 dto.setDiff_date
 			now_date = sdf.parse(today);

@@ -169,7 +169,7 @@ public class ProjectService {
 	}
 	
 	
-	// review
+	// review select
 	public List<ReviewDTO> selectList_review(int project_idx){
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -227,6 +227,18 @@ public class ProjectService {
 		}
 		
 		return null; 
+	}
+	
+	// review register
+	public int insert_review(int user_idx, int project_idx, String input_content) {
+		
+		ReviewDTO dto = new ReviewDTO();
+		// 매개변수로 보낼 dto setting
+		dto.setUser_idx(user_idx);
+		dto.setProject_idx(project_idx);
+		dto.setContent(input_content);
+		
+		return projectDAO.insert_review(dto);
 	}
 	
 		

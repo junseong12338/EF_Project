@@ -38,6 +38,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY REVIEW_IDX DESC
 	</select>
 	
+	<!-- review table insert -->
+	<insert id="insert_review" parameterType="review">
+		INSERT INTO EF_REVIEW VALUES(
+			SEQ_EF_REVIEW_IDX.NEXTVAL,
+			#{project_idx},
+			#{user_idx},
+			#{content},
+			SYSDATE
+		)
+	</insert>
+	
 </mapper>
 
 

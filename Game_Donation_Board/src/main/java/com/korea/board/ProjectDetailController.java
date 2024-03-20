@@ -48,7 +48,10 @@ public class ProjectDetailController {
 		result_dto.setProject_idx(dto.getProject_idx());
 		result_dto.setTitle(dto.getProject_title());
 		result_dto.setImg(dto.getProject_img());
-		result_dto.setTarget(dto.getProject_target());
+		//target -> target_str ( 형식 입력 )
+		String target_str = String.format("%,d", dto.getProject_target());
+		result_dto.setTarget_str(target_str);
+		
 		result_dto.setStart(dto.getProject_start());
 		result_dto.setEnd(dto.getProject_end());
 		
@@ -56,7 +59,9 @@ public class ProjectDetailController {
 		// donation, persent, diff_date
 		HashMap<String, Object> map = projectService.selectMap(project_idx);
 		
-		result_dto.setDonation( (int)map.get("donation") );
+		//donation -> donation_str ( 형식 입력 )
+		String donation_str = String.format("%,d", map.get("donation")); 
+		result_dto.setDonation_str(donation_str);
 		result_dto.setPersent( (String)map.get("persent") );
 		result_dto.setDiff_date( (String)map.get("diff_date") );
 		
@@ -86,6 +91,11 @@ public class ProjectDetailController {
 		
 		if(dto_user != null) {
 			
+			// 자기 자신의 포인트 ( 형식 설정 )
+			String point_str = String.format("%,d", dto_user.getUser_point());
+			
+			model.addAttribute("point_str", point_str);
+			
 			int user_idx = dto_user.getUser_idx();
 			
 			// project_idx, user_idx(사용자) 두개의 변수를 sql에 보내야하므로 HashMap ㄱㄱ
@@ -104,9 +114,11 @@ public class ProjectDetailController {
 			}
 			
 		}
+		
 
 		// 바인딩
 		model.addAttribute("dto", result_dto);
+		
 		
 		// 포워딩
 		return Common.project.VIEW_PATH + "detail.jsp";
@@ -132,6 +144,22 @@ public class ProjectDetailController {
 		model.addAttribute("list", list);
 		
 		return Common.project.VIEW_PATH + "detail_ajax.jsp";
+	}
+	
+	// review register
+	@RequestMapping("review_register")
+	public void review_register(@RequestParam(value="user_idx") int user_idx,
+								@RequestParam(value="project_idx") int project_idx,
+								@RequestParam(value="input_content") String input_content) {
+		
+		// 등록
+		int res = projectService.insert_review(user_idx, project_idx, input_content);
+		
+		if(res > 0) {
+			System.out.println("등록 성공");
+		}else {
+			System.out.println("등록 실패");
+		}
 	}
 	
 	

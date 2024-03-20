@@ -157,7 +157,7 @@
 </style>
 
 <script>
-	/* wanted : (프로젝트 내용, 공지, 리뷰) = (0,1,2) */
+	/* wanted : (프로젝트 내용, 리뷰) = (0,1) */
 	let wanted = 0;
 	let heart_check = 0;
 	
@@ -286,6 +286,36 @@
 	};
 	
 	
+	function register_review(){
+		
+		let input_content = document.getElementById("review-content").value;
+		let user_idx = document.getElementById("user_idx").value;
+		
+		if(user_idx = ''){
+			alert("로그인 후 이용해주세요");
+			return;
+		}
+		
+		if(input_content == ''){
+			alert("리뷰 내용을 작성하여 등록해주세요.");
+			return;
+		}
+		
+		$.ajax({
+			url : "review_register",
+			method : "POST",
+			data : {
+				user_idx : user_idx,
+				project_idx : ${dto.project_idx},
+				input_content : input_content
+			},
+			success : function(){
+				GetDetail(1);
+			}
+		})
+	};
+	
+	
 	
 </script>
 
@@ -325,9 +355,9 @@
                   </div>
                   <div class="col-lg-4">
                     <ul>
-                      <li>모인금액 <span>${dto.donation } 원 ( ${dto.persent} )</span></li>
+                      <li>모인금액 <span>${dto.donation_str } 원 ( ${dto.persent} )</span></li>
                       <li>남은기간 <span>${dto.diff_date }</span></li>
-                      <li>목표금액 <span>${dto.target }</span></li>
+                      <li>목표금액 <span>${dto.target_str } 원</span></li>
                       
                       <li>펀딩 기간 <span>${dto.start } ~ ${dto.end }</span></li>
                       <li>
@@ -419,7 +449,7 @@
              <!-- 상품 가격 -->
              <div class="mb-3">
                  <label class="form-label">후원 포인트</label>
-                 <input class="form-control form-control-sm" id="point_donation" placeholder="후원 가능한 포인트 : ${user_email.user_point } point">
+                 <input class="form-control form-control-sm" id="point_donation" placeholder="후원 가능한 포인트 : ${point_str } point">
              </div>
              <!-- 히든 인풋 -->
              <input type="hidden" id="user_point" value="${user_email.user_point }">

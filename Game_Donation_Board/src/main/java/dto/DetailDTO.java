@@ -15,12 +15,14 @@ public class DetailDTO {
 	
 	// 총 후원금액
 	private int donation;
+	private String donation_str;
 	// 남은기간
 	private String diff_date;
 	// 작성자
 	private String author;
 	// 목표금액
 	private int target;
+	private String target_str;
 	// 달성 퍼센트
 	private String persent;
 	// 펀딩기간

@@ -40,7 +40,7 @@
 				</li>
 				<li>
 					<i class="fa fa-download"></i>
-					${dto.project_donation}&nbsp;원
+					${dto.donation_str}&nbsp;원
 				</li>
 			</ul>
 		</div>
