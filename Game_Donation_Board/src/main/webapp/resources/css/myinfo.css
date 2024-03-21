@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+input[type="text"] {
+            background-color: white; /* 투명 배경색 */
+            border: 1px solid black; /* 테두리 설정 */
+            border-radius: 5px; /* 테두리 둥글게 만듦 */
+            padding: 5px; /* 입력 칸 내부 여백 */
+            margin-bottom: 10px; /* 입력 칸 간격 조정 */
+            color: black; /* 텍스트 색상을 흰색으로 설정 */
+        }
+
+        #nickname{
+          width: 25%; /* 사용자 이름 입력 칸 너비를 70%로 설정 */
+        }
+
+        input[type="email"] {
+            background-color: white; /* 투명 배경색 */
+            border: 1px solid black; /* 테두리 설정 */
+            border-radius: 5px; /* 테두리 둥글게 만듦 */
+            padding: 5px; /* 입력 칸 내부 여백 */
+            margin-bottom: 10px; /* 입력 칸 간격 조정 */
+            width: 30%; /* 이메일 주소 입력 칸 너비를 설정 */
+            color: black; /* 텍스트 색상을 흰색으로 설정 */
+            display: inline-block; /* 인라인 블록 요소로 변경 */
+        }
+        .shipping-address-1 {
+            width:50%; 
+        }
+
+        .shipping-address-2 {
+            width: 20%; 
+        }
+        
+    label{
+        color: white;
+    }
+
+    button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #bb4ab1; padding: 5px 10px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 5px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #a400b3;
+            transition: background-color 0.5s;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: white;
+            display: inline-block;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+        
+           /* 프로필 설정과 사용자 닉네임 간격 조정 */
+      #profile-settings {
+        margin-bottom: 40px; /* 프로필 설정과 다음 섹션 사이의 간격 설정 */
+      }
+      
+        /* 결제 수단 방법과 간격 조정 */
+ 	 #payment-settings {
+  	  margin-bottom: 50px;
+ 	 }

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="u">
+
+	<select id="admin_notice_list" resultType="dto.AdminNoticeDTO" parameterType="java.util.List">
+		SELECT * 
+		FROM	
+			ef_admin_notice
+	</select>
+	
+	<select id = "notice_select" resultType="dto.AdminNoticeDTO" parameterType="int"> 
+		SELECT * 
+		FROM 
+			ef_admin_notice
+		where ad_notice_idx =#{ad_notice_idx}
+	</select>
+	
+	<select id="admin_notice_count" resultType="int">
+		SELECT 
+			count(*) 
+		FROM 
+			ef_admin_notice
+	</select>
+		
+
+	<select id="checkEmail" resultType="user" parameterType="String">
+		SELECT * FROM EF_USER WHERE USER_EMAIL =#{user_email}
+	</select>
+	
+	<select id="checkSocial" resultType="user" parameterType="String">
+		SELECT * FROM EF_USER WHERE user_social =#{user_social}
+	</select>
+	
+   <insert id="insert" parameterType="user">
+        INSERT INTO EF_USER VALUES (SEQ_EF_USER_IDX.NEXTVAL, 1, #{user_email}, #{user_name}, #{user_pw, jdbcType=VARCHAR} , 'resources/assets/images/user.png', 1, '', '', 0,#{user_social, jdbcType=VARCHAR})
+   </insert>
+
+	<!-- 포인트 업데이트  -->
+   <update id="user_update_point" parameterType="user">
+       UPDATE EF_USER
+        SET user_point = #{user_point}
+        WHERE user_email = #{user_email}
+   </update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="user_delete" parameterType="int">
+		DELETE FROM EF_USER
+		WHERE user_idx=#{user_idx}
+	</delete>
+	
+	<!-- 주소지 등록 -->
+	<update id ="update" parameterType="user">
+		UPDATE EF_USER
+		SET USER_ADDR =#{user_addr,jdbcType=VARCHAR}, USER_NAME =#{user_name,jdbcType=VARCHAR}
+		where user_email=#{user_email}
+	</update>
+	
+	 <!-- EF_PROJECT 테이블에서 게시글을 페이징하여 가져옴 -->
+	<select id="user_list" resultType="user" parameterType="java.util.HashMap"> 
+		SELECT * FROM 
+		(SELECT RANK() OVER(ORDER BY REF DESC, STEP) "no", b.* FROM EF_PROJECT b) 
+		WHERE "no" BETWEEN #{start} AND #{end}
+ 	</select>
+
+	<!-- 내가 등록한 프로젝트 조회 -->
+	<select id="user_project" parameterType="int" resultType="dto.ProjectDTO"> 
+	SELECT * FROM EF_PROJECT
+    WHERE USER_IDX =#{user_idx}
+	</select>
+	
+	<!-- 후원한 프로젝트 조회 -->
+	<select id="donation_list"  parameterType="int" resultType="dto.DonationDTO">
+		SELECT * FROM EF_DONATION
+		WHERE USER_IDX =#{user_idx}
+	</select>
+	
+	<!-- 사용자가 작성한 리뷰 가져오기  -->
+	<select id="user_review" parameterType="int" resultType="dto.ReviewDTO"> 
+	SELECT * FROM EF_REVIEW
+    WHERE USER_IDX =#{user_idx}
+	</select>
+	<!-- 이영찬 end -->
+	
+	<select id="SelectName" resultType="user" parameterType="int">
+		SELECT user_name FROM EF_USER where user_idx =#{user_idx}
+	</select>
+	
+	<!-- 정진수 -->
+	<!-- 유저 1건 가져오기 -->
+	<select id="selectone" parameterType="int" resultType="user">
+		SELECT *
+		FROM EF_USER
+		WHERE USER_IDX = #{user_idx}
+	</select>
+	
+	<!-- 유저 이미지 업데이트 -->
+	<update id="user_img_update" parameterType="user">
+		UPDATE EF_USER SET
+		USER_IMG = #{user_img}
+		WHERE USER_IDX = #{user_idx}
+	</update>
+	
+	<!-- 어드민 공지사항 다음번호 가져오기 -->
+	<select id="select_next_idx" resultType="int">
+		SELECT SEQ_EF_ADMIN_NOTICE_IDX.NEXTVAL
+		FROM DUAL
+	</select>
+	
+	<!-- 어드민 공지사항 insert -->
+	<insert id="insert_admin_notice" parameterType="adminNotice">
+		INSERT INTO EF_ADMIN_NOTICE VALUES(
+			#{ad_notice_idx},
+			#{ad_notice_title},
+			#{ad_notice_content},
+			''
+		)
+	</insert>
+	
+	<!-- 어드민 공지사항 한건 셀렉트 -->
+	<select id="selectOne_admin_notice" parameterType="int" resultType="adminNotice">
+		SELECT *
+		FROM EF_ADMIN_NOTICE
+		WHERE AD_NOTICE_IDX = #{idx}
+	</select>
+	
+	<!-- 어드민 공지사항 업데이트 -->
+	<update id="update_admin_notice" parameterType="adminNotice">
+		UPDATE EF_ADMIN_NOTICE SET
+		AD_NOTICE_TITLE = #{ad_notice_title},
+		AD_NOTICE_CONTENT = #{ad_notice_content}
+		WHERE AD_NOTICE_IDX = #{ad_notice_idx}
+	</update>
+	
+	<!-- 어드민 공지사항 삭제 -->
+	<delete id="delete_admin_notice" parameterType="int">
+		DELETE FROM EF_ADMIN_NOTICE
+		WHERE AD_NOTICE_IDX = #{idx}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

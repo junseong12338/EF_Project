@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="d">
+	<!-- EF_USER 테이블의 user_point 차감 - update -->
+	<update id="update_point" parameterType="java.util.HashMap">
+		UPDATE EF_USER
+		SET user_point = #{diff_point}
+		WHERE user_idx = #{user_idx}
+	</update>
+	<!-- 사용자가 이 프로젝트에 후원한적이 있는지 체크 -->
+	<select id="select_used" parameterType="java.util.HashMap" resultType="int">
+		SELECT COUNT(USER_IDX) FROM EF_DONATION
+		WHERE user_idx = #{user_idx} AND project_idx = #{project_idx}
+	</select>
+	<!-- 후원한 적 YES -->
+	<update id="update_donation" parameterType="java.util.HashMap">
+		UPDATE EF_DONATION
+		SET donation_money = #{diff_point}
+		WHERE user_idx = #{user_idx} AND project_idx = #{project_idx}
+	</update>
+	<!-- 후원한 적 NO -->
+	<insert id="insert_donation" parameterType="java.util.HashMap">
+		INSERT INTO EF_DONATION VALUES(
+			#{user_idx},
+			#{project_idx},
+			#{use_point}
+		)
+	</insert>
+	
+	<!-- review table selectList -->
+	<select id="select_review" resultType="review" parameterType="java.util.HashMap">
+		SELECT r.USER_IDX, REVIEW_CONTENT, REGDATE, u.USER_NAME, u.USER_IMG
+		FROM EF_REVIEW r INNER JOIN EF_USER u
+		ON r.USER_IDX = u.USER_IDX
+		WHERE PROJECT_IDX = #{project_idx}
+		ORDER BY REVIEW_IDX DESC
+	</select>
+	
+	<!-- review table insert -->
+	<insert id="insert_review" parameterType="review">
+		INSERT INTO EF_REVIEW VALUES(
+			SEQ_EF_REVIEW_IDX.NEXTVAL,
+			#{project_idx},
+			#{user_idx},
+			#{review_content},
+			TO_DATE(#{regdate},'yyyy-MM-dd HH24:mi:ss')
+		)
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

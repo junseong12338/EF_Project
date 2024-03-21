@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project">
+<!-- 정진수 -->
+	<select id="select_next_idx" resultType="int">
+		SELECT SEQ_EF_PROJECT_IDX.NEXTVAL
+		FROM DUAL
+	</select>
+
+	<insert id="insert_project" parameterType="project">
+		INSERT INTO EF_PROJECT VALUES(
+			#{project_idx},
+			#{user_idx},
+			#{project_title},
+			#{project_content},
+			#{project_status},
+			#{project_img},
+			TO_DATE(#{project_start}, 'YYYY-MM-DD'),
+			TO_DATE(#{project_end}, 'YYYY-MM-DD'),
+			#{project_target}
+		)
+	</insert>
+	
+	<!-- 프로젝트 단일 셀렉트 -->
+	<select id="selectOne_project" parameterType="int" resultType="project">
+		SELECT PROJECT_IDX,
+		       USER_IDX,
+		       PROJECT_TITLE,
+		       PROJECT_CONTENT,
+		       PROJECT_STATUS,
+		       PROJECT_IMG,
+		       TO_CHAR(PROJECT_START,'YYYY-MM-DD') AS PROJECT_START,
+		       TO_CHAR(PROJECT_END,'YYYY-MM-DD') AS PROJECT_END,       
+		       PROJECT_TARGET
+	   FROM EF_PROJECT
+	   WHERE PROJECT_IDX=#{idx}
+	</select>
+	
+	<!-- 프로젝트 업데이트 -->
+	<update id="project_update" parameterType="project">
+		UPDATE EF_PROJECT
+		SET PROJECT_TITLE = #{project_title},
+		    PROJECT_CONTENT = #{project_content},
+		    PROJECT_STATUS= #{project_status},
+		    PROJECT_IMG = #{project_img},
+		    PROJECT_START = TO_DATE(#{project_start}, 'YYYY-MM-DD'),
+		    PROJECT_END = TO_DATE(#{project_end}, 'YYYY-MM-DD'),
+		    PROJECT_TARGET = #{project_target}
+		WHERE PROJECT_IDX = #{project_idx}
+	</update>
+	
+	<!-- 카테고리 등록 -->
+	<insert id="insert_category" parameterType="categoryNum">
+		INSERT INTO EF_CATEGORY VALUES(
+			#{project_idx},
+			#{category_idx}
+		)
+	</insert>
+	
+	<!-- 카테고리 삭제 -->
+	<delete id="category_delete" parameterType="int">
+		DELETE FROM EF_CATEGORY
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
+	
+	
+	<select id="select_category" parameterType="int" resultType="categoryNum">
+		SELECT *
+		FROM EF_CATEGORY
+		WHERE PROJECT_IDX = #{idx}
+	</select> 
+	
+	<!-- 프로젝트 삭제 -->
+	<delete id="delete_project" parameterType="int">
+		DELETE FROM EF_PROJECT
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="delete_like" parameterType="int">
+		DELETE FROM EF_LIKE
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
+	
+	<!-- 도네이션 삭제 -->
+	<delete id="delete_donation" parameterType="int">
+		DELETE FROM EF_DONATION
+		WHERE PROJECT_IDX = #{idx}
+	</delete>
+	
+	
+	<!-- 박성현 Start -->
+	<!-- project-list Start -->
+	<!-- 리스트 총 개수 반환 -->
+	<select id="project_count" resultType="int" parameterType="project">
+		SELECT COUNT(PROJECT_IDX)
+		FROM EF_PROJECT 
+		WHERE PROJECT_STATUS = 1
+		<!-- 후원 기간 -->
+		<choose>
+		    <when test="sort_date == 1">
+		        AND PROJECT_START <![CDATA[<]]> SYSDATE AND PROJECT_END <![CDATA[>]]> SYSDATE
+		    </when>
+		    <when test="sort_date == 2">
+		       AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
+		    </when>
+		    <when test="sort_date == 3">
+		        AND A.PROJECT_END <![CDATA[<]]> SYSDATE
+		    </when>
+		</choose>
+		<!-- 카테고리 -->
+		<if test="category_list != null">
+	    AND PROJECT_IDX IN (SELECT PROJECT_IDX
+	                        FROM EF_CATEGORY
+	                        <foreach item="c" collection="category_list" open="WHERE" separator="OR" close="">
+	                            CATEGORY_IDX = #{c}
+	                        </foreach>
+	                        GROUP BY PROJECT_IDX
+	                        HAVING COUNT(CATEGORY_IDX) <![CDATA[>=]]> #{category_list_size}
+	                        )
+		</if>
+	</select>
+
+
+	<!-- 프로젝트 리스트 가져오기 -->
+	<select id="project_list" resultType="project" parameterType="project">
+		SELECT AL.*
+			FROM (SELECT A.*, B.LIKE_COUNT, RANK() OVER (
+								<!-- sort start --> 
+								<choose>
+									<when test="sort == 0">
+										ORDER BY B.LIKE_COUNT DESC, A.PROJECT_IDX DESC
+									</when>
+									<when test="sort == 1">
+										ORDER BY A.PROJECT_IDX DESC
+									</when>
+									<when test="sort == 2">
+										ORDER BY C.PROJECT_DONATION ASC, A.PROJECT_IDX DESC
+									</when>
+								</choose>
+								<!-- sort end -->
+								 ) AS "RANK_NO" , C.PROJECT_DONATION
+					FROM EF_PROJECT A,	( SELECT P.PROJECT_IDX, COUNT ( L.PROJECT_IDX ) AS "LIKE_COUNT"
+										FROM EF_PROJECT P LEFT JOIN EF_LIKE L 
+										ON P.PROJECT_IDX = L.PROJECT_IDX
+										GROUP BY P.PROJECT_IDX ) B ,	( SELECT P.PROJECT_IDX, SUM ( D.DONATION_MONEY ) AS "PROJECT_DONATION"
+																		FROM EF_PROJECT P LEFT OUTER JOIN EF_DONATION D
+																		ON P.PROJECT_IDX = D.PROJECT_IDX
+																		GROUP BY P.PROJECT_IDX ) C
+
+			WHERE A.PROJECT_IDX = B.PROJECT_IDX
+				AND A.PROJECT_IDX = C.PROJECT_IDX
+		
+				<!-- 반복 foreach start -->
+				<if test="category_list != null">
+					<foreach collection="category_list" item="c">
+					AND A.PROJECT_IDX IN ( SELECT PROJECT_IDX
+							FROM EF_CATEGORY
+							WHERE CATEGORY_IDX = #{c} )
+					</foreach>
+				</if>
+				<!-- 반복 foreach end -->
+				AND A.PROJECT_STATUS = 1
+				<!-- choose 기간 start -->
+				<choose>
+					<when test="sort_date == 1">
+						AND A.PROJECT_START <![CDATA[<]]> SYSDATE AND A.PROJECT_END <![CDATA[>]]> SYSDATE
+					</when>
+					<when test="sort_date == 2">
+						AND A.PROJECT_START <![CDATA[>]]> SYSDATE
+					</when>
+					<when test="sort_date == 3">
+						AND A.PROJECT_END <![CDATA[<]]> SYSDATE
+					</when>
+				</choose>
+				<!-- choose 기간 end -->
+				) AL
+				
+			WHERE AL.RANK_NO BETWEEN #{start} AND #{end} 
+				
+	</select>	
+	<!-- project-list End -->
+	
+	<!-- Detail Start -->
+	<!-- 해당 프로젝트의 후원 총합 SUM -->
+	<select id="donation" resultType="int" parameterType="int">
+		SELECT SUM(DONATION_MONEY) 
+		FROM EF_DONATION
+		WHERE PROJECT_IDX = #{project_idx} 
+	</select>
+	
+	<!-- 해당 프로젝트를 게시한 유저 이름 -->
+	<select id="user_author" resultType="string" parameterType="int">
+		SELECT USER_NAME 
+		FROM EF_USER u JOIN EF_PROJECT p
+		ON u.USER_IDX = p.USER_IDX
+		WHERE p.PROJECT_IDX = #{project_idx}
+	</select>
+	
+	<!-- 해당 프로젝트의 카테고리 이름 list -->
+	<select id="category_name" resultType="string" parameterType="int">
+		SELECT n.CATEGORY_NAME
+		FROM EF_CATEGORY c JOIN EF_CATEGORY_NAME n
+		ON c.CATEGORY_IDX = n.CATEGORY_IDX
+		WHERE c.PROJECT_IDX = #{project_idx}
+	</select>
+	
+	<!-- 해당 프로젝트의 좋아요 수 COUNT -->
+	<select id="like_cnt" resultType="int" parameterType="int">
+		SELECT COUNT(USER_IDX)
+		FROM EF_LIKE
+		WHERE PROJECT_IDX = #{project_idx}
+	</select>
+	
+	<select id="user_name" resultType="string" parameterType="int">
+		SELECT DISTINCT USER_NAME FROM EF_PROJECT p JOIN EF_USER u
+		ON p.user_idx = u.user_idx
+		WHERE p.user_idx = #{user_idx}
+	</select>
+	
+	
+	<!-- 상세페이지 정보 들고오기 -->
+	<select id="project_detail" resultType="project" parameterType="int">
+		SELECT * FROM EF_PROJECT WHERE PROJECT_IDX = #{project_idx}
+	</select>
+	
+	<!-- like 테이블에서 두개의 idx와 같은 행 개수 가져오기 -->
+	<select id="map_idx" resultType="int" parameterType="java.util.HashMap">
+		SELECT COUNT(*) FROM EF_LIKE WHERE PROJECT_IDX = #{project_idx} AND USER_IDX = #{user_idx}
+	</select>
+	
+	<!-- insert heart -->
+	<insert id="insert_heart" parameterType="java.util.HashMap">
+		INSERT INTO EF_LIKE VALUES(
+				#{user_idx}, 
+				#{project_idx}
+		)
+	</insert>
+	
+	<!-- delete heart -->
+	<delete id="delete_heart" parameterType="java.util.HashMap">
+		DELETE FROM EF_LIKE
+		WHERE USER_IDX = #{user_idx} AND PROJECT_IDX = #{project_idx}
+	</delete>
+	
+	<!-- Detail End -->
+	<!-- 박성현 End -->
+	
+		
+	<!-- 이준성 -->
+	<!-- 승인안된 모든 프로젝트 리스트 -->
+	<select id = "project_wait_count" resultType="int">
+		SELECT 
+			count(*) 
+		FROM 
+			EF_PROJECT
+		WHERE 
+			project_status=#{status}
+		
+	</select>
+	
+	<select id = "getUserName" resultType="String">
+		SELECT 
+			user_name 
+		FROM 
+			EF_USER
+		WHERE 
+			user_idx =#{user_idx}
+	</select>
+
+	
+	<!-- 관리자 페이징을 위한  승인 안된 리스트 -->
+	<select id = "getRowTotal" resultType="admininfo" parameterType="java.util.HashMap">		 
+		SELECT 
+			project_idx, p.user_idx, project_title, Project_status, project_img, project_start, project_end, u.user_name
+		FROM (
+		    SELECT 
+		    	project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end,
+	            ROW_NUMBER() OVER (ORDER BY project_idx) AS cnt
+		    FROM 
+		    	ef_project
+		    where 
+		    	project_status=#{status}
+		) p
+		JOIN 
+			EF_USER u ON p.user_idx = u.user_idx
+		WHERE 
+			p.cnt BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 관리자 페이징을 위한 승인 업데이트 -->
+	<update id="updateStatus" parameterType="java.util.HashMap">
+		UPDATE 
+			EF_PROJECT
+		SET
+			Project_Status = #{status}
+		WHERE
+			Project_idx = #{project_idx}
+	</update>
+
+	<!-- 최대 후원순 정렬 + 좋아요 -->
+	<select id="Main_donation_list" resultType="mainlist">
+		<![CDATA[
+SELECT
+    project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end, user_name, user_img, project_target, donation_money, project_like
+FROM (
+    SELECT 
+        p.project_idx, p.user_idx, p.project_title, p.Project_status, p.project_img, p.project_start, p.project_end, u.user_name, u.user_img, p.project_target, d.donation_money, l.project_like
+    FROM 
+        EF_PROJECT p
+    JOIN 
+        EF_USER u ON p.user_idx = u.user_idx
+    LEFT JOIN 
+        (SELECT project_idx, SUM(donation_money) as donation_money FROM EF_DONation GROUP BY project_idx) d ON p.project_idx = d.project_idx
+    LEFT JOIN 
+        (SELECT project_idx, COUNT(*) as project_like FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+    WHERE 
+        p.Project_status = 1 AND d.donation_money IS NOT NULL
+    ORDER BY 
+        d.donation_money desc 
+)
+WHERE ROWNUM <= 6
+		  ]]>
+	</select>
+		
+	<!-- 신규 등록 프로젝트 + 마감일 남은것들 + 좋아요 + 후원 금액 -->
+	<select id="Main_New_registration_list" resultType="mainlist">
+	    <![CDATA[
+		SELECT 
+		    project_idx, user_idx, project_title, Project_status, project_img, project_start, project_end, user_name, user_img, project_target, donation_money, project_like
+		FROM (
+		    SELECT 
+		        p.project_idx, p.user_idx, p.project_title, p.project_status, p.project_img, p.project_start, p.project_end, u.user_name, u.user_img, p.project_target, d.donation_money, l.project_like
+		    FROM 
+		        EF_PROJECT p
+		    JOIN 
+		        EF_USER u ON p.user_idx = u.user_idx
+		    LEFT JOIN 
+		        (SELECT project_idx, SUM(donation_money) as donation_money FROM EF_DONation GROUP BY project_idx) d ON p.project_idx = d.project_idx
+		    LEFT JOIN 
+		        (SELECT project_idx, COUNT(*) as project_like FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+		    WHERE 
+		        ROWNUM <= 8 
+		        AND Project_status = 1
+		        AND p.project_start <= SYSDATE+1
+		        AND p.project_end >= SYSDATE
+		    ORDER BY project_idx DESC
+		)
+	    ]]>
+	</select>
+	
+	<!-- 등록 예정 프로젝트 -->
+	<select id="Main_To_be_released_list" resultType="mainlist">
+SELECT 
+    p.project_idx, p.user_idx, p.project_title, p.project_status, p.project_img, p.project_start, p.project_end, u.user_name
+FROM 
+    EF_PROJECT p
+JOIN 
+    EF_USER u ON p.user_idx = u.user_idx
+WHERE 
+    p.project_status = 1
+    AND TRUNC(p.project_start) <![CDATA[>]]> TRUNC(SYSDATE)+1
+ORDER BY 
+    p.project_start ASC
+FETCH FIRST 3 ROWS ONLY
+	</select>
+	
+	<!-- 추천 수 정렬 -->
+	<select id="Main_Like_Project_list" resultType="mainlist">
+		<![CDATA[
+			SELECT 
+			    project_idx, user_idx, project_title,Project_status, user_name, user_img,project_like
+			FROM (
+			    SELECT 
+			        p.project_idx, p.user_idx,p.project_title ,p.Project_status, u.user_name, u.user_img, l.project_like
+			    FROM 
+			        EF_PROJECT p
+			    JOIN 
+			        EF_USER u ON p.user_idx = u.user_idx
+			    LEFT JOIN 
+			        (SELECT project_idx, COUNT(*) as project_like FROM EF_LIKE GROUP BY project_idx) l ON p.project_idx = l.project_idx
+			    WHERE ROWNUM <= 5 
+			        AND Project_status = 1
+			        AND l.project_like IS NOT NULL 
+			    ORDER BY l.project_like DESC 
+			)
+		]]>
+	</select>	
+	<!-- 이준성 -->
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

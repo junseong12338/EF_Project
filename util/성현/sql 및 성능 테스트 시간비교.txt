@@ -1,0 +1,112 @@
+sort ( 0, 1, 2 ) - like desc, idx desc | idx desc | donation asc, idx desc
+	- like table, donation table JOIN
+	- LIST
+
+sort_date ( 0, 1, 2 ) - start ~ end | ~ start | end ~
+	- project
+	- LIST, COUNT 
+
+category_list ( 1 ~ 10 ) - 리스트에 들어있는 값들과 같은 idx
+	- category table JOIN
+	- LIST, COUNT
+
+Rownum - ( 1 ~ 12 ) 단계별로
+	- project
+	- LIST
+
+
+
+< count >
+	<select id="project_count" resultType="int" parameterType="project">
+		SELECT COUNT(PROJECT_IDX)
+		FROM EF_PROJECT 
+		WHERE PROJECT_STATUS = 1
+		<!-- 후원 기간 -->
+		<choose>
+		    <when test="sort_date == 1">
+		        AND PROJECT_START <![CDATA[<]]> SYSDATE AND PROJECT_END <![CDATA[>]]> SYSDATE
+		    </when>
+		    <when test="sort_date == 2">
+		       AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
+		    </when>
+		    <when test="sort_date == 3">
+		        AND A.PROJECT_END <![CDATA[<]]> SYSDATE
+		    </when>
+		</choose>
+		<!-- 카테고리 -->
+		<if test="category_list != null">
+		    AND PROJECT_IDX IN (SELECT PROJECT_IDX
+		                        FROM EF_CATEGORY
+		                        <foreach item="c" collection="category_list" open="WHERE" separator="OR" close="">
+		                            CATEGORY_IDX = #{c}
+		                        </foreach>
+		                        GROUP BY PROJECT_IDX
+		                        HAVING COUNT(CATEGORY_IDX) >= #{category_list_size}
+		                        )
+		</if>
+	</select>
+
+< list >
+	<!-- 프로젝트 리스트 가져오기 -->
+	<select id="project_list" resultType="project" parameterType="project">
+		SELECT p.project_idx, user_idx, project_title, project_content, project_img, project_start, project_end, project_target, NVL(l.like_count, 0) as like_count, NVL(d.project_donation, 0) as project_donation
+		FROM EF_PROJECT p 
+		LEFT OUTER JOIN LC l
+		ON p.project_idx = l.project_idx
+		LEFT OUTER JOIN DS d
+		ON p.project_idx = d.project_idx
+		
+		WHERE PROJECT_STATUS = 1
+		<!-- 후원 기간 -->
+		<choose>
+		    <when test="sort_date == 1">
+		        AND PROJECT_START <![CDATA[<]]> SYSDATE AND PROJECT_END <![CDATA[>]]> SYSDATE
+		    </when>
+		    <when test="sort_date == 2">
+		       AND A.PROJECT_START <![CDATA[>]]> SYSDATE 
+		    </when>
+		    <when test="sort_date == 3">
+		        AND A.PROJECT_END <![CDATA[<]]> SYSDATE
+		    </when>
+		</choose>
+		<!-- 카테고리 -->
+		<if test="category_list != null">
+	    AND p.PROJECT_IDX IN (SELECT PROJECT_IDX
+	                        FROM EF_CATEGORY
+	                        <foreach item="c" collection="category_list" open="WHERE" separator="OR" close="">
+	                            CATEGORY_IDX = #{c}
+	                        </foreach>
+	                        GROUP BY PROJECT_IDX
+	                        HAVING COUNT(CATEGORY_IDX) >= #{category_list_size}
+	                        )
+		</if>
+		<!-- list scroll event range -->
+		AND ROWNUM BETWEEN #{start} AND #{end}
+		ORDER BY <choose>
+		            <when test="sort == 0">
+		                LIKE_COUNT DESC, p.PROJECT_IDX DESC
+		            </when>
+		            <when test="sort == 1">
+		                p.PROJECT_IDX DESC
+		            </when>
+		            <when test="sort == 2">
+		                PROJECT_DONATION DESC, p.PROJECT_IDX DESC
+		            </when>
+		        </choose>
+						
+	</select>
+
+
+sql 수정 후 : 2022
+
+sql 수정 전 : 2256
+
+
+
+
+
+
+
+
+
+

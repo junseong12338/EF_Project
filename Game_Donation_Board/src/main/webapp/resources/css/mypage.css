@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+  .heading-section h4 {
+        color: white;
+        font-size: 34px;
+        text-decoration: none;
+        margin-bottom: 30px;
+      }
+      
+       .owl-features .item {
+    width: 100%;
+    float: left; /* 좌측 정렬되도록 함 */
+   }
+
+  .owl-features .thumb img {
+    width: 100%; /* 각 사진 이미지가 요소 내에 꽉 차게 표시되도록 함 */
+    border-radius: 20px;
+  	}
+  .down-content .down-content span {
+    padding: 10px 0; /* 위아래 padding을 조절하여 높이를 조절합니다 */
+    display: flex;
+    align-items: center;
+
+	}
